@@ -1,0 +1,86 @@
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Menu, X, Code, Brain, Monitor } from 'lucide-react';
+
+const Header = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const menuItems = [
+    { label: 'Home', href: '#home' },
+    { label: 'About', href: '#about' },
+    { label: 'Departments', href: '#departments' },
+    { label: 'Programs', href: '#programs' },
+    { label: 'Contact', href: '#contact' },
+  ];
+
+  return (
+    <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
+      <div className="container mx-auto px-4 py-4">
+        <div className="flex items-center justify-between">
+          {/* Logo */}
+          <div className="flex items-center space-x-2">
+            <div className="w-10 h-10 bg-gradient-primary rounded-lg flex items-center justify-center">
+              <Code className="w-6 h-6 text-foreground" />
+            </div>
+            <div>
+              <h1 className="text-xl font-bold text-foreground">CodeKids Academy</h1>
+              <p className="text-xs text-muted-foreground">Future Programmers</p>
+            </div>
+          </div>
+
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center space-x-8">
+            {menuItems.map((item) => (
+              <a
+                key={item.label}
+                href={item.href}
+                className="text-foreground hover:text-primary transition-colors duration-300 relative group"
+              >
+                {item.label}
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+              </a>
+            ))}
+          </nav>
+
+          {/* CTA Button */}
+          <div className="hidden md:block">
+            <Button variant="hero" size="lg">
+              Enroll Now
+            </Button>
+          </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="md:hidden p-2 text-foreground hover:text-primary transition-colors"
+          >
+            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
+        </div>
+
+        {/* Mobile Menu */}
+        {isMenuOpen && (
+          <div className="md:hidden mt-4 py-4 border-t border-border">
+            <nav className="flex flex-col space-y-4">
+              {menuItems.map((item) => (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  className="text-foreground hover:text-primary transition-colors duration-300 py-2"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {item.label}
+                </a>
+              ))}
+              <Button variant="hero" size="lg" className="mt-4">
+                Enroll Now
+              </Button>
+            </nav>
+          </div>
+        )}
+      </div>
+    </header>
+  );
+};
+
+export default Header;
