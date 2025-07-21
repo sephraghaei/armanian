@@ -6,56 +6,56 @@ import { Clock, Users, Trophy, Star } from 'lucide-react';
 const Programs = () => {
   const programs = [
     {
-      title: 'Beginner Explorer',
-      description: 'Perfect first step into the world of programming for young learners.',
-      price: '$120',
-      duration: '8 weeks',
-      level: 'Beginner',
-      ages: '6-9 years',
-      classSize: '8 students',
+      title: 'کاوشگر مبتدی',
+      description: 'گام اول کامل به دنیای برنامه‌نویسی برای فراگیران جوان.',
+      price: '۱,۲۰۰,۰۰۰ تومان',
+      duration: '۸ هفته',
+      level: 'مبتدی',
+      ages: '۶-۹ سال',
+      classSize: '۸ دانشجو',
       features: [
-        'Scratch visual programming',
-        'Basic computer skills',
-        'Creative problem solving',
-        'Interactive games and projects',
-        'Certificate of completion'
+        'برنامه‌نویسی بصری Scratch',
+        'مهارت‌های اولیه کامپیوتر',
+        'حل مسائل خلاقانه',
+        'بازی‌ها و پروژه‌های تعاملی',
+        'گواهی تکمیل دوره'
       ],
       popular: false
     },
     {
-      title: 'Code Adventurer',
-      description: 'Comprehensive programming course for intermediate young coders.',
-      price: '$200',
-      duration: '12 weeks',
-      level: 'Intermediate',
-      ages: '10-13 years',
-      classSize: '10 students',
+      title: 'ماجراجوی کد',
+      description: 'دوره جامع برنامه‌نویسی برای کدنویسان جوان متوسط.',
+      price: '۲,۰۰۰,۰۰۰ تومان',
+      duration: '۱۲ هفته',
+      level: 'متوسط',
+      ages: '۱۰-۱۳ سال',
+      classSize: '۱۰ دانشجو',
       features: [
-        'Python programming basics',
-        'Web development introduction',
-        'Game development projects',
-        'Team collaboration skills',
-        'Portfolio creation',
-        'Industry mentor sessions'
+        'مبانی برنامه‌نویسی Python',
+        'آشنایی با توسعه وب',
+        'پروژه‌های توسعه بازی',
+        'مهارت‌های کار تیمی',
+        'ایجاد نمونه کارها',
+        'جلسات منتورشیپ صنعتی'
       ],
       popular: true
     },
     {
-      title: 'Future Developer',
-      description: 'Advanced program preparing teens for real-world development.',
-      price: '$300',
-      duration: '16 weeks',
-      level: 'Advanced',
-      ages: '14-16 years',
-      classSize: '6 students',
+      title: 'توسعه‌دهنده آینده',
+      description: 'برنامه پیشرفته آماده‌سازی نوجوانان برای توسعه واقعی.',
+      price: '۳,۰۰۰,۰۰۰ تومان',
+      duration: '۱۶ هفته',
+      level: 'پیشرفته',
+      ages: '۱۴-۱۶ سال',
+      classSize: '۶ دانشجو',
       features: [
-        'Full-stack web development',
-        'Mobile app development',
-        'AI and machine learning intro',
-        'Real client projects',
-        'Internship opportunities',
-        'University preparation',
-        'ICDL certification'
+        'توسعه وب فول‌استک',
+        'توسعه اپلیکیشن موبایل',
+        'آشنایی با AI و یادگیری ماشین',
+        'پروژه‌های مشتری واقعی',
+        'فرصت‌های کارآموزی',
+        'آماده‌سازی دانشگاهی',
+        'گواهینامه ICDL'
       ],
       popular: false
     }
@@ -66,11 +66,11 @@ const Programs = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            Choose Your Learning Path
+            مسیر یادگیری خود را انتخاب کنید
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-            Structured programs designed to take your child from coding curiosity to confident creator. 
-            Each path is carefully crafted for different age groups and skill levels.
+            برنامه‌های ساختارمندی که کودک شما را از کنجکاوی کدنویسی به سازنده‌ای با اعتماد به نفس تبدیل می‌کند. 
+            هر مسیر به دقت برای گروه‌های سنی و سطوح مهارت مختلف طراحی شده است.
           </p>
         </div>
 
@@ -81,7 +81,7 @@ const Programs = () => {
                 <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
                   <Badge variant="default" className="bg-gradient-primary text-foreground">
                     <Star className="w-3 h-3 mr-1" />
-                    Most Popular
+                    محبوب‌ترین
                   </Badge>
                 </div>
               )}
@@ -91,7 +91,7 @@ const Programs = () => {
                   <CardTitle className="text-2xl text-foreground">{program.title}</CardTitle>
                   <div className="text-right">
                     <div className="text-2xl font-bold text-primary">{program.price}</div>
-                    <div className="text-sm text-muted-foreground">per course</div>
+                    <div className="text-sm text-muted-foreground">هر دوره</div>
                   </div>
                 </div>
                 <CardDescription className="text-muted-foreground">
@@ -122,7 +122,7 @@ const Programs = () => {
 
                 {/* Features List */}
                 <div>
-                  <h4 className="font-semibold text-foreground mb-3">What's Included:</h4>
+                  <h4 className="font-semibold text-foreground mb-3">شامل موارد:</h4>
                   <ul className="space-y-2">
                     {program.features.map((feature, idx) => (
                       <li key={idx} className="flex items-start space-x-2 text-sm text-muted-foreground">
@@ -138,7 +138,7 @@ const Programs = () => {
                   className="w-full"
                   size="lg"
                 >
-                  {program.popular ? "Start Learning" : "Choose Program"}
+                  {program.popular ? "شروع یادگیری" : "انتخاب دوره"}
                 </Button>
               </CardContent>
             </Card>
@@ -148,17 +148,17 @@ const Programs = () => {
         {/* Additional Info */}
         <div className="mt-16 text-center bg-gradient-hero rounded-2xl p-8">
           <h3 className="text-2xl font-bold text-foreground mb-4">
-            Still Not Sure? 
+            هنوز مطمئن نیستید؟
           </h3>
           <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-            Book a free consultation with our education specialists to find the perfect program for your child's interests and skill level.
+            جلسه مشاوره رایگان با متخصصان آموزشی ما رزرو کنید تا بهترین برنامه متناسب با علایق و سطح مهارت فرزندتان را پیدا کنید.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button variant="hero" size="lg">
-              Book Free Consultation
+              رزرو مشاوره رایگان
             </Button>
             <Button variant="outline" size="lg">
-              Download Brochure
+              دانلود بروشور
             </Button>
           </div>
         </div>

@@ -5,23 +5,23 @@ const About = () => {
   const features = [
     {
       icon: Target,
-      title: 'Our Mission',
-      description: 'To inspire and educate the next generation of programmers and digital innovators through engaging, age-appropriate learning experiences.'
+      title: 'ماموریت ما',
+      description: 'الهام بخشیدن و آموزش نسل آینده برنامه‌نویسان و نوآوران دیجیتال از طریق تجربیات یادگیری جذاب و متناسب با سن.'
     },
     {
       icon: Users,
-      title: 'Expert Instructors',
-      description: 'Our certified teachers combine technical expertise with child development knowledge to create the perfect learning environment.'
+      title: 'مربیان متخصص',
+      description: 'معلمان مجاز ما تخصص فنی را با دانش رشد کودک ترکیب می‌کنند تا محیط یادگیری کاملی ایجاد کنند.'
     },
     {
       icon: Award,
-      title: 'Recognized Excellence',
-      description: 'Accredited programs and internationally recognized certifications including ICDL that prepare kids for the digital future.'
+      title: 'تعالی شناخته شده',
+      description: 'برنامه‌های تایید شده و گواهینامه‌های معتبر بین‌المللی از جمله ICDL که کودکان را برای آینده دیجیتال آماده می‌کند.'
     },
     {
       icon: Lightbulb,
-      title: 'Creative Learning',
-      description: 'We blend coding with creativity, making learning fun through games, projects, and interactive challenges that spark imagination.'
+      title: 'یادگیری خلاقانه',
+      description: 'ما کدنویسی را با خلاقیت ترکیب می‌کنیم و یادگیری را از طریق بازی‌ها، پروژه‌ها و چالش‌های تعاملی که تخیل را برمی‌انگیزد، سرگرم‌کننده می‌کنیم.'
     }
   ];
 
@@ -30,11 +30,11 @@ const About = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            About CodeKids Academy
+            درباره آرمانیان
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-            We're more than just a coding school. We're a community dedicated to nurturing young talent, 
-            building confidence, and preparing children for a technology-driven future.
+            ما فراتر از یک مدرسه کدنویسی هستیم. ما جامعه‌ای هستیم که به پرورش استعدادهای جوان، 
+            ایجاد اعتماد به نفس و آماده کردن کودکان برای آینده‌ای محور فناوری اختصاص دارد.
           </p>
         </div>
 
@@ -61,32 +61,32 @@ const About = () => {
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <div>
               <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
-                Why Choose Us?
+                چرا ما را انتخاب کنید؟
               </h3>
               <ul className="space-y-3 text-muted-foreground">
                 <li className="flex items-center space-x-3">
                   <div className="w-2 h-2 bg-primary rounded-full"></div>
-                  <span>Age-appropriate curriculum designed by education experts</span>
+                  <span>برنامه درسی متناسب با سن طراحی شده توسط متخصصان آموزش</span>
                 </li>
                 <li className="flex items-center space-x-3">
                   <div className="w-2 h-2 bg-accent rounded-full"></div>
-                  <span>Small class sizes for personalized attention</span>
+                  <span>کلاس‌های کوچک برای توجه شخصی</span>
                 </li>
                 <li className="flex items-center space-x-3">
                   <div className="w-2 h-2 bg-primary rounded-full"></div>
-                  <span>Modern facilities with latest technology</span>
+                  <span>امکانات مدرن با جدیدترین فناوری</span>
                 </li>
                 <li className="flex items-center space-x-3">
                   <div className="w-2 h-2 bg-accent rounded-full"></div>
-                  <span>Regular progress tracking and parent updates</span>
+                  <span>پیگیری منظم پیشرفت و گزارش به والدین</span>
                 </li>
               </ul>
             </div>
             <div className="text-center md:text-right">
-              <div className="text-4xl md:text-5xl font-bold text-primary mb-2">5+</div>
-              <div className="text-lg text-muted-foreground mb-4">Years of Excellence</div>
-              <div className="text-4xl md:text-5xl font-bold text-accent mb-2">95%</div>
-              <div className="text-lg text-muted-foreground">Student Satisfaction</div>
+              <div className="text-4xl md:text-5xl font-bold text-primary mb-2">۵+</div>
+              <div className="text-lg text-muted-foreground mb-4">سال تعالی</div>
+              <div className="text-4xl md:text-5xl font-bold text-accent mb-2">۹۵٪</div>
+              <div className="text-lg text-muted-foreground">رضایت دانشجویان</div>
             </div>
           </div>
         </div>

@@ -9,17 +9,17 @@ const Footer = () => {
   ];
 
   const quickLinks = [
-    { label: 'About Us', href: '#about' },
-    { label: 'Programs', href: '#programs' },
-    { label: 'Departments', href: '#departments' },
-    { label: 'Contact', href: '#contact' },
+    { label: 'درباره ما', href: '#about' },
+    { label: 'دوره‌ها', href: '#programs' },
+    { label: 'بخش‌ها', href: '#departments' },
+    { label: 'تماس', href: '#contact' },
   ];
 
   const programs = [
-    { label: 'Beginner Explorer', href: '#' },
-    { label: 'Code Adventurer', href: '#' },
-    { label: 'Future Developer', href: '#' },
-    { label: 'ICDL Certification', href: '#' },
+    { label: 'کاوشگر مبتدی', href: '#' },
+    { label: 'ماجراجوی کد', href: '#' },
+    { label: 'توسعه‌دهنده آینده', href: '#' },
+    { label: 'گواهینامه ICDL', href: '#' },
   ];
 
   return (
@@ -33,13 +33,13 @@ const Footer = () => {
                 <Code className="w-6 h-6 text-foreground" />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-foreground">CodeKids Academy</h3>
-                <p className="text-xs text-muted-foreground">Future Programmers</p>
+                <h3 className="text-xl font-bold text-foreground">آرمانیان</h3>
+                <p className="text-xs text-muted-foreground">برنامه‌نویسان آینده</p>
               </div>
             </div>
             <p className="text-muted-foreground text-sm">
-              Empowering young minds with programming skills and digital literacy 
-              for a technology-driven future.
+              توانمندسازی ذهن‌های جوان با مهارت‌های برنامه‌نویسی و سواد دیجیتال 
+              برای آینده‌ای محور فناوری.
             </p>
             <div className="flex space-x-4">
               {socialLinks.map((social, index) => (
@@ -57,7 +57,7 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-lg font-semibold text-foreground mb-4">Quick Links</h4>
+            <h4 className="text-lg font-semibold text-foreground mb-4">لینک‌های سریع</h4>
             <ul className="space-y-2">
               {quickLinks.map((link, index) => (
                 <li key={index}>
@@ -74,7 +74,7 @@ const Footer = () => {
 
           {/* Programs */}
           <div>
-            <h4 className="text-lg font-semibold text-foreground mb-4">Programs</h4>
+            <h4 className="text-lg font-semibold text-foreground mb-4">دوره‌ها</h4>
             <ul className="space-y-2">
               {programs.map((program, index) => (
                 <li key={index}>
@@ -91,21 +91,21 @@ const Footer = () => {
 
           {/* Contact Info */}
           <div>
-            <h4 className="text-lg font-semibold text-foreground mb-4">Contact Info</h4>
+            <h4 className="text-lg font-semibold text-foreground mb-4">اطلاعات تماس</h4>
             <div className="space-y-3">
               <div className="flex items-center space-x-3">
                 <Mail className="w-4 h-4 text-accent" />
-                <span className="text-muted-foreground text-sm">info@codekidsacademy.com</span>
+                <span className="text-muted-foreground text-sm">info@armanian.ir</span>
               </div>
               <div className="flex items-center space-x-3">
                 <Phone className="w-4 h-4 text-accent" />
-                <span className="text-muted-foreground text-sm">+1 (555) 123-4567</span>
+                <span className="text-muted-foreground text-sm">۰۱۳-۳۳۱۲۳۴۵۶</span>
               </div>
               <div className="mt-4">
                 <p className="text-muted-foreground text-sm">
-                  123 Tech Street<br />
-                  Innovation District<br />
-                  City, State 12345
+                  کیاشهر<br />
+                  خیابان فناوری ۱۲۳<br />
+                  ایران
                 </p>
               </div>
             </div>
@@ -116,17 +116,17 @@ const Footer = () => {
         <div className="border-t border-border mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <p className="text-muted-foreground text-sm">
-              © 2024 CodeKids Academy. All rights reserved.
+              © ۱۴۰۳ آرمانیان. تمامی حقوق محفوظ است.
             </p>
             <div className="flex space-x-6 text-sm">
               <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
-                Privacy Policy
+                سیاست حفظ حریم خصوصی
               </a>
               <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
-                Terms of Service
+                شرایط خدمات
               </a>
               <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
-                Cookie Policy
+                سیاست کوکی
               </a>
             </div>
           </div>

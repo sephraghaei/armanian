@@ -6,11 +6,11 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const menuItems = [
-    { label: 'Home', href: '#home' },
-    { label: 'About', href: '#about' },
-    { label: 'Departments', href: '#departments' },
-    { label: 'Programs', href: '#programs' },
-    { label: 'Contact', href: '#contact' },
+    { label: 'خانه', href: '#home' },
+    { label: 'درباره ما', href: '#about' },
+    { label: 'بخش‌ها', href: '#departments' },
+    { label: 'دوره‌ها', href: '#programs' },
+    { label: 'تماس', href: '#contact' },
   ];
 
   return (
@@ -23,8 +23,8 @@ const Header = () => {
               <Code className="w-6 h-6 text-foreground" />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-foreground">CodeKids Academy</h1>
-              <p className="text-xs text-muted-foreground">Future Programmers</p>
+              <h1 className="text-xl font-bold text-foreground">آرمانیان</h1>
+              <p className="text-xs text-muted-foreground">برنامه‌نویسان آینده</p>
             </div>
           </div>
 
@@ -45,7 +45,7 @@ const Header = () => {
           {/* CTA Button */}
           <div className="hidden md:block">
             <Button variant="hero" size="lg">
-              Enroll Now
+              ثبت نام کنید
             </Button>
           </div>
 
@@ -73,7 +73,7 @@ const Header = () => {
                 </a>
               ))}
               <Button variant="hero" size="lg" className="mt-4">
-                Enroll Now
+                ثبت نام کنید
               </Button>
             </nav>
           </div>

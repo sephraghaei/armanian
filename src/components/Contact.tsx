@@ -9,23 +9,23 @@ const Contact = () => {
   const contactInfo = [
     {
       icon: MapPin,
-      title: 'Visit Us',
-      details: ['123 Tech Street', 'Innovation District', 'City, State 12345']
+      title: 'به ما سر بزنید',
+      details: ['کیاشهر', 'خیابان فناوری ۱۲۳', 'ایران']
     },
     {
       icon: Phone,
-      title: 'Call Us',
-      details: ['+1 (555) 123-4567', '+1 (555) 987-6543']
+      title: 'تماس بگیرید',
+      details: ['۰۱۳-۳۳۱۲۳۴۵۶', '۰۹۱۲-۳۴۵۶۷۸۹']
     },
     {
       icon: Mail,
-      title: 'Email Us',
-      details: ['info@codekidsacademy.com', 'admissions@codekidsacademy.com']
+      title: 'ایمیل بزنید',
+      details: ['info@armanian.ir', 'admissions@armanian.ir']
     },
     {
       icon: Clock,
-      title: 'Hours',
-      details: ['Mon-Fri: 9:00 AM - 6:00 PM', 'Sat: 10:00 AM - 4:00 PM', 'Sun: Closed']
+      title: 'ساعات کاری',
+      details: ['شنبه-چهارشنبه: ۹:۰۰ تا ۱۸:۰۰', 'پنج‌شنبه: ۱۰:۰۰ تا ۱۶:۰۰', 'جمعه: تعطیل']
     }
   ];
 
@@ -34,11 +34,11 @@ const Contact = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            Get In Touch
+            با ما در تماس باشید
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-            Ready to start your child's coding journey? Contact us today to learn more about our programs 
-            or schedule a visit to our modern facilities.
+            آماده شروع سفر کدنویسی فرزندتان هستید؟ همین امروز با ما تماس بگیرید تا درباره برنامه‌هایمان 
+            بیشتر بدانید یا برای بازدید از امکانات مدرن ما وقت بگیرید.
           </p>
         </div>
 
@@ -47,11 +47,11 @@ const Contact = () => {
           <div className="space-y-8">
             <div>
               <h3 className="text-2xl font-bold text-foreground mb-6">
-                Let's Connect
+                بیایید ارتباط برقرار کنیم
               </h3>
               <p className="text-muted-foreground mb-8">
-                We'd love to hear from you! Whether you have questions about our programs, 
-                want to schedule a trial class, or need more information, we're here to help.
+                ما دوست داریم از شما بشنویم! چه سوالی درباره برنامه‌هایمان داشته باشید، 
+                بخواهید کلاس آزمایشی رزرو کنید، یا اطلاعات بیشتری نیاز داشته باشید، ما اینجا هستیم تا کمک کنیم.
               </p>
             </div>
 
@@ -83,54 +83,54 @@ const Contact = () => {
           {/* Contact Form */}
           <Card className="shadow-glow-primary">
             <CardHeader>
-              <CardTitle className="text-2xl text-foreground">Send Us a Message</CardTitle>
+              <CardTitle className="text-2xl text-foreground">پیام خود را برای ما بفرستید</CardTitle>
               <CardDescription className="text-muted-foreground">
-                Fill out the form below and we'll get back to you within 24 hours.
+                فرم زیر را پر کنید و ما ظرف ۲۴ ساعت با شما تماس خواهیم گرفت.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="firstName" className="text-foreground">First Name</Label>
-                  <Input id="firstName" placeholder="Enter your first name" />
+                  <Label htmlFor="firstName" className="text-foreground">نام</Label>
+                  <Input id="firstName" placeholder="نام خود را وارد کنید" />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="lastName" className="text-foreground">Last Name</Label>
-                  <Input id="lastName" placeholder="Enter your last name" />
+                  <Label htmlFor="lastName" className="text-foreground">نام خانوادگی</Label>
+                  <Input id="lastName" placeholder="نام خانوادگی خود را وارد کنید" />
                 </div>
               </div>
               
               <div className="space-y-2">
-                <Label htmlFor="email" className="text-foreground">Email</Label>
-                <Input id="email" type="email" placeholder="Enter your email" />
+                <Label htmlFor="email" className="text-foreground">ایمیل</Label>
+                <Input id="email" type="email" placeholder="ایمیل خود را وارد کنید" />
               </div>
               
               <div className="space-y-2">
-                <Label htmlFor="phone" className="text-foreground">Phone Number</Label>
-                <Input id="phone" type="tel" placeholder="Enter your phone number" />
+                <Label htmlFor="phone" className="text-foreground">شماره تلفن</Label>
+                <Input id="phone" type="tel" placeholder="شماره تلفن خود را وارد کنید" />
               </div>
               
               <div className="space-y-2">
-                <Label htmlFor="childAge" className="text-foreground">Child's Age</Label>
-                <Input id="childAge" placeholder="How old is your child?" />
+                <Label htmlFor="childAge" className="text-foreground">سن فرزند</Label>
+                <Input id="childAge" placeholder="فرزند شما چند ساله است؟" />
               </div>
               
               <div className="space-y-2">
-                <Label htmlFor="message" className="text-foreground">Message</Label>
+                <Label htmlFor="message" className="text-foreground">پیام</Label>
                 <Textarea 
                   id="message" 
-                  placeholder="Tell us about your child's interests and what program you're considering..."
+                  placeholder="درباره علایق فرزندتان و برنامه‌ای که در نظر دارید برای ما بنویسید..."
                   rows={4}
                 />
               </div>
               
               <Button variant="hero" size="lg" className="w-full">
                 <Send className="w-4 h-4 mr-2" />
-                Send Message
+                ارسال پیام
               </Button>
               
               <p className="text-xs text-muted-foreground text-center">
-                By submitting this form, you agree to our Privacy Policy and Terms of Service.
+                با ارسال این فرم، شما با سیاست حفظ حریم خصوصی و شرایط خدمات ما موافقت می‌کنید.
               </p>
             </CardContent>
           </Card>

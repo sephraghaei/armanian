@@ -6,51 +6,51 @@ const Departments = () => {
   const departments = [
     {
       icon: Code,
-      title: 'Programming Fundamentals',
-      description: 'Learn the basics of coding with Python, JavaScript, and Scratch programming languages.',
-      age: '8-16 years',
-      duration: '12 weeks',
-      highlights: ['Visual Programming', 'Text-based Coding', 'Problem Solving', 'Logic Building']
+      title: 'مبانی برنامه‌نویسی',
+      description: 'یادگیری اصول کدنویسی با زبان‌های برنامه‌نویسی Python، JavaScript و Scratch.',
+      age: '۸-۱۶ سال',
+      duration: '۱۲ هفته',
+      highlights: ['برنامه‌نویسی بصری', 'کدنویسی متنی', 'حل مسئله', 'منطق سازی']
     },
     {
       icon: Gamepad2,
-      title: 'Game Development',
-      description: 'Create amazing games using Unity, Roblox, and other game development platforms.',
-      age: '10-16 years',
-      duration: '16 weeks',
-      highlights: ['2D/3D Games', 'Game Design', 'Character Animation', 'Level Design']
+      title: 'توسعه بازی',
+      description: 'ساخت بازی‌های شگفت‌انگیز با استفاده از Unity، Roblox و سایر پلتفرم‌های توسعه بازی.',
+      age: '۱۰-۱۶ سال',
+      duration: '۱۶ هفته',
+      highlights: ['بازی‌های ۲D/۳D', 'طراحی بازی', 'انیمیشن شخصیت', 'طراحی مرحله']
     },
     {
       icon: Globe,
-      title: 'Web Development',
-      description: 'Build websites and web applications using HTML, CSS, and JavaScript.',
-      age: '12-16 years',
-      duration: '14 weeks',
-      highlights: ['HTML/CSS', 'JavaScript', 'Responsive Design', 'Web Publishing']
+      title: 'توسعه وب',
+      description: 'ساخت وب‌سایت‌ها و اپلیکیشن‌های وب با استفاده از HTML، CSS و JavaScript.',
+      age: '۱۲-۱۶ سال',
+      duration: '۱۴ هفته',
+      highlights: ['HTML/CSS', 'JavaScript', 'طراحی ریسپانسیو', 'انتشار وب']
     },
     {
       icon: Palette,
-      title: 'Digital Design',
-      description: 'Learn graphic design, UI/UX principles, and creative digital art.',
-      age: '10-16 years',
-      duration: '10 weeks',
-      highlights: ['Graphic Design', 'UI/UX Basics', 'Digital Art', 'Creative Tools']
+      title: 'طراحی دیجیتال',
+      description: 'یادگیری طراحی گرافیک، اصول UI/UX و هنر دیجیتال خلاقانه.',
+      age: '۱۰-۱۶ سال',
+      duration: '۱۰ هفته',
+      highlights: ['طراحی گرافیک', 'مبانی UI/UX', 'هنر دیجیتال', 'ابزارهای خلاقانه']
     },
     {
       icon: Brain,
-      title: 'AI & Machine Learning',
-      description: 'Introduction to artificial intelligence and machine learning concepts for kids.',
-      age: '13-16 years',
-      duration: '12 weeks',
-      highlights: ['AI Basics', 'Data Science', 'Machine Learning', 'Future Tech']
+      title: 'هوش مصنوعی و یادگیری ماشین',
+      description: 'آشنایی با مفاهیم هوش مصنوعی و یادگیری ماشین برای کودکان.',
+      age: '۱۳-۱۶ سال',
+      duration: '۱۲ هفته',
+      highlights: ['مبانی AI', 'علم داده', 'یادگیری ماشین', 'فناوری آینده']
     },
     {
       icon: Monitor,
-      title: 'ICDL Certification',
-      description: 'International Computer Driving License - Essential digital skills certification.',
-      age: '8-16 years',
-      duration: '8 weeks',
-      highlights: ['Computer Basics', 'Office Applications', 'Internet Safety', 'Digital Literacy']
+      title: 'گواهینامه ICDL',
+      description: 'گواهینامه بین‌المللی رانندگی کامپیوتر - گواهی مهارت‌های دیجیتال ضروری.',
+      age: '۸-۱۶ سال',
+      duration: '۸ هفته',
+      highlights: ['مبانی کامپیوتر', 'برنامه‌های آفیس', 'امنیت اینترنت', 'سواد دیجیتال']
     }
   ];
 
@@ -59,11 +59,11 @@ const Departments = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            Our Departments
+            بخش‌های ما
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-            Explore our comprehensive range of technology and programming courses 
-            designed to inspire and educate young minds.
+            طیف جامعی از دوره‌های فناوری و برنامه‌نویسی ما را که برای الهام بخشیدن 
+            و آموزش ذهن‌های جوان طراحی شده‌اند، کاوش کنید.
           </p>
         </div>
 
@@ -84,12 +84,12 @@ const Departments = () => {
               
               <CardContent className="space-y-4">
                 <div className="flex justify-between text-sm">
-                  <span className="text-accent font-medium">Age: {dept.age}</span>
-                  <span className="text-primary font-medium">Duration: {dept.duration}</span>
+                  <span className="text-accent font-medium">سن: {dept.age}</span>
+                  <span className="text-primary font-medium">مدت: {dept.duration}</span>
                 </div>
                 
                 <div>
-                  <h4 className="text-sm font-semibold text-foreground mb-2">What You'll Learn:</h4>
+                  <h4 className="text-sm font-semibold text-foreground mb-2">چیزهایی که یاد خواهید گرفت:</h4>
                   <div className="grid grid-cols-2 gap-1">
                     {dept.highlights.map((highlight, idx) => (
                       <div key={idx} className="flex items-center space-x-1 text-xs text-muted-foreground">
@@ -101,7 +101,7 @@ const Departments = () => {
                 </div>
                 
                 <Button variant="outline" className="w-full group">
-                  Learn More
+                  بیشتر بدانید
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </CardContent>
@@ -111,7 +111,7 @@ const Departments = () => {
 
         <div className="text-center mt-12">
           <Button variant="hero" size="lg">
-            View All Programs
+            مشاهده همه دوره‌ها
           </Button>
         </div>
       </div>
