@@ -15,9 +15,9 @@ const Hero = () => {
       <div className="container mx-auto px-4 py-20 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Content */}
-          <div className="space-y-8">
+          <div className="space-y-8 text-center lg:text-right">
             <div className="space-y-4">
-              <div className="flex items-center space-x-2 text-accent">
+              <div className="flex items-center justify-center lg:justify-start space-x-2 text-accent">
                 <Sparkles className="w-5 h-5" />
                 <span className="text-sm font-medium uppercase tracking-wide">به آینده خوش آمدید</span>
               </div>
@@ -29,13 +29,13 @@ const Hero = () => {
                 </span>
               </h1>
               
-              <p className="text-lg text-muted-foreground max-w-lg">
+              <p className="text-lg text-muted-foreground max-w-lg mx-auto lg:mx-0">
                 توانمندسازی ذهن‌های جوان با مهارت‌های برنامه‌نویسی، سواد دیجیتال و حل مسائل خلاقانه. 
                 به برنامه‌های نوآورانه‌ما که مخصوص کودکان ۶ تا ۱۶ سال طراحی شده، بپیوندید.
               </p>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <Button variant="hero" size="lg" className="group">
                 امروز شروع کنید
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
