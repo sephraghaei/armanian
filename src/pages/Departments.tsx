@@ -89,7 +89,7 @@ const DepartmentsPage = () => {
               <Card key={index} className="group hover:shadow-glow-primary transition-all duration-500 hover:-translate-y-2 border-border/50">
                 <CardHeader className="pb-4">
                   <div className="w-16 h-16 bg-gradient-primary rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                    <dept.icon className="w-8 h-8 text-foreground" />
+                    <dept.icon className="w-8 h-8 text-white" />
                   </div>
                   <CardTitle className="text-xl text-foreground group-hover:text-primary transition-colors">
                     {dept.title}

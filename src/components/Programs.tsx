@@ -79,7 +79,7 @@ const Programs = () => {
             <Card key={index} className={`relative hover:shadow-glow-primary transition-all duration-500 hover:-translate-y-2 ${program.popular ? 'border-primary shadow-glow-primary' : ''}`}>
               {program.popular && (
                 <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                  <Badge variant="default" className="bg-gradient-primary text-foreground">
+                  <Badge variant="default" className="bg-gradient-primary text-white">
                     <Star className="w-3 h-3 mr-1" />
                     محبوب‌ترین
                   </Badge>

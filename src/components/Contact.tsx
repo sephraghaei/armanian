@@ -61,7 +61,7 @@ const Contact = () => {
                   <CardContent className="p-6">
                     <div className="flex items-start space-x-4">
                       <div className="w-12 h-12 bg-gradient-primary rounded-lg flex items-center justify-center flex-shrink-0">
-                        <info.icon className="w-6 h-6 text-foreground" />
+                        <info.icon className="w-6 h-6 text-white" />
                       </div>
                       <div>
                         <h4 className="font-semibold text-foreground mb-2">{info.title}</h4>

@@ -111,7 +111,7 @@ const CoursesPage = () => {
               <Card key={index} className={`relative hover:shadow-glow-primary transition-all duration-500 hover:-translate-y-2 ${course.popular ? 'border-primary shadow-glow-primary' : ''}`}>
                 {course.popular && (
                   <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                    <Badge variant="default" className="bg-gradient-primary text-foreground">
+                    <Badge variant="default" className="bg-gradient-primary text-white">
                       <Star className="w-3 h-3 mr-1" />
                       محبوب‌ترین
                     </Badge>
@@ -186,7 +186,7 @@ const CoursesPage = () => {
                     <h3 className="text-2xl font-bold text-foreground mb-4 flex items-center">
                       {course.title}
                       {course.popular && (
-                        <Badge variant="default" className="bg-gradient-primary text-foreground mr-2">
+                        <Badge variant="default" className="bg-gradient-primary text-white mr-2">
                           محبوب
                         </Badge>
                       )}
