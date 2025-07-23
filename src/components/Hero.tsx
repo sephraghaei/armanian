@@ -23,15 +23,15 @@ const Hero = () => {
               </div>
               
               <h1 className="text-4xl md:text-6xl font-bold text-foreground leading-tight">
-                جایی که کودکان یاد می‌گیرند
+                آموزشگاه آزاد فنی و حرفه‌ای
                 <span className="block bg-gradient-primary bg-clip-text text-transparent">
-                  آینده را کدنویسی کنند
+                  مهارت‌های آینده را بیاموزید
                 </span>
               </h1>
               
               <p className="text-lg text-muted-foreground max-w-lg mx-auto lg:mx-0">
-                توانمندسازی ذهن‌های جوان با مهارت‌های برنامه‌نویسی، سواد دیجیتال و حل مسائل خلاقانه. 
-                به برنامه‌های نوآورانه‌ما که مخصوص کودکان ۶ تا ۱۶ سال طراحی شده، بپیوندید.
+                آموزش تخصصی کامپیوتر، گرافیک، معماری و زبان انگلیسی برای تمام سنین. 
+                از کودکان تا بزرگسالان، مهارت‌های فنی و حرفه‌ای مورد نیاز بازار کار را کسب کنید.
               </p>
             </div>
 
