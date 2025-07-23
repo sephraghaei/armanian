@@ -21,7 +21,7 @@ const Header = () => {
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2">
+          <Link to="/" className="flex items-center space-x-reverse space-x-2">
             <div className="w-10 h-10 bg-gradient-primary rounded-lg flex items-center justify-center">
               <Code className="w-6 h-6 text-white" />
             </div>
@@ -32,7 +32,7 @@ const Header = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
+          <nav className="hidden md:flex items-center space-x-reverse space-x-8">
             {menuItems.map((item) => {
               const isActive = location.pathname === item.href || (item.href.startsWith('#') && location.pathname === '/');
               const isHashLink = item.href.startsWith('#');
@@ -46,7 +46,7 @@ const Header = () => {
                   }`}
                 >
                   {item.label}
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+                  <span className="absolute -bottom-1 right-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
                 </a>
               ) : (
                 <Link
@@ -57,7 +57,7 @@ const Header = () => {
                   }`}
                 >
                   {item.label}
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+                  <span className="absolute -bottom-1 right-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
                 </Link>
               );
             })}

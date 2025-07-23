@@ -64,19 +64,19 @@ const About = () => {
                 چرا ما را انتخاب کنید؟
               </h3>
               <ul className="space-y-3 text-muted-foreground">
-                <li className="flex items-center space-x-3">
+                <li className="flex items-center space-x-reverse space-x-3">
                   <div className="w-2 h-2 bg-primary rounded-full"></div>
                   <span>برنامه درسی متناسب با سن طراحی شده توسط متخصصان آموزش</span>
                 </li>
-                <li className="flex items-center space-x-3">
+                <li className="flex items-center space-x-reverse space-x-3">
                   <div className="w-2 h-2 bg-accent rounded-full"></div>
                   <span>کلاس‌های کوچک برای توجه شخصی</span>
                 </li>
-                <li className="flex items-center space-x-3">
+                <li className="flex items-center space-x-reverse space-x-3">
                   <div className="w-2 h-2 bg-primary rounded-full"></div>
                   <span>امکانات مدرن با جدیدترین فناوری</span>
                 </li>
-                <li className="flex items-center space-x-3">
+                <li className="flex items-center space-x-reverse space-x-3">
                   <div className="w-2 h-2 bg-accent rounded-full"></div>
                   <span>پیگیری منظم پیشرفت و گزارش به والدین</span>
                 </li>

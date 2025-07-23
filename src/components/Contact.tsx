@@ -59,7 +59,7 @@ const Contact = () => {
               {contactInfo.map((info, index) => (
                 <Card key={index} className="hover:shadow-glow-primary transition-all duration-300">
                   <CardContent className="p-6">
-                    <div className="flex items-start space-x-4">
+                    <div className="flex items-start space-x-reverse space-x-4">
                       <div className="w-12 h-12 bg-gradient-primary rounded-lg flex items-center justify-center flex-shrink-0">
                         <info.icon className="w-6 h-6 text-white" />
                       </div>
@@ -125,7 +125,7 @@ const Contact = () => {
               </div>
               
               <Button variant="hero" size="lg" className="w-full">
-                <Send className="w-4 h-4 mr-2" />
+                <Send className="w-4 h-4 ml-2" />
                 ارسال پیام
               </Button>
               

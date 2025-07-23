@@ -17,7 +17,7 @@ const Hero = () => {
           {/* Content */}
           <div className="space-y-8 text-center lg:text-right">
             <div className="space-y-4">
-              <div className="flex items-center justify-center lg:justify-start space-x-2 text-accent">
+              <div className="flex items-center justify-center lg:justify-end space-x-reverse space-x-2 text-accent">
                 <Sparkles className="w-5 h-5" />
                 <span className="text-sm font-medium uppercase tracking-wide">به آینده خوش آمدید</span>
               </div>
@@ -29,16 +29,16 @@ const Hero = () => {
                 </span>
               </h1>
               
-              <p className="text-lg text-muted-foreground max-w-lg mx-auto lg:mx-0">
+              <p className="text-lg text-muted-foreground max-w-lg mx-auto lg:mr-0">
                 آموزش تخصصی کامپیوتر، گرافیک، معماری و زبان انگلیسی برای تمام سنین. 
                 از کودکان تا بزرگسالان، مهارت‌های فنی و حرفه‌ای مورد نیاز بازار کار را کسب کنید.
               </p>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-end">
               <Button variant="hero" size="lg" className="group">
                 امروز شروع کنید
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
               </Button>
               <Button variant="outline" size="lg">
                 مشاهده دوره‌ها

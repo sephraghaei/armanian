@@ -80,7 +80,7 @@ const Departments = () => {
                   <h4 className="text-sm font-semibold text-foreground mb-2">دوره‌های ارائه شده:</h4>
                   <ul className="space-y-1">
                     {dept.courses.map((course, idx) => (
-                      <li key={idx} className="flex items-center space-x-1 text-xs text-muted-foreground">
+                      <li key={idx} className="flex items-center space-x-reverse space-x-1 text-xs text-muted-foreground">
                         <div className="w-1.5 h-1.5 bg-accent rounded-full"></div>
                         <span>{course}</span>
                       </li>
@@ -90,7 +90,7 @@ const Departments = () => {
                 
                 <Button variant="outline" className="w-full group">
                   بیشتر بدانید
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
                 </Button>
               </CardContent>
             </Card>

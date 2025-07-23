@@ -80,7 +80,7 @@ const Programs = () => {
               {program.popular && (
                 <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
                   <Badge variant="default" className="bg-gradient-primary text-white">
-                    <Star className="w-3 h-3 mr-1" />
+                    <Star className="w-3 h-3 ml-1" />
                     محبوب‌ترین
                   </Badge>
                 </div>
@@ -102,19 +102,19 @@ const Programs = () => {
               <CardContent className="space-y-6">
                 {/* Program Details */}
                 <div className="grid grid-cols-2 gap-4 text-sm">
-                  <div className="flex items-center space-x-2">
+                  <div className="flex items-center space-x-reverse space-x-2">
                     <Clock className="w-4 h-4 text-accent" />
                     <span className="text-muted-foreground">{program.duration}</span>
                   </div>
-                  <div className="flex items-center space-x-2">
+                  <div className="flex items-center space-x-reverse space-x-2">
                     <Users className="w-4 h-4 text-accent" />
                     <span className="text-muted-foreground">{program.classSize}</span>
                   </div>
-                  <div className="flex items-center space-x-2">
+                  <div className="flex items-center space-x-reverse space-x-2">
                     <Trophy className="w-4 h-4 text-accent" />
                     <span className="text-muted-foreground">{program.level}</span>
                   </div>
-                  <div className="flex items-center space-x-2">
+                  <div className="flex items-center space-x-reverse space-x-2">
                     <Star className="w-4 h-4 text-accent" />
                     <span className="text-muted-foreground">{program.ages}</span>
                   </div>
@@ -125,7 +125,7 @@ const Programs = () => {
                   <h4 className="font-semibold text-foreground mb-3">شامل موارد:</h4>
                   <ul className="space-y-2">
                     {program.features.map((feature, idx) => (
-                      <li key={idx} className="flex items-start space-x-2 text-sm text-muted-foreground">
+                      <li key={idx} className="flex items-start space-x-reverse space-x-2 text-sm text-muted-foreground">
                         <div className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0"></div>
                         <span>{feature}</span>
                       </li>
