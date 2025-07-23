@@ -27,7 +27,7 @@ const Header = () => {
             </div>
             <div>
               <h1 className="text-xl font-bold text-foreground">آرمانیان</h1>
-              <p className="text-xs text-muted-foreground">برنامه‌نویسان آینده</p>
+              <p className="text-xs text-muted-foreground">آموزشگاه آزاد فنی و حرفه‌ای</p>
             </div>
           </Link>
 
