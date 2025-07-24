@@ -21,12 +21,15 @@ const Hero = () => {
               <span className="text-sm font-medium uppercase tracking-wide">به آینده خوش آمدید</span>
             </div>
             
-            <h1 className="text-4xl md:text-6xl font-bold text-foreground leading-tight max-w-4xl mx-auto">
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-foreground leading-tight max-w-4xl mx-auto mb-4">
+              آرمانیان
+            </h1>
+            <h2 className="text-3xl md:text-5xl font-bold text-foreground leading-tight max-w-4xl mx-auto">
               آموزشگاه آزاد فنی و حرفه‌ای
               <span className="block bg-gradient-primary bg-clip-text text-transparent">
                 مهارت‌های آینده را بیاموزید
               </span>
-            </h1>
+            </h2>
             
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
               آموزش تخصصی کامپیوتر، گرافیک، معماری و زبان انگلیسی برای تمام سنین. 
@@ -35,12 +38,16 @@ const Hero = () => {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="hero" size="lg" className="group">
-              امروز شروع کنید
-              <ArrowRight className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+            <Button variant="hero" size="lg" className="group" asChild>
+              <a href="#contact">
+                امروز شروع کنید
+                <ArrowRight className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+              </a>
             </Button>
-            <Button variant="outline" size="lg">
-              مشاهده دوره‌ها
+            <Button variant="outline" size="lg" asChild>
+              <a href="/courses">
+                مشاهده دوره‌ها
+              </a>
             </Button>
           </div>
 

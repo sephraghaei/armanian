@@ -10,9 +10,9 @@ const Header = () => {
 
   const menuItems = [
     { label: 'خانه', href: '/' },
-    { label: 'درباره ما', href: '#about' },
-    { label: 'بخش‌ها', href: '/departments' },
+    { label: 'دپارتمان ها', href: '/departments' },
     { label: 'دوره‌ها', href: '/courses' },
+    { label: 'درباره ما', href: '#about' },
     { label: 'تماس', href: '#contact' },
   ];
 
