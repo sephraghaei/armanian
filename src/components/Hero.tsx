@@ -14,25 +14,30 @@ const Hero = () => {
 
       <div className="container mx-auto px-4 py-20 relative z-10">
         {/* Content - Full Width */}
-        <div className="text-center space-y-8 mb-16">
-          <div className="space-y-4">
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-foreground leading-tight max-w-4xl mx-auto mb-4">
+        <div className="text-center space-y-12 mb-20">
+          <div className="space-y-8">
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-foreground leading-tight max-w-5xl mx-auto mb-6">
               آرمانیان
             </h1>
-            <h2 className="text-3xl md:text-5xl font-bold text-foreground leading-tight max-w-4xl mx-auto">
-              آموزشگاه آزاد فنی و حرفه‌ای
-              <span className="block bg-gradient-primary bg-clip-text text-transparent">
-                مهارت‌های آینده را بیاموزید
-              </span>
-            </h2>
             
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-              آموزش تخصصی کامپیوتر، گرافیک، معماری و زبان انگلیسی برای تمام سنین. 
-              از کودکان تا بزرگسالان، مهارت‌های فنی و حرفه‌ای مورد نیاز بازار کار را کسب کنید.
-            </p>
+            <div className="space-y-4">
+              <h2 className="text-3xl md:text-5xl font-bold text-foreground leading-tight max-w-4xl mx-auto">
+                آموزشگاه آزاد فنی و حرفه‌ای
+              </h2>
+              <h3 className="text-2xl md:text-4xl font-semibold bg-gradient-primary bg-clip-text text-transparent leading-relaxed max-w-4xl mx-auto">
+                مهارت‌های آینده را بیاموزید
+              </h3>
+            </div>
+            
+            <div className="pt-4">
+              <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+                آموزش تخصصی کامپیوتر، گرافیک، معماری و زبان انگلیسی برای تمام سنین. 
+                از کودکان تا بزرگسالان، مهارت‌های فنی و حرفه‌ای مورد نیاز بازار کار را کسب کنید.
+              </p>
+            </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-6 justify-center pt-4">
             <Button variant="hero" size="lg" className="group" asChild>
               <a href="#contact">
                 امروز شروع کنید
@@ -47,24 +52,24 @@ const Hero = () => {
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-3 gap-6 pt-8 max-w-2xl mx-auto">
-            <div className="text-center">
-              <div className="text-2xl font-bold text-primary">۵۰۰+</div>
-              <div className="text-sm text-muted-foreground">دانشجوی خوشحال</div>
+          <div className="grid grid-cols-3 gap-8 pt-8 max-w-2xl mx-auto">
+            <div className="text-center space-y-2">
+              <div className="text-3xl md:text-4xl font-bold text-primary">۵۰۰+</div>
+              <div className="text-sm md:text-base text-muted-foreground">دانشجوی خوشحال</div>
             </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-accent">۱۵+</div>
-              <div className="text-sm text-muted-foreground">معلم متخصص</div>
+            <div className="text-center space-y-2">
+              <div className="text-3xl md:text-4xl font-bold text-accent">۱۵+</div>
+              <div className="text-sm md:text-base text-muted-foreground">معلم متخصص</div>
             </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-primary">۱۲</div>
-              <div className="text-sm text-muted-foreground">دوره آموزشی</div>
+            <div className="text-center space-y-2">
+              <div className="text-3xl md:text-4xl font-bold text-primary">۱۲</div>
+              <div className="text-sm md:text-base text-muted-foreground">دوره آموزشی</div>
             </div>
           </div>
         </div>
 
         {/* Image - Below Text */}
-        <div className="relative max-w-4xl mx-auto">
+        <div className="relative max-w-4xl mx-auto mt-16">
           <div className="relative rounded-2xl overflow-hidden shadow-2xl">
             <img 
               src={heroImage} 
