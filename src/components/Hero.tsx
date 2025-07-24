@@ -16,11 +16,6 @@ const Hero = () => {
         {/* Content - Full Width */}
         <div className="text-center space-y-8 mb-16">
           <div className="space-y-4">
-            <div className="flex items-center justify-center space-x-reverse space-x-2 text-accent">
-              <Sparkles className="w-5 h-5" />
-              <span className="text-sm font-medium uppercase tracking-wide">به آینده خوش آمدید</span>
-            </div>
-            
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-foreground leading-tight max-w-4xl mx-auto mb-4">
               آرمانیان
             </h1>
