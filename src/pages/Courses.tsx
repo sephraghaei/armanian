@@ -10,7 +10,6 @@ const CoursesPage = () => {
     {
       title: 'دوره‌های کودکان',
       description: 'برنامه‌های آموزشی ویژه کودکان با روش‌های بازی محور.',
-      price: '۱,۲۰۰,۰۰۰ تومان',
       duration: '۸ هفته',
       level: 'مبتدی',
       ages: '۶-۱۲ سال',
@@ -34,7 +33,6 @@ const CoursesPage = () => {
     {
       title: 'دوره‌های نوجوانان',
       description: 'برنامه‌های تخصصی برای نوجوانان با پروژه‌های عملی.',
-      price: '۲,۰۰۰,۰۰۰ تومان',
       duration: '۱۲ هفته',
       level: 'متوسط',
       ages: '۱۳-۱۷ سال',
@@ -59,7 +57,6 @@ const CoursesPage = () => {
     {
       title: 'دوره‌های بزرگسالان',
       description: 'برنامه‌های حرفه‌ای برای بزرگسالان و ارتقای مهارت شغلی.',
-      price: '۳,۰۰۰,۰۰۰ تومان',
       duration: '۱۶ هفته',
       level: 'پیشرفته',
       ages: '۱۸+ سال',
@@ -119,13 +116,7 @@ const CoursesPage = () => {
                 )}
                 
                 <CardHeader className="pb-4">
-                  <div className="flex justify-between items-start mb-2">
-                    <CardTitle className="text-2xl text-foreground">{course.title}</CardTitle>
-                    <div className="text-right">
-                      <div className="text-2xl font-bold text-primary">{course.price}</div>
-                      <div className="text-sm text-muted-foreground">هر دوره</div>
-                    </div>
-                  </div>
+                  <CardTitle className="text-2xl text-foreground mb-2">{course.title}</CardTitle>
                   <CardDescription className="text-muted-foreground">
                     {course.description}
                   </CardDescription>
