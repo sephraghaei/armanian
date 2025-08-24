@@ -32,7 +32,7 @@ const Header = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-reverse space-x-8">
+          <nav className="hidden md:flex items-center space-x-reverse space-x-8 mr-12">
             {menuItems.map((item) => {
               const isActive = location.pathname === item.href || (item.href.startsWith('#') && location.pathname === '/');
               const isHashLink = item.href.startsWith('#');
