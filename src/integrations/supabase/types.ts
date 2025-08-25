@@ -14,6 +14,86 @@ export type Database = {
   }
   public: {
     Tables: {
+      courses: {
+        Row: {
+          created_at: string | null
+          department_id: number | null
+          description: string | null
+          duration: string | null
+          features: string[] | null
+          id: string
+          is_popular: boolean | null
+          learning_outcomes: string[] | null
+          level: string | null
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          department_id?: number | null
+          description?: string | null
+          duration?: string | null
+          features?: string[] | null
+          id?: string
+          is_popular?: boolean | null
+          learning_outcomes?: string[] | null
+          level?: string | null
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          department_id?: number | null
+          description?: string | null
+          duration?: string | null
+          features?: string[] | null
+          id?: string
+          is_popular?: boolean | null
+          learning_outcomes?: string[] | null
+          level?: string | null
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "courses_department_id_fkey"
+            columns: ["department_id"]
+            isOneToOne: false
+            referencedRelation: "departments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      departments: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          icon: string | null
+          id: number
+          name: string
+          slug: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          icon?: string | null
+          id?: number
+          name: string
+          slug?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          icon?: string | null
+          id?: number
+          name?: string
+          slug?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       Departments: {
         Row: {
           created_at: string
@@ -29,6 +109,48 @@ export type Database = {
           created_at?: string
           id?: number
           Name?: string | null
+        }
+        Relationships: []
+      }
+      programs: {
+        Row: {
+          age_group: string | null
+          class_size: number | null
+          created_at: string | null
+          description: string | null
+          duration: string | null
+          features: string[] | null
+          id: string
+          is_popular: boolean | null
+          level: string | null
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          age_group?: string | null
+          class_size?: number | null
+          created_at?: string | null
+          description?: string | null
+          duration?: string | null
+          features?: string[] | null
+          id?: string
+          is_popular?: boolean | null
+          level?: string | null
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          age_group?: string | null
+          class_size?: number | null
+          created_at?: string | null
+          description?: string | null
+          duration?: string | null
+          features?: string[] | null
+          id?: string
+          is_popular?: boolean | null
+          level?: string | null
+          title?: string
+          updated_at?: string | null
         }
         Relationships: []
       }
