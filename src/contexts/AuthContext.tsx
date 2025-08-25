@@ -74,10 +74,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const signIn = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({
+    console.log('AuthContext: signIn called with:', { email, password: password ? '***' : 'empty' });
+    
+    const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password
     });
+    
+    console.log('AuthContext: signIn response:', { 
+      user: data?.user?.id ? 'found' : 'not found', 
+      session: data?.session ? 'found' : 'not found',
+      error: error?.message 
+    });
+    
     return { error };
   };
 

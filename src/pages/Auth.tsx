@@ -71,15 +71,25 @@ const Auth = () => {
     e.preventDefault();
     setIsLoading(true);
 
+    console.log('Attempting login with:', { email, password: password ? '***' : 'empty' });
+
     try {
       const { error } = await signIn(email, password);
+      console.log('Login response:', { error: error?.message });
       
       if (error) {
+        console.error('Login error details:', error);
         if (error.message.includes('Invalid login credentials')) {
           toast({
             variant: "destructive",
             title: "اطلاعات نادرست",
             description: "ایمیل یا رمز عبور اشتباه است.",
+          });
+        } else if (error.message.includes('Email not confirmed')) {
+          toast({
+            variant: "destructive",
+            title: "ایمیل تایید نشده",
+            description: "لطفاً ایمیل خود را تایید کنید.",
           });
         } else {
           toast({
@@ -89,6 +99,7 @@ const Auth = () => {
           });
         }
       } else {
+        console.log('Login successful');
         toast({
           title: "ورود موفقیت‌آمیز",
           description: "به آرمانیان خوش آمدید!",
