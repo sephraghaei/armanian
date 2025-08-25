@@ -1,12 +1,40 @@
 import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Menu, X, Code, Brain, Monitor } from 'lucide-react';
+import { Menu, X, Code, Brain, Monitor, User, LogOut } from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
+import { useToast } from '@/hooks/use-toast';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+  const { user, signOut, loading } = useAuth();
+  const { toast } = useToast();
+  const navigate = useNavigate();
   const location = useLocation();
+
+  const handleSignOut = async () => {
+    const { error } = await signOut();
+    if (error) {
+      toast({
+        variant: "destructive",
+        title: "خطا در خروج",
+        description: error.message,
+      });
+    } else {
+      toast({
+        title: "خروج موفقیت‌آمیز",
+        description: "با موفقیت از حساب کاربری خارج شدید.",
+      });
+      navigate('/');
+    }
+  };
 
   const menuItems = [
     { label: 'خانه', href: '/' },
@@ -63,11 +91,35 @@ const Header = () => {
             })}
           </nav>
 
-          {/* CTA Button */}
+          {/* Auth Section */}
           <div className="hidden md:block">
-            <Button variant="hero" size="lg">
-              ثبت نام کنید
-            </Button>
+            {loading ? (
+              <div className="w-24 h-10 bg-muted animate-pulse rounded-md" />
+            ) : user ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="lg" className="gap-2">
+                    <User className="w-4 h-4" />
+                    حساب کاربری
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-48">
+                  <DropdownMenuItem className="flex items-center gap-2">
+                    <User className="w-4 h-4" />
+                    <span>{user.email}</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={handleSignOut} className="flex items-center gap-2 text-destructive">
+                    <LogOut className="w-4 h-4" />
+                    خروج
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Button variant="hero" size="lg" onClick={() => navigate('/auth')}>
+                ورود / ثبت نام
+              </Button>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -111,9 +163,16 @@ const Header = () => {
                   </Link>
                 );
               })}
-              <Button variant="hero" size="lg" className="mt-4">
-                ثبت نام کنید
-              </Button>
+              {user ? (
+                <Button variant="outline" onClick={handleSignOut} className="mt-4 gap-2">
+                  <LogOut className="w-4 h-4" />
+                  خروج
+                </Button>
+              ) : (
+                <Button variant="hero" size="lg" className="mt-4" onClick={() => navigate('/auth')}>
+                  ورود / ثبت نام
+                </Button>
+              )}
             </nav>
           </div>
         )}
