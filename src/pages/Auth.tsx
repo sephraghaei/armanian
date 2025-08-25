@@ -7,14 +7,15 @@ import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
-import { Loader2, GraduationCap, ArrowLeft } from 'lucide-react';
+import { Loader2, GraduationCap, ArrowLeft, Phone, Shield } from 'lucide-react';
 
 const Auth = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [displayName, setDisplayName] = useState('');
-  const { signUp, signIn, user } = useAuth();
+  const [phone, setPhone] = useState('');
+  const [otp, setOtp] = useState('');
+  const [showOtpInput, setShowOtpInput] = useState(false);
+  const [isSignUp, setIsSignUp] = useState(false);
+  const { signUpWithPhone, signInWithPhone, verifyOtp, user } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
 
@@ -25,83 +26,99 @@ const Auth = () => {
     }
   }, [user, navigate]);
 
-  const handleSignUp = async (e: React.FormEvent) => {
+  const handleSendOtp = async (e: React.FormEvent, isSignUpMode: boolean) => {
     e.preventDefault();
     setIsLoading(true);
+    setIsSignUp(isSignUpMode);
+
+    // Validate phone number format
+    const phoneRegex = /^(\+98|0)?9\d{9}$/;
+    if (!phoneRegex.test(phone)) {
+      toast({
+        variant: "destructive",
+        title: "شماره نادرست",
+        description: "لطفاً شماره موبایل معتبر وارد کنید (مثال: 09123456789)",
+      });
+      setIsLoading(false);
+      return;
+    }
+
+    // Format phone number to international format
+    let formattedPhone = phone;
+    if (phone.startsWith('0')) {
+      formattedPhone = '+98' + phone.substring(1);
+    } else if (!phone.startsWith('+98')) {
+      formattedPhone = '+98' + phone;
+    }
 
     try {
-      const { error } = await signUp(email, password, displayName);
+      const { error } = isSignUpMode 
+        ? await signUpWithPhone(formattedPhone)
+        : await signInWithPhone(formattedPhone);
       
       if (error) {
-        if (error.message.includes('already registered')) {
-          toast({
-            variant: "destructive",
-            title: "حساب کاربری موجود است",
-            description: "این ایمیل قبلاً ثبت شده است. لطفاً وارد شوید.",
-          });
-        } else {
-          toast({
-            variant: "destructive",
-            title: "خطا در ثبت نام",
-            description: error.message,
-          });
-        }
-      } else {
         toast({
-          title: "ثبت نام موفقیت‌آمیز",
-          description: "حساب کاربری شما با موفقیت ایجاد شد.",
+          variant: "destructive",
+          title: "خطا در ارسال کد",
+          description: error.message,
         });
-        // Clear form
-        setEmail('');
-        setPassword('');
-        setDisplayName('');
+      } else {
+        setShowOtpInput(true);
+        toast({
+          title: "کد تایید ارسال شد",
+          description: "کد تایید به شماره موبایل شما ارسال شد.",
+        });
       }
     } catch (error) {
       toast({
         variant: "destructive",
         title: "خطا",
-        description: "مشکلی در ثبت نام رخ داده است.",
+        description: "مشکلی در ارسال کد رخ داده است.",
       });
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleSignIn = async (e: React.FormEvent) => {
+  const handleVerifyOtp = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
-    console.log('Attempting login with:', { email, password: password ? '***' : 'empty' });
+    // Format phone number to international format
+    let formattedPhone = phone;
+    if (phone.startsWith('0')) {
+      formattedPhone = '+98' + phone.substring(1);
+    } else if (!phone.startsWith('+98')) {
+      formattedPhone = '+98' + phone;
+    }
 
     try {
-      const { error } = await signIn(email, password);
-      console.log('Login response:', { error: error?.message });
+      const { error } = await verifyOtp(formattedPhone, otp);
       
       if (error) {
-        console.error('Login error details:', error);
-        if (error.message.includes('Invalid login credentials')) {
+        if (error.message.includes('Invalid token')) {
           toast({
             variant: "destructive",
-            title: "اطلاعات نادرست",
-            description: "ایمیل یا رمز عبور اشتباه است.",
+            title: "کد نادرست",
+            description: "کد تایید وارد شده نادرست است.",
           });
-        } else if (error.message.includes('Email not confirmed')) {
+        } else if (error.message.includes('expired')) {
           toast({
             variant: "destructive",
-            title: "ایمیل تایید نشده",
-            description: "لطفاً ایمیل خود را تایید کنید.",
+            title: "کد منقضی شده",
+            description: "کد تایید منقضی شده است. لطفاً دوباره تلاش کنید.",
           });
+          setShowOtpInput(false);
         } else {
           toast({
             variant: "destructive",
-            title: "خطا در ورود",
+            title: "خطا در تایید",
             description: error.message,
           });
         }
       } else {
-        console.log('Login successful');
         toast({
-          title: "ورود موفقیت‌آمیز",
+          title: isSignUp ? "ثبت نام موفقیت‌آمیز" : "ورود موفقیت‌آمیز",
           description: "به آرمانیان خوش آمدید!",
         });
         navigate('/');
@@ -110,12 +127,85 @@ const Auth = () => {
       toast({
         variant: "destructive",
         title: "خطا",
-        description: "مشکلی در ورود رخ داده است.",
+        description: "مشکلی در تایید کد رخ داده است.",
       });
     } finally {
       setIsLoading(false);
     }
   };
+
+  const resetForm = () => {
+    setShowOtpInput(false);
+    setOtp('');
+    setIsLoading(false);
+  };
+
+  if (showOtpInput) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-background via-background to-secondary/20 flex items-center justify-center p-4">
+        <div className="w-full max-w-md relative">
+          {/* Back Button */}
+          <Button
+            variant="ghost"
+            onClick={resetForm}
+            className="absolute -top-12 left-0 flex items-center gap-2 text-muted-foreground hover:text-primary"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            بازگشت
+          </Button>
+
+          <div className="text-center mb-8">
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <Shield className="h-8 w-8 text-primary" />
+              <h1 className="text-3xl font-bold text-primary">تایید شماره</h1>
+            </div>
+            <p className="text-muted-foreground">کد تایید ارسال شده به {phone} را وارد کنید</p>
+          </div>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>کد تایید</CardTitle>
+              <CardDescription>
+                کد 6 رقمی ارسال شده را وارد کنید
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <form onSubmit={handleVerifyOtp} className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="otp">کد تایید</Label>
+                  <Input
+                    id="otp"
+                    type="text"
+                    inputMode="numeric"
+                    placeholder="123456"
+                    value={otp}
+                    onChange={(e) => setOtp(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                    required
+                    maxLength={6}
+                    disabled={isLoading}
+                    className="text-center text-lg tracking-widest"
+                  />
+                </div>
+                <Button type="submit" className="w-full" disabled={isLoading || otp.length !== 6}>
+                  {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                  تایید کد
+                </Button>
+                <Button 
+                  type="button" 
+                  variant="outline" 
+                  className="w-full" 
+                  onClick={() => handleSendOtp({ preventDefault: () => {} } as any, isSignUp)}
+                  disabled={isLoading}
+                >
+                  ارسال مجدد کد
+                </Button>
+              </form>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-secondary/20 flex items-center justify-center p-4">
@@ -148,37 +238,30 @@ const Auth = () => {
               <CardHeader>
                 <CardTitle>ورود به حساب کاربری</CardTitle>
                 <CardDescription>
-                  برای دسترسی به دوره‌ها و امکانات وارد شوید
+                  شماره موبایل خود را وارد کنید
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <form onSubmit={handleSignIn} className="space-y-4">
+                <form onSubmit={(e) => handleSendOtp(e, false)} className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="signin-email">ایمیل</Label>
-                    <Input
-                      id="signin-email"
-                      type="email"
-                      placeholder="name@example.com"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      required
-                      disabled={isLoading}
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="signin-password">رمز عبور</Label>
-                    <Input
-                      id="signin-password"
-                      type="password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      required
-                      disabled={isLoading}
-                    />
+                    <Label htmlFor="signin-phone">شماره موبایل</Label>
+                    <div className="relative">
+                      <Phone className="absolute right-3 top-3 h-4 w-4 text-muted-foreground" />
+                      <Input
+                        id="signin-phone"
+                        type="tel"
+                        placeholder="09123456789"
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                        required
+                        disabled={isLoading}
+                        className="pr-10"
+                      />
+                    </div>
                   </div>
                   <Button type="submit" className="w-full" disabled={isLoading}>
                     {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                    ورود
+                    ارسال کد تایید
                   </Button>
                 </form>
               </CardContent>
@@ -190,46 +273,26 @@ const Auth = () => {
               <CardHeader>
                 <CardTitle>ایجاد حساب کاربری</CardTitle>
                 <CardDescription>
-                  برای شروع یادگیری حساب کاربری ایجاد کنید
+                  برای شروع یادگیری شماره موبایل خود را وارد کنید
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <form onSubmit={handleSignUp} className="space-y-4">
+                <form onSubmit={(e) => handleSendOtp(e, true)} className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="signup-name">نام نمایشی</Label>
-                    <Input
-                      id="signup-name"
-                      type="text"
-                      placeholder="نام و نام خانوادگی"
-                      value={displayName}
-                      onChange={(e) => setDisplayName(e.target.value)}
-                      disabled={isLoading}
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="signup-email">ایمیل</Label>
-                    <Input
-                      id="signup-email"
-                      type="email"
-                      placeholder="name@example.com"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      required
-                      disabled={isLoading}
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="signup-password">رمز عبور</Label>
-                    <Input
-                      id="signup-password"
-                      type="password"
-                      placeholder="حداقل 6 کاراکتر"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      required
-                      minLength={6}
-                      disabled={isLoading}
-                    />
+                    <Label htmlFor="signup-phone">شماره موبایل</Label>
+                    <div className="relative">
+                      <Phone className="absolute right-3 top-3 h-4 w-4 text-muted-foreground" />
+                      <Input
+                        id="signup-phone"
+                        type="tel"
+                        placeholder="09123456789"
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                        required
+                        disabled={isLoading}
+                        className="pr-10"
+                      />
+                    </div>
                   </div>
                   <Button type="submit" className="w-full" disabled={isLoading}>
                     {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}

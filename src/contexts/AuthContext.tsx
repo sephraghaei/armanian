@@ -6,8 +6,9 @@ interface AuthContextType {
   user: User | null;
   session: Session | null;
   loading: boolean;
-  signUp: (email: string, password: string, displayName?: string) => Promise<{ error: any }>;
-  signIn: (email: string, password: string) => Promise<{ error: any }>;
+  signUpWithPhone: (phone: string) => Promise<{ error: any }>;
+  verifyOtp: (phone: string, otp: string) => Promise<{ error: any }>;
+  signInWithPhone: (phone: string) => Promise<{ error: any }>;
   signOut: () => Promise<{ error: any }>;
 }
 
@@ -57,31 +58,49 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     };
   }, []);
 
-  const signUp = async (email: string, password: string, displayName?: string) => {
-    const redirectUrl = `${window.location.origin}/`;
+  const signUpWithPhone = async (phone: string) => {
+    console.log('AuthContext: signUpWithPhone called with:', { phone });
     
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
+    const { data, error } = await supabase.auth.signInWithOtp({
+      phone: phone,
       options: {
-        emailRedirectTo: redirectUrl,
         data: {
-          display_name: displayName
+          display_name: 'کاربر جدید'
         }
       }
     });
+    
+    console.log('AuthContext: signUpWithPhone response:', { 
+      error: error?.message 
+    });
+    
     return { error };
   };
 
-  const signIn = async (email: string, password: string) => {
-    console.log('AuthContext: signIn called with:', { email, password: password ? '***' : 'empty' });
+  const signInWithPhone = async (phone: string) => {
+    console.log('AuthContext: signInWithPhone called with:', { phone });
     
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password
+    const { data, error } = await supabase.auth.signInWithOtp({
+      phone: phone
     });
     
-    console.log('AuthContext: signIn response:', { 
+    console.log('AuthContext: signInWithPhone response:', { 
+      error: error?.message 
+    });
+    
+    return { error };
+  };
+
+  const verifyOtp = async (phone: string, otp: string) => {
+    console.log('AuthContext: verifyOtp called with:', { phone, otp: otp ? '***' : 'empty' });
+    
+    const { data, error } = await supabase.auth.verifyOtp({
+      phone: phone,
+      token: otp,
+      type: 'sms'
+    });
+    
+    console.log('AuthContext: verifyOtp response:', { 
       user: data?.user?.id ? 'found' : 'not found', 
       session: data?.session ? 'found' : 'not found',
       error: error?.message 
@@ -99,8 +118,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     user,
     session,
     loading,
-    signUp,
-    signIn,
+    signUpWithPhone,
+    signInWithPhone,
+    verifyOtp,
     signOut
   };
 
