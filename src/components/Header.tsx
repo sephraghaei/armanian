@@ -14,7 +14,12 @@ import {
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  
+  // Add debugging to see if AuthProvider is available
+  console.log('Header rendering, checking auth context...');
+  
   const { user, signOut, loading } = useAuth();
+  console.log('Auth context loaded:', { user: !!user, loading });
   const { toast } = useToast();
   const navigate = useNavigate();
   const location = useLocation();
