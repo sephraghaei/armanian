@@ -175,10 +175,23 @@ const Header = () => {
                 );
               })}
               {user ? (
-                <Button variant="outline" onClick={handleSignOut} className="mt-4 gap-2">
-                  <LogOut className="w-4 h-4" />
-                  خروج
-                </Button>
+                <div className="space-y-3">
+                  <Button 
+                    variant="outline" 
+                    onClick={() => {
+                      navigate('/profile');
+                      setIsMenuOpen(false);
+                    }} 
+                    className="w-full gap-2"
+                  >
+                    <User className="w-4 h-4" />
+                    پروفایل کاربری
+                  </Button>
+                  <Button variant="outline" onClick={handleSignOut} className="w-full gap-2">
+                    <LogOut className="w-4 h-4" />
+                    خروج
+                  </Button>
+                </div>
               ) : (
                 <Button variant="hero" size="lg" className="mt-4" onClick={() => navigate('/auth')}>
                   ورود / ثبت نام
