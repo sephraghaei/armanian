@@ -111,7 +111,7 @@ const Header = () => {
                 <DropdownMenuContent align="end" className="w-48">
                   <DropdownMenuItem className="flex items-center gap-2">
                     <User className="w-4 h-4" />
-                    <span>{user.email}</span>
+                    <span>{user.phone || user.email || 'کاربر'}</span>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={handleSignOut} className="flex items-center gap-2 text-destructive">
