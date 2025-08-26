@@ -109,9 +109,15 @@ const Header = () => {
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-48">
-                  <DropdownMenuItem className="flex items-center gap-2">
+                  <DropdownMenuItem 
+                    className="flex items-center gap-2 cursor-pointer" 
+                    onClick={() => window.location.href = '/profile'}
+                  >
                     <User className="w-4 h-4" />
-                    <span>{user.phone || user.email || 'کاربر'}</span>
+                    <span>پروفایل کاربری</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem className="flex items-center gap-2">
+                    <span className="text-sm text-muted-foreground">{user.phone || user.email || 'کاربر'}</span>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={handleSignOut} className="flex items-center gap-2 text-destructive">
