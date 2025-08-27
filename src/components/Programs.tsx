@@ -121,7 +121,7 @@ const Programs = () => {
                   className="w-full"
                   size="lg"
                 >
-                  {program.popular ? "شروع یادگیری" : "انتخاب دوره"}
+                  انتخاب دوره
                 </Button>
               </CardContent>
             </Card>
