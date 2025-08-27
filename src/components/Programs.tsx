@@ -118,10 +118,10 @@ const Programs = () => {
 
                 <Button 
                   variant="outline" 
-                  className="w-full bg-white text-black border-white hover:bg-white/90"
+                  className="w-full bg-white/95 text-black border-white/30 hover:bg-white hover:scale-105 hover:shadow-xl transition-all duration-300 group backdrop-blur-sm"
                   size="lg"
                 >
-                  انتخاب دوره
+                  <span className="group-hover:translate-x-1 transition-transform duration-300">انتخاب دوره</span>
                 </Button>
               </CardContent>
             </Card>
