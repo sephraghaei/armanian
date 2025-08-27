@@ -74,14 +74,6 @@ const Programs = () => {
         <div className="grid md:grid-cols-3 gap-8">
           {programs.map((program, index) => (
             <Card key={index} className={`relative hover:shadow-glow-primary transition-all duration-500 hover:-translate-y-2 ${program.popular ? 'border-primary shadow-glow-primary' : ''}`}>
-              {program.popular && (
-                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                  <Badge variant="default" className="bg-gradient-primary text-white">
-                    <Star className="w-3 h-3 ml-1" />
-                    محبوب‌ترین
-                  </Badge>
-                </div>
-              )}
               
               <CardHeader className="pb-4">
                 <CardTitle className="text-2xl text-foreground mb-2">{program.title}</CardTitle>
