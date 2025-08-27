@@ -58,7 +58,7 @@ const Contact = () => {
             <div className="grid gap-6">
               {contactInfo.map((info, index) => (
                 <Card key={index} className="hover:shadow-glow-primary transition-all duration-300">
-                  <CardContent className="p-6">
+                  <CardContent className="p-8 bg-background/50 backdrop-blur-sm hover:bg-background/70 transition-all duration-300">
                     <div className="flex items-start space-x-reverse space-x-4">
                       <div className="w-12 h-12 bg-gradient-primary rounded-lg flex items-center justify-center flex-shrink-0">
                         <info.icon className="w-6 h-6 text-white" />
