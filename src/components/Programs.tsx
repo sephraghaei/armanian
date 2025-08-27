@@ -117,8 +117,8 @@ const Programs = () => {
                 </div>
 
                 <Button 
-                  variant={program.popular ? "hero" : "outline"} 
-                  className="w-full"
+                  variant="outline" 
+                  className="w-full bg-white text-black border-white hover:bg-white/90"
                   size="lg"
                 >
                   انتخاب دوره
