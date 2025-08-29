@@ -1,8 +1,15 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Code, Palette, Home, Globe, ArrowRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const Departments = () => {
+  const navigate = useNavigate();
+
+  const handleLearnMore = () => {
+    navigate('/departments');
+  };
+
   const departments = [
     {
       icon: Code,
@@ -88,7 +95,7 @@ const Departments = () => {
                   </ul>
                 </div>
                 
-                <Button variant="default" className="w-full group hover-scale hover:shadow-glow-primary transition-all duration-300">
+                <Button variant="default" className="w-full group hover-scale hover:shadow-glow-primary transition-all duration-300" onClick={handleLearnMore}>
                   <span className="group-hover:translate-x-1 transition-transform duration-300">بیشتر بدانید</span>
                   <ArrowRight className="w-4 h-4 group-hover:-translate-x-1 transition-transform duration-300" />
                 </Button>
