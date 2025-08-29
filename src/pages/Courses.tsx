@@ -2,10 +2,17 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Clock, Users, Trophy, Star, CheckCircle } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 const CoursesPage = () => {
+  const navigate = useNavigate();
+
+  const handleSignUp = () => {
+    navigate('/auth');
+  };
+
   const courses = [
     {
       title: 'دوره‌های کودکان',
@@ -160,6 +167,7 @@ const CoursesPage = () => {
                     variant={course.popular ? "hero" : "outline"} 
                     className="w-full"
                     size="lg"
+                    onClick={handleSignUp}
                   >
                     {course.popular ? "شروع یادگیری" : "انتخاب دوره"}
                   </Button>
@@ -186,7 +194,7 @@ const CoursesPage = () => {
                       {course.detailedDescription}
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4">
-                      <Button variant="hero" size="lg">
+                      <Button variant="hero" size="lg" onClick={handleSignUp}>
                         ثبت نام در دوره
                       </Button>
                       <Button variant="outline" size="lg">

@@ -2,8 +2,15 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Clock, Users, Trophy, Star } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const Programs = () => {
+  const navigate = useNavigate();
+
+  const handleSignUp = () => {
+    navigate('/auth');
+  };
+
   const programs = [
     {
       title: 'دوره‌های کودکان',
@@ -120,6 +127,7 @@ const Programs = () => {
                   variant="default" 
                   className="w-full group hover-scale hover:shadow-glow-primary transition-all duration-300"
                   size="lg"
+                  onClick={handleSignUp}
                 >
                   <span className="transition-transform duration-300 group-hover:translate-x-1">انتخاب دوره</span>
                 </Button>
