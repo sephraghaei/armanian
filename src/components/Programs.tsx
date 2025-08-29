@@ -128,23 +128,6 @@ const Programs = () => {
           ))}
         </div>
 
-        {/* Additional Info */}
-        <div className="mt-16 text-center bg-gradient-hero rounded-2xl p-8">
-          <h3 className="text-2xl font-bold text-foreground mb-4">
-            هنوز مطمئن نیستید؟
-          </h3>
-          <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-            جلسه مشاوره رایگان با متخصصان آموزشی ما رزرو کنید تا بهترین برنامه متناسب با علایق و سن فرزندتان را پیدا کنید.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="hero" size="lg">
-              رزرو مشاوره رایگان
-            </Button>
-            <Button variant="outline" size="lg">
-              دانلود بروشور
-            </Button>
-          </div>
-        </div>
       </div>
     </section>
   );
