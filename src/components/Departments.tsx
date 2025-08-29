@@ -88,7 +88,7 @@ const Departments = () => {
                   </ul>
                 </div>
                 
-                <Button variant="outline" className="w-full group bg-white/95 text-black border-white/30 hover:bg-white hover:scale-105 hover:shadow-xl transition-all duration-300 backdrop-blur-sm">
+                <Button variant="default" className="w-full group hover-scale hover:shadow-glow-primary transition-all duration-300">
                   <span className="group-hover:translate-x-1 transition-transform duration-300">بیشتر بدانید</span>
                   <ArrowRight className="w-4 h-4 group-hover:-translate-x-1 transition-transform duration-300" />
                 </Button>
