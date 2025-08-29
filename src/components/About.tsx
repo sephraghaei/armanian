@@ -56,40 +56,6 @@ const About = () => {
           ))}
         </div>
 
-        {/* Additional Info */}
-        <div className="mt-20 bg-gradient-hero rounded-2xl p-8 md:p-12">
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div>
-              <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
-                چرا ما را انتخاب کنید؟
-              </h3>
-              <ul className="space-y-3 text-muted-foreground">
-                <li className="flex items-center space-x-reverse space-x-3">
-                  <div className="w-2 h-2 bg-primary rounded-full"></div>
-                  <span>برنامه درسی متناسب با سن طراحی شده توسط متخصصان آموزش</span>
-                </li>
-                <li className="flex items-center space-x-reverse space-x-3">
-                  <div className="w-2 h-2 bg-accent rounded-full"></div>
-                  <span>کلاس‌های کوچک برای توجه شخصی</span>
-                </li>
-                <li className="flex items-center space-x-reverse space-x-3">
-                  <div className="w-2 h-2 bg-primary rounded-full"></div>
-                  <span>امکانات مدرن با جدیدترین فناوری</span>
-                </li>
-                <li className="flex items-center space-x-reverse space-x-3">
-                  <div className="w-2 h-2 bg-accent rounded-full"></div>
-                  <span>پیگیری منظم پیشرفت و گزارش به والدین</span>
-                </li>
-              </ul>
-            </div>
-            <div className="text-center md:text-right">
-              <div className="text-4xl md:text-5xl font-bold text-primary mb-2">۵+</div>
-              <div className="text-lg text-muted-foreground mb-4">سال تعالی</div>
-              <div className="text-4xl md:text-5xl font-bold text-accent mb-2">۹۵٪</div>
-              <div className="text-lg text-muted-foreground">رضایت دانشجویان</div>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   );
