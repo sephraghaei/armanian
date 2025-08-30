@@ -1,8 +1,14 @@
 import { Button } from '@/components/ui/button';
 import { Code, Sparkles, ArrowRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import heroImage from '@/assets/hero-coding.jpg';
 
 const Hero = () => {
+  const navigate = useNavigate();
+
+  const handleSignUp = () => {
+    navigate('/auth');
+  };
   return (
     <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-hero">
       {/* Background Elements */}
@@ -38,11 +44,9 @@ const Hero = () => {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-6 justify-center pt-4">
-            <Button variant="hero" size="lg" className="group" asChild>
-              <a href="#contact">
-                امروز شروع کنید
-                <ArrowRight className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-              </a>
+            <Button variant="hero" size="lg" className="group" onClick={handleSignUp}>
+              امروز شروع کنید
+              <ArrowRight className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
             </Button>
             <Button variant="outline" size="lg" asChild>
               <a href="/courses">
