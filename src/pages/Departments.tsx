@@ -1,10 +1,16 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Code, Palette, Home, Globe, ArrowRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 const DepartmentsPage = () => {
+  const navigate = useNavigate();
+  
+  const handleSignUp = () => {
+    navigate('/auth');
+  };
   const departments = [
     {
       icon: Code,
@@ -154,7 +160,7 @@ const DepartmentsPage = () => {
                         <div className="flex justify-between items-center mb-4">
                           <span className="text-primary font-medium">مدت: {course.duration}</span>
                         </div>
-                        <Button variant="outline" className="w-full group">
+                        <Button variant="outline" className="w-full group" onClick={handleSignUp}>
                           ثبت نام
                           <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                         </Button>
