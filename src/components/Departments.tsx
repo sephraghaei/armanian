@@ -2,6 +2,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Code, Palette, Home, Globe, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import computerDeptImage from '@/assets/computer-department.jpg';
+import graphicDeptImage from '@/assets/graphic-department.jpg';
+import architectureDeptImage from '@/assets/architecture-department.jpg';
+import englishDeptImage from '@/assets/english-department.jpg';
 
 const Departments = () => {
   const navigate = useNavigate();
@@ -19,6 +23,7 @@ const Departments = () => {
       icon: Code,
       title: 'دپارتمان کامپیوتر',
       description: 'آموزش مهارت‌های کامپیوتری و برنامه‌نویسی برای تمام سنین.',
+      image: computerDeptImage,
       courses: [
         'ICDL کودکان',
         'ICDL بزرگسالان',
@@ -31,6 +36,7 @@ const Departments = () => {
       icon: Palette,
       title: 'دپارتمان گرافیک',
       description: 'آموزش طراحی گرافیک و نرم‌افزارهای طراحی حرفه‌ای.',
+      image: graphicDeptImage,
       courses: [
         'فتوشاپ نوجوانان',
         'فتوشاپ بزرگسالان',
@@ -41,6 +47,7 @@ const Departments = () => {
       icon: Home,
       title: 'دپارتمان معماری',
       description: 'آموزش طراحی معماری و نرم‌افزارهای تخصصی ساختمان.',
+      image: architectureDeptImage,
       courses: [
         'طراحی داخلی معماری',
         'نرم‌افزارهای معماری (اسکچاپ، اتوکد، تریدی مکس)',
@@ -52,6 +59,7 @@ const Departments = () => {
       icon: Globe,
       title: 'دپارتمان زبان انگلیسی',
       description: 'آموزش زبان انگلیسی با روش‌های مدرن و تکنولوژی.',
+      image: englishDeptImage,
       courses: [
         'آموزش زبان با کامپیوتر',
         'آموزش زبان ترمیک'

@@ -1,5 +1,7 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Target, Users, Award, Lightbulb } from 'lucide-react';
+import successImage from '@/assets/success-students.jpg';
+import facilityImage from '@/assets/facility-exterior.jpg';
 
 const About = () => {
   const features = [
@@ -54,6 +56,72 @@ const About = () => {
               </CardContent>
             </Card>
           ))}
+        </div>
+
+        {/* Success Stories Section with Image */}
+        <div className="mt-20 grid md:grid-cols-2 gap-12 items-center">
+          <div className="relative">
+            <img 
+              src={successImage} 
+              alt="دانشجویان موفق آرمانیان"
+              className="rounded-2xl shadow-xl w-full h-80 object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-accent/20 rounded-2xl"></div>
+          </div>
+          <div className="space-y-6">
+            <h3 className="text-2xl md:text-3xl font-bold text-foreground">
+              داستان‌های موفقیت ما
+            </h3>
+            <p className="text-muted-foreground leading-relaxed">
+              بیش از ۵۰۰ دانشجوی خوشحال و موفق که مهارت‌های آینده را در آرمانیان فرا گرفته‌اند. 
+              از کودکان که اولین خط کد خود را نوشته‌اند تا بزرگسالانی که مسیر شغلی جدیدی آغاز کرده‌اند.
+            </p>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="text-center p-4 bg-card rounded-xl border">
+                <div className="text-2xl font-bold text-primary">۵۰۰+</div>
+                <div className="text-sm text-muted-foreground">دانشجوی فارغ‌التحصیل</div>
+              </div>
+              <div className="text-center p-4 bg-card rounded-xl border">
+                <div className="text-2xl font-bold text-accent">۹۵٪</div>
+                <div className="text-sm text-muted-foreground">رضایت والدین</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Facility Section with Image */}
+        <div className="mt-20 grid md:grid-cols-2 gap-12 items-center">
+          <div className="space-y-6 order-2 md:order-1">
+            <h3 className="text-2xl md:text-3xl font-bold text-foreground">
+              امکانات مدرن و استاندارد
+            </h3>
+            <p className="text-muted-foreground leading-relaxed">
+              محیط یادگیری مجهز به جدیدترین تجهیزات و فناوری‌های روز دنیا. 
+              کلاس‌های هوشمند، رایانه‌های مدرن و فضای الهام‌بخش برای رشد خلاقیت.
+            </p>
+            <ul className="space-y-3">
+              <li className="flex items-center space-x-reverse space-x-3">
+                <div className="w-2 h-2 bg-primary rounded-full"></div>
+                <span className="text-muted-foreground">کلاس‌های مجهز به تکنولوژی مدرن</span>
+              </li>
+              <li className="flex items-center space-x-reverse space-x-3">
+                <div className="w-2 h-2 bg-accent rounded-full"></div>
+                <span className="text-muted-foreground">محیط یادگیری ایمن و دوستانه</span>
+              </li>
+              <li className="flex items-center space-x-reverse space-x-3">
+                <div className="w-2 h-2 bg-primary rounded-full"></div>
+                <span className="text-muted-foreground">دسترسی آسان و پارکینگ رایگان</span>
+              </li>
+            </ul>
+          </div>
+          <div className="relative order-1 md:order-2">
+            <img 
+              src={facilityImage} 
+              alt="ساختمان آموزشگاه آرمانیان"
+              className="rounded-2xl shadow-xl w-full h-80 object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-tl from-primary/20 to-accent/20 rounded-2xl"></div>
+          </div>
         </div>
 
       </div>
