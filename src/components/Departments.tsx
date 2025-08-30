@@ -6,8 +6,12 @@ import { useNavigate } from 'react-router-dom';
 const Departments = () => {
   const navigate = useNavigate();
 
-  const handleLearnMore = () => {
-    navigate('/departments');
+  const handleLearnMore = (departmentName?: string) => {
+    if (departmentName === 'کامپیوتر') {
+      navigate('/departments#computer');
+    } else {
+      navigate('/departments');
+    }
   };
 
   const departments = [
@@ -95,7 +99,7 @@ const Departments = () => {
                   </ul>
                 </div>
                 
-                <Button variant="default" className="w-full group hover-scale hover:shadow-glow-primary transition-all duration-300" onClick={handleLearnMore}>
+                <Button variant="default" className="w-full group hover-scale hover:shadow-glow-primary transition-all duration-300" onClick={() => handleLearnMore(dept.title.includes('کامپیوتر') ? 'کامپیوتر' : undefined)}>
                   <span className="group-hover:translate-x-1 transition-transform duration-300">بیشتر بدانید</span>
                   <ArrowRight className="w-4 h-4 group-hover:-translate-x-1 transition-transform duration-300" />
                 </Button>
