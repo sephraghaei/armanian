@@ -87,7 +87,7 @@ const Auth = () => {
 
     try {
       const { error } = isSignUpMode 
-        ? await signUpWithPhone(formattedPhone)
+        ? await signUpWithPhone(formattedPhone, firstName, lastName, password)
         : await signInWithPhone(formattedPhone);
       
       if (error) {
