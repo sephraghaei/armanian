@@ -160,10 +160,15 @@ const DepartmentsPage = () => {
                         <div className="flex justify-between items-center mb-4">
                           <span className="text-primary font-medium">مدت: {course.duration}</span>
                         </div>
-                        <Button variant="outline" className="w-full group" onClick={handleSignUp}>
-                          ثبت نام
-                          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                        </Button>
+                        <div className="flex gap-2">
+                          <Button variant="outline" className="flex-1 group" onClick={handleSignUp}>
+                            ثبت نام
+                            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                          </Button>
+                          <Button variant="ghost" className="flex-1">
+                            بیشتر بدانید
+                          </Button>
+                        </div>
                       </CardContent>
                     </Card>
                   ))}
