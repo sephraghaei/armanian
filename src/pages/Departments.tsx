@@ -165,7 +165,11 @@ const DepartmentsPage = () => {
                             ثبت نام
                             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                           </Button>
-                          <Button variant="ghost" className="flex-1">
+                          <Button 
+                            variant="ghost" 
+                            className="flex-1"
+                            onClick={() => navigate(`/course/${course.name.toLowerCase().replace(/\s+/g, '-').replace(/[^\w\-]/g, '')}`)}
+                          >
                             بیشتر بدانید
                           </Button>
                         </div>
