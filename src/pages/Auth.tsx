@@ -7,12 +7,15 @@ import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
-import { Loader2, GraduationCap, ArrowLeft, Phone, Shield } from 'lucide-react';
+import { Loader2, GraduationCap, ArrowLeft, Phone, Shield, User, Lock } from 'lucide-react';
 
 const Auth = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [phone, setPhone] = useState('');
   const [otp, setOtp] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [password, setPassword] = useState('');
   const [showOtpInput, setShowOtpInput] = useState(false);
   const [isSignUp, setIsSignUp] = useState(false);
   const { signUpWithPhone, signInWithPhone, verifyOtp, user } = useAuth();
@@ -30,6 +33,37 @@ const Auth = () => {
     e.preventDefault();
     setIsLoading(true);
     setIsSignUp(isSignUpMode);
+
+    // Validate required fields for signup
+    if (isSignUpMode) {
+      if (!firstName.trim()) {
+        toast({
+          variant: "destructive",
+          title: "نام الزامی است",
+          description: "لطفاً نام خود را وارد کنید",
+        });
+        setIsLoading(false);
+        return;
+      }
+      if (!lastName.trim()) {
+        toast({
+          variant: "destructive",
+          title: "نام خانوادگی الزامی است",
+          description: "لطفاً نام خانوادگی خود را وارد کنید",
+        });
+        setIsLoading(false);
+        return;
+      }
+      if (!password.trim() || password.length < 6) {
+        toast({
+          variant: "destructive",
+          title: "رمز عبور نامعتبر",
+          description: "رمز عبور باید حداقل 6 کاراکتر باشد",
+        });
+        setIsLoading(false);
+        return;
+      }
+    }
 
     // Validate phone number format
     const phoneRegex = /^(\+98|0)?9\d{9}$/;
@@ -273,11 +307,45 @@ const Auth = () => {
               <CardHeader>
                 <CardTitle>ایجاد حساب کاربری</CardTitle>
                 <CardDescription>
-                  برای شروع یادگیری شماره موبایل خود را وارد کنید
+                  اطلاعات زیر را برای ایجاد حساب کاربری وارد کنید
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <form onSubmit={(e) => handleSendOtp(e, true)} className="space-y-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="firstName">نام</Label>
+                      <div className="relative">
+                        <User className="absolute right-3 top-3 h-4 w-4 text-muted-foreground" />
+                        <Input
+                          id="firstName"
+                          type="text"
+                          placeholder="نام"
+                          value={firstName}
+                          onChange={(e) => setFirstName(e.target.value)}
+                          required
+                          disabled={isLoading}
+                          className="pr-10"
+                        />
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="lastName">نام خانوادگی</Label>
+                      <div className="relative">
+                        <User className="absolute right-3 top-3 h-4 w-4 text-muted-foreground" />
+                        <Input
+                          id="lastName"
+                          type="text"
+                          placeholder="نام خانوادگی"
+                          value={lastName}
+                          onChange={(e) => setLastName(e.target.value)}
+                          required
+                          disabled={isLoading}
+                          className="pr-10"
+                        />
+                      </div>
+                    </div>
+                  </div>
                   <div className="space-y-2">
                     <Label htmlFor="signup-phone">شماره موبایل</Label>
                     <div className="relative">
@@ -291,6 +359,23 @@ const Auth = () => {
                         required
                         disabled={isLoading}
                         className="pr-10"
+                      />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="password">رمز عبور</Label>
+                    <div className="relative">
+                      <Lock className="absolute right-3 top-3 h-4 w-4 text-muted-foreground" />
+                      <Input
+                        id="password"
+                        type="password"
+                        placeholder="حداقل 6 کاراکتر"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                        disabled={isLoading}
+                        className="pr-10"
+                        minLength={6}
                       />
                     </div>
                   </div>
