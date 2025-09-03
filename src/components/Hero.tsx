@@ -11,11 +11,28 @@ const Hero = () => {
   };
   return (
     <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-hero">
-      {/* Background Elements */}
-      <div className="absolute inset-0 opacity-20">
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0">
+        {/* Floating Geometric Shapes */}
+        <div className="absolute top-10 left-10 w-4 h-4 bg-primary/20 rotate-45 animate-bounce" style={{animationDelay: '0s'}}></div>
+        <div className="absolute top-32 right-20 w-6 h-6 bg-accent/25 rotate-12 animate-bounce" style={{animationDelay: '1s'}}></div>
+        <div className="absolute bottom-40 left-1/4 w-3 h-3 bg-primary/15 rotate-45 animate-bounce" style={{animationDelay: '2s'}}></div>
+        <div className="absolute top-1/2 right-10 w-5 h-5 bg-accent/20 rotate-12 animate-bounce" style={{animationDelay: '0.5s'}}></div>
+        <div className="absolute bottom-20 right-1/3 w-4 h-4 bg-primary/25 rotate-45 animate-bounce" style={{animationDelay: '1.5s'}}></div>
+        
+        {/* Floating Circles with Pulse */}
         <div className="absolute top-20 left-10 w-20 h-20 bg-primary/30 rounded-full blur-xl animate-pulse"></div>
-        <div className="absolute top-40 right-20 w-32 h-32 bg-accent/30 rounded-full blur-xl animate-pulse delay-1000"></div>
-        <div className="absolute bottom-20 left-1/4 w-24 h-24 bg-primary/20 rounded-full blur-xl animate-pulse delay-2000"></div>
+        <div className="absolute top-40 right-20 w-32 h-32 bg-accent/30 rounded-full blur-xl animate-pulse" style={{animationDelay: '1s'}}></div>
+        <div className="absolute bottom-20 left-1/4 w-24 h-24 bg-primary/20 rounded-full blur-xl animate-pulse" style={{animationDelay: '2s'}}></div>
+        <div className="absolute top-1/3 left-2/3 w-16 h-16 bg-accent/25 rounded-full blur-lg animate-pulse" style={{animationDelay: '0.5s'}}></div>
+        <div className="absolute bottom-1/3 right-1/4 w-28 h-28 bg-primary/15 rounded-full blur-xl animate-pulse" style={{animationDelay: '1.5s'}}></div>
+        
+        {/* Animated Lines */}
+        <div className="absolute top-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent animate-pulse"></div>
+        <div className="absolute bottom-1/3 left-0 w-full h-px bg-gradient-to-r from-transparent via-accent/25 to-transparent animate-pulse" style={{animationDelay: '1s'}}></div>
+        
+        {/* Moving Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 animate-pulse"></div>
       </div>
 
       <div className="container mx-auto px-4 py-20 pt-32 relative z-10">
