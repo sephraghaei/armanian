@@ -13,6 +13,41 @@ const Hero = () => {
     <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-hero">
       {/* Animated Background Elements */}
       <div className="absolute inset-0">
+        {/* Animated Wave Lines */}
+        <svg className="absolute top-0 left-0 w-full h-full opacity-30" viewBox="0 0 1200 800" preserveAspectRatio="none">
+          <path 
+            d="M0,200 Q300,150 600,200 T1200,200" 
+            stroke="hsl(var(--primary) / 0.3)" 
+            strokeWidth="2" 
+            fill="none"
+            className="animate-pulse"
+          />
+          <path 
+            d="M0,300 Q300,250 600,300 T1200,300" 
+            stroke="hsl(var(--accent) / 0.25)" 
+            strokeWidth="2" 
+            fill="none"
+            className="animate-pulse"
+            style={{animationDelay: '1s'}}
+          />
+          <path 
+            d="M0,400 Q300,350 600,400 T1200,400" 
+            stroke="hsl(var(--primary) / 0.2)" 
+            strokeWidth="1.5" 
+            fill="none"
+            className="animate-pulse"
+            style={{animationDelay: '2s'}}
+          />
+          <path 
+            d="M0,500 Q300,450 600,500 T1200,500" 
+            stroke="hsl(var(--accent) / 0.15)" 
+            strokeWidth="1" 
+            fill="none"
+            className="animate-pulse"
+            style={{animationDelay: '0.5s'}}
+          />
+        </svg>
+        
         {/* Floating Geometric Shapes */}
         <div className="absolute top-10 left-10 w-4 h-4 bg-primary/20 rotate-45 animate-bounce" style={{animationDelay: '0s'}}></div>
         <div className="absolute top-32 right-20 w-6 h-6 bg-accent/25 rotate-12 animate-bounce" style={{animationDelay: '1s'}}></div>
@@ -20,16 +55,17 @@ const Hero = () => {
         <div className="absolute top-1/2 right-10 w-5 h-5 bg-accent/20 rotate-12 animate-bounce" style={{animationDelay: '0.5s'}}></div>
         <div className="absolute bottom-20 right-1/3 w-4 h-4 bg-primary/25 rotate-45 animate-bounce" style={{animationDelay: '1.5s'}}></div>
         
+        {/* Flowing Wave Lines with CSS */}
+        <div className="absolute top-1/4 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary/40 to-transparent animate-pulse transform -skew-y-1"></div>
+        <div className="absolute top-2/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent animate-pulse transform skew-y-1" style={{animationDelay: '1s'}}></div>
+        <div className="absolute bottom-1/3 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/25 to-transparent animate-pulse transform -skew-y-2" style={{animationDelay: '2s'}}></div>
+        
         {/* Floating Circles with Pulse */}
         <div className="absolute top-20 left-10 w-20 h-20 bg-primary/30 rounded-full blur-xl animate-pulse"></div>
         <div className="absolute top-40 right-20 w-32 h-32 bg-accent/30 rounded-full blur-xl animate-pulse" style={{animationDelay: '1s'}}></div>
         <div className="absolute bottom-20 left-1/4 w-24 h-24 bg-primary/20 rounded-full blur-xl animate-pulse" style={{animationDelay: '2s'}}></div>
         <div className="absolute top-1/3 left-2/3 w-16 h-16 bg-accent/25 rounded-full blur-lg animate-pulse" style={{animationDelay: '0.5s'}}></div>
         <div className="absolute bottom-1/3 right-1/4 w-28 h-28 bg-primary/15 rounded-full blur-xl animate-pulse" style={{animationDelay: '1.5s'}}></div>
-        
-        {/* Animated Lines */}
-        <div className="absolute top-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent animate-pulse"></div>
-        <div className="absolute bottom-1/3 left-0 w-full h-px bg-gradient-to-r from-transparent via-accent/25 to-transparent animate-pulse" style={{animationDelay: '1s'}}></div>
         
         {/* Moving Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 animate-pulse"></div>
