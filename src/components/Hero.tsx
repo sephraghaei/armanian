@@ -21,21 +21,6 @@ const Hero = () => {
       <div className="container mx-auto px-4 py-20 pt-32 relative z-10">
         {/* Content - Full Width */}
         <div className="text-center space-y-12 mb-20">
-          {/* Wave Element */}
-          <div className="absolute inset-x-0 bottom-0 overflow-hidden">
-            <svg className="relative block w-full h-16" viewBox="0 0 1200 120" preserveAspectRatio="none">
-              <path 
-                d="M0,60 C300,20 600,100 900,60 C1050,30 1150,80 1200,60 L1200,120 L0,120 Z" 
-                fill="hsl(var(--primary) / 0.1)"
-                className="animate-pulse"
-              />
-              <path 
-                d="M0,80 C300,40 600,120 900,80 C1050,50 1150,100 1200,80 L1200,120 L0,120 Z" 
-                fill="hsl(var(--accent) / 0.08)"
-                className="animate-pulse delay-1000"
-              />
-            </svg>
-          </div>
           <div className="space-y-8">
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-foreground leading-tight max-w-5xl mx-auto mb-6">
               آرمانیان
@@ -106,6 +91,22 @@ const Hero = () => {
             <Sparkles className="w-6 h-6 text-accent" />
           </div>
         </div>
+      </div>
+      
+      {/* Wave Element */}
+      <div className="absolute bottom-0 left-0 w-full overflow-hidden z-20">
+        <svg className="relative block w-full h-20 md:h-32" viewBox="0 0 1200 120" preserveAspectRatio="none">
+          <path 
+            d="M0,60 C300,20 600,100 900,60 C1050,30 1150,80 1200,60 L1200,120 L0,120 Z" 
+            fill="hsl(var(--primary) / 0.15)"
+            className="animate-pulse"
+          />
+          <path 
+            d="M0,80 C300,40 600,120 900,80 C1050,50 1150,100 1200,80 L1200,120 L0,120 Z" 
+            fill="hsl(var(--accent) / 0.1)"
+            className="animate-pulse delay-1000"
+          />
+        </svg>
       </div>
     </section>
   );
