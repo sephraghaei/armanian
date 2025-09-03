@@ -52,11 +52,26 @@ const Hero = () => {
           
           {/* Flowing Wave Lines */}
           <path 
+            d="M0,150 Q150,100 300,150 T600,150 Q750,100 900,150 T1200,150" 
+            stroke="hsl(var(--primary) / 0.4)" 
+            strokeWidth="2.5" 
+            fill="none"
+            className="animate-pulse"
+          />
+          <path 
             d="M0,250 Q150,200 300,250 T600,250 Q750,200 900,250 T1200,250" 
             stroke="hsl(var(--primary) / 0.3)" 
             strokeWidth="2" 
             fill="none"
             className="animate-pulse"
+          />
+          <path 
+            d="M0,320 Q150,270 300,320 T600,320 Q750,270 900,320 T1200,320" 
+            stroke="hsl(var(--accent) / 0.35)" 
+            strokeWidth="1.8" 
+            fill="none"
+            className="animate-pulse"
+            style={{animationDelay: '0.7s'}}
           />
           <path 
             d="M0,350 Q150,300 300,350 T600,350 Q750,300 900,350 T1200,350" 
@@ -67,6 +82,14 @@ const Hero = () => {
             style={{animationDelay: '1s'}}
           />
           <path 
+            d="M0,420 Q150,370 300,420 T600,420 Q750,370 900,420 T1200,420" 
+            stroke="hsl(var(--primary) / 0.25)" 
+            strokeWidth="1.3" 
+            fill="none"
+            className="animate-pulse"
+            style={{animationDelay: '1.3s'}}
+          />
+          <path 
             d="M0,450 Q150,400 300,450 T600,450 Q750,400 900,450 T1200,450" 
             stroke="hsl(var(--primary) / 0.2)" 
             strokeWidth="1" 
@@ -75,12 +98,36 @@ const Hero = () => {
             style={{animationDelay: '2s'}}
           />
           <path 
+            d="M0,520 Q150,470 300,520 T600,520 Q750,470 900,520 T1200,520" 
+            stroke="hsl(var(--accent) / 0.18)" 
+            strokeWidth="1.2" 
+            fill="none"
+            className="animate-pulse"
+            style={{animationDelay: '0.3s'}}
+          />
+          <path 
             d="M0,550 Q150,500 300,550 T600,550 Q750,500 900,550 T1200,550" 
             stroke="hsl(var(--accent) / 0.15)" 
             strokeWidth="1" 
             fill="none"
             className="animate-pulse"
             style={{animationDelay: '0.5s'}}
+          />
+          <path 
+            d="M0,620 Q150,570 300,620 T600,620 Q750,570 900,620 T1200,620" 
+            stroke="hsl(var(--primary) / 0.15)" 
+            strokeWidth="0.8" 
+            fill="none"
+            className="animate-pulse"
+            style={{animationDelay: '1.7s'}}
+          />
+          <path 
+            d="M0,680 Q150,630 300,680 T600,680 Q750,630 900,680 T1200,680" 
+            stroke="hsl(var(--accent) / 0.12)" 
+            strokeWidth="0.8" 
+            fill="none"
+            className="animate-pulse"
+            style={{animationDelay: '2.3s'}}
           />
         </svg>
         
