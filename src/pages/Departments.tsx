@@ -19,28 +19,39 @@ const DepartmentsPage = () => {
       courses: [
         {
           name: 'ICDL کودکان',
-          description: 'آموزش مهارت‌های اولیه کامپیوتر برای کودکان ۶ تا ۱۲ سال',
-          duration: '۸ هفته'
+          slug: 'icdl-kids',
+          description: 'آموزش جامع مهارت‌های اولیه کامپیوتر شامل سیستم عامل، آفیس و امنیت سایبری',
+          duration: '۸ هفته',
+          instructor: 'سیمین آقایی',
+          ageGroup: '۶ تا ۱۲ سال',
+          price: '۱,۵۰۰,۰۰۰ تومان'
         },
         {
           name: 'ICDL بزرگسالان',
-          description: 'گواهینامه بین‌المللی مهارت‌های کامپیوتری برای بزرگسالان',
-          duration: '۱۰ هفته'
+          slug: 'icdl-adults',
+          description: 'گواهینامه بین‌المللی شامل تمامی ماژول‌های ICDL و آمادگی آزمون',
+          duration: '۱۰ هفته',
+          instructor: 'مهدی محمدی',
+          ageGroup: '۱۸ سال به بالا',
+          price: '۲,۲۰۰,۰۰۰ تومان'
         },
         {
           name: 'برنامه‌نویسی اسکرچ کودکان',
-          description: 'آموزش برنامه‌نویسی بصری با اسکرچ برای کودکان',
-          duration: '۱۲ هفته'
+          slug: 'scratch-kids',
+          description: 'یادگیری برنامه‌نویسی بصری، ساخت بازی و انیمیشن‌های تعاملی',
+          duration: '۱۲ هفته',
+          instructor: 'سیمین آقایی',
+          ageGroup: '۸ تا ۱۴ سال',
+          price: '۱,۸۰۰,۰۰۰ تومان'
         },
         {
           name: 'برنامه‌نویسی پایتون نوجوانان',
-          description: 'آموزش زبان برنامه‌نویسی پایتون برای نوجوانان',
-          duration: '۱۴ هفته'
-        },
-        {
-          name: 'برنامه‌نویسی پایتون بزرگسالان',
-          description: 'دوره حرفه‌ای برنامه‌نویسی پایتون برای بزرگسالان',
-          duration: '۱۶ هفته'
+          slug: 'python-teens',
+          description: 'آموزش Python با پروژه‌های عملی و ساخت برنامه‌های کاربردی',
+          duration: '۱۴ هفته',
+          instructor: 'مهدی محمدی',
+          ageGroup: '۱۳ تا ۱۷ سال',
+          price: '۲,۵۰۰,۰۰۰ تومان'
         }
       ]
     },
@@ -51,18 +62,30 @@ const DepartmentsPage = () => {
       courses: [
         {
           name: 'فتوشاپ نوجوانان',
-          description: 'آموزش فتوشاپ برای نوجوانان با پروژه‌های خلاقانه',
-          duration: '۱۰ هفته'
+          slug: 'photoshop-teens',
+          description: 'طراحی پوستر، ویرایش تصاویر و ساخت آثار هنری دیجیتال',
+          duration: '۱۰ هفته',
+          instructor: 'سیمین آقایی',
+          ageGroup: '۱۲ تا ۱۷ سال',
+          price: '۲,۰۰۰,۰۰۰ تومان'
         },
         {
           name: 'فتوشاپ بزرگسالان',
-          description: 'دوره حرفه‌ای فتوشاپ برای بزرگسالان',
-          duration: '۱۲ هفته'
+          slug: 'photoshop-adults',
+          description: 'تکنیک‌های حرفه‌ای طراحی گرافیک و ویرایش تصاویر پیشرفته',
+          duration: '۱۲ هفته',
+          instructor: 'مهدی محمدی',
+          ageGroup: '۱۸ سال به بالا',
+          price: '۲,۸۰۰,۰۰۰ تومان'
         },
         {
           name: 'افترافکت بزرگسالان',
-          description: 'آموزش انیمیشن و جلوه‌های ویژه با افترافکت',
-          duration: '۱۴ هفته'
+          slug: 'after-effects',
+          description: 'انیمیشن، جلوه‌های ویژه و موشن گرافیک حرفه‌ای',
+          duration: '۱۴ هفته',
+          instructor: 'مهدی محمدی',
+          ageGroup: '۱۸ سال به بالا',
+          price: '۳,۵۰۰,۰۰۰ تومان'
         }
       ]
     },
@@ -73,23 +96,30 @@ const DepartmentsPage = () => {
       courses: [
         {
           name: 'طراحی داخلی معماری',
-          description: 'آموزش اصول طراحی داخلی و دکوراسیون',
-          duration: '۱۲ هفته'
+          slug: 'interior-design',
+          description: 'اصول طراحی داخلی، دکوراسیون و چیدمان فضا',
+          duration: '۱۲ هفته',
+          instructor: 'مهدی محمدی',
+          ageGroup: '۱۸ سال به بالا',
+          price: '۳,۰۰۰,۰۰۰ تومان'
         },
         {
           name: 'نرم‌افزارهای معماری',
-          description: 'آموزش اسکچاپ، اتوکد و تریدی مکس',
-          duration: '۱۶ هفته'
+          slug: 'architecture-software',
+          description: 'اسکچاپ، اتوکد، تریدی مکس و رندرگیری حرفه‌ای',
+          duration: '۱۶ هفته',
+          instructor: 'سیمین آقایی',
+          ageGroup: '۱۸ سال به بالا',
+          price: '۴,۰۰۰,۰۰۰ تومان'
         },
         {
           name: 'نقشه‌کشی معماری',
-          description: 'آموزش اصول نقشه‌کشی و طراحی نقشه‌های فنی',
-          duration: '۱۰ هفته'
-        },
-        {
-          name: 'اسکیس و راندو',
-          description: 'آموزش تکنیک‌های اسکیس و ارائه طرح',
-          duration: '۸ هفته'
+          slug: 'architectural-drawing',
+          description: 'اصول نقشه‌کشی، طراحی نقشه‌های فنی و جزئیات اجرایی',
+          duration: '۱۰ هفته',
+          instructor: 'مهدی محمدی',
+          ageGroup: '۱۸ سال به بالا',
+          price: '۲,۵۰۰,۰۰۰ تومان'
         }
       ]
     },
@@ -100,13 +130,21 @@ const DepartmentsPage = () => {
       courses: [
         {
           name: 'آموزش زبان با کامپیوتر',
-          description: 'آموزش زبان انگلیسی با نرم‌افزارهای تعاملی',
-          duration: '۱۲ هفته'
+          slug: 'english-computer',
+          description: 'زبان انگلیسی با نرم‌افزارهای تعاملی و تکنولوژی نوین',
+          duration: '۱۲ هفته',
+          instructor: 'سیمین آقایی',
+          ageGroup: '۱۰ سال به بالا',
+          price: '۱,۶۰۰,۰۰۰ تومان'
         },
         {
           name: 'آموزش زبان ترمیک',
-          description: 'آموزش زبان انگلیسی با روش ترمیک',
-          duration: '۱۰ هفته'
+          slug: 'english-thermic',
+          description: 'روش نوین ترمیک برای یادگیری سریع و مؤثر زبان انگلیسی',
+          duration: '۱۰ هفته',
+          instructor: 'مهدی محمدی',
+          ageGroup: '۱۵ سال به بالا',
+          price: '۱,۴۰۰,۰۰۰ تومان'
         }
       ]
     }
@@ -157,8 +195,23 @@ const DepartmentsPage = () => {
                         </CardDescription>
                       </CardHeader>
                       <CardContent>
-                        <div className="flex justify-between items-center mb-4">
-                          <span className="text-primary font-medium">مدت: {course.duration}</span>
+                        <div className="space-y-3 mb-4">
+                          <div className="flex justify-between items-center">
+                            <span className="text-sm text-muted-foreground">مدت دوره:</span>
+                            <span className="text-primary font-medium">{course.duration}</span>
+                          </div>
+                          <div className="flex justify-between items-center">
+                            <span className="text-sm text-muted-foreground">مدرس:</span>
+                            <span className="font-medium">{course.instructor}</span>
+                          </div>
+                          <div className="flex justify-between items-center">
+                            <span className="text-sm text-muted-foreground">سن:</span>
+                            <span className="text-sm">{course.ageGroup}</span>
+                          </div>
+                          <div className="flex justify-between items-center">
+                            <span className="text-sm text-muted-foreground">هزینه:</span>
+                            <span className="font-bold text-primary">{course.price}</span>
+                          </div>
                         </div>
                         <div className="flex gap-2">
                           <Button variant="outline" className="flex-1 group" onClick={handleSignUp}>
@@ -168,7 +221,7 @@ const DepartmentsPage = () => {
                           <Button 
                             variant="ghost" 
                             className="flex-1"
-                            onClick={() => navigate(`/course/${course.name.toLowerCase().replace(/\s+/g, '-').replace(/[^\w\-]/g, '')}`)}
+                            onClick={() => navigate(`/course/${course.slug}`)}
                           >
                             بیشتر بدانید
                           </Button>
