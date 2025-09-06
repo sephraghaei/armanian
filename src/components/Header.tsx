@@ -52,7 +52,7 @@ const Header = () => {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-transparent backdrop-blur-0 border-b border-transparent">
       <div className="container mx-auto px-4 py-4">
-        <div className="flex items-center justify-between h-16 gap-8 relative px-4 md:px-6 rounded-lg border border-border/50 bg-card/70 supports-[backdrop-filter]:bg-card/60 backdrop-blur-2xl backdrop-saturate-150 shadow-lg shadow-glow-primary md:divide-x md:divide-x-reverse md:divide-border/50">
+        <div className="flex items-center justify-between h-16 gap-8 relative px-4 md:px-6 rounded-lg border border-border/30 bg-background/90 backdrop-blur-md shadow-lg">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-reverse space-x-2">
             <div className="w-10 h-10 bg-gradient-primary rounded-lg flex items-center justify-center">
