@@ -24,9 +24,6 @@ const Hero = () => {
               <h2 className="text-3xl md:text-5xl font-bold text-foreground leading-tight max-w-4xl mx-auto">
                 آموزشگاه آزاد فنی و حرفه‌ای
               </h2>
-              <h3 className="text-2xl md:text-4xl font-semibold bg-gradient-primary bg-clip-text text-transparent leading-relaxed max-w-4xl mx-auto">
-                مهارت‌های آینده را بیاموزید
-              </h3>
             </div>
             
             <div className="pt-4">
