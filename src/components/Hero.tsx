@@ -16,7 +16,7 @@ const Hero = () => {
         {/* Content - Full Width */}
         <div className="text-center space-y-12 mb-20">
           <div className="space-y-8">
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-foreground leading-tight max-w-5xl mx-auto mb-6">
+            <h1 className="text-6xl md:text-8xl lg:text-9xl font-black bg-gradient-primary bg-clip-text text-transparent leading-tight max-w-5xl mx-auto mb-6 drop-shadow-2xl">
               آرمانیان
             </h1>
             
