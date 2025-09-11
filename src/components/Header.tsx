@@ -50,29 +50,29 @@ const Header = () => {
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50">
-      <div className="absolute inset-0 bg-gradient-to-b from-background/95 via-background/90 to-background/80 backdrop-blur-xl border-b border-border/20"></div>
-      <div className="relative container mx-auto px-4 md:px-6 py-4">
-        <div className="flex items-center justify-between h-16 gap-8 px-6 rounded-2xl border border-border/30 bg-card/80 backdrop-blur-sm shadow-2xl shadow-primary/5">
+    <header className="fixed top-0 left-0 right-0 z-50 animate-fade-in">
+      <div className="absolute inset-0 bg-gradient-to-b from-background/95 via-background/90 to-background/85 backdrop-blur-2xl border-b border-border/10"></div>
+      <div className="relative container mx-auto px-4 md:px-6 py-3">
+        <div className="flex items-center justify-between h-14 gap-6 px-4 md:px-6 rounded-2xl border border-border/20 bg-card/70 backdrop-blur-md shadow-xl hover:shadow-2xl transition-all duration-500">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-reverse space-x-3 group">
+          <Link to="/" className="flex items-center space-x-reverse space-x-3 group hover-scale">
             <div className="relative">
-              <div className="w-12 h-12 bg-gradient-primary rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl group-hover:shadow-primary/20 transition-all duration-300">
-                <Code className="w-7 h-7 text-white" />
+              <div className="w-10 h-10 bg-gradient-primary rounded-lg flex items-center justify-center shadow-md group-hover:shadow-lg group-hover:shadow-primary/30 transition-all duration-300 group-hover:rotate-3">
+                <Code className="w-5 h-5 text-white" />
               </div>
-              <div className="absolute -top-1 -right-1 w-4 h-4 bg-accent rounded-full border-2 border-background animate-pulse"></div>
+              <div className="absolute -top-1 -right-1 w-3 h-3 bg-accent rounded-full border-2 border-background pulse"></div>
             </div>
             <div className="hidden sm:block">
-              <h1 className="text-xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">آرمانیان</h1>
-              <p className="text-xs text-muted-foreground/80 font-medium">آموزشگاه آزاد فنی و حرفه‌ای</p>
+              <h1 className="text-lg font-bold text-foreground group-hover:text-primary transition-colors duration-300">آرمانیان</h1>
+              <p className="text-xs text-muted-foreground/70 font-medium">آموزشگاه آزاد فنی و حرفه‌ای</p>
             </div>
             <div className="sm:hidden">
-              <h1 className="text-lg font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">آرمانیان</h1>
+              <h1 className="text-base font-bold text-foreground group-hover:text-primary transition-colors duration-300">آرمانیان</h1>
             </div>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-reverse space-x-1">
+          <nav className="hidden md:flex items-center space-x-reverse space-x-2">
             {menuItems.map((item, index) => {
               const isActive = location.pathname === item.href || (item.href.startsWith('#') && location.pathname === '/');
               const isHashLink = item.href.startsWith('#');
@@ -81,31 +81,27 @@ const Header = () => {
                 <a
                   key={item.label}
                   href={item.href}
-                  className={`relative px-4 py-2 rounded-xl font-medium transition-all duration-300 group ${
+                  className={`story-link relative px-3 py-2 rounded-lg font-medium transition-all duration-300 group animate-fade-in ${
                     isActive 
-                      ? 'text-primary bg-primary/10 shadow-md' 
+                      ? 'text-primary bg-primary/10 shadow-sm' 
                       : 'text-foreground/80 hover:text-primary hover:bg-primary/5'
                   }`}
+                  style={{ animationDelay: `${index * 100}ms` }}
                 >
                   {item.label}
-                  <span className={`absolute bottom-0 right-1/2 translate-x-1/2 h-0.5 bg-gradient-to-r from-primary to-accent transition-all duration-300 ${
-                    isActive ? 'w-6' : 'w-0 group-hover:w-4'
-                  }`}></span>
                 </a>
               ) : (
                 <Link
                   key={item.label}
                   to={item.href}
-                  className={`relative px-4 py-2 rounded-xl font-medium transition-all duration-300 group ${
+                  className={`story-link relative px-3 py-2 rounded-lg font-medium transition-all duration-300 group animate-fade-in ${
                     isActive 
-                      ? 'text-primary bg-primary/10 shadow-md' 
+                      ? 'text-primary bg-primary/10 shadow-sm' 
                       : 'text-foreground/80 hover:text-primary hover:bg-primary/5'
                   }`}
+                  style={{ animationDelay: `${index * 100}ms` }}
                 >
                   {item.label}
-                  <span className={`absolute bottom-0 right-1/2 translate-x-1/2 h-0.5 bg-gradient-to-r from-primary to-accent transition-all duration-300 ${
-                    isActive ? 'w-6' : 'w-0 group-hover:w-4'
-                  }`}></span>
                 </Link>
               );
             })}
@@ -114,16 +110,16 @@ const Header = () => {
           {/* Auth Section */}
           <div className="hidden md:block">
             {loading ? (
-              <div className="w-32 h-12 bg-muted/50 animate-pulse rounded-xl" />
+              <div className="w-28 h-10 bg-muted/40 animate-pulse rounded-lg" />
             ) : user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline" size="lg" className="gap-2 bg-card/50 hover:bg-card border-border/50 hover:border-primary/30 transition-all duration-300 shadow-lg hover:shadow-xl">
+                  <Button variant="outline" size="sm" className="gap-2 hover-scale bg-card/60 hover:bg-card border-border/30 hover:border-primary/20 transition-all duration-300 shadow-md hover:shadow-lg">
                     <User className="w-4 h-4" />
                     حساب کاربری
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-56 bg-card/95 backdrop-blur-xl border-border/30 shadow-2xl">
+                <DropdownMenuContent align="end" className="w-52 bg-card backdrop-blur-xl border-border/20 shadow-xl z-50 animate-scale-in">
                   <DropdownMenuItem 
                     className="flex items-center gap-2 cursor-pointer hover:bg-primary/10 transition-colors" 
                     onClick={() => window.location.href = '/profile'}
@@ -134,7 +130,7 @@ const Header = () => {
                   <DropdownMenuItem className="flex items-center gap-2 opacity-60">
                     <span className="text-sm text-muted-foreground">{user.phone || user.email || 'کاربر'}</span>
                   </DropdownMenuItem>
-                  <DropdownMenuSeparator className="bg-border/30" />
+                  <DropdownMenuSeparator className="bg-border/20" />
                   <DropdownMenuItem onClick={handleSignOut} className="flex items-center gap-2 text-destructive hover:bg-destructive/10 transition-colors">
                     <LogOut className="w-4 h-4" />
                     خروج
@@ -142,7 +138,7 @@ const Header = () => {
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
-              <Button variant="hero" size="lg" className="shadow-lg hover:shadow-xl hover:shadow-primary/20 transition-all duration-300" onClick={() => navigate('/auth')}>
+              <Button variant="hero" size="sm" className="hover-scale shadow-md hover:shadow-lg hover:shadow-primary/10 transition-all duration-300" onClick={() => navigate('/auth')}>
                 ورود / ثبت نام
               </Button>
             )}
@@ -151,15 +147,18 @@ const Header = () => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-3 rounded-xl bg-card/50 border border-border/30 text-foreground hover:text-primary hover:bg-card hover:border-primary/30 transition-all duration-300 shadow-lg hover:shadow-xl"
+            className="md:hidden p-2 rounded-lg bg-card/60 border border-border/20 text-foreground hover:text-primary hover:bg-card hover:border-primary/20 transition-all duration-300 shadow-md hover:shadow-lg hover-scale"
           >
-            {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            {isMenuOpen ? 
+              <X className="w-5 h-5 animate-scale-in" /> : 
+              <Menu className="w-5 h-5 animate-scale-in" />
+            }
           </button>
         </div>
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden mt-4 p-6 rounded-2xl border border-border/30 bg-card/95 backdrop-blur-xl shadow-2xl shadow-primary/10">
+          <div className="md:hidden mt-3 p-4 rounded-xl border border-border/20 bg-card/90 backdrop-blur-xl shadow-xl animate-slide-in-right">
             <nav className="flex flex-col space-y-2">
               {menuItems.map((item, index) => {
                 const isActive = location.pathname === item.href || (item.href.startsWith('#') && location.pathname === '/');
@@ -169,11 +168,12 @@ const Header = () => {
                   <a
                     key={item.label}
                     href={item.href}
-                    className={`transition-all duration-300 py-4 px-6 rounded-xl text-center font-medium ${
+                    className={`transition-all duration-300 py-3 px-4 rounded-lg text-center font-medium animate-fade-in ${
                       isActive 
-                        ? 'text-primary bg-primary/10 border border-primary/20 shadow-md' 
-                        : 'text-foreground/80 hover:text-primary hover:bg-primary/5 hover:shadow-sm'
+                        ? 'text-primary bg-primary/10 border border-primary/20 shadow-sm' 
+                        : 'text-foreground/80 hover:text-primary hover:bg-primary/5'
                     }`}
+                    style={{ animationDelay: `${index * 50}ms` }}
                     onClick={() => setIsMenuOpen(false)}
                   >
                     {item.label}
@@ -182,11 +182,12 @@ const Header = () => {
                   <Link
                     key={item.label}
                     to={item.href}
-                    className={`transition-all duration-300 py-4 px-6 rounded-xl text-center font-medium ${
+                    className={`transition-all duration-300 py-3 px-4 rounded-lg text-center font-medium animate-fade-in ${
                       isActive 
-                        ? 'text-primary bg-primary/10 border border-primary/20 shadow-md' 
-                        : 'text-foreground/80 hover:text-primary hover:bg-primary/5 hover:shadow-sm'
+                        ? 'text-primary bg-primary/10 border border-primary/20 shadow-sm' 
+                        : 'text-foreground/80 hover:text-primary hover:bg-primary/5'
                     }`}
+                    style={{ animationDelay: `${index * 50}ms` }}
                     onClick={() => setIsMenuOpen(false)}
                   >
                     {item.label}
@@ -194,16 +195,16 @@ const Header = () => {
                 );
               })}
               
-              <div className="pt-4 mt-4 border-t border-border/30">
+              <div className="pt-3 mt-3 border-t border-border/20">
                 {user ? (
-                  <div className="space-y-3">
+                  <div className="space-y-2">
                     <Button 
                       variant="outline" 
                       onClick={() => {
                         navigate('/profile');
                         setIsMenuOpen(false);
                       }} 
-                      className="w-full gap-2 py-4 bg-card/50 hover:bg-card border-border/50 hover:border-primary/30 transition-all duration-300 shadow-md hover:shadow-lg"
+                      className="w-full gap-2 py-3 bg-card/60 hover:bg-card border-border/30 hover:border-primary/20 transition-all duration-300 shadow-sm hover:shadow-md"
                     >
                       <User className="w-4 h-4" />
                       پروفایل کاربری
@@ -211,7 +212,7 @@ const Header = () => {
                     <Button 
                       variant="outline" 
                       onClick={handleSignOut} 
-                      className="w-full gap-2 py-4 text-destructive border-destructive/30 hover:bg-destructive/10 hover:border-destructive/50 transition-all duration-300 shadow-md hover:shadow-lg"
+                      className="w-full gap-2 py-3 text-destructive border-destructive/20 hover:bg-destructive/10 hover:border-destructive/30 transition-all duration-300 shadow-sm hover:shadow-md"
                     >
                       <LogOut className="w-4 h-4" />
                       خروج
@@ -220,8 +221,8 @@ const Header = () => {
                 ) : (
                   <Button 
                     variant="hero" 
-                    size="lg" 
-                    className="w-full py-4 shadow-lg hover:shadow-xl hover:shadow-primary/20 transition-all duration-300" 
+                    size="sm" 
+                    className="w-full py-3 shadow-md hover:shadow-lg hover:shadow-primary/10 transition-all duration-300" 
                     onClick={() => {
                       navigate('/auth');
                       setIsMenuOpen(false);
