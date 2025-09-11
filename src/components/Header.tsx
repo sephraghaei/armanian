@@ -51,16 +51,19 @@ const Header = () => {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-transparent backdrop-blur-0 border-b border-transparent">
-      <div className="container mx-auto px-4 py-4">
-        <div className="flex items-center justify-between h-16 gap-8 relative px-4 md:px-6 rounded-lg border border-border/30 bg-background/90 backdrop-blur-md shadow-lg">
+      <div className="container mx-auto px-3 md:px-4 py-3 md:py-4">
+        <div className="flex items-center justify-between h-14 md:h-16 gap-4 md:gap-8 relative px-3 md:px-6 rounded-lg border border-border/30 bg-background/95 backdrop-blur-md shadow-lg">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-reverse space-x-2">
-            <div className="w-10 h-10 bg-gradient-primary rounded-lg flex items-center justify-center">
-              <Code className="w-6 h-6 text-white" />
+            <div className="w-8 h-8 md:w-10 md:h-10 bg-gradient-primary rounded-lg flex items-center justify-center">
+              <Code className="w-4 h-4 md:w-6 md:h-6 text-white" />
             </div>
-            <div>
-              <h1 className="text-xl font-bold text-foreground">آرمانیان</h1>
+            <div className="hidden sm:block">
+              <h1 className="text-lg md:text-xl font-bold text-foreground">آرمانیان</h1>
               <p className="text-xs text-muted-foreground">آموزشگاه آزاد فنی و حرفه‌ای</p>
+            </div>
+            <div className="sm:hidden">
+              <h1 className="text-base font-bold text-foreground">آرمانیان</h1>
             </div>
           </Link>
 
@@ -136,16 +139,16 @@ const Header = () => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-2 text-foreground hover:text-primary transition-colors"
+            className="md:hidden p-2 rounded-md bg-background/80 border border-border/50 text-foreground hover:text-primary hover:bg-background transition-all"
           >
-            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden mt-4 py-4 border-t border-border">
-            <nav className="flex flex-col space-y-4">
+          <div className="md:hidden mt-3 p-4 rounded-lg border border-border/30 bg-background/95 backdrop-blur-md shadow-lg">
+            <nav className="flex flex-col space-y-3">
               {menuItems.map((item) => {
                 const isActive = location.pathname === item.href || (item.href.startsWith('#') && location.pathname === '/');
                 const isHashLink = item.href.startsWith('#');
@@ -154,8 +157,10 @@ const Header = () => {
                   <a
                     key={item.label}
                     href={item.href}
-                    className={`transition-colors duration-300 py-2 ${
-                      isActive ? 'text-primary' : 'text-foreground hover:text-primary'
+                    className={`transition-all duration-300 py-3 px-4 rounded-md text-center ${
+                      isActive 
+                        ? 'text-primary bg-primary/10 border border-primary/20' 
+                        : 'text-foreground hover:text-primary hover:bg-primary/5'
                     }`}
                     onClick={() => setIsMenuOpen(false)}
                   >
@@ -165,8 +170,10 @@ const Header = () => {
                   <Link
                     key={item.label}
                     to={item.href}
-                    className={`transition-colors duration-300 py-2 ${
-                      isActive ? 'text-primary' : 'text-foreground hover:text-primary'
+                    className={`transition-all duration-300 py-3 px-4 rounded-md text-center ${
+                      isActive 
+                        ? 'text-primary bg-primary/10 border border-primary/20' 
+                        : 'text-foreground hover:text-primary hover:bg-primary/5'
                     }`}
                     onClick={() => setIsMenuOpen(false)}
                   >
@@ -174,29 +181,44 @@ const Header = () => {
                   </Link>
                 );
               })}
-              {user ? (
-                <div className="space-y-3">
+              
+              <div className="pt-3 border-t border-border/30">
+                {user ? (
+                  <div className="space-y-2">
+                    <Button 
+                      variant="outline" 
+                      onClick={() => {
+                        navigate('/profile');
+                        setIsMenuOpen(false);
+                      }} 
+                      className="w-full gap-2 py-3"
+                    >
+                      <User className="w-4 h-4" />
+                      پروفایل کاربری
+                    </Button>
+                    <Button 
+                      variant="outline" 
+                      onClick={handleSignOut} 
+                      className="w-full gap-2 py-3 text-destructive border-destructive/20 hover:bg-destructive/10"
+                    >
+                      <LogOut className="w-4 h-4" />
+                      خروج
+                    </Button>
+                  </div>
+                ) : (
                   <Button 
-                    variant="outline" 
+                    variant="hero" 
+                    size="lg" 
+                    className="w-full py-3" 
                     onClick={() => {
-                      navigate('/profile');
+                      navigate('/auth');
                       setIsMenuOpen(false);
-                    }} 
-                    className="w-full gap-2"
+                    }}
                   >
-                    <User className="w-4 h-4" />
-                    پروفایل کاربری
+                    ورود / ثبت نام
                   </Button>
-                  <Button variant="outline" onClick={handleSignOut} className="w-full gap-2">
-                    <LogOut className="w-4 h-4" />
-                    خروج
-                  </Button>
-                </div>
-              ) : (
-                <Button variant="hero" size="lg" className="mt-4" onClick={() => navigate('/auth')}>
-                  ورود / ثبت نام
-                </Button>
-              )}
+                )}
+              </div>
             </nav>
           </div>
         )}
