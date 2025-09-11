@@ -16,18 +16,18 @@ const Hero = () => {
         {/* Content - Full Width */}
         <div className="text-center space-y-12 mb-20">
           <div className="space-y-8">
-            <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold  text-foreground leading-tight max-w-5xl mx-auto mb-8 tracking-tight">
+            <h1 className="text-6xl md:text-8xl lg:text-9xl font-extrabold bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent leading-tight max-w-5xl mx-auto mb-8 tracking-tight drop-shadow-2xl">
               آرمانیان
             </h1>
             
-            <div className="space-y-4">
-              <h2 className="text-3xl md:text-5xl font-bold text-foreground leading-tight max-w-4xl mx-auto">
+            <div className="space-y-6">
+              <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent leading-tight max-w-4xl mx-auto">
                 آموزشگاه آزاد فنی و حرفه‌ای
               </h2>
             </div>
             
-            <div className="pt-4">
-              <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+            <div className="pt-6">
+              <p className="text-xl md:text-2xl text-muted-foreground/90 max-w-3xl mx-auto leading-relaxed font-medium">
                 جایی که رویاها به مهارت تبدیل می‌شوند و استعدادها شکوفا می‌گردند
               </p>
             </div>
