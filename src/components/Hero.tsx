@@ -11,6 +11,19 @@ const Hero = () => {
   };
   return (
     <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden bg-transparent">
+      {/* Animated Wave Backgrounds */}
+      <svg className="absolute inset-0 w-full h-full z-0" viewBox="0 0 1200 800" preserveAspectRatio="none">
+        <path d="M0,200 Q300,100 600,200 T1200,200 L1200,800 L0,800 Z" fill="hsl(var(--primary) / 0.05)" className="animate-pulse" style={{animationDelay: '0s'}} />
+        <path d="M0,300 Q400,200 800,300 T1200,300 L1200,800 L0,800 Z" fill="hsl(var(--accent) / 0.08)" className="animate-pulse" style={{animationDelay: '1s'}} />
+        <path d="M0,400 Q200,300 600,400 T1200,400 L1200,800 L0,800 Z" fill="hsl(var(--primary) / 0.03)" className="animate-pulse" style={{animationDelay: '2s'}} />
+        <path d="M0,500 Q500,400 1000,500 T1200,500 L1200,800 L0,800 Z" fill="hsl(var(--accent) / 0.06)" className="animate-pulse" style={{animationDelay: '3s'}} />
+      </svg>
+      
+      <svg className="absolute inset-0 w-full h-full z-0" viewBox="0 0 1200 800" preserveAspectRatio="none">
+        <path d="M0,150 Q350,50 700,150 T1200,150 L1200,0 L0,0 Z" fill="hsl(var(--primary) / 0.04)" className="animate-pulse" style={{animationDelay: '1.5s'}} />
+        <path d="M0,250 Q450,150 900,250 T1200,250 L1200,0 L0,0 Z" fill="hsl(var(--accent) / 0.07)" className="animate-pulse" style={{animationDelay: '2.5s'}} />
+        <path d="M0,100 Q250,0 500,100 T1200,100 L1200,0 L0,0 Z" fill="hsl(var(--primary) / 0.02)" className="animate-pulse" style={{animationDelay: '0.5s'}} />
+      </svg>
 
       <div className="container mx-auto px-4 py-20 pt-32 relative z-10">
         {/* Content - Full Width */}
