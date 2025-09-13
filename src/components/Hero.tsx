@@ -11,50 +11,71 @@ const Hero = () => {
   };
   return (
     <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden bg-transparent">
-      {/* Beautiful Animated Wave Backgrounds */}
-      <svg className="absolute inset-0 w-full h-full z-0" viewBox="0 0 1200 800" preserveAspectRatio="none">
-        <defs>
-          <linearGradient id="waveGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.1" />
-            <stop offset="50%" stopColor="hsl(var(--accent))" stopOpacity="0.05" />
-            <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.02" />
-          </linearGradient>
-          <linearGradient id="waveGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="hsl(var(--accent))" stopOpacity="0.12" />
-            <stop offset="50%" stopColor="hsl(var(--primary))" stopOpacity="0.06" />
-            <stop offset="100%" stopColor="hsl(var(--accent))" stopOpacity="0.03" />
-          </linearGradient>
-          <linearGradient id="waveGradient3" x1="0%" y1="100%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.08" />
-            <stop offset="100%" stopColor="hsl(var(--accent))" stopOpacity="0.04" />
-          </linearGradient>
-        </defs>
+      {/* Smooth Flowing Wave Backgrounds */}
+      <div className="absolute inset-0 w-full h-full overflow-hidden">
+        <svg className="absolute inset-0 w-full h-full z-0" viewBox="0 0 1200 800" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="waveGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.06" />
+              <stop offset="50%" stopColor="hsl(var(--accent))" stopOpacity="0.03" />
+              <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.01" />
+            </linearGradient>
+            <linearGradient id="waveGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="hsl(var(--accent))" stopOpacity="0.08" />
+              <stop offset="50%" stopColor="hsl(var(--primary))" stopOpacity="0.04" />
+              <stop offset="100%" stopColor="hsl(var(--accent))" stopOpacity="0.02" />
+            </linearGradient>
+            <linearGradient id="waveGradient3" x1="100%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.05" />
+              <stop offset="100%" stopColor="hsl(var(--accent))" stopOpacity="0.025" />
+            </linearGradient>
+          </defs>
+          
+          {/* Smooth bottom waves */}
+          <path d="M0,200 C240,140 360,260 600,200 C840,140 960,260 1200,200 L1200,800 L0,800 Z" 
+                fill="url(#waveGradient1)" 
+                className="opacity-80" 
+                style={{
+                  animation: 'wave 8s ease-in-out infinite',
+                  animationDelay: '0s'
+                }} />
+          
+          <path d="M0,320 C180,240 420,380 660,300 C900,220 1080,360 1200,300 L1200,800 L0,800 Z" 
+                fill="url(#waveGradient2)" 
+                className="opacity-70" 
+                style={{
+                  animation: 'wave 12s ease-in-out infinite reverse',
+                  animationDelay: '2s'
+                }} />
+          
+          <path d="M0,440 C300,360 500,520 800,440 C1000,360 1100,480 1200,440 L1200,800 L0,800 Z" 
+                fill="url(#waveGradient3)" 
+                className="opacity-60" 
+                style={{
+                  animation: 'waveFlow 10s ease-in-out infinite',
+                  animationDelay: '4s'
+                }} />
+        </svg>
         
-        {/* Bottom flowing waves */}
-        <path d="M0,180 C300,120 500,220 800,160 C1000,120 1100,200 1200,180 L1200,800 L0,800 Z" 
-              fill="url(#waveGradient1)" className="animate-pulse" style={{animationDelay: '0s', animationDuration: '4s'}} />
-        
-        <path d="M0,280 C200,200 400,320 700,240 C900,180 1050,300 1200,260 L1200,800 L0,800 Z" 
-              fill="url(#waveGradient2)" className="animate-pulse" style={{animationDelay: '1s', animationDuration: '5s'}} />
-        
-        <path d="M0,380 C350,300 600,420 900,360 C1050,320 1150,400 1200,380 L1200,800 L0,800 Z" 
-              fill="url(#waveGradient3)" className="animate-pulse" style={{animationDelay: '2s', animationDuration: '6s'}} />
-        
-        <path d="M0,480 C250,400 450,520 750,460 C950,420 1100,500 1200,480 L1200,800 L0,800 Z" 
-              fill="hsl(var(--primary) / 0.04)" className="animate-pulse" style={{animationDelay: '3s', animationDuration: '7s'}} />
-      </svg>
-      
-      {/* Top flowing waves */}
-      <svg className="absolute inset-0 w-full h-full z-0" viewBox="0 0 1200 800" preserveAspectRatio="none">
-        <path d="M0,120 C400,60 600,180 1000,100 C1100,80 1150,140 1200,120 L1200,0 L0,0 Z" 
-              fill="hsl(var(--accent) / 0.06)" className="animate-pulse" style={{animationDelay: '1.5s', animationDuration: '5s'}} />
-        
-        <path d="M0,220 C300,140 550,280 850,200 C1000,160 1100,240 1200,220 L1200,0 L0,0 Z" 
-              fill="hsl(var(--primary) / 0.04)" className="animate-pulse" style={{animationDelay: '2.5s', animationDuration: '6s'}} />
-        
-        <path d="M0,80 C250,20 500,120 800,60 C1000,20 1150,100 1200,80 L1200,0 L0,0 Z" 
-              fill="hsl(var(--accent) / 0.03)" className="animate-pulse" style={{animationDelay: '0.5s', animationDuration: '4s'}} />
-      </svg>
+        {/* Subtle top waves */}
+        <svg className="absolute inset-0 w-full h-full z-0" viewBox="0 0 1200 800" preserveAspectRatio="none">
+          <path d="M0,100 C300,40 600,160 900,100 C1050,70 1150,130 1200,100 L1200,0 L0,0 Z" 
+                fill="hsl(var(--accent) / 0.04)" 
+                className="opacity-50" 
+                style={{
+                  animation: 'wave 14s ease-in-out infinite reverse',
+                  animationDelay: '1s'
+                }} />
+          
+          <path d="M0,180 C200,120 500,240 800,180 C1000,120 1100,200 1200,180 L1200,0 L0,0 Z" 
+                fill="hsl(var(--primary) / 0.03)" 
+                className="opacity-40" 
+                style={{
+                  animation: 'waveFlow 16s ease-in-out infinite',
+                  animationDelay: '3s'
+                }} />
+        </svg>
+      </div>
 
       <div className="container mx-auto px-4 py-20 pt-32 relative z-10">
         {/* Content - Full Width */}
