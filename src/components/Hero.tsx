@@ -11,18 +11,49 @@ const Hero = () => {
   };
   return (
     <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden bg-transparent">
-      {/* Animated Wave Backgrounds */}
+      {/* Beautiful Animated Wave Backgrounds */}
       <svg className="absolute inset-0 w-full h-full z-0" viewBox="0 0 1200 800" preserveAspectRatio="none">
-        <path d="M0,200 Q300,100 600,200 T1200,200 L1200,800 L0,800 Z" fill="hsl(var(--primary) / 0.05)" className="animate-pulse" style={{animationDelay: '0s'}} />
-        <path d="M0,300 Q400,200 800,300 T1200,300 L1200,800 L0,800 Z" fill="hsl(var(--accent) / 0.08)" className="animate-pulse" style={{animationDelay: '1s'}} />
-        <path d="M0,400 Q200,300 600,400 T1200,400 L1200,800 L0,800 Z" fill="hsl(var(--primary) / 0.03)" className="animate-pulse" style={{animationDelay: '2s'}} />
-        <path d="M0,500 Q500,400 1000,500 T1200,500 L1200,800 L0,800 Z" fill="hsl(var(--accent) / 0.06)" className="animate-pulse" style={{animationDelay: '3s'}} />
+        <defs>
+          <linearGradient id="waveGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.1" />
+            <stop offset="50%" stopColor="hsl(var(--accent))" stopOpacity="0.05" />
+            <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.02" />
+          </linearGradient>
+          <linearGradient id="waveGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="hsl(var(--accent))" stopOpacity="0.12" />
+            <stop offset="50%" stopColor="hsl(var(--primary))" stopOpacity="0.06" />
+            <stop offset="100%" stopColor="hsl(var(--accent))" stopOpacity="0.03" />
+          </linearGradient>
+          <linearGradient id="waveGradient3" x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.08" />
+            <stop offset="100%" stopColor="hsl(var(--accent))" stopOpacity="0.04" />
+          </linearGradient>
+        </defs>
+        
+        {/* Bottom flowing waves */}
+        <path d="M0,180 C300,120 500,220 800,160 C1000,120 1100,200 1200,180 L1200,800 L0,800 Z" 
+              fill="url(#waveGradient1)" className="animate-pulse" style={{animationDelay: '0s', animationDuration: '4s'}} />
+        
+        <path d="M0,280 C200,200 400,320 700,240 C900,180 1050,300 1200,260 L1200,800 L0,800 Z" 
+              fill="url(#waveGradient2)" className="animate-pulse" style={{animationDelay: '1s', animationDuration: '5s'}} />
+        
+        <path d="M0,380 C350,300 600,420 900,360 C1050,320 1150,400 1200,380 L1200,800 L0,800 Z" 
+              fill="url(#waveGradient3)" className="animate-pulse" style={{animationDelay: '2s', animationDuration: '6s'}} />
+        
+        <path d="M0,480 C250,400 450,520 750,460 C950,420 1100,500 1200,480 L1200,800 L0,800 Z" 
+              fill="hsl(var(--primary) / 0.04)" className="animate-pulse" style={{animationDelay: '3s', animationDuration: '7s'}} />
       </svg>
       
+      {/* Top flowing waves */}
       <svg className="absolute inset-0 w-full h-full z-0" viewBox="0 0 1200 800" preserveAspectRatio="none">
-        <path d="M0,150 Q350,50 700,150 T1200,150 L1200,0 L0,0 Z" fill="hsl(var(--primary) / 0.04)" className="animate-pulse" style={{animationDelay: '1.5s'}} />
-        <path d="M0,250 Q450,150 900,250 T1200,250 L1200,0 L0,0 Z" fill="hsl(var(--accent) / 0.07)" className="animate-pulse" style={{animationDelay: '2.5s'}} />
-        <path d="M0,100 Q250,0 500,100 T1200,100 L1200,0 L0,0 Z" fill="hsl(var(--primary) / 0.02)" className="animate-pulse" style={{animationDelay: '0.5s'}} />
+        <path d="M0,120 C400,60 600,180 1000,100 C1100,80 1150,140 1200,120 L1200,0 L0,0 Z" 
+              fill="hsl(var(--accent) / 0.06)" className="animate-pulse" style={{animationDelay: '1.5s', animationDuration: '5s'}} />
+        
+        <path d="M0,220 C300,140 550,280 850,200 C1000,160 1100,240 1200,220 L1200,0 L0,0 Z" 
+              fill="hsl(var(--primary) / 0.04)" className="animate-pulse" style={{animationDelay: '2.5s', animationDuration: '6s'}} />
+        
+        <path d="M0,80 C250,20 500,120 800,60 C1000,20 1150,100 1200,80 L1200,0 L0,0 Z" 
+              fill="hsl(var(--accent) / 0.03)" className="animate-pulse" style={{animationDelay: '0.5s', animationDuration: '4s'}} />
       </svg>
 
       <div className="container mx-auto px-4 py-20 pt-32 relative z-10">
