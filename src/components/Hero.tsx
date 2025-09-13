@@ -16,7 +16,7 @@ const Hero = () => {
         {/* Content - Full Width */}
         <div className="text-center space-y-12 mb-20">
           <div className="space-y-8">
-            <h1 className="text-6xl md:text-8xl lg:text-9xl font-extrabold bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent leading-tight max-w-5xl mx-auto mb-8 tracking-tight drop-shadow-2xl">
+            <h1 className="text-6xl md:text-8xl lg:text-9xl font-extrabold bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent leading-tight max-w-5xl mx-auto mb-8 tracking-tight [text-shadow:none] supports-[background-clip:text]:text-transparent supports-[background-clip:text]:bg-clip-text">
               آرمانیان
             </h1>
             
