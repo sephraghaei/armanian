@@ -289,7 +289,7 @@ const Auth = () => {
                         onChange={(e) => setPhone(e.target.value)}
                         required
                         disabled={isLoading}
-                        className="pr-10"
+                        className="pr-10 placeholder:text-muted-foreground/50"
                       />
                     </div>
                   </div>
