@@ -362,23 +362,6 @@ const Auth = () => {
                       />
                     </div>
                   </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="password">رمز عبور</Label>
-                    <div className="relative">
-                      <Lock className="absolute right-3 top-3 h-4 w-4 text-muted-foreground" />
-                      <Input
-                        id="password"
-                        type="password"
-                        placeholder="حداقل 6 کاراکتر"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                        disabled={isLoading}
-                        className="pr-10"
-                        minLength={6}
-                      />
-                    </div>
-                  </div>
                   <Button type="submit" className="w-full" disabled={isLoading}>
                     {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                     ثبت نام
