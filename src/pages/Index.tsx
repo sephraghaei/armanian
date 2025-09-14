@@ -169,9 +169,9 @@ const Index = () => {
       <div className="relative z-10">
         <Header />
         <Hero />
-        <About />
         <Departments />
         <Programs />
+        <About />
         <Contact />
         <Footer />
       </div>
