@@ -16,18 +16,18 @@ const Hero = () => {
         <svg className="absolute inset-0 w-full h-full z-0" viewBox="0 0 1200 800" preserveAspectRatio="none">
           <defs>
             <linearGradient id="waveGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.06" />
-              <stop offset="50%" stopColor="hsl(var(--accent))" stopOpacity="0.03" />
-              <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.01" />
+              <stop offset="0%" stopColor="hsl(var(--primary-wave))" stopOpacity="0.1" />
+              <stop offset="50%" stopColor="hsl(var(--accent-wave))" stopOpacity="0.1" />
+              <stop offset="100%" stopColor="hsl(var(--primary-wave))" stopOpacity="0.1" />
             </linearGradient>
             <linearGradient id="waveGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="hsl(var(--accent))" stopOpacity="0.08" />
-              <stop offset="50%" stopColor="hsl(var(--primary))" stopOpacity="0.04" />
-              <stop offset="100%" stopColor="hsl(var(--accent))" stopOpacity="0.02" />
+              <stop offset="0%" stopColor="hsl(var(--accent-wave))" stopOpacity="0.1" />
+              <stop offset="50%" stopColor="hsl(var(--primary-wave))" stopOpacity="0.1" />
+              <stop offset="100%" stopColor="hsl(var(--accent-wave))" stopOpacity="0.1" />
             </linearGradient>
             <linearGradient id="waveGradient3" x1="100%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.05" />
-              <stop offset="100%" stopColor="hsl(var(--accent))" stopOpacity="0.025" />
+              <stop offset="0%" stopColor="hsl(var(--primary-wave))" stopOpacity="0.1" />
+              <stop offset="100%" stopColor="hsl(var(--accent-wave))" stopOpacity="0.1" />
             </linearGradient>
           </defs>
           
@@ -146,7 +146,6 @@ const Hero = () => {
           </div>
         </div>
       </div>
-      
     </section>
   );
 };
