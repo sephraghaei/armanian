@@ -99,7 +99,7 @@ const Hero = () => {
 
           <div className="flex flex-col sm:flex-row gap-6 justify-center pt-4">
             <Button variant="hero" size="lg" className="group" onClick={handleSignUp}>
-              امروز شروع کنید
+              همین امروز شروع کن
               <ArrowRight className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
             </Button>
             <Button variant="outline" size="lg" asChild>
