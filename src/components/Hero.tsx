@@ -81,11 +81,11 @@ const Hero = () => {
         {/* Content - Full Width */}
         <div className="text-center space-y-12 mb-20">
           <div className="space-y-8">
-          <h1 className="text-[8rem] md:text-[10rem] lg:text-[12rem] font-extrabold text-primary leading-tight max-w-5xl mx-auto mb-8 tracking-tight">
+          <h1 className="text-[4rem] md:text-[8rem] lg:text-[10rem] font-extrabold text-primary leading-tight max-w-5xl mx-auto mb-8 tracking-tight">
               آرمانیان
           </h1>
             <div className="space-y-6">
-              <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent leading-tight max-w-4xl mx-auto">
+              <h2 className="text-xl md:text-2xl lg:text-4xl font-bold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent leading-tight max-w-4xl mx-auto">
                 آموزشگاه آزاد فنی و حرفه‌ای کامپیوتر و معماری
               </h2>
             </div>
