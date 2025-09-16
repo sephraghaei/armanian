@@ -14,6 +14,28 @@ const Hero = () => {
     <section id="home" className="min-h-[80vh] md:min-h-screen flex items-center justify-center relative overflow-hidden bg-transparent">
       {/* Smooth Flowing Wave Backgrounds */}
       <div className="absolute inset-0 w-full h-full overflow-hidden">
+        {/* Mobile subtle orange waves */}
+        <svg className="absolute inset-0 w-full h-full z-0 sm:hidden" viewBox="0 0 1200 800" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="mobileOrange1" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="hsl(28,92%,56%)" stopOpacity="0.06" />
+              <stop offset="100%" stopColor="hsl(30,92%,60%)" stopOpacity="0.06" />
+            </linearGradient>
+            <linearGradient id="mobileOrange2" x1="100%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="hsl(28,92%,56%)" stopOpacity="0.05" />
+              <stop offset="100%" stopColor="hsl(30,92%,60%)" stopOpacity="0.05" />
+            </linearGradient>
+          </defs>
+          <g style={{ filter: 'blur(0.5px)' }}>
+            <path d="M0,260 C220,230 420,290 600,260 C820,230 1000,290 1200,260 L1200,800 L0,800 Z"
+                  fill="url(#mobileOrange1)"
+                  style={{ animation: 'wave 16s ease-in-out infinite', opacity: 0.7 }} />
+            <path d="M0,340 C240,310 460,360 720,340 C940,320 1080,360 1200,340 L1200,800 L0,800 Z"
+                  fill="url(#mobileOrange2)"
+                  style={{ animation: 'waveFlow 22s ease-in-out infinite', opacity: 0.7 }} />
+          </g>
+        </svg>
+
         <svg className="absolute inset-0 w-full h-full z-0 hidden sm:block" viewBox="0 0 1200 800" preserveAspectRatio="none">
           <defs>
             <linearGradient id="waveGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -35,7 +57,7 @@ const Hero = () => {
           {/* Smooth bottom waves */}
           <path d="M0,200 C240,140 360,260 600,200 C840,140 960,260 1200,200 L1200,800 L0,800 Z" 
                 fill="url(#waveGradient1)" 
-                className="opacity-80" 
+                className="opacity-50" 
                 style={{
                   animation: 'wave 8s ease-in-out infinite',
                   animationDelay: '0s'
@@ -43,7 +65,7 @@ const Hero = () => {
           
           <path d="M0,320 C180,240 420,380 660,300 C900,220 1080,360 1200,300 L1200,800 L0,800 Z" 
                 fill="url(#waveGradient2)" 
-                className="opacity-70" 
+                className="opacity-40" 
                 style={{
                   animation: 'wave 12s ease-in-out infinite reverse',
                   animationDelay: '2s'
@@ -51,7 +73,7 @@ const Hero = () => {
           
           <path d="M0,440 C300,360 500,520 800,440 C1000,360 1100,480 1200,440 L1200,800 L0,800 Z" 
                 fill="url(#waveGradient3)" 
-                className="opacity-60" 
+                className="opacity-35" 
                 style={{
                   animation: 'waveFlow 10s ease-in-out infinite',
                   animationDelay: '4s'
@@ -82,7 +104,7 @@ const Hero = () => {
         {/* Content - Full Width */}
         <div className="text-center space-y-12 mb-20">
           <div className="space-y-6 md:space-y-8">
-          <h1 className="text-[2.75rem] sm:text-[4rem] md:text-[8rem] lg:text-[10rem] font-extrabold leading-[1.1] md:leading-tight max-w-5xl mx-auto mb-4 md:mb-8 tracking-tight bg-clip-text text-transparent animate-gradient-x" style={{ backgroundImage: 'linear-gradient(90deg, hsl(233,63%,67%), hsl(200 51% 65%), hsl(233,63%,67%))' }}>
+          <h1 className="text-[4.5rem] sm:text-[5rem] md:text-[8rem] lg:text-[10rem] font-extrabold leading-[1.08] md:leading-tight max-w-5xl mx-auto mb-4 md:mb-8 tracking-tight bg-clip-text text-transparent animate-gradient-x" style={{ backgroundImage: 'linear-gradient(90deg, hsl(233,63%,67%), hsl(200 51% 65%), hsl(233,63%,67%))' }}>
               آرمانیان
           </h1>
             <div className="space-y-6">
