@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Menu, X, Code, Brain, Monitor, User, LogOut } from 'lucide-react';
@@ -49,6 +49,99 @@ const Header = () => {
     { label: 'تماس', href: '#contact' },
   ];
 
+  // Scroll spy for hash sections on home page
+  const [activeHash, setActiveHash] = useState<string | null>(null);
+  const observerRef = useRef<IntersectionObserver | null>(null);
+
+  const hashIds = useMemo(() => (
+    menuItems
+      .filter(i => i.href.startsWith('#'))
+      .map(i => i.href.slice(1))
+  ), []);
+
+  useEffect(() => {
+    if (location.pathname !== '/') {
+      setActiveHash(null);
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+        observerRef.current = null;
+      }
+      return;
+    }
+
+    // Include hero section as home anchor
+    const idsToObserve = ['home', ...hashIds];
+    const elements = idsToObserve
+      .map(id => document.getElementById(id))
+      .filter((el): el is HTMLElement => !!el);
+
+    if (elements.length === 0) return;
+
+    const handleIntersect: IntersectionObserverCallback = (entries) => {
+      // Find the entry most in view (largest intersection ratio)
+      const visible = entries
+        .filter(e => e.isIntersecting)
+        .sort((a, b) => (b.intersectionRatio - a.intersectionRatio));
+      if (visible.length > 0) {
+        const top = visible[0];
+        const id = top.target.id;
+        setActiveHash(id === 'home' ? '#' : `#${id}`);
+      } else {
+        // If none intersect (e.g., at very top), default to home
+        const scrollY = window.scrollY || document.documentElement.scrollTop;
+        if (scrollY < 120) setActiveHash('#');
+      }
+    };
+
+    const observer = new IntersectionObserver(handleIntersect, {
+      root: null,
+      rootMargin: '-20% 0px -60% 0px',
+      threshold: [0, 0.1, 0.25, 0.5, 0.75, 1],
+    });
+    observerRef.current = observer;
+
+    elements.forEach(el => observer.observe(el));
+
+    // Initial set on mount
+    setTimeout(() => {
+      handleIntersect(elements.map(el => ({
+        target: el,
+        isIntersecting: true,
+        intersectionRatio: 0,
+        time: 0,
+        boundingClientRect: el.getBoundingClientRect(),
+        intersectionRect: el.getBoundingClientRect(),
+        rootBounds: null,
+      })) as unknown as IntersectionObserverEntry[]);
+    }, 0);
+
+    return () => {
+      observer.disconnect();
+      observerRef.current = null;
+    };
+  }, [location.pathname, hashIds]);
+
+  const scrollToHash = (hash: string) => {
+    const id = hash.replace('#', '') || 'home';
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      try {
+        window.history.replaceState(null, '', hash === '#' ? '/' : hash);
+      } catch {}
+    }
+  };
+
+  const handleHashClick = (e: React.MouseEvent, hash: string) => {
+    e.preventDefault();
+    if (location.pathname !== '/') {
+      navigate('/', { replace: false });
+      setTimeout(() => scrollToHash(hash), 60);
+    } else {
+      scrollToHash(hash);
+    }
+  };
+
   return (
     <header className="fixed top-0 left-0 right-0 z-50 animate-fade-in">
       <div className="absolute inset-0 bg-gradient-to-b from-background/95 via-background/90 to-background/85 backdrop-blur-2xl border-b border-border/10"></div>
@@ -74,8 +167,10 @@ const Header = () => {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-reverse space-x-2">
             {menuItems.map((item, index) => {
-              const isActive = location.pathname === item.href || (item.href.startsWith('#') && location.pathname === '/');
               const isHashLink = item.href.startsWith('#');
+              const isActive = isHashLink
+                ? (location.pathname === '/' && (activeHash ? activeHash === item.href || (activeHash === '#' && item.label === 'خانه') : false))
+                : location.pathname === item.href;
               
               return isHashLink ? (
                 <a
@@ -87,6 +182,7 @@ const Header = () => {
                       : 'text-foreground/80 hover:text-primary hover:bg-primary/5'
                   }`}
                   style={{ animationDelay: `${index * 100}ms` }}
+                  onClick={(e) => handleHashClick(e, item.href)}
                 >
                   {item.label}
                 </a>
@@ -161,8 +257,10 @@ const Header = () => {
           <div className="md:hidden mt-3 p-4 rounded-xl border border-border/20 bg-card/90 backdrop-blur-xl shadow-xl animate-slide-in-right">
             <nav className="flex flex-col space-y-2">
               {menuItems.map((item, index) => {
-                const isActive = location.pathname === item.href || (item.href.startsWith('#') && location.pathname === '/');
                 const isHashLink = item.href.startsWith('#');
+                const isActive = isHashLink
+                  ? (location.pathname === '/' && (activeHash ? activeHash === item.href || (activeHash === '#' && item.label === 'خانه') : false))
+                  : location.pathname === item.href;
                 
                 return isHashLink ? (
                   <a
@@ -174,7 +272,7 @@ const Header = () => {
                         : 'text-foreground/80 hover:text-primary hover:bg-primary/5'
                     }`}
                     style={{ animationDelay: `${index * 50}ms` }}
-                    onClick={() => setIsMenuOpen(false)}
+                    onClick={(e) => { handleHashClick(e, item.href); setIsMenuOpen(false); }}
                   >
                     {item.label}
                   </a>

@@ -89,7 +89,7 @@ const CoursesPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background animate-page-in">
       <Header />
       
       {/* Hero Section */}
