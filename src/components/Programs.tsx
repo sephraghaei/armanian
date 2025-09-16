@@ -79,8 +79,8 @@ const Programs = () => {
         </div>
 
         <div className="grid md:grid-cols-3 gap-8">
-          {programs.map((program, index) => (
-            <Card key={index} className={`relative transition-all duration-500 hover:-translate-y-2 border-orange-300/70 hover:shadow-[0_0_40px_hsl(28_92%_56%_/_0.35)] ${program.popular ? 'border-2' : 'border'} bg-white/95`}>
+          {programs.map((program) => (
+            <Card key={program.title} className={`relative transition-all duration-500 hover:-translate-y-2 border-orange-300/70 hover:shadow-[0_0_40px_hsl(28_92%_56%_/_0.35)] ${program.popular ? 'border-2' : 'border'} bg-white/95`}>
               
               <CardHeader className="pb-4">
                 <CardTitle className="text-2xl text-foreground mb-2">{program.title}</CardTitle>

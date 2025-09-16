@@ -41,8 +41,8 @@ const About = () => {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {features.map((feature, index) => (
-            <Card key={index} className="group hover:shadow-glow-primary transition-all duration-300 hover:-translate-y-2">
+          {features.map((feature) => (
+            <Card key={feature.title} className="group hover:shadow-glow-primary transition-all duration-300 hover:-translate-y-2">
               <CardContent className="p-6 text-center">
                 <div className="w-16 h-16 bg-gradient-primary rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
                   <feature.icon className="w-8 h-8 text-white" />

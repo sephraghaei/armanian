@@ -6,7 +6,7 @@ interface AuthContextType {
   user: User | null;
   session: Session | null;
   loading: boolean;
-  signUpWithPhone: (phone: string, firstName: string, lastName: string, password: string) => Promise<{ error: any }>;
+  signUpWithPhone: (phone: string, firstName: string, lastName: string) => Promise<{ error: any }>;
   verifyOtp: (phone: string, otp: string) => Promise<{ error: any }>;
   signInWithPhone: (phone: string) => Promise<{ error: any }>;
   signOut: () => Promise<{ error: any }>;
@@ -58,7 +58,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     };
   }, []);
 
-  const signUpWithPhone = async (phone: string, firstName: string, lastName: string, password: string) => {
+  const signUpWithPhone = async (phone: string, firstName: string, lastName: string) => {
     console.log('AuthContext: signUpWithPhone called with:', { phone, firstName, lastName });
     
     const displayName = `${firstName} ${lastName}`.trim();

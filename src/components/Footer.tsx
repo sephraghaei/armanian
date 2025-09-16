@@ -42,9 +42,9 @@ const Footer = () => {
               برای آینده‌ای محور فناوری.
             </p>
             <div className="flex space-x-4">
-              {socialLinks.map((social, index) => (
+              {socialLinks.map((social) => (
                 <a
-                  key={index}
+                  key={social.label}
                   href={social.href}
                   aria-label={social.label}
                   className="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors duration-300"
@@ -59,8 +59,8 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-semibold text-foreground mb-4">لینک‌های سریع</h4>
             <ul className="space-y-2">
-              {quickLinks.map((link, index) => (
-                <li key={index}>
+              {quickLinks.map((link) => (
+                <li key={link.label}>
                   <a
                     href={link.href}
                     className="text-muted-foreground hover:text-primary transition-colors duration-300"
@@ -76,8 +76,8 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-semibold text-foreground mb-4">دوره‌ها</h4>
             <ul className="space-y-2">
-              {programs.map((program, index) => (
-                <li key={index}>
+              {programs.map((program) => (
+                <li key={program.label}>
                   <a
                     href={program.href}
                     className="text-muted-foreground hover:text-primary transition-colors duration-300"

@@ -15,7 +15,7 @@ const Auth = () => {
   const [otp, setOtp] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [password, setPassword] = useState('');
+  // Password is not used in OTP-based phone signup/signin
   const [showOtpInput, setShowOtpInput] = useState(false);
   const [isSignUp, setIsSignUp] = useState(false);
   const { signUpWithPhone, signInWithPhone, verifyOtp, user } = useAuth();
@@ -54,15 +54,7 @@ const Auth = () => {
         setIsLoading(false);
         return;
       }
-      if (!password.trim() || password.length < 6) {
-        toast({
-          variant: "destructive",
-          title: "رمز عبور نامعتبر",
-          description: "رمز عبور باید حداقل 6 کاراکتر باشد",
-        });
-        setIsLoading(false);
-        return;
-      }
+      // No password required for phone OTP signup
     }
 
     // Validate phone number format
@@ -87,7 +79,7 @@ const Auth = () => {
 
     try {
       const { error } = isSignUpMode 
-        ? await signUpWithPhone(formattedPhone, firstName, lastName, password)
+        ? await signUpWithPhone(formattedPhone, firstName, lastName)
         : await signInWithPhone(formattedPhone);
       
       if (error) {
