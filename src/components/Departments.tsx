@@ -80,8 +80,8 @@ const Departments = () => {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {departments.map((dept, index) => (
-            <Card key={index} className="group hover:shadow-glow-primary transition-all duration-500 hover:-translate-y-2 border-border/50">
+          {departments.map((dept) => (
+            <Card key={dept.title} className="group hover:shadow-glow-primary transition-all duration-500 hover:-translate-y-2 border-border/50">
               <CardHeader className="pb-4">
                 <div className="w-16 h-16 bg-gradient-primary rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                   <dept.icon className="w-8 h-8 text-white" />
@@ -98,8 +98,8 @@ const Departments = () => {
                 <div>
                   <h4 className="text-sm font-semibold text-foreground mb-2">دوره‌های ارائه شده:</h4>
                   <ul className="space-y-1">
-                    {dept.courses.map((course, idx) => (
-                      <li key={idx} className="flex items-center space-x-reverse space-x-1 text-xs text-muted-foreground">
+                    {dept.courses.map((course) => (
+                      <li key={`${dept.title}-${course}`} className="flex items-center space-x-reverse space-x-1 text-xs text-muted-foreground">
                         <div className="w-1.5 h-1.5 bg-accent rounded-full"></div>
                         <span>{course}</span>
                       </li>
