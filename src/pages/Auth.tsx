@@ -7,7 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
-import { Loader2, GraduationCap, ArrowLeft, Phone, Shield, User, Lock } from 'lucide-react';
+import { Loader2, GraduationCap, ArrowLeft, Phone, Shield, User } from 'lucide-react';
 
 const Auth = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -15,7 +15,7 @@ const Auth = () => {
   const [otp, setOtp] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [password, setPassword] = useState('');
+  // password removed for OTP-only flow
   const [showOtpInput, setShowOtpInput] = useState(false);
   const [isSignUp, setIsSignUp] = useState(false);
   const { signUpWithPhone, signInWithPhone, verifyOtp, user } = useAuth();
@@ -54,15 +54,6 @@ const Auth = () => {
         setIsLoading(false);
         return;
       }
-      if (!password.trim() || password.length < 6) {
-        toast({
-          variant: "destructive",
-          title: "رمز عبور نامعتبر",
-          description: "رمز عبور باید حداقل 6 کاراکتر باشد",
-        });
-        setIsLoading(false);
-        return;
-      }
     }
 
     // Validate phone number format
@@ -87,7 +78,7 @@ const Auth = () => {
 
     try {
       const { error } = isSignUpMode 
-        ? await signUpWithPhone(formattedPhone, firstName, lastName, password)
+        ? await signUpWithPhone(formattedPhone, firstName, lastName)
         : await signInWithPhone(formattedPhone);
       
       if (error) {
@@ -312,7 +303,7 @@ const Auth = () => {
               </CardHeader>
               <CardContent>
                 <form onSubmit={(e) => handleSendOtp(e, true)} className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label htmlFor="firstName">نام</Label>
                       <div className="relative">
