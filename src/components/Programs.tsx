@@ -80,7 +80,7 @@ const Programs = () => {
 
         <div className="grid md:grid-cols-3 gap-8">
           {programs.map((program, index) => (
-            <Card key={index} className={`relative hover:shadow-glow-primary transition-all duration-500 hover:-translate-y-2 ${program.popular ? 'border-primary shadow-glow-primary' : ''}`}>
+            <Card key={index} className={`relative transition-all duration-500 hover:-translate-y-2 border-orange-300/70 hover:shadow-[0_0_40px_hsl(28_92%_56%_/_0.35)] ${program.popular ? 'border-2' : 'border'} bg-white/95`}>
               
               <CardHeader className="pb-4">
                 <CardTitle className="text-2xl text-foreground mb-2">{program.title}</CardTitle>
@@ -93,19 +93,19 @@ const Programs = () => {
                 {/* Program Details */}
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   <div className="flex items-center space-x-reverse space-x-2">
-                    <Clock className="w-4 h-4 text-accent" />
+                    <Clock className="w-4 h-4" style={{ color: 'hsl(28,92%,56%)' }} />
                     <span className="text-muted-foreground">{program.duration}</span>
                   </div>
                   <div className="flex items-center space-x-reverse space-x-2">
-                    <Users className="w-4 h-4 text-accent" />
+                    <Users className="w-4 h-4" style={{ color: 'hsl(28,92%,56%)' }} />
                     <span className="text-muted-foreground">{program.classSize}</span>
                   </div>
                   <div className="flex items-center space-x-reverse space-x-2">
-                    <Trophy className="w-4 h-4 text-accent" />
+                    <Trophy className="w-4 h-4" style={{ color: 'hsl(28,92%,56%)' }} />
                     <span className="text-muted-foreground">{program.level}</span>
                   </div>
                   <div className="flex items-center space-x-reverse space-x-2">
-                    <Star className="w-4 h-4 text-accent" />
+                    <Star className="w-4 h-4" style={{ color: 'hsl(28,92%,56%)' }} />
                     <span className="text-muted-foreground">{program.ages}</span>
                   </div>
                 </div>
@@ -116,7 +116,7 @@ const Programs = () => {
                   <ul className="space-y-2">
                     {program.features.map((feature, idx) => (
                       <li key={idx} className="flex items-start space-x-reverse space-x-2 text-sm text-muted-foreground">
-                        <div className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                        <div className="w-1.5 h-1.5 rounded-full mt-2 flex-shrink-0" style={{ backgroundColor: 'hsl(28,92%,56%)' }}></div>
                         <span>{feature}</span>
                       </li>
                     ))}
@@ -125,7 +125,8 @@ const Programs = () => {
 
                 <Button 
                   variant="default" 
-                  className="w-full group hover-scale hover:shadow-glow-primary transition-all duration-300"
+                  className="w-full group hover-scale transition-all duration-300 text-white"
+                  style={{ background: 'linear-gradient(135deg, hsl(28,92%,56%), hsl(24,95%,55%))' }}
                   size="lg"
                   onClick={handleSignUp}
                 >

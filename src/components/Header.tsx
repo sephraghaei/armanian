@@ -63,11 +63,11 @@ const Header = () => {
               <div className="absolute -top-1 -right-1 w-3 h-3 bg-accent rounded-full border-2 border-background pulse"></div>
             </div>
             <div className="hidden sm:block">
-              <h1 className="text-lg font-bold text-foreground group-hover:text-primary transition-colors duration-300">آرمانیان</h1>
+              <h1 className="text-lg font-bold transition-colors duration-300 bg-clip-text text-transparent animate-gradient-x" style={{ backgroundImage: 'linear-gradient(90deg, hsl(233,63%,67%), hsl(200 51% 65%), hsl(233,63%,67%))' }}>آرمانیان</h1>
               <p className="text-xs text-muted-foreground/70 font-medium">آموزشگاه آزاد فنی و حرفه‌ای</p>
             </div>
             <div className="sm:hidden">
-              <h1 className="text-base font-bold text-foreground group-hover:text-primary transition-colors duration-300">آرمانیان</h1>
+              <h1 className="text-base font-bold transition-colors duration-300 bg-clip-text text-transparent animate-gradient-x" style={{ backgroundImage: 'linear-gradient(90deg, hsl(233,63%,67%), hsl(200 51% 65%), hsl(233,63%,67%))' }}>آرمانیان</h1>
             </div>
           </Link>
 

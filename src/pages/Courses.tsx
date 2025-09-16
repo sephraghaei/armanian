@@ -112,10 +112,10 @@ const CoursesPage = () => {
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-3 gap-8 mb-16">
             {courses.map((course, index) => (
-              <Card key={index} className={`relative hover:shadow-glow-primary transition-all duration-500 hover:-translate-y-2 ${course.popular ? 'border-primary shadow-glow-primary' : ''}`}>
+              <Card key={index} className={`relative transition-all duration-500 hover:-translate-y-2 border-orange-300/70 hover:shadow-[0_0_40px_hsl(28_92%_56%_/_0.35)] ${course.popular ? 'border-2' : 'border'} bg-white/95`}>
                 {course.popular && (
                   <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                    <Badge variant="default" className="bg-gradient-primary text-white">
+                    <Badge variant="default" className="text-white" style={{ background: 'linear-gradient(135deg, hsl(28,92%,56%), hsl(24,95%,55%))' }}>
                       <Star className="w-3 h-3 mr-1" />
                       محبوب‌ترین
                     </Badge>
@@ -133,19 +133,19 @@ const CoursesPage = () => {
                   {/* Course Details */}
                   <div className="grid grid-cols-2 gap-4 text-sm">
                     <div className="flex items-center space-x-2">
-                      <Clock className="w-4 h-4 text-accent" />
+                      <Clock className="w-4 h-4" style={{ color: 'hsl(28,92%,56%)' }} />
                       <span className="text-muted-foreground">{course.duration}</span>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <Users className="w-4 h-4 text-accent" />
+                      <Users className="w-4 h-4" style={{ color: 'hsl(28,92%,56%)' }} />
                       <span className="text-muted-foreground">{course.classSize}</span>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <Trophy className="w-4 h-4 text-accent" />
+                      <Trophy className="w-4 h-4" style={{ color: 'hsl(28,92%,56%)' }} />
                       <span className="text-muted-foreground">{course.level}</span>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <Star className="w-4 h-4 text-accent" />
+                      <Star className="w-4 h-4" style={{ color: 'hsl(28,92%,56%)' }} />
                       <span className="text-muted-foreground">{course.ages}</span>
                     </div>
                   </div>
@@ -156,7 +156,7 @@ const CoursesPage = () => {
                     <ul className="space-y-2">
                       {course.features.map((feature, idx) => (
                         <li key={idx} className="flex items-start space-x-2 text-sm text-muted-foreground">
-                          <CheckCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                          <CheckCircle className="w-4 h-4 mt-0.5 flex-shrink-0" style={{ color: 'hsl(28,92%,56%)' }} />
                           <span>{feature}</span>
                         </li>
                       ))}
@@ -164,8 +164,9 @@ const CoursesPage = () => {
                   </div>
 
                   <Button 
-                    variant={course.popular ? "hero" : "outline"} 
-                    className="w-full"
+                    variant={course.popular ? "default" : "outline"} 
+                    className="w-full text-white"
+                    style={course.popular ? { background: 'linear-gradient(135deg, hsl(28,92%,56%), hsl(24,95%,55%))' } : {}}
                     size="lg"
                     onClick={handleSignUp}
                   >

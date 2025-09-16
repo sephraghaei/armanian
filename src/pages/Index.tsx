@@ -10,7 +10,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background relative">
       {/* Background Wave Layers - Full Height Coverage */}
-      <div className="absolute inset-0 w-full min-h-full pointer-events-none z-0">
+      <div className="absolute inset-0 w-full min-h-full pointer-events-none z-0 hidden sm:block">
         {/* Multiple SVG layers for full coverage */}
         <svg 
           className="absolute top-0 left-0 w-full h-screen"
