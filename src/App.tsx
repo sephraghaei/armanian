@@ -11,6 +11,7 @@ import CourseDetailsPage from "./pages/CourseDetails";
 import Auth from "./pages/Auth";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
+import ConsultationPrompt from "@/components/ConsultationPrompt";
 
 const queryClient = new QueryClient();
 
@@ -24,6 +25,7 @@ const App = () => {
         <Sonner />
         <BrowserRouter>
           <AuthProvider>
+            <ConsultationPrompt />
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/departments" element={<DepartmentsPage />} />
