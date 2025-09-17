@@ -7,7 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
-import { Loader2, GraduationCap, ArrowLeft, Phone, Shield, User } from 'lucide-react';
+import { Loader2, GraduationCap, ArrowLeft, Phone, Shield, User, Lock } from 'lucide-react';
 
 const Auth = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -15,10 +15,10 @@ const Auth = () => {
   const [otp, setOtp] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  // password removed for OTP-only flow
+  const [password, setPassword] = useState('');
   const [showOtpInput, setShowOtpInput] = useState(false);
   const [isSignUp, setIsSignUp] = useState(false);
-  const { signUpWithPhone, signInWithPhone, verifyOtp, user } = useAuth();
+  const { signUpWithCredentials, signInWithCredentials, user } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
 
@@ -29,7 +29,7 @@ const Auth = () => {
     }
   }, [user, navigate]);
 
-  const handleSendOtp = async (e: React.FormEvent, isSignUpMode: boolean) => {
+  const handleSubmit = async (e: React.FormEvent, isSignUpMode: boolean) => {
     e.preventDefault();
     setIsLoading(true);
     setIsSignUp(isSignUpMode);
@@ -50,6 +50,16 @@ const Auth = () => {
           variant: "destructive",
           title: "نام خانوادگی الزامی است",
           description: "لطفاً نام خانوادگی خود را وارد کنید",
+        });
+        setIsLoading(false);
+        return;
+      }
+      const strong = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
+      if (!strong.test(password)) {
+        toast({
+          variant: "destructive",
+          title: "رمز عبور ضعیف است",
+          description: "حداقل ۸ کاراکتر، یک حرف بزرگ و یک عدد لازم است",
         });
         setIsLoading(false);
         return;
@@ -78,81 +88,21 @@ const Auth = () => {
 
     try {
       const { error } = isSignUpMode 
-        ? await signUpWithPhone(formattedPhone, firstName, lastName)
-        : await signInWithPhone(formattedPhone);
+        ? await signUpWithCredentials(formattedPhone, firstName, lastName, password)
+        : await signInWithCredentials(formattedPhone, password);
       
       if (error) {
         toast({
           variant: "destructive",
-          title: "خطا در ارسال کد",
+          title: "خطا در احراز هویت",
           description: error.message,
         });
-      } else {
-        setShowOtpInput(true);
-        toast({
-          title: "کد تایید ارسال شد",
-          description: "کد تایید به شماره موبایل شما ارسال شد.",
-        });
       }
     } catch (error) {
       toast({
         variant: "destructive",
         title: "خطا",
-        description: "مشکلی در ارسال کد رخ داده است.",
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleVerifyOtp = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-
-    // Format phone number to international format
-    let formattedPhone = phone;
-    if (phone.startsWith('0')) {
-      formattedPhone = '+98' + phone.substring(1);
-    } else if (!phone.startsWith('+98')) {
-      formattedPhone = '+98' + phone;
-    }
-
-    try {
-      const { error } = await verifyOtp(formattedPhone, otp);
-      
-      if (error) {
-        if (error.message.includes('Invalid token')) {
-          toast({
-            variant: "destructive",
-            title: "کد نادرست",
-            description: "کد تایید وارد شده نادرست است.",
-          });
-        } else if (error.message.includes('expired')) {
-          toast({
-            variant: "destructive",
-            title: "کد منقضی شده",
-            description: "کد تایید منقضی شده است. لطفاً دوباره تلاش کنید.",
-          });
-          setShowOtpInput(false);
-        } else {
-          toast({
-            variant: "destructive",
-            title: "خطا در تایید",
-            description: error.message,
-          });
-        }
-      } else {
-        toast({
-          title: isSignUp ? "ثبت نام موفقیت‌آمیز" : "ورود موفقیت‌آمیز",
-          description: "به آرمانیان خوش آمدید!",
-        });
-        navigate('/');
-      }
-    } catch (error) {
-      toast({
-        variant: "destructive",
-        title: "خطا",
-        description: "مشکلی در تایید کد رخ داده است.",
+        description: "مشکلی رخ داده است.",
       });
     } finally {
       setIsLoading(false);
@@ -165,72 +115,7 @@ const Auth = () => {
     setIsLoading(false);
   };
 
-  if (showOtpInput) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-background via-background to-secondary/20 flex items-center justify-center p-4">
-        <div className="w-full max-w-md relative">
-          {/* Back Button */}
-          <Button
-            variant="ghost"
-            onClick={resetForm}
-            className="absolute -top-12 left-0 flex items-center gap-2 text-muted-foreground hover:text-primary"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            بازگشت
-          </Button>
-
-          <div className="text-center mb-8">
-            <div className="flex items-center justify-center gap-2 mb-4">
-              <Shield className="h-8 w-8 text-primary" />
-              <h1 className="text-3xl font-bold text-primary">تایید شماره</h1>
-            </div>
-            <p className="text-muted-foreground">کد تایید ارسال شده به {phone} را وارد کنید</p>
-          </div>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>کد تایید</CardTitle>
-              <CardDescription>
-                کد 6 رقمی ارسال شده را وارد کنید
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <form onSubmit={handleVerifyOtp} className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="otp">کد تایید</Label>
-                  <Input
-                    id="otp"
-                    type="text"
-                    inputMode="numeric"
-                    placeholder="123456"
-                    value={otp}
-                    onChange={(e) => setOtp(e.target.value.replace(/\D/g, '').slice(0, 6))}
-                    required
-                    maxLength={6}
-                    disabled={isLoading}
-                    className="text-center text-lg tracking-widest"
-                  />
-                </div>
-                <Button type="submit" className="w-full" disabled={isLoading || otp.length !== 6}>
-                  {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                  تایید کد
-                </Button>
-                <Button 
-                  type="button" 
-                  variant="outline" 
-                  className="w-full" 
-                  onClick={() => handleSendOtp({ preventDefault: () => {} } as any, isSignUp)}
-                  disabled={isLoading}
-                >
-                  ارسال مجدد کد
-                </Button>
-              </form>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
-    );
-  }
+  // OTP UI removed; directly render forms
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-secondary/20 flex items-center justify-center p-4">
@@ -267,7 +152,7 @@ const Auth = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <form onSubmit={(e) => handleSendOtp(e, false)} className="space-y-4">
+                <form onSubmit={(e) => handleSubmit(e, false)} className="space-y-4">
                   <div className="space-y-2">
                     <Label htmlFor="signin-phone">شماره موبایل</Label>
                     <div className="relative">
@@ -284,9 +169,25 @@ const Auth = () => {
                       />
                     </div>
                   </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="signin-password">رمز عبور</Label>
+                    <div className="relative">
+                      <Lock className="absolute right-3 top-3 h-4 w-4 text-muted-foreground" />
+                      <Input
+                        id="signin-password"
+                        type="password"
+                        placeholder="********"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                        disabled={isLoading}
+                        className="pr-10"
+                      />
+                    </div>
+                  </div>
                   <Button type="submit" className="w-full" disabled={isLoading}>
                     {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                    ارسال کد تایید
+                    ورود
                   </Button>
                 </form>
               </CardContent>
@@ -302,7 +203,7 @@ const Auth = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <form onSubmit={(e) => handleSendOtp(e, true)} className="space-y-4">
+                <form onSubmit={(e) => handleSubmit(e, true)} className="space-y-4">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label htmlFor="firstName">نام</Label>
@@ -352,6 +253,23 @@ const Auth = () => {
                         className="pr-10 placeholder:text-muted-foreground/50"
                       />
                     </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="signup-password">رمز عبور</Label>
+                    <div className="relative">
+                      <Lock className="absolute right-3 top-3 h-4 w-4 text-muted-foreground" />
+                      <Input
+                        id="signup-password"
+                        type="password"
+                        placeholder="حداقل ۸ کاراکتر، یک حرف بزرگ و یک عدد"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                        disabled={isLoading}
+                        className="pr-10"
+                      />
+                    </div>
+                    <p className="text-xs text-muted-foreground">رمز باید حداقل ۸ کاراکتر، شامل یک حرف بزرگ و یک عدد باشد.</p>
                   </div>
                   <Button type="submit" className="w-full" disabled={isLoading}>
                     {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}

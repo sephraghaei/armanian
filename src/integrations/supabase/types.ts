@@ -14,6 +14,33 @@ export type Database = {
   }
   public: {
     Tables: {
+      users_app: {
+        Row: {
+          id: string
+          phone: string
+          first_name: string
+          last_name: string
+          password_hash: string
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          phone: string
+          first_name: string
+          last_name: string
+          password_hash: string
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          phone?: string
+          first_name?: string
+          last_name?: string
+          password_hash?: string
+          created_at?: string
+        }
+        Relationships: []
+      },
       courses: {
         Row: {
           created_at: string | null

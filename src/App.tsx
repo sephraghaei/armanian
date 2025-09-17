@@ -13,6 +13,7 @@ import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 import ConsultationPrompt from "@/components/ConsultationPrompt";
 import ScrollArrows from "@/components/ScrollArrows";
+import RequireAuth from "@/components/RequireAuth";
 
 const queryClient = new QueryClient();
 
@@ -34,7 +35,7 @@ const App = () => {
               <Route path="/courses" element={<CoursesPage />} />
               <Route path="/course/:courseName" element={<CourseDetailsPage />} />
               <Route path="/auth" element={<Auth />} />
-              <Route path="/profile" element={<Profile />} />
+              <Route path="/profile" element={<RequireAuth><Profile /></RequireAuth>} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>

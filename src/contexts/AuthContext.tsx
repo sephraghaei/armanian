@@ -2,13 +2,19 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 
+type AppUser = {
+  id: string;
+  phone: string;
+  first_name: string;
+  last_name: string;
+};
+
 interface AuthContextType {
-  user: User | null;
-  session: Session | null;
+  user: AppUser | null;
+  session: null;
   loading: boolean;
-  signUpWithPhone: (phone: string, firstName: string, lastName: string) => Promise<{ error: any }>;
-  verifyOtp: (phone: string, otp: string) => Promise<{ error: any }>;
-  signInWithPhone: (phone: string) => Promise<{ error: any }>;
+  signUpWithCredentials: (phone: string, firstName: string, lastName: string, password: string) => Promise<{ error: any }>;
+  signInWithCredentials: (phone: string, password: string) => Promise<{ error: any }>;
   signOut: () => Promise<{ error: any }>;
 }
 
@@ -23,108 +29,82 @@ export const useAuth = () => {
 };
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
-  const [session, setSession] = useState<Session | null>(null);
+  const [user, setUser] = useState<AppUser | null>(null);
+  const [session, setSession] = useState<null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    let mounted = true;
-
-    // Set up auth state listener FIRST
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        if (mounted) {
-          console.log('Auth state change:', event, !!session);
-          setSession(session);
-          setUser(session?.user ?? null);
-          setLoading(false);
-        }
+    try {
+      const rawUser = localStorage.getItem('app_user');
+      if (rawUser) {
+        setUser(JSON.parse(rawUser));
       }
-    );
-
-    // THEN check for existing session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (mounted) {
-        console.log('Initial session:', !!session);
-        setSession(session);
-        setUser(session?.user ?? null);
-        setLoading(false);
-      }
-    });
-
-    return () => {
-      mounted = false;
-      subscription.unsubscribe();
-    };
+    } catch {}
+    setLoading(false);
   }, []);
 
-  const signUpWithPhone = async (phone: string, firstName: string, lastName: string) => {
-    console.log('AuthContext: signUpWithPhone called with:', { phone, firstName, lastName });
-    
-    const displayName = `${firstName} ${lastName}`.trim();
-    
-    const { data, error } = await supabase.auth.signInWithOtp({
-      phone: phone,
-      options: {
-        data: {
-          display_name: displayName,
-          first_name: firstName,
-          last_name: lastName
-        }
+  const toEmailFromPhone = (phone: string): string => {
+    const normalized = phone.replace(/[^\d]/g, '').replace(/^98/, '0');
+    // synthetic, unique per phone
+    return `u${normalized}@example.com`;
+  };
+
+  const signUpWithCredentials = async (phone: string, firstName: string, lastName: string, password: string) => {
+    try {
+      const base = (import.meta as any).env?.VITE_FUNCTIONS_URL || '/functions/v1';
+      const res = await fetch(`${base}/auth-register`, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ phone, firstName, lastName, password }),
+      });
+      if (!res.ok) {
+        const text = await res.text();
+        const body = (() => { try { return JSON.parse(text); } catch { return {}; } })();
+        return { error: { message: body.error || 'REGISTER_FAILED' } };
       }
-    });
-    
-    console.log('AuthContext: signUpWithPhone response:', { 
-      error: error?.message 
-    });
-    
-    return { error };
+      const body = await res.json();
+      try { localStorage.setItem('app_user', JSON.stringify(body.user)); } catch {}
+      setUser(body.user);
+      return { error: null };
+    } catch (e: any) {
+      return { error: { message: 'NETWORK_ERROR' } };
+    }
   };
 
-  const signInWithPhone = async (phone: string) => {
-    console.log('AuthContext: signInWithPhone called with:', { phone });
-    
-    const { data, error } = await supabase.auth.signInWithOtp({
-      phone: phone
-    });
-    
-    console.log('AuthContext: signInWithPhone response:', { 
-      error: error?.message 
-    });
-    
-    return { error };
-  };
-
-  const verifyOtp = async (phone: string, otp: string) => {
-    console.log('AuthContext: verifyOtp called with:', { phone, otp: otp ? '***' : 'empty' });
-    
-    const { data, error } = await supabase.auth.verifyOtp({
-      phone: phone,
-      token: otp,
-      type: 'sms'
-    });
-    
-    console.log('AuthContext: verifyOtp response:', { 
-      user: data?.user?.id ? 'found' : 'not found', 
-      session: data?.session ? 'found' : 'not found',
-      error: error?.message 
-    });
-    
-    return { error };
+  const signInWithCredentials = async (phone: string, password: string) => {
+    try {
+      const base = (import.meta as any).env?.VITE_FUNCTIONS_URL || '/functions/v1';
+      const res = await fetch(`${base}/auth-login`, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ phone, password }),
+      });
+      if (!res.ok) {
+        const text = await res.text();
+        const body = (() => { try { return JSON.parse(text); } catch { return {}; } })();
+        return { error: { message: body.error || 'LOGIN_FAILED' } };
+      }
+      const body = await res.json();
+      try { localStorage.setItem('app_user', JSON.stringify(body.user)); } catch {}
+      setUser(body.user);
+      return { error: null };
+    } catch (e: any) {
+      return { error: { message: 'NETWORK_ERROR' } };
+    }
   };
 
   const signOut = async () => {
-    const { error } = await supabase.auth.signOut();
-    return { error };
+    try { localStorage.removeItem('app_user'); } catch {}
+    setUser(null);
+    return { error: null };
   };
 
   const value = {
     user,
     session,
     loading,
-    signUpWithPhone,
-    signInWithPhone,
-    verifyOtp,
+    signUpWithCredentials,
+    signInWithCredentials,
     signOut
   };
 

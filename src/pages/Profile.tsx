@@ -33,7 +33,7 @@ interface Enrollment {
 }
 
 const Profile = () => {
-  const { user, session, loading } = useAuth();
+  const { user, loading } = useAuth();
   const { toast } = useToast();
   const [profile, setProfile] = useState<Profile | null>(null);
   const [enrollments, setEnrollments] = useState<Enrollment[]>([]);
@@ -216,9 +216,7 @@ const Profile = () => {
     );
   }
 
-  if (!session) {
-    return <Navigate to="/auth" replace />;
-  }
+  if (!user) return <Navigate to="/auth" replace />;
 
   return (
     <div className="min-h-screen bg-background">
