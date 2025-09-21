@@ -146,22 +146,22 @@ const Header = () => {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 animate-fade-in">
       <div className="absolute inset-0 bg-gradient-to-b from-background/95 via-background/90 to-background/85 backdrop-blur-2xl border-b border-border/10"></div>
-      <div className="relative container mx-auto px-4 md:px-6 py-3">
-        <div className="flex items-center justify-between h-14 gap-3 px-3 md:px-6 rounded-2xl border border-border/20 bg-card/70 backdrop-blur-md shadow-xl hover:shadow-2xl transition-all duration-500">
+      <div className="relative container mx-auto px-2 md:px-6 py-3">
+        <div className="flex items-center justify-between h-14 gap-2 px-2 md:px-6 rounded-2xl border border-border/20 bg-card/70 backdrop-blur-md shadow-xl hover:shadow-2xl transition-all duration-500">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-reverse space-x-2 md:space-x-3 group hover-scale min-w-0 flex-shrink-0">
+          <Link to="/" className="flex items-center space-x-reverse space-x-2 group hover-scale flex-shrink-0">
             <div className="relative">
-              <div className="w-10 h-10 bg-gradient-primary rounded-lg flex items-center justify-center shadow-md group-hover:shadow-lg group-hover:shadow-primary/30 transition-all duration-300 group-hover:rotate-3">
-                <Code className="w-5 h-5 text-white" />
+              <div className="w-8 h-8 md:w-10 md:h-10 bg-gradient-primary rounded-lg flex items-center justify-center shadow-md group-hover:shadow-lg group-hover:shadow-primary/30 transition-all duration-300 group-hover:rotate-3">
+                <Code className="w-4 h-4 md:w-5 md:h-5 text-white" />
               </div>
-              <div className="absolute -top-1 -right-1 w-3 h-3 bg-accent rounded-full border-2 border-background pulse"></div>
+              <div className="absolute -top-1 -right-1 w-2 h-2 md:w-3 md:h-3 bg-accent rounded-full border-2 border-background pulse"></div>
             </div>
             <div className="hidden sm:block">
               <h1 className="text-lg font-bold transition-colors duration-300 bg-clip-text text-transparent animate-gradient-x" style={{ backgroundImage: 'linear-gradient(90deg, hsl(233,63%,67%), hsl(200 51% 65%), hsl(233,63%,67%))' }}>آرمانیان</h1>
               <p className="text-xs text-muted-foreground/70 font-medium">آموزشگاه آزاد فنی و حرفه‌ای</p>
             </div>
-            <div className="sm:hidden min-w-0 flex-1">
-              <h1 className="text-base font-bold transition-colors duration-300 bg-clip-text text-transparent animate-gradient-x overflow-visible whitespace-nowrap" style={{ backgroundImage: 'linear-gradient(90deg, hsl(233,63%,67%), hsl(200 51% 65%), hsl(233,63%,67%))' }}>آرمانیان</h1>
+            <div className="sm:hidden">
+              <h1 className="text-sm font-bold transition-colors duration-300 bg-clip-text text-transparent animate-gradient-x" style={{ backgroundImage: 'linear-gradient(90deg, hsl(233,63%,67%), hsl(200 51% 65%), hsl(233,63%,67%))' }}>آرمانیان</h1>
             </div>
           </Link>
 
@@ -244,7 +244,7 @@ const Header = () => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-2 rounded-lg bg-card/60 border border-border/20 text-foreground hover:text-primary hover:bg-card hover:border-primary/20 transition-all duration-300 shadow-md hover:shadow-lg hover-scale"
+            className="md:hidden p-1.5 md:p-2 rounded-lg bg-card/60 border border-border/20 text-foreground hover:text-primary hover:bg-card hover:border-primary/20 transition-all duration-300 shadow-md hover:shadow-lg hover-scale flex-shrink-0"
           >
             {isMenuOpen ? 
               <X className="w-5 h-5 animate-scale-in" /> : 
