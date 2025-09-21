@@ -51,8 +51,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signUpWithCredentials = async (phone: string, firstName: string, lastName: string, password: string) => {
     try {
-      const base = (import.meta as any).env?.VITE_FUNCTIONS_URL || '/functions/v1';
-      const res = await fetch(`${base}/auth-register`, {
+      const functionUrl = `https://drthfkbvxqjhuurmxjrk.supabase.co/functions/v1/auth-register`;
+      const res = await fetch(functionUrl, {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({ phone, firstName, lastName, password }),
@@ -60,21 +60,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (!res.ok) {
         const text = await res.text();
         const body = (() => { try { return JSON.parse(text); } catch { return {}; } })();
-        return { error: { message: body.error || 'REGISTER_FAILED' } };
+        return { error: { message: body.error || 'خطا در ثبت نام' } };
       }
       const body = await res.json();
       try { localStorage.setItem('app_user', JSON.stringify(body.user)); } catch {}
       setUser(body.user);
       return { error: null };
     } catch (e: any) {
-      return { error: { message: 'NETWORK_ERROR' } };
+      return { error: { message: 'خطای شبکه. لطفاً اتصال اینترنت خود را بررسی کنید' } };
     }
   };
 
   const signInWithCredentials = async (phone: string, password: string) => {
     try {
-      const base = (import.meta as any).env?.VITE_FUNCTIONS_URL || '/functions/v1';
-      const res = await fetch(`${base}/auth-login`, {
+      const functionUrl = `https://drthfkbvxqjhuurmxjrk.supabase.co/functions/v1/auth-login`;
+      const res = await fetch(functionUrl, {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({ phone, password }),
@@ -82,14 +82,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (!res.ok) {
         const text = await res.text();
         const body = (() => { try { return JSON.parse(text); } catch { return {}; } })();
-        return { error: { message: body.error || 'LOGIN_FAILED' } };
+        return { error: { message: body.error || 'خطا در ورود' } };
       }
       const body = await res.json();
       try { localStorage.setItem('app_user', JSON.stringify(body.user)); } catch {}
       setUser(body.user);
       return { error: null };
     } catch (e: any) {
-      return { error: { message: 'NETWORK_ERROR' } };
+      return { error: { message: 'خطای شبکه. لطفاً اتصال اینترنت خود را بررسی کنید' } };
     }
   };
 
