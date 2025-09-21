@@ -147,9 +147,9 @@ const Header = () => {
     <header className="fixed top-0 left-0 right-0 z-50 animate-fade-in">
       <div className="absolute inset-0 bg-gradient-to-b from-background/95 via-background/90 to-background/85 backdrop-blur-2xl border-b border-border/10"></div>
       <div className="relative container mx-auto px-4 md:px-6 py-3">
-        <div className="flex items-center justify-between h-14 gap-6 px-4 md:px-6 rounded-2xl border border-border/20 bg-card/70 backdrop-blur-md shadow-xl hover:shadow-2xl transition-all duration-500">
+        <div className="flex items-center justify-between h-14 gap-3 px-3 md:px-6 rounded-2xl border border-border/20 bg-card/70 backdrop-blur-md shadow-xl hover:shadow-2xl transition-all duration-500">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-reverse space-x-3 group hover-scale">
+          <Link to="/" className="flex items-center space-x-reverse space-x-2 md:space-x-3 group hover-scale min-w-0 flex-shrink-0">
             <div className="relative">
               <div className="w-10 h-10 bg-gradient-primary rounded-lg flex items-center justify-center shadow-md group-hover:shadow-lg group-hover:shadow-primary/30 transition-all duration-300 group-hover:rotate-3">
                 <Code className="w-5 h-5 text-white" />
@@ -160,8 +160,8 @@ const Header = () => {
               <h1 className="text-lg font-bold transition-colors duration-300 bg-clip-text text-transparent animate-gradient-x" style={{ backgroundImage: 'linear-gradient(90deg, hsl(233,63%,67%), hsl(200 51% 65%), hsl(233,63%,67%))' }}>آرمانیان</h1>
               <p className="text-xs text-muted-foreground/70 font-medium">آموزشگاه آزاد فنی و حرفه‌ای</p>
             </div>
-            <div className="sm:hidden">
-              <h1 className="text-base font-bold transition-colors duration-300 bg-clip-text text-transparent animate-gradient-x leading-relaxed py-1" style={{ backgroundImage: 'linear-gradient(90deg, hsl(233,63%,67%), hsl(200 51% 65%), hsl(233,63%,67%))' }}>آرمانیان</h1>
+            <div className="sm:hidden min-w-0 flex-1">
+              <h1 className="text-base font-bold transition-colors duration-300 bg-clip-text text-transparent animate-gradient-x overflow-visible whitespace-nowrap" style={{ backgroundImage: 'linear-gradient(90deg, hsl(233,63%,67%), hsl(200 51% 65%), hsl(233,63%,67%))' }}>آرمانیان</h1>
             </div>
           </Link>
 
