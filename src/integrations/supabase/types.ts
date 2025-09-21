@@ -14,33 +14,6 @@ export type Database = {
   }
   public: {
     Tables: {
-      users_app: {
-        Row: {
-          id: string
-          phone: string
-          first_name: string
-          last_name: string
-          password_hash: string
-          created_at: string
-        }
-        Insert: {
-          id?: string
-          phone: string
-          first_name: string
-          last_name: string
-          password_hash: string
-          created_at?: string
-        }
-        Update: {
-          id?: string
-          phone?: string
-          first_name?: string
-          last_name?: string
-          password_hash?: string
-          created_at?: string
-        }
-        Relationships: []
-      },
       courses: {
         Row: {
           created_at: string | null
@@ -246,6 +219,36 @@ export type Database = {
           level?: string | null
           title?: string
           updated_at?: string | null
+        }
+        Relationships: []
+      }
+      users_app: {
+        Row: {
+          created_at: string
+          first_name: string
+          id: string
+          last_name: string
+          password_hash: string
+          phone: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          first_name: string
+          id?: string
+          last_name: string
+          password_hash: string
+          phone: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          first_name?: string
+          id?: string
+          last_name?: string
+          password_hash?: string
+          phone?: string
+          updated_at?: string
         }
         Relationships: []
       }
