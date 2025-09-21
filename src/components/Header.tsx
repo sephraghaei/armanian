@@ -77,7 +77,7 @@ const Header = () => {
 
     if (elements.length === 0) return;
 
-    const handleIntersect: IntersectionObserverCallback = (entries) => {
+    const handleIntersect = (entries: IntersectionObserverEntry[]) => {
       // Find the entry most in view (largest intersection ratio)
       const visible = entries
         .filter(e => e.isIntersecting)
@@ -104,7 +104,7 @@ const Header = () => {
 
     // Initial set on mount
     setTimeout(() => {
-      handleIntersect(elements.map(el => ({
+      const initialEntries = elements.map(el => ({
         target: el,
         isIntersecting: true,
         intersectionRatio: 0,
@@ -112,7 +112,8 @@ const Header = () => {
         boundingClientRect: el.getBoundingClientRect(),
         intersectionRect: el.getBoundingClientRect(),
         rootBounds: null,
-      })) as unknown as IntersectionObserverEntry[]);
+      })) as unknown as IntersectionObserverEntry[];
+      handleIntersect(initialEntries);
     }, 0);
 
     return () => {
@@ -160,7 +161,7 @@ const Header = () => {
               <p className="text-xs text-muted-foreground/70 font-medium">آموزشگاه آزاد فنی و حرفه‌ای</p>
             </div>
             <div className="sm:hidden">
-              <h1 className="text-base font-bold transition-colors duration-300 bg-clip-text text-transparent animate-gradient-x" style={{ backgroundImage: 'linear-gradient(90deg, hsl(233,63%,67%), hsl(200 51% 65%), hsl(233,63%,67%))' }}>آرمانیان</h1>
+              <h1 className="text-base font-bold transition-colors duration-300 bg-clip-text text-transparent animate-gradient-x leading-relaxed py-1" style={{ backgroundImage: 'linear-gradient(90deg, hsl(233,63%,67%), hsl(200 51% 65%), hsl(233,63%,67%))' }}>آرمانیان</h1>
             </div>
           </Link>
 
@@ -224,7 +225,7 @@ const Header = () => {
                     <span>پروفایل کاربری</span>
                   </DropdownMenuItem>
                   <DropdownMenuItem className="flex items-center gap-2 opacity-60">
-                    <span className="text-sm text-muted-foreground">{user.phone || user.email || 'کاربر'}</span>
+                    <span className="text-sm text-muted-foreground">{user.phone || 'کاربر'}</span>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator className="bg-border/20" />
                   <DropdownMenuItem onClick={handleSignOut} className="flex items-center gap-2 text-destructive hover:bg-destructive/10 transition-colors">
