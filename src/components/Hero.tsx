@@ -114,7 +114,7 @@ const Hero = () => {
             </div>
             
             <div className="pt-6">
-              <p className="text-base sm:text-lg md:text-2xl text-muted-foreground/90 max-w-3xl mx-auto leading-relaxed font-medium">
+              <p className="text-base sm:text-lg md:text-2xl text-muted-foreground/90 max-w-3xl mx-auto leading-loose md:leading-relaxed font-medium overflow-visible">
                 <Typewriter text="مسیر آینده از آرمانیان می گذرد ..." />
               </p>
             </div>
