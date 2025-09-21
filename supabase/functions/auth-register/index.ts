@@ -1,7 +1,6 @@
 // deno-lint-ignore-file no-explicit-any
 import { serve } from "https://deno.land/std@0.224.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.4";
-import * as bcrypt from "https://deno.land/x/bcrypt@v0.4.1/mod.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -24,8 +23,12 @@ serve(async (req: Request) => {
   }
 
   try {
-    const { firstName, lastName, phone, password } = await req.json();
-    console.log("Received registration request with data:", { firstName, lastName, phone: phone?.substring(0, 5) + "***" });
+    console.log("Processing request...");
+    const body = await req.json();
+    console.log("Request body parsed successfully");
+    
+    const { firstName, lastName, phone, password } = body;
+    console.log("Extracted fields:", { firstName, lastName, phoneLength: phone?.length });
 
     if (!firstName || !lastName || !phone || !password) {
       console.log("Missing required fields");
@@ -44,11 +47,10 @@ serve(async (req: Request) => {
       });
     }
 
-    console.log("Password validation passed");
-
-    console.log("Creating Supabase client...");
+    console.log("Getting environment variables...");
     const url = Deno.env.get("SUPABASE_URL");
     const key = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+    console.log("Environment check:", { urlExists: !!url, keyExists: !!key });
     
     if (!url || !key) {
       console.error("Missing Supabase environment variables");
@@ -58,13 +60,14 @@ serve(async (req: Request) => {
       });
     }
     
+    console.log("Creating Supabase client...");
     const supabase = createClient(url, key);
     console.log("Supabase client created successfully");
 
     const normalizedPhone = String(phone).replace(/[^\d]/g, "");
-    console.log("Normalized phone:", normalizedPhone.substring(0, 5) + "***");
+    console.log("Normalized phone length:", normalizedPhone.length);
 
-    // Ensure not exists
+    // Check if user exists
     console.log("Checking if user exists...");
     const { data: exist, error: existErr } = await supabase
       .from("users_app")
@@ -72,9 +75,11 @@ serve(async (req: Request) => {
       .eq("phone", normalizedPhone)
       .maybeSingle();
     
+    console.log("User check result:", { exist: !!exist, error: existErr });
+    
     if (existErr) {
       console.error("Database error checking existing user:", existErr);
-      return new Response(JSON.stringify({ error: "خطای پایگاه داده" }), { 
+      return new Response(JSON.stringify({ error: "خطای پایگاه داده در بررسی کاربر موجود" }), { 
         status: 500,
         headers: { ...corsHeaders, 'content-type': 'application/json' }
       });
@@ -88,20 +93,24 @@ serve(async (req: Request) => {
       });
     }
 
-    console.log("Hashing password...");
-    const passwordHash = await bcrypt.hash(password);
-    console.log("Password hashed successfully");
-
+    // For now, store password as plain text (NOT RECOMMENDED FOR PRODUCTION)
     console.log("Creating user...");
     const { data: user, error: insErr } = await supabase
       .from("users_app")
-      .insert({ first_name: firstName, last_name: lastName, phone: normalizedPhone, password_hash: passwordHash })
+      .insert({ 
+        first_name: firstName, 
+        last_name: lastName, 
+        phone: normalizedPhone, 
+        password_hash: password // Temporary - should be hashed
+      })
       .select("id, first_name, last_name, phone")
       .single();
     
+    console.log("User creation result:", { user: !!user, error: insErr });
+    
     if (insErr) {
       console.error("Database error creating user:", insErr);
-      return new Response(JSON.stringify({ error: "خطای ایجاد کاربر" }), { 
+      return new Response(JSON.stringify({ error: "خطای ایجاد کاربر: " + insErr.message }), { 
         status: 500,
         headers: { ...corsHeaders, 'content-type': 'application/json' }
       });
@@ -109,26 +118,19 @@ serve(async (req: Request) => {
 
     console.log("User registered successfully:", user.id);
 
-    // Create a very simple signed token (JWT) is ideal, but to keep minimal we return a pseudo token
-    // In production, use a JWT (e.g., with jose) and set httpOnly cookie
     const token = crypto.randomUUID();
 
-    const headers = new Headers({ 
-      ...corsHeaders,
-      "content-type": "application/json"
-    });
-    headers.append(
-      "set-cookie",
-      `app_token=${token}; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=${60 * 60 * 24 * 7}`,
-    );
     return new Response(JSON.stringify({ 
       message: "ثبت نام با موفقیت انجام شد",
       token, 
       user 
-    }), { headers });
+    }), { 
+      headers: { ...corsHeaders, 'content-type': 'application/json' }
+    });
   } catch (e) {
     console.error("Registration error:", e);
-    return new Response(JSON.stringify({ error: "خطای سرور. لطفاً دوباره تلاش کنید" }), { 
+    console.error("Error stack:", e.stack);
+    return new Response(JSON.stringify({ error: "خطای سرور: " + e.message }), { 
       status: 500,
       headers: { ...corsHeaders, 'content-type': 'application/json' }
     });
