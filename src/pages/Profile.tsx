@@ -9,8 +9,8 @@ import { Badge } from '@/components/ui/badge';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { useToast } from '@/hooks/use-toast';
-import { Trash2, Clock, Plus } from 'lucide-react';
-import { Navigate } from 'react-router-dom';
+import { Trash2, Clock, Plus, ArrowLeft } from 'lucide-react';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 interface Profile {
   id: string;
@@ -34,6 +34,7 @@ interface Enrollment {
 
 const Profile = () => {
   const { user, loading } = useAuth();
+  const navigate = useNavigate();
   const { toast } = useToast();
   const [profile, setProfile] = useState<Profile | null>(null);
   const [enrollments, setEnrollments] = useState<Enrollment[]>([]);
@@ -222,6 +223,16 @@ const Profile = () => {
     <div className="min-h-screen bg-background">
       <div className="container mx-auto py-8 px-4">
         <div className="max-w-4xl mx-auto space-y-6">
+          {/* Back Button */}
+          <Button 
+            variant="ghost" 
+            onClick={() => navigate(-1)}
+            className="flex items-center gap-2 mb-4"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            برگشت
+          </Button>
+          
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold">پروفایل کاربری</h1>
             <p className="text-muted-foreground mt-2">مدیریت اطلاعات شخصی و دوره‌های خود</p>
