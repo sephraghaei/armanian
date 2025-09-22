@@ -24,7 +24,7 @@ interface Course {
 }
 
 const CourseDetail = () => {
-  const { courseId } = useParams();
+  const { courseId } = useParams(); // This is actually the course title
   const navigate = useNavigate();
   const { user } = useAuth();
   const { toast } = useToast();
@@ -41,7 +41,7 @@ const CourseDetail = () => {
       const { data, error } = await supabase
         .from('courses')
         .select('*')
-        .eq('id', courseId)
+        .eq('title', courseId) // Search by title since courseId is actually the title
         .single();
 
       if (error) {
@@ -74,7 +74,7 @@ const CourseDetail = () => {
         .from('enrollments')
         .select('id')
         .eq('user_id', user.id)
-        .eq('course_id', courseId)
+        .eq('course_id', course.id) // Use course.id from the fetched course
         .single();
 
       if (existingEnrollment) {
@@ -91,7 +91,7 @@ const CourseDetail = () => {
         .from('enrollments')
         .insert({
           user_id: user.id,
-          course_id: courseId,
+          course_id: course.id, // Use course.id from the fetched course
           expires_at: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString(), // 1 year from now
         });
 
