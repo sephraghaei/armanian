@@ -65,6 +65,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const body = await res.json();
       try { localStorage.setItem('app_user', JSON.stringify(body.user)); } catch {}
       setUser(body.user);
+      // Redirect to courses page after successful signup
+      window.location.href = '/courses';
       return { error: null };
     } catch (e: any) {
       return { error: { message: 'خطای شبکه. لطفاً اتصال اینترنت خود را بررسی کنید' } };
