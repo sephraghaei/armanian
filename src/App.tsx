@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import DepartmentsPage from "./pages/Departments";
 import CoursesPage from "./pages/Courses";
 import CourseDetailsPage from "./pages/CourseDetails";
+import CourseDetailPage from "./pages/CourseDetail";
 import Auth from "./pages/Auth";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
@@ -33,7 +34,8 @@ const App = () => {
               <Route path="/" element={<Index />} />
               <Route path="/departments" element={<DepartmentsPage />} />
               <Route path="/courses" element={<CoursesPage />} />
-              <Route path="/course/:courseName" element={<CourseDetailsPage />} />
+              <Route path="/course/:courseId" element={<CourseDetailsPage />} />
+              <Route path="/course-detail/:courseId" element={<CourseDetailPage />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/profile" element={<RequireAuth><Profile /></RequireAuth>} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

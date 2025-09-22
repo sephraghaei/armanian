@@ -168,7 +168,7 @@ const CoursesPage = () => {
                     className="w-full text-white"
                     style={course.popular ? { background: 'linear-gradient(135deg, hsl(28,92%,56%), hsl(24,95%,55%))' } : {}}
                     size="lg"
-                    onClick={handleSignUp}
+                    onClick={() => navigate(`/course-detail/${course.title}`)}
                   >
                     {course.popular ? "شروع یادگیری" : "انتخاب دوره"}
                   </Button>
@@ -195,7 +195,7 @@ const CoursesPage = () => {
                       {course.detailedDescription}
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4">
-                      <Button variant="hero" size="lg" onClick={handleSignUp}>
+                      <Button variant="hero" size="lg" onClick={() => navigate(`/course-detail/${course.title}`)}>
                         ثبت نام در دوره
                       </Button>
                       <Button variant="outline" size="lg">
