@@ -25,7 +25,7 @@ const CourseDetailsPage = () => {
   // Sample course data - in real app, this would come from API/database
   const courseData = {
     'icdl-kids': {
-      title: 'ICDL کودکان',
+      title: 'دوره مهارت های پنجگانه ICDL کودکان',
       description: 'آموزش جامع مهارت‌های اولیه کامپیوتر برای کودکان ۶ تا ۱۲ سال. این دوره شامل آشنایی با سیستم عامل، مرورگر اینترنت، نرم‌افزارهای آفیس و مفاهیم امنیت سایبری می‌باشد.',
       duration: '۸ هفته',
       sessions: '۱۶ جلسه',
