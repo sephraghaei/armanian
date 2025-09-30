@@ -27,6 +27,13 @@ const About = () => {
     }
   ];
 
+  const videos = [
+    "/videos/1.mp4",
+    "/videos/2.mp4",
+    "/videos/3.mp4",
+    "/videos/4.mp4"
+  ];
+
   return (
     <section id="about" className="py-20 bg-transparent">
       <div className="container mx-auto px-4">
@@ -88,42 +95,27 @@ const About = () => {
             </div>
           </div>
         </div>
-
-        {/* Facility Section with Image */}
-        <div className="mt-20 grid md:grid-cols-2 gap-12 items-center">
-          <div className="space-y-6 order-2 md:order-1">
-            <h3 className="text-2xl md:text-3xl font-bold text-foreground">
-              امکانات مدرن و استاندارد
-            </h3>
-            <p className="text-muted-foreground leading-relaxed">
-              محیط یادگیری مجهز به جدیدترین تجهیزات و فناوری‌های روز دنیا. 
-              کلاس‌های هوشمند، رایانه‌های مدرن و فضای الهام‌بخش برای رشد خلاقیت.
-            </p>
-            <ul className="space-y-3">
-              <li className="flex items-center space-x-reverse space-x-3">
-                <div className="w-2 h-2 bg-primary rounded-full"></div>
-                <span className="text-muted-foreground">کلاس‌های مجهز به تکنولوژی مدرن</span>
-              </li>
-              <li className="flex items-center space-x-reverse space-x-3">
-                <div className="w-2 h-2 bg-accent rounded-full"></div>
-                <span className="text-muted-foreground">محیط یادگیری ایمن و دوستانه</span>
-              </li>
-              <li className="flex items-center space-x-reverse space-x-3">
-                <div className="w-2 h-2 bg-primary rounded-full"></div>
-                <span className="text-muted-foreground">دسترسی آسان و پارکینگ رایگان</span>
-              </li>
-            </ul>
-          </div>
-          <div className="relative order-1 md:order-2">
-            <img 
-              src={facilityImage} 
-              alt="ساختمان آموزشگاه آرمانیان"
-              className="rounded-2xl shadow-xl w-full h-80 object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-tl from-primary/20 to-accent/20 rounded-2xl"></div>
+        
+        {/* Video Section */}
+        <div className="mt-20">
+          <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-6 text-center">
+            ویدیوهای آموزشی ما
+          </h3>
+          <div className="flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-thin scrollbar-thumb-muted-foreground/30">
+            {videos.map((video, index) => (
+              <div key={index} className="snap-center flex-shrink-0 w-80">
+                <video
+                  src={video}
+                  controls
+                  className="rounded-2xl shadow-xl w-full h-48 object-cover"
+                />
+                <p className="text-center text-sm text-muted-foreground mt-2">
+                  ویدیو {index + 1}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
-
       </div>
     </section>
   );
