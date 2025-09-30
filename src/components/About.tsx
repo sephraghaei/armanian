@@ -28,9 +28,9 @@ const About = () => {
   ];
 
   const videos = [
-    "/assets/1.mp4",
-    "/assets/2.mp4",
-    "/assets/3.mp4"
+    "/src/assets/1.mp4",
+    "/src/assets/2.mp4",
+    "/src/assets/3.mp4"
   ];
 
   return (
