@@ -11,7 +11,6 @@ import {
   CheckCircle, 
   ArrowRight,
   ArrowLeft,
-  User,
   Calendar,
   DollarSign
 } from 'lucide-react';
@@ -34,8 +33,6 @@ const CourseDetailsPage = () => {
       level: 'مقدماتی',
       ageGroup: '۷ تا ۱۴ سال',
       classSize: '۱۰ نفر',
-      teacher: 'سیمین آقایی',
-      teacherExperience: '۸ سال سابقه تدریس کودکان',
       schedule: null,
       prerequisites: ['علاقه به یادگیری'],
       certificate: 'گواهینامه معتبر بین المللی ICDL',
@@ -66,8 +63,6 @@ const CourseDetailsPage = () => {
       level: 'متوسط',
       ageGroup: '۱۸ سال به بالا',
       classSize: '۱۵ نفر',
-      teacher: 'مهدی محمدی',
-      teacherExperience: '۱۰ سال سابقه تدریس ICDL',
       schedule: 'یکشنبه و سه‌شنبه - ۱۸:۰۰ تا ۲۰:۰۰',
       prerequisites: ['آشنایی اولیه با کامپیوتر', 'انگیزه یادگیری'],
       certificate: undefined,
@@ -95,8 +90,6 @@ const CourseDetailsPage = () => {
       level: 'مقدماتی',
       ageGroup: '۸ تا ۱۴ سال',
       classSize: '۱۰ نفر',
-      teacher: 'سیمین آقایی',
-      teacherExperience: '۶ سال سابقه تدریس برنامه‌نویسی کودکان',
       schedule: 'چهارشنبه و جمعه - ۱۶:۳۰ تا ۱۸:۰۰',
       prerequisites: ['آشنایی با کامپیوتر', 'علاقه به خلاقیت'],
       certificate: undefined,
@@ -124,8 +117,6 @@ const CourseDetailsPage = () => {
       level: 'متوسط',
       ageGroup: '۱۳ تا ۱۷ سال',
       classSize: '۱۲ نفر',
-      teacher: 'مهدی محمدی',
-      teacherExperience: '۱۲ سال سابقه تدریس برنامه‌نویسی',
       schedule: 'شنبه و دوشنبه - ۱۷:۰۰ تا ۱۹:۰۰',
       prerequisites: ['منطق ریاضی', 'علاقه به برنامه‌نویسی'],
       certificate: undefined,
@@ -153,8 +144,6 @@ const CourseDetailsPage = () => {
       level: 'مقدماتی',
       ageGroup: '۱۲ تا ۱۷ سال',
       classSize: '۱۲ نفر',
-      teacher: 'سیمین آقایی',
-      teacherExperience: '۷ سال سابقه تدریس گرافیک',
       schedule: 'یکشنبه و چهارشنبه - ۱۶:۰۰ تا ۱۸:۰۰',
       prerequisites: ['علاقه به هنر', 'آشنایی با کامپیوتر'],
       certificate: undefined,
@@ -182,8 +171,6 @@ const CourseDetailsPage = () => {
       level: 'متوسط',
       ageGroup: '۱۸ سال به بالا',
       classSize: '۱۰ نفر',
-      teacher: 'مهدی محمدی',
-      teacherExperience: '۱۵ سال سابقه طراحی و تدریس معماری',
       schedule: 'شنبه و سه‌شنبه - ۱۹:۰۰ تا ۲۱:۰۰',
       prerequisites: ['علاقه به طراحی', 'حس زیبایی‌شناسی'],
       certificate: undefined,
@@ -211,8 +198,6 @@ const CourseDetailsPage = () => {
       level: 'مقدماتی تا متوسط',
       ageGroup: '۱۰ سال به بالا',
       classSize: '۱۵ نفر',
-      teacher: 'سیمین آقایی',
-      teacherExperience: '۹ سال سابقه تدریس زبان انگلیسی',
       schedule: 'دوشنبه و پنج‌شنبه - ۱۷:۰۰ تا ۱۸:۳۰',
       prerequisites: ['انگیزه یادگیری', 'آشنایی اولیه با انگلیسی'],
       certificate: undefined,
@@ -401,25 +386,6 @@ const CourseDetailsPage = () => {
 
             {/* Sidebar */}
             <div className="space-y-6">
-              {/* Instructor Card */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <User className="w-5 h-5" />
-                    مدرس دوره
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-center">
-                    <div className="w-20 h-20 bg-gradient-primary rounded-full flex items-center justify-center mx-auto mb-4">
-                      <User className="w-10 h-10 text-white" />
-                    </div>
-                    <h3 className="font-semibold text-lg">{course.teacher}</h3>
-                    <p className="text-muted-foreground">{course.teacherExperience}</p>
-                  </div>
-                </CardContent>
-              </Card>
-
               {/* Enrollment Card */}
               <Card className="border-primary/20">
                 <CardHeader>
