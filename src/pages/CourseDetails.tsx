@@ -412,21 +412,6 @@ const CourseDetailsPage = () => {
                   </p>
                 </CardContent>
               </Card>
-
-              {/* Contact Card */}
-              <Card>
-                <CardHeader>
-                  <CardTitle>نیاز به مشاوره دارید؟</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <p className="text-muted-foreground text-sm">
-                    برای دریافت مشاوره رایگان با کارشناسان ما تماس بگیرید.
-                  </p>
-                  <Button variant="outline" className="w-full">
-                    مشاوره رایگان
-                  </Button>
-                </CardContent>
-              </Card>
             </div>
           </div>
         </div>
