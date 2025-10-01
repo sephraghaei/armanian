@@ -26,29 +26,34 @@ const CourseDetailsPage = () => {
   const courseData = {
     'icdl-kids': {
       title: 'دوره مهارت های پنجگانه ICDL کودکان',
-      description: 'آموزش جامع مهارت‌های اولیه کامپیوتر برای کودکان ۶ تا ۱۲ سال. این دوره شامل آشنایی با سیستم عامل، مرورگر اینترنت، نرم‌افزارهای آفیس و مفاهیم امنیت سایبری می‌باشد.',
-      duration: '۸ هفته',
-      sessions: '۱۶ جلسه',
-      price: '۱,۵۰۰,۰۰۰ تومان',
+      description: 'در این دوره کودکان از پایه با سخت افزار کامپیوتر، فناوری اطلاعات، کار با سیستم عامل ویندوز و نرم افزار های آفیس شامل ورد و پاورپورینت و کار با ایمیل و اینترنت آشنا می شوند. این دوره مخصوص کودکان ۷ تا ۱۴ سال می باشد و با متد های بازی و سرگرمی همراه با یادگیری برای کودکان فضایی مفرح و جذاب فراهم کرده است.',
+      duration: '۱۰ هفته',
+      sessions: '۲۵ جلسه',
+      price: '۴,۶۰۰,۰۰۰ تومان',
+      oldPrice: '۴,۹۰۰,۰۰۰ تومان',
       level: 'مقدماتی',
-      ageGroup: '۶ تا ۱۲ سال',
+      ageGroup: '۷ تا ۱۴ سال',
       classSize: '۱۰ نفر',
       teacher: 'سیمین آقایی',
       teacherExperience: '۸ سال سابقه تدریس کودکان',
-      schedule: 'شنبه و دوشنبه - ۱۶:۰۰ تا ۱۷:۳۰',
-      prerequisites: ['علاقه به یادگیری', 'آشنایی اولیه با کامپیوتر'],
+      schedule: null,
+      prerequisites: ['علاقه به یادگیری'],
+      certificate: 'گواهینامه معتبر بین المللی ICDL',
       features: [
-        'گواهینامه معتبر بین‌المللی ICDL',
         'پروژه‌های عملی تعاملی',
         'بازی‌های آموزشی',
         'پشتیبانی آنلاین والدین'
       ],
       learningOutcomes: [
-        'کار با سیستم عامل ویندوز',
-        'استفاده از مرورگر و جستجو در اینترنت',
-        'تایپ ده انگشتی فارسی و انگلیسی',
-        'ایجاد ارائه ساده با PowerPoint',
-        'مفاهیم امنیت سایبری برای کودکان'
+        'کار با سیستم عامل ویندوز ۷ و ۱۰',
+        'مدیریت فایل ها و پوشه ها',
+        'شناخت سخت افزار و نرم افزار کامپیوتر',
+        'تایپ ده انگشتی',
+        'ارایه مطالب با power point',
+        'طراحی جلد کتاب با word',
+        'طراحی تراکت با word',
+        'ساخت ایمیل',
+        'سرچ اصولی در گوگل و copilot'
       ]
     },
     'icdl-adults': {
@@ -57,6 +62,7 @@ const CourseDetailsPage = () => {
       duration: '۱۰ هفته',
       sessions: '۲۰ جلسه',
       price: '۲,۲۰۰,۰۰۰ تومان',
+      oldPrice: undefined,
       level: 'متوسط',
       ageGroup: '۱۸ سال به بالا',
       classSize: '۱۵ نفر',
@@ -64,6 +70,7 @@ const CourseDetailsPage = () => {
       teacherExperience: '۱۰ سال سابقه تدریس ICDL',
       schedule: 'یکشنبه و سه‌شنبه - ۱۸:۰۰ تا ۲۰:۰۰',
       prerequisites: ['آشنایی اولیه با کامپیوتر', 'انگیزه یادگیری'],
+      certificate: undefined,
       features: [
         'گواهینامه بین‌المللی ICDL',
         'نرم‌افزارهای Microsoft Office',
@@ -84,6 +91,7 @@ const CourseDetailsPage = () => {
       duration: '۱۲ هفته',
       sessions: '۲۴ جلسه',
       price: '۱,۸۰۰,۰۰۰ تومان',
+      oldPrice: undefined,
       level: 'مقدماتی',
       ageGroup: '۸ تا ۱۴ سال',
       classSize: '۱۰ نفر',
@@ -91,6 +99,7 @@ const CourseDetailsPage = () => {
       teacherExperience: '۶ سال سابقه تدریس برنامه‌نویسی کودکان',
       schedule: 'چهارشنبه و جمعه - ۱۶:۳۰ تا ۱۸:۰۰',
       prerequisites: ['آشنایی با کامپیوتر', 'علاقه به خلاقیت'],
+      certificate: undefined,
       features: [
         'پروژه‌های بازی‌سازی',
         'انیمیشن‌های تعاملی',
@@ -111,6 +120,7 @@ const CourseDetailsPage = () => {
       duration: '۱۴ هفته',
       sessions: '۲۸ جلسه',
       price: '۲,۵۰۰,۰۰۰ تومان',
+      oldPrice: undefined,
       level: 'متوسط',
       ageGroup: '۱۳ تا ۱۷ سال',
       classSize: '۱۲ نفر',
@@ -118,6 +128,7 @@ const CourseDetailsPage = () => {
       teacherExperience: '۱۲ سال سابقه تدریس برنامه‌نویسی',
       schedule: 'شنبه و دوشنبه - ۱۷:۰۰ تا ۱۹:۰۰',
       prerequisites: ['منطق ریاضی', 'علاقه به برنامه‌نویسی'],
+      certificate: undefined,
       features: [
         'پروژه‌های عملی',
         'یادگیری تعاملی',
@@ -138,6 +149,7 @@ const CourseDetailsPage = () => {
       duration: '۱۰ هفته',
       sessions: '۲۰ جلسه',
       price: '۲,۰۰۰,۰۰۰ تومان',
+      oldPrice: undefined,
       level: 'مقدماتی',
       ageGroup: '۱۲ تا ۱۷ سال',
       classSize: '۱۲ نفر',
@@ -145,6 +157,7 @@ const CourseDetailsPage = () => {
       teacherExperience: '۷ سال سابقه تدریس گرافیک',
       schedule: 'یکشنبه و چهارشنبه - ۱۶:۰۰ تا ۱۸:۰۰',
       prerequisites: ['علاقه به هنر', 'آشنایی با کامپیوتر'],
+      certificate: undefined,
       features: [
         'پروژه‌های خلاقانه',
         'تکنیک‌های حرفه‌ای',
@@ -165,6 +178,7 @@ const CourseDetailsPage = () => {
       duration: '۱۲ هفته',
       sessions: '۲۴ جلسه',
       price: '۳,۰۰۰,۰۰۰ تومان',
+      oldPrice: undefined,
       level: 'متوسط',
       ageGroup: '۱۸ سال به بالا',
       classSize: '۱۰ نفر',
@@ -172,6 +186,7 @@ const CourseDetailsPage = () => {
       teacherExperience: '۱۵ سال سابقه طراحی و تدریس معماری',
       schedule: 'شنبه و سه‌شنبه - ۱۹:۰۰ تا ۲۱:۰۰',
       prerequisites: ['علاقه به طراحی', 'حس زیبایی‌شناسی'],
+      certificate: undefined,
       features: [
         'پروژه‌های واقعی',
         'نرم‌افزارهای حرفه‌ای',
@@ -192,6 +207,7 @@ const CourseDetailsPage = () => {
       duration: '۱۲ هفته',
       sessions: '۲۴ جلسه',
       price: '۱,۶۰۰,۰۰۰ تومان',
+      oldPrice: undefined,
       level: 'مقدماتی تا متوسط',
       ageGroup: '۱۰ سال به بالا',
       classSize: '۱۵ نفر',
@@ -199,6 +215,7 @@ const CourseDetailsPage = () => {
       teacherExperience: '۹ سال سابقه تدریس زبان انگلیسی',
       schedule: 'دوشنبه و پنج‌شنبه - ۱۷:۰۰ تا ۱۸:۳۰',
       prerequisites: ['انگیزه یادگیری', 'آشنایی اولیه با انگلیسی'],
+      certificate: undefined,
       features: [
         'نرم‌افزارهای تعاملی',
         'بازی‌های آموزشی',
@@ -297,12 +314,15 @@ const CourseDetailsPage = () => {
                     </div>
                   </div>
 
-                  <Separator />
-
-                  <div>
-                    <h3 className="font-semibold mb-3">زمان‌بندی کلاس‌ها</h3>
-                    <p className="text-muted-foreground">{course.schedule}</p>
-                  </div>
+                  {course.schedule && (
+                    <>
+                      <Separator />
+                      <div>
+                        <h3 className="font-semibold mb-3">زمان‌بندی کلاس‌ها</h3>
+                        <p className="text-muted-foreground">{course.schedule}</p>
+                      </div>
+                    </>
+                  )}
                 </CardContent>
               </Card>
 
@@ -328,11 +348,8 @@ const CourseDetailsPage = () => {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Award className="w-5 h-5" />
-                    نتایج یادگیری
+                    توانایی هایی که بعد از اتمام این دوره کسب می کنید
                   </CardTitle>
-                  <CardDescription>
-                    پس از اتمام این دوره قادر خواهید بود:
-                  </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <ul className="space-y-3">
@@ -345,6 +362,24 @@ const CourseDetailsPage = () => {
                   </ul>
                 </CardContent>
               </Card>
+
+              {/* Certificate */}
+              {course.certificate && (
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Award className="w-5 h-5" />
+                      مدارک دوره
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="flex items-center gap-3">
+                      <CheckCircle className="w-5 h-5 text-primary flex-shrink-0" />
+                      <span>{course.certificate}</span>
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
 
               {/* Course Features */}
               <Card>
@@ -392,6 +427,9 @@ const CourseDetailsPage = () => {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="text-center">
+                    {course.oldPrice && (
+                      <p className="text-lg text-muted-foreground line-through">{course.oldPrice}</p>
+                    )}
                     <p className="text-2xl font-bold text-primary">{course.price}</p>
                     <p className="text-muted-foreground">هزینه کل دوره</p>
                   </div>
