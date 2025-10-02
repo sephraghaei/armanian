@@ -3,6 +3,9 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Target, Users, Award, Lightbulb } from 'lucide-react';
 import successImage from '@/assets/success-students.jpg';
 import facilityImage from '@/assets/facility-exterior.jpg';
+import video1 from '@/assets/1.mp4';
+import video2 from '@/assets/2.mp4';
+import video3 from '@/assets/3.mp4';
 
 const About = () => {
   const features = [
@@ -30,15 +33,15 @@ const About = () => {
 
   const videos = [
     {
-      src: "/src/assets/1.mp4",
+      src: video1,
       title: "۵ مهارت کلیدی که هرگز در مدرسه یاد نمی‌گیرید"
     },
     {
-      src: "/src/assets/2.mp4",
+      src: video2,
       title: "مدارس فعلی آماده چالش‌های آینده هستند؟"
     },
     {
-      src: "/src/assets/3.mp4",
+      src: video3,
       title: "چگونه رایانگ عامل رشد خلاقیت می‌شود؟"
     }
   ];
