@@ -113,52 +113,63 @@ const About = () => {
             ویدیوهای آموزشی ما
           </h3>
           
-          <div className="max-w-4xl mx-auto">
-            <Card className="p-6 bg-card/50 backdrop-blur-sm border-2">
+          <div className="max-w-2xl mx-auto">
+            <Card className="overflow-hidden bg-card border-2">
               {/* Video List */}
-              <div className="space-y-3 mb-6">
+              <div className="border-l-4 border-primary bg-card">
                 {videos.map((video, index) => (
                   <button
                     key={index}
                     onClick={() => setSelectedVideo(index)}
-                    className={`w-full flex items-center gap-4 p-4 rounded-xl transition-all hover:bg-accent/50 ${
-                      selectedVideo === index ? 'bg-primary/10 border-2 border-primary' : 'border-2 border-transparent'
+                    className={`w-full flex items-center justify-between gap-4 p-4 transition-all border-b last:border-b-0 ${
+                      selectedVideo === index 
+                        ? 'bg-primary/5' 
+                        : 'hover:bg-muted/50'
                     }`}
                   >
+                    <h4 className="text-right text-sm md:text-base font-medium text-foreground flex-1 leading-relaxed">
+                      {video.title}
+                    </h4>
+                    
                     <div className="relative flex-shrink-0">
-                      <div className="w-24 h-16 bg-muted rounded-lg overflow-hidden">
+                      <div className="w-20 h-14 md:w-24 md:h-16 bg-black rounded-lg overflow-hidden shadow-md">
                         <video
                           src={video.src}
                           className="w-full h-full object-cover"
                         />
                       </div>
                       <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-8 h-8 bg-primary/80 rounded-full flex items-center justify-center">
-                          <div className="w-0 h-0 border-t-4 border-t-transparent border-l-6 border-l-white border-b-4 border-b-transparent mr-[-2px]" />
+                        <div className="w-10 h-10 bg-primary/90 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform">
+                          <svg 
+                            viewBox="0 0 24 24" 
+                            fill="white" 
+                            className="w-5 h-5 mr-[-2px]"
+                          >
+                            <path d="M8 5v14l11-7z"/>
+                          </svg>
                         </div>
                       </div>
                     </div>
-                    <p className="text-right text-sm md:text-base font-medium text-foreground flex-1">
-                      {video.title}
-                    </p>
                   </button>
                 ))}
               </div>
 
               {/* Main Video Player */}
-              <div className="relative rounded-2xl overflow-hidden shadow-2xl bg-black">
-                <video
-                  key={selectedVideo}
-                  src={videos[selectedVideo].src}
-                  controls
-                  className="w-full aspect-video"
-                  autoPlay
-                />
+              <div className="p-6 bg-muted/30">
+                <div className="relative rounded-xl overflow-hidden shadow-2xl bg-black">
+                  <video
+                    key={selectedVideo}
+                    src={videos[selectedVideo].src}
+                    controls
+                    className="w-full aspect-video"
+                    autoPlay
+                  />
+                </div>
+                
+                <p className="text-center text-foreground mt-4 font-semibold text-lg">
+                  {videos[selectedVideo].title}
+                </p>
               </div>
-              
-              <p className="text-center text-muted-foreground mt-4 font-medium">
-                {videos[selectedVideo].title}
-              </p>
             </Card>
           </div>
         </div>
