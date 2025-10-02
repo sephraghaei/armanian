@@ -1,3 +1,4 @@
+import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Target, Users, Award, Lightbulb } from 'lucide-react';
 import successImage from '@/assets/success-students.jpg';
@@ -28,10 +29,21 @@ const About = () => {
   ];
 
   const videos = [
-    "/src/assets/1.mp4",
-    "/src/assets/2.mp4",
-    "/src/assets/3.mp4"
+    {
+      src: "/src/assets/1.mp4",
+      title: "۵ مهارت کلیدی که هرگز در مدرسه یاد نمی‌گیرید"
+    },
+    {
+      src: "/src/assets/2.mp4",
+      title: "مدارس فعلی آماده چالش‌های آینده هستند؟"
+    },
+    {
+      src: "/src/assets/3.mp4",
+      title: "چگونه رایانگ عامل رشد خلاقیت می‌شود؟"
+    }
   ];
+
+  const [selectedVideo, setSelectedVideo] = React.useState(0);
 
   return (
     <section id="about" className="py-20 bg-transparent">
@@ -97,22 +109,57 @@ const About = () => {
         
         {/* Video Section */}
         <div className="mt-20">
-          <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-6 text-center">
+          <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-8 text-center">
             ویدیوهای آموزشی ما
           </h3>
-          <div className="flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-thin scrollbar-thumb-muted-foreground/30">
-            {videos.map((video, index) => (
-              <div key={index} className="snap-center flex-shrink-0 w-80">
-                <video
-                  src={video}
-                  controls
-                  className="rounded-2xl shadow-xl w-full h-48 object-cover"
-                />
-                <p className="text-center text-sm text-muted-foreground mt-2">
-                  ویدیو {index + 1}
-                </p>
+          
+          <div className="max-w-4xl mx-auto">
+            <Card className="p-6 bg-card/50 backdrop-blur-sm border-2">
+              {/* Video List */}
+              <div className="space-y-3 mb-6">
+                {videos.map((video, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setSelectedVideo(index)}
+                    className={`w-full flex items-center gap-4 p-4 rounded-xl transition-all hover:bg-accent/50 ${
+                      selectedVideo === index ? 'bg-primary/10 border-2 border-primary' : 'border-2 border-transparent'
+                    }`}
+                  >
+                    <div className="relative flex-shrink-0">
+                      <div className="w-24 h-16 bg-muted rounded-lg overflow-hidden">
+                        <video
+                          src={video.src}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="w-8 h-8 bg-primary/80 rounded-full flex items-center justify-center">
+                          <div className="w-0 h-0 border-t-4 border-t-transparent border-l-6 border-l-white border-b-4 border-b-transparent mr-[-2px]" />
+                        </div>
+                      </div>
+                    </div>
+                    <p className="text-right text-sm md:text-base font-medium text-foreground flex-1">
+                      {video.title}
+                    </p>
+                  </button>
+                ))}
               </div>
-            ))}
+
+              {/* Main Video Player */}
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl bg-black">
+                <video
+                  key={selectedVideo}
+                  src={videos[selectedVideo].src}
+                  controls
+                  className="w-full aspect-video"
+                  autoPlay
+                />
+              </div>
+              
+              <p className="text-center text-muted-foreground mt-4 font-medium">
+                {videos[selectedVideo].title}
+              </p>
+            </Card>
           </div>
         </div>
       </div>
