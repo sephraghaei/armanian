@@ -165,7 +165,6 @@ const About = () => {
                     src={videos[selectedVideo].src}
                     controls
                     className="w-full aspect-video"
-                    autoPlay
                   />
                 </div>
                 
