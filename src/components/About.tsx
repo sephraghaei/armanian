@@ -112,11 +112,11 @@ const About = () => {
         
         {/* Video Section */}
         <div className="mt-20">
-          <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-8 text-center">
+          <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-foreground mb-6 md:mb-8 text-center px-4">
             ویدیوهای آموزشی ما
           </h3>
           
-          <div className="max-w-2xl mx-auto">
+          <div className="max-w-2xl mx-auto px-4">
             <Card className="overflow-hidden bg-card border-2">
               {/* Video List */}
               <div className="border-l-4 border-primary bg-card">
@@ -124,29 +124,29 @@ const About = () => {
                   <button
                     key={index}
                     onClick={() => setSelectedVideo(index)}
-                    className={`w-full flex items-center justify-between gap-4 p-4 transition-all border-b last:border-b-0 ${
+                    className={`w-full flex items-center justify-between gap-2 md:gap-4 p-3 md:p-4 transition-all border-b last:border-b-0 ${
                       selectedVideo === index 
                         ? 'bg-primary/5' 
                         : 'hover:bg-muted/50'
                     }`}
                   >
-                    <h4 className="text-right text-sm md:text-base font-medium text-foreground flex-1 leading-relaxed">
+                    <h4 className="text-right text-xs md:text-sm lg:text-base font-medium text-foreground flex-1 leading-relaxed">
                       {video.title}
                     </h4>
                     
                     <div className="relative flex-shrink-0">
-                      <div className="w-20 h-14 md:w-24 md:h-16 bg-black rounded-lg overflow-hidden shadow-md">
+                      <div className="w-16 h-12 md:w-24 md:h-16 bg-black rounded-lg overflow-hidden shadow-md">
                         <video
                           src={video.src}
                           className="w-full h-full object-cover"
                         />
                       </div>
                       <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-10 h-10 bg-primary/90 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform">
+                        <div className="w-8 h-8 md:w-10 md:h-10 bg-primary/90 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform">
                           <svg 
                             viewBox="0 0 24 24" 
                             fill="white" 
-                            className="w-5 h-5 mr-[-2px]"
+                            className="w-4 h-4 md:w-5 md:h-5 mr-[-2px]"
                           >
                             <path d="M8 5v14l11-7z"/>
                           </svg>
@@ -158,7 +158,7 @@ const About = () => {
               </div>
 
               {/* Main Video Player */}
-              <div className="p-6 bg-muted/30">
+              <div className="p-4 md:p-6 bg-muted/30">
                 <div className="relative rounded-xl overflow-hidden shadow-2xl bg-black">
                   <video
                     key={selectedVideo}
@@ -168,7 +168,7 @@ const About = () => {
                   />
                 </div>
                 
-                <p className="text-center text-foreground mt-4 font-semibold text-lg">
+                <p className="text-center text-foreground mt-3 md:mt-4 font-semibold text-sm md:text-base lg:text-lg px-2">
                   {videos[selectedVideo].title}
                 </p>
               </div>
