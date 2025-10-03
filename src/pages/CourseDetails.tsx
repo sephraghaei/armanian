@@ -61,7 +61,7 @@ const CourseDetailsPage = () => {
       price: '۲,۲۰۰,۰۰۰ تومان',
       oldPrice: undefined,
       level: 'متوسط',
-      ageGroup: '۱۸ سال به بالا',
+      ageGroup: '۱۴ سال به بالا',
       classSize: '۱۵ نفر',
       schedule: 'یکشنبه و سه‌شنبه - ۱۸:۰۰ تا ۲۰:۰۰',
       prerequisites: ['آشنایی اولیه با کامپیوتر', 'انگیزه یادگیری'],
