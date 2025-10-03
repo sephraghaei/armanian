@@ -34,6 +34,7 @@ const CourseDetailsPage = () => {
       ageGroup: '۷ تا ۱۴ سال',
       classSize: '۱۰ نفر',
       schedule: null,
+      suitableFor: undefined,
       prerequisites: ['علاقه به یادگیری'],
       certificate: 'گواهینامه معتبر بین المللی ICDL',
       features: [
@@ -54,30 +55,41 @@ const CourseDetailsPage = () => {
       ]
     },
     'icdl-adults': {
-      title: 'دوره مهارت های هفتگانه بزرگسالان',
-      description: 'گواهینامه بین‌المللی مهارت‌های کامپیوتری برای بزرگسالان شامل تمامی ماژول‌های ICDL و آمادگی برای آزمون بین‌المللی.',
+      title: 'مهارت های هفتگانه بزرگسالان',
+      description: 'در این دوره‌ مهارت های کار با سخت افزار و نرم افزار کامپیوتر مانند ویندوز، اینترنت، ورد، پاورپوینت و اکسل به صورت کامل و کاربردی آموزش داده می شود.',
       duration: '۱۰ هفته',
-      sessions: '۲۰ جلسه',
+      sessions: '۲۵ جلسه',
       price: '۲,۲۰۰,۰۰۰ تومان',
       oldPrice: undefined,
       level: 'متوسط',
       ageGroup: '۱۴ سال به بالا',
-      classSize: '۱۵ نفر',
-      schedule: 'یکشنبه و سه‌شنبه - ۱۸:۰۰ تا ۲۰:۰۰',
-      prerequisites: ['آشنایی اولیه با کامپیوتر', 'انگیزه یادگیری'],
-      certificate: undefined,
+      classSize: '۱۰ نفر',
+      schedule: null,
+      suitableFor: [
+        'کارمندانی که به دنبال ارتقای شغلی هستند',
+        'شرکت کننده های آزمون های استخدامی',
+        'کسانی که قصد دارند وارد بازار کار شوند',
+        'کسانی که برای مهاجرت نیاز به مدرک فنی و حرفه ای برای کامپیوتر دارند'
+      ],
+      prerequisites: ['علاقه به یادگیری'],
+      certificate: 'مدرک معتبر سازمان فنی و حرفه ای ICDL\nمدرک بین المللی آموزشگاهی',
       features: [
         'گواهینامه بین‌المللی ICDL',
         'نرم‌افزارهای Microsoft Office',
         'آمادگی آزمون بین‌المللی',
-        'پروژه‌های کاربردی'
+        'پروژه‌های کاربردی',
+        'مشاوره رایگان'
       ],
       learningOutcomes: [
-        'مهارت کامل Microsoft Office',
-        'مدیریت فایل و پوشه',
-        'استفاده حرفه‌ای از اینترنت',
-        'مفاهیم امنیت اطلاعات',
-        'آمادگی بازار کار'
+        'کار با سیستم عامل ویندوز ۷ و ۱۰',
+        'استفاده از مرورگر و جستجوی اینترنت',
+        'ساخت ایمیل و ارسال آن',
+        'تایپ ده انگشتی',
+        'ارایه مطالب پاورپوینت',
+        'طراحی تراکت با ورد',
+        'طراحی جلد کتاب با ورد',
+        'طراحی فاکتور با اکسل',
+        'طراحی لیست مخاطبان با اکسل'
       ]
     },
     'scratch-kids': {
@@ -91,6 +103,7 @@ const CourseDetailsPage = () => {
       ageGroup: '۸ تا ۱۴ سال',
       classSize: '۱۰ نفر',
       schedule: 'چهارشنبه و جمعه - ۱۶:۳۰ تا ۱۸:۰۰',
+      suitableFor: undefined,
       prerequisites: ['آشنایی با کامپیوتر', 'علاقه به خلاقیت'],
       certificate: undefined,
       features: [
@@ -118,6 +131,7 @@ const CourseDetailsPage = () => {
       ageGroup: '۱۳ تا ۱۷ سال',
       classSize: '۱۲ نفر',
       schedule: 'شنبه و دوشنبه - ۱۷:۰۰ تا ۱۹:۰۰',
+      suitableFor: undefined,
       prerequisites: ['منطق ریاضی', 'علاقه به برنامه‌نویسی'],
       certificate: undefined,
       features: [
@@ -145,6 +159,7 @@ const CourseDetailsPage = () => {
       ageGroup: '۱۲ تا ۱۷ سال',
       classSize: '۱۲ نفر',
       schedule: 'یکشنبه و چهارشنبه - ۱۶:۰۰ تا ۱۸:۰۰',
+      suitableFor: undefined,
       prerequisites: ['علاقه به هنر', 'آشنایی با کامپیوتر'],
       certificate: undefined,
       features: [
@@ -172,6 +187,7 @@ const CourseDetailsPage = () => {
       ageGroup: '۱۸ سال به بالا',
       classSize: '۱۰ نفر',
       schedule: 'شنبه و سه‌شنبه - ۱۹:۰۰ تا ۲۱:۰۰',
+      suitableFor: undefined,
       prerequisites: ['علاقه به طراحی', 'حس زیبایی‌شناسی'],
       certificate: undefined,
       features: [
@@ -199,6 +215,7 @@ const CourseDetailsPage = () => {
       ageGroup: '۱۰ سال به بالا',
       classSize: '۱۵ نفر',
       schedule: 'دوشنبه و پنج‌شنبه - ۱۷:۰۰ تا ۱۸:۳۰',
+      suitableFor: undefined,
       prerequisites: ['انگیزه یادگیری', 'آشنایی اولیه با انگلیسی'],
       certificate: undefined,
       features: [
@@ -311,6 +328,25 @@ const CourseDetailsPage = () => {
                 </CardContent>
               </Card>
 
+              {/* Suitable For */}
+              {course.suitableFor && (
+                <Card>
+                  <CardHeader>
+                    <CardTitle>این دوره مناسب چه کسانی است؟</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="space-y-2">
+                      {course.suitableFor.map((item, index) => (
+                        <li key={index} className="flex items-center gap-2">
+                          <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
+              )}
+
               {/* Prerequisites */}
               <Card>
                 <CardHeader>
@@ -354,14 +390,18 @@ const CourseDetailsPage = () => {
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                       <Award className="w-5 h-5" />
-                      مدارک دوره
+                      مدرک دوره
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="flex items-center gap-3">
-                      <CheckCircle className="w-5 h-5 text-primary flex-shrink-0" />
-                      <span>{course.certificate}</span>
-                    </div>
+                    <ul className="space-y-2">
+                      {course.certificate.split('\n').map((cert, index) => (
+                        <li key={index} className="flex items-center gap-3">
+                          <CheckCircle className="w-5 h-5 text-primary flex-shrink-0" />
+                          <span>{cert}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </CardContent>
                 </Card>
               )}
