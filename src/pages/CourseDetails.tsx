@@ -18,7 +18,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 const CourseDetailsPage = () => {
-  const { courseName } = useParams<{ courseName: string }>();
+  const { courseId } = useParams<{ courseId: string }>();
   const navigate = useNavigate();
 
   // Sample course data - in real app, this would come from API/database
@@ -234,7 +234,7 @@ const CourseDetailsPage = () => {
     }
   };
 
-  const course = courseData[courseName as keyof typeof courseData] || courseData['icdl-kids'];
+  const course = courseData[courseId as keyof typeof courseData] || courseData['icdl-kids'];
 
   const handleEnroll = () => {
     navigate('/auth');
