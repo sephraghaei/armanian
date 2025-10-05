@@ -268,46 +268,10 @@ const DepartmentsPage = () => {
 
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {dept.courses.map((course, courseIndex) => (
-                    <Card key={courseIndex} className="hover:shadow-glow-primary transition-all duration-300 hover:-translate-y-1">
+                    <Card key={courseIndex} className="hover:shadow-glow-primary transition-all duration-300 hover:-translate-y-1 cursor-pointer" onClick={() => navigate(`/course/${course.slug}`)}>
                       <CardHeader>
                         <CardTitle className="text-lg text-foreground">{course.name}</CardTitle>
-                        <CardDescription className="text-muted-foreground">
-                          {course.description}
-                        </CardDescription>
                       </CardHeader>
-                      <CardContent>
-                        <div className="space-y-3 mb-4">
-                          <div className="flex justify-between items-center">
-                            <span className="text-sm text-muted-foreground">مدت دوره:</span>
-                            <span className="text-primary font-medium">{course.duration}</span>
-                          </div>
-                          <div className="flex justify-between items-center">
-                            <span className="text-sm text-muted-foreground">مدرس:</span>
-                            <span className="font-medium">{course.instructor}</span>
-                          </div>
-                          <div className="flex justify-between items-center">
-                            <span className="text-sm text-muted-foreground">سن:</span>
-                            <span className="text-sm">{course.ageGroup}</span>
-                          </div>
-                          <div className="flex justify-between items-center">
-                            <span className="text-sm text-muted-foreground">هزینه:</span>
-                            <span className="font-bold text-primary">{course.price}</span>
-                          </div>
-                        </div>
-                        <div className="flex gap-2">
-                          <Button variant="outline" className="flex-1 group" onClick={handleSignUp}>
-                            ثبت نام
-                            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                          </Button>
-                          <Button 
-                            variant="ghost" 
-                            className="flex-1"
-                            onClick={() => navigate(`/course/${course.slug}`)}
-                          >
-                            بیشتر بدانید
-                          </Button>
-                        </div>
-                      </CardContent>
                     </Card>
                   ))}
                 </div>
