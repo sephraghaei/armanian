@@ -268,10 +268,25 @@ const DepartmentsPage = () => {
 
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {dept.courses.map((course, courseIndex) => (
-                    <Card key={courseIndex} className="hover:shadow-glow-primary transition-all duration-300 hover:-translate-y-1 cursor-pointer" onClick={() => navigate(`/course/${course.slug}`)}>
+                    <Card key={courseIndex} className="hover:shadow-glow-primary transition-all duration-300 hover:-translate-y-1">
                       <CardHeader>
                         <CardTitle className="text-lg text-foreground">{course.name}</CardTitle>
                       </CardHeader>
+                      <CardContent>
+                        <div className="flex gap-2">
+                          <Button variant="outline" className="flex-1 group" onClick={handleSignUp}>
+                            ثبت نام
+                            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                          </Button>
+                          <Button 
+                            variant="ghost" 
+                            className="flex-1"
+                            onClick={() => navigate(`/course/${course.slug}`)}
+                          >
+                            بیشتر بدانید
+                          </Button>
+                        </div>
+                      </CardContent>
                     </Card>
                   ))}
                 </div>
