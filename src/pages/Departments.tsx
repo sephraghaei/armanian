@@ -36,22 +36,49 @@ const DepartmentsPage = () => {
           price: '۲,۲۰۰,۰۰۰ تومان'
         },
         {
-          name: 'برنامه‌نویسی اسکرچ کودکان',
+          name: 'برنامه نویسی اسکرچ مخصوص ۷ تا ۱۴ سال',
           slug: 'scratch-kids',
           description: 'یادگیری برنامه‌نویسی بصری، ساخت بازی و انیمیشن‌های تعاملی',
           duration: '۱۲ هفته',
           instructor: 'سیمین آقایی',
-          ageGroup: '۸ تا ۱۴ سال',
+          ageGroup: '۷ تا ۱۴ سال',
           price: '۱,۸۰۰,۰۰۰ تومان'
         },
         {
-          name: 'برنامه‌نویسی پایتون نوجوانان',
-          slug: 'python-teens',
-          description: 'آموزش Python با پروژه‌های عملی و ساخت برنامه‌های کاربردی',
+          name: 'برنامه نویسی پایتون مقدماتی',
+          slug: 'python-basic',
+          description: 'آموزش پایتون از مبتدی با پروژه‌های عملی',
+          duration: '۱۲ هفته',
+          instructor: 'مهدی محمدی',
+          ageGroup: '۱۳ سال به بالا',
+          price: '۲,۲۰۰,۰۰۰ تومان'
+        },
+        {
+          name: 'برنامه نویسی پایتون پیشرفته',
+          slug: 'python-advanced',
+          description: 'تکنیک‌های پیشرفته Python و توسعه پروژه‌های حرفه‌ای',
           duration: '۱۴ هفته',
           instructor: 'مهدی محمدی',
-          ageGroup: '۱۳ تا ۱۷ سال',
+          ageGroup: '۱۶ سال به بالا',
+          price: '۲,۸۰۰,۰۰۰ تومان'
+        },
+        {
+          name: 'رباتیک مخصوص۷ تا ۱۴ سال',
+          slug: 'robotics-kids',
+          description: 'آموزش ساخت و برنامه‌نویسی ربات‌ها با پروژه‌های عملی',
+          duration: '۱۲ هفته',
+          instructor: 'سیمین آقایی',
+          ageGroup: '۷ تا ۱۴ سال',
           price: '۲,۵۰۰,۰۰۰ تومان'
+        },
+        {
+          name: 'طراحی سایت با وردپرس',
+          slug: 'wordpress',
+          description: 'آموزش جامع طراحی و مدیریت وب سایت با وردپرس',
+          duration: '۱۰ هفته',
+          instructor: 'مهدی محمدی',
+          ageGroup: '۱۵ سال به بالا',
+          price: '۲,۰۰۰,۰۰۰ تومان'
         }
       ]
     },
@@ -61,31 +88,40 @@ const DepartmentsPage = () => {
       description: 'آموزش طراحی گرافیک و نرم‌افزارهای طراحی حرفه‌ای.',
       courses: [
         {
-          name: 'فتوشاپ نوجوانان',
-          slug: 'photoshop-teens',
-          description: 'طراحی پوستر، ویرایش تصاویر و ساخت آثار هنری دیجیتال',
-          duration: '۱۰ هفته',
+          name: 'فتوشاپ مقدماتی',
+          slug: 'photoshop-basic',
+          description: 'اصول اولیه فتوشاپ، ویرایش تصاویر و طراحی‌های ساده',
+          duration: '۸ هفته',
           instructor: 'سیمین آقایی',
-          ageGroup: '۱۲ تا ۱۷ سال',
-          price: '۲,۰۰۰,۰۰۰ تومان'
+          ageGroup: '۱۲ سال به بالا',
+          price: '۱,۸۰۰,۰۰۰ تومان'
         },
         {
-          name: 'فتوشاپ بزرگسالان',
-          slug: 'photoshop-adults',
-          description: 'تکنیک‌های حرفه‌ای طراحی گرافیک و ویرایش تصاویر پیشرفته',
-          duration: '۱۲ هفته',
+          name: 'فتوشاپ جامع مخصوص بازارکار',
+          slug: 'photoshop-professional',
+          description: 'تکنیک‌های حرفه‌ای طراحی گرافیک برای ورود به بازار کار',
+          duration: '۱۴ هفته',
           instructor: 'مهدی محمدی',
-          ageGroup: '۱۸ سال به بالا',
-          price: '۲,۸۰۰,۰۰۰ تومان'
+          ageGroup: '۱۶ سال به بالا',
+          price: '۳,۲۰۰,۰۰۰ تومان'
         },
         {
-          name: 'افترافکت بزرگسالان',
-          slug: 'after-effects',
-          description: 'انیمیشن، جلوه‌های ویژه و موشن گرافیک حرفه‌ای',
+          name: 'افترافکت مقدماتی',
+          slug: 'after-effects-basic',
+          description: 'آموزش اصول انیمیشن و جلوه‌های ویژه برای مبتدیان',
+          duration: '۱۰ هفته',
+          instructor: 'مهدی محمدی',
+          ageGroup: '۱۵ سال به بالا',
+          price: '۲,۵۰۰,۰۰۰ تومان'
+        },
+        {
+          name: 'افترافکت پیشرفته',
+          slug: 'after-effects-advanced',
+          description: 'تکنیک‌های حرفه‌ای موشن گرافیک و انیمیشن پیشرفته',
           duration: '۱۴ هفته',
           instructor: 'مهدی محمدی',
           ageGroup: '۱۸ سال به بالا',
-          price: '۳,۵۰۰,۰۰۰ تومان'
+          price: '۳,۸۰۰,۰۰۰ تومان'
         }
       ]
     },
@@ -95,31 +131,58 @@ const DepartmentsPage = () => {
       description: 'آموزش طراحی معماری و نرم‌افزارهای تخصصی ساختمان.',
       courses: [
         {
-          name: 'طراحی داخلی معماری',
-          slug: 'interior-design',
-          description: 'اصول طراحی داخلی، دکوراسیون و چیدمان فضا',
-          duration: '۱۲ هفته',
+          name: 'طراحی داخلی معماری جامع',
+          slug: 'interior-design-complete',
+          description: 'آموزش جامع طراحی داخلی، دکوراسیون و چیدمان فضا',
+          duration: '۱۶ هفته',
           instructor: 'مهدی محمدی',
           ageGroup: '۱۸ سال به بالا',
+          price: '۳,۵۰۰,۰۰۰ تومان'
+        },
+        {
+          name: 'اسکچاپ',
+          slug: 'sketchup',
+          description: 'آموزش مدل‌سازی سه بعدی و طراحی معماری با اسکچاپ',
+          duration: '۱۰ هفته',
+          instructor: 'سیمین آقایی',
+          ageGroup: '۱۶ سال به بالا',
+          price: '۲,۲۰۰,۰۰۰ تومان'
+        },
+        {
+          name: 'اتوکد جامع',
+          slug: 'autocad-complete',
+          description: 'نقشه‌کشی و طراحی فنی حرفه‌ای با اتوکد',
+          duration: '۱۴ هفته',
+          instructor: 'مهدی محمدی',
+          ageGroup: '۱۶ سال به بالا',
           price: '۳,۰۰۰,۰۰۰ تومان'
         },
         {
-          name: 'نرم‌افزارهای معماری',
-          slug: 'architecture-software',
-          description: 'اسکچاپ، اتوکد، تریدی مکس و رندرگیری حرفه‌ای',
+          name: '3DS Max',
+          slug: '3ds-max',
+          description: 'مدل‌سازی و رندرگیری حرفه‌ای با تریدی مکس',
           duration: '۱۶ هفته',
           instructor: 'سیمین آقایی',
           ageGroup: '۱۸ سال به بالا',
-          price: '۴,۰۰۰,۰۰۰ تومان'
+          price: '۴,۲۰۰,۰۰۰ تومان'
         },
         {
-          name: 'نقشه‌کشی معماری',
-          slug: 'architectural-drawing',
-          description: 'اصول نقشه‌کشی، طراحی نقشه‌های فنی و جزئیات اجرایی',
-          duration: '۱۰ هفته',
+          name: 'طراحی نما مخصوص بازارکار',
+          slug: 'facade-design',
+          description: 'طراحی نمای ساختمان برای ورود به بازار کار',
+          duration: '۱۲ هفته',
           instructor: 'مهدی محمدی',
           ageGroup: '۱۸ سال به بالا',
-          price: '۲,۵۰۰,۰۰۰ تومان'
+          price: '۲,۸۰۰,۰۰۰ تومان'
+        },
+        {
+          name: 'نقشه کشی و معماری',
+          slug: 'architectural-drawing',
+          description: 'اصول نقشه‌کشی، طراحی نقشه‌های فنی و جزئیات اجرایی',
+          duration: '۱۲ هفته',
+          instructor: 'مهدی محمدی',
+          ageGroup: '۱۸ سال به بالا',
+          price: '۲,۶۰۰,۰۰۰ تومان'
         }
       ]
     },
@@ -138,13 +201,31 @@ const DepartmentsPage = () => {
           price: '۱,۶۰۰,۰۰۰ تومان'
         },
         {
-          name: 'آموزش زبان ترمیک',
+          name: 'زبان ترمیک',
           slug: 'english-thermic',
           description: 'روش نوین ترمیک برای یادگیری سریع و مؤثر زبان انگلیسی',
           duration: '۱۰ هفته',
           instructor: 'مهدی محمدی',
           ageGroup: '۱۵ سال به بالا',
           price: '۱,۴۰۰,۰۰۰ تومان'
+        },
+        {
+          name: 'زبان مکالمه محور',
+          slug: 'english-conversation',
+          description: 'تمرکز بر مکالمه و ارتباط روان به زبان انگلیسی',
+          duration: '۱۲ هفته',
+          instructor: 'سیمین آقایی',
+          ageGroup: '۱۲ سال به بالا',
+          price: '۱,۸۰۰,۰۰۰ تومان'
+        },
+        {
+          name: 'یادگیری زبان با فیلم و سریال خارجی',
+          slug: 'english-movies',
+          description: 'یادگیری زبان انگلیسی از طریق تماشای فیلم و سریال',
+          duration: '۸ هفته',
+          instructor: 'مهدی محمدی',
+          ageGroup: '۱۴ سال به بالا',
+          price: '۱,۵۰۰,۰۰۰ تومان'
         }
       ]
     }
