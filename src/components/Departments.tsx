@@ -2,6 +2,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Code, Palette, Home, Globe, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import computerDeptImage from '@/assets/computer-department.jpg';
 import graphicDeptImage from '@/assets/graphic-department.jpg';
 import architectureDeptImage from '@/assets/architecture-department.jpg';
@@ -79,42 +80,46 @@ const Departments = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <Accordion type="single" collapsible className="w-full space-y-4">
           {departments.map((dept, index) => (
-            <Card key={index} className="group hover:shadow-glow-primary transition-all duration-500 hover:-translate-y-2 border-border/50">
-              <CardHeader className="pb-4">
-                <div className="w-16 h-16 bg-gradient-primary rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                  <dept.icon className="w-8 h-8 text-white" />
+            <AccordionItem key={index} value={`dept-${index}`} className="border border-border/50 rounded-xl bg-card/50 backdrop-blur-sm overflow-hidden">
+              <AccordionTrigger className="px-6 py-4 hover:no-underline">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-gradient-primary rounded-xl flex items-center justify-center shrink-0">
+                    <dept.icon className="w-6 h-6 text-white" />
+                  </div>
+                  <div className="text-right">
+                    <h3 className="text-xl font-bold text-foreground">{dept.title}</h3>
+                    <p className="text-sm text-muted-foreground">{dept.description}</p>
+                  </div>
                 </div>
-                <CardTitle className="text-xl text-foreground group-hover:text-primary transition-colors">
-                  {dept.title}
-                </CardTitle>
-                <CardDescription className="text-muted-foreground">
-                  {dept.description}
-                </CardDescription>
-              </CardHeader>
+              </AccordionTrigger>
               
-              <CardContent className="space-y-4">
-                <div>
-                  <h4 className="text-sm font-semibold text-foreground mb-2">دوره‌های ارائه شده:</h4>
-                  <ul className="space-y-1">
-                    {dept.courses.map((course, idx) => (
-                      <li key={idx} className="flex items-center space-x-reverse space-x-1 text-xs text-muted-foreground">
-                        <div className="w-1.5 h-1.5 bg-accent rounded-full"></div>
-                        <span>{course}</span>
-                      </li>
-                    ))}
-                  </ul>
+              <AccordionContent className="px-6 pb-6">
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+                  {dept.courses.map((course, idx) => (
+                    <Card key={idx} className="hover:shadow-glow-primary transition-all duration-300 hover:-translate-y-1">
+                      <CardHeader className="pb-3">
+                        <CardTitle className="text-base text-foreground">{course}</CardTitle>
+                      </CardHeader>
+                      <CardContent className="pt-0">
+                        <div className="flex gap-2">
+                          <Button variant="outline" size="sm" className="flex-1 group" onClick={() => handleLearnMore(dept.title.includes('کامپیوتر') ? 'کامپیوتر' : undefined)}>
+                            <span className="text-xs">ثبت نام</span>
+                            <ArrowRight className="w-3 h-3 group-hover:-translate-x-1 transition-transform duration-300" />
+                          </Button>
+                          <Button variant="ghost" size="sm" className="flex-1" onClick={() => handleLearnMore(dept.title.includes('کامپیوتر') ? 'کامپیوتر' : undefined)}>
+                            <span className="text-xs">بیشتر بدانید</span>
+                          </Button>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
                 </div>
-                
-                <Button variant="default" className="w-full group hover-scale hover:shadow-glow-primary transition-all duration-300" onClick={() => handleLearnMore(dept.title.includes('کامپیوتر') ? 'کامپیوتر' : undefined)}>
-                  <span className="group-hover:translate-x-1 transition-transform duration-300">بیشتر بدانید</span>
-                  <ArrowRight className="w-4 h-4 group-hover:-translate-x-1 transition-transform duration-300" />
-                </Button>
-              </CardContent>
-            </Card>
+              </AccordionContent>
+            </AccordionItem>
           ))}
-        </div>
+        </Accordion>
 
         <div className="text-center mt-12">
           <Button variant="hero" size="lg">
