@@ -28,7 +28,7 @@ const DepartmentCard = ({ title, description, icon: Icon, image, courses, onLear
               <Icon className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h3 className="text-lg font-bold text-white drop-shadow-lg">{title}</h3>
+              <h3 className="text-lg font-bold text-foreground drop-shadow-lg">{title}</h3>
             </div>
           </div>
         </div>

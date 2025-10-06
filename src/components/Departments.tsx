@@ -19,12 +19,16 @@ const Departments = () => {
     }
   };
 
-  const handleLearnMore = (departmentName?: string) => {
-    if (departmentName === 'کامپیوتر') {
-      navigate('/departments#computer');
-    } else {
-      navigate('/departments');
-    }
+  const handleLearnMore = (departmentTitle: string) => {
+    // Convert department title to slug for navigation
+    const departmentSlug = departmentTitle
+      .replace('دپارتمان ', '')
+      .replace('کامپیوتر', 'computer')
+      .replace('گرافیک', 'graphic')
+      .replace('معماری', 'architecture')
+      .replace('زبان انگلیسی', 'english');
+    
+    navigate(`/departments#${departmentSlug}`);
   };
 
   const departments = [
@@ -121,7 +125,7 @@ const Departments = () => {
                   icon={dept.icon}
                   image={dept.image}
                   courses={dept.courses}
-                  onLearnMore={() => handleLearnMore(dept.title.includes('کامپیوتر') ? 'کامپیوتر' : undefined)}
+                  onLearnMore={() => handleLearnMore(dept.title)}
                 />
               ))}
             </div>
