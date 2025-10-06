@@ -1,8 +1,8 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Code, Palette, Home, Globe, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Code, Palette, Home, Globe, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useRef } from 'react';
+import DepartmentCard from './DepartmentCard';
 import computerDeptImage from '@/assets/computer-department.jpg';
 import graphicDeptImage from '@/assets/graphic-department.jpg';
 import architectureDeptImage from '@/assets/architecture-department.jpg';
@@ -114,55 +114,15 @@ const Departments = () => {
           >
             <div className="flex gap-6 px-12">
               {departments.map((dept, index) => (
-                <div key={index} className="w-[350px] shrink-0">
-                  <Card className="h-full border-border/50 bg-card overflow-hidden group hover:shadow-glow-primary transition-all duration-300">
-                    {/* Department Image */}
-                    <div className="relative h-48 overflow-hidden">
-                      <img 
-                        src={dept.image} 
-                        alt={dept.title}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent" />
-                      <div className="absolute bottom-4 right-4 flex items-center gap-3">
-                        <div className="w-12 h-12 bg-gradient-primary rounded-xl flex items-center justify-center">
-                          <dept.icon className="w-6 h-6 text-white" />
-                        </div>
-                        <div>
-                          <h3 className="text-lg font-bold text-white">{dept.title}</h3>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    {/* Courses List */}
-                    <CardContent className="p-4 space-y-2 max-h-[280px] overflow-y-auto scrollbar-thin">
-                      {dept.courses.map((course, idx) => (
-                        <div 
-                          key={idx} 
-                          className="flex items-center justify-between p-3 rounded-lg hover:bg-accent/50 transition-colors group/item"
-                        >
-                          <div className="flex items-center gap-2 flex-1">
-                            <div className="w-1.5 h-1.5 bg-primary rounded-full" />
-                            <span className="text-sm text-foreground">{course}</span>
-                          </div>
-                          <ArrowRight className="w-4 h-4 text-muted-foreground opacity-0 group-hover/item:opacity-100 transition-opacity" />
-                        </div>
-                      ))}
-                    </CardContent>
-
-                    {/* Action Buttons */}
-                    <div className="p-4 pt-0">
-                      <Button 
-                        variant="default" 
-                        className="w-full group/btn"
-                        onClick={() => handleLearnMore(dept.title.includes('کامپیوتر') ? 'کامپیوتر' : undefined)}
-                      >
-                        <span>مشاهده همه دوره‌ها</span>
-                        <ArrowRight className="w-4 h-4 group-hover/btn:-translate-x-1 transition-transform" />
-                      </Button>
-                    </div>
-                  </Card>
-                </div>
+                <DepartmentCard
+                  key={index}
+                  title={dept.title}
+                  description={dept.description}
+                  icon={dept.icon}
+                  image={dept.image}
+                  courses={dept.courses}
+                  onLearnMore={() => handleLearnMore(dept.title.includes('کامپیوتر') ? 'کامپیوتر' : undefined)}
+                />
               ))}
             </div>
           </div>
