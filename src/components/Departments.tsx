@@ -97,7 +97,7 @@ const Departments = () => {
           <Button
             variant="outline"
             size="icon"
-            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 rounded-full bg-background/80 backdrop-blur-sm hover:bg-background shadow-lg"
+            className="absolute right-2 md:right-0 top-1/2 -translate-y-1/2 z-10 rounded-full bg-background/90 backdrop-blur-md hover:bg-primary hover:text-primary-foreground hover:border-primary shadow-xl transition-all duration-300"
             onClick={() => scroll('right')}
           >
             <ChevronRight className="w-5 h-5" />
@@ -105,7 +105,7 @@ const Departments = () => {
           <Button
             variant="outline"
             size="icon"
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 rounded-full bg-background/80 backdrop-blur-sm hover:bg-background shadow-lg"
+            className="absolute left-2 md:left-0 top-1/2 -translate-y-1/2 z-10 rounded-full bg-background/90 backdrop-blur-md hover:bg-primary hover:text-primary-foreground hover:border-primary shadow-xl transition-all duration-300"
             onClick={() => scroll('left')}
           >
             <ChevronLeft className="w-5 h-5" />
@@ -114,9 +114,9 @@ const Departments = () => {
           {/* Scrollable Container */}
           <div 
             ref={scrollContainerRef}
-            className="overflow-x-auto pb-8 -mx-4 px-4 scrollbar-hide scroll-smooth"
+            className="overflow-x-auto pb-10 -mx-4 px-4 scrollbar-hide scroll-smooth"
           >
-            <div className="flex gap-6 px-12">
+            <div className="flex gap-8 px-4 md:px-16">
               {departments.map((dept, index) => (
                 <DepartmentCard
                   key={index}
