@@ -112,7 +112,7 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
     direction: rtl;
     text-align: right;
-    font-family: 'Vazirmatn', system-ui, sans-serif;
+    font-family: 'IranSans', system-ui, sans-serif;
     font-weight: 400;
   }
 }

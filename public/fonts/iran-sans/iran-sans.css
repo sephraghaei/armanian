@@ -1,0 +1,54 @@
+/* IranSans Pro Font */
+@font-face {
+  font-family: 'IranSans';
+  src: url('./IranSans-Light.woff2') format('woff2'),
+       url('./IranSans-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'IranSans';
+  src: url('./IranSans-Regular.woff2') format('woff2'),
+       url('./IranSans-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'IranSans';
+  src: url('./IranSans-Medium.woff2') format('woff2'),
+       url('./IranSans-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'IranSans';
+  src: url('./IranSans-Bold.woff2') format('woff2'),
+       url('./IranSans-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'IranSans';
+  src: url('./IranSans-ExtraBold.woff2') format('woff2'),
+       url('./IranSans-ExtraBold.woff') format('woff');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'IranSans';
+  src: url('./IranSans-Black.woff2') format('woff2'),
+       url('./IranSans-Black.woff') format('woff');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
