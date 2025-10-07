@@ -79,36 +79,6 @@ const About = () => {
           ))}
         </div>
 
-        {/* Success Stories Section with Image */}
-        <div className="mt-20 grid md:grid-cols-2 gap-12 items-center">
-          <div className="relative">
-            <img 
-              src={successImage} 
-              alt="دانشجویان موفق آرمانیان"
-              className="rounded-2xl shadow-xl w-full h-80 object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-accent/20 rounded-2xl"></div>
-          </div>
-          <div className="space-y-6">
-            <h3 className="text-2xl md:text-3xl font-bold text-foreground">
-              داستان‌های موفقیت ما
-            </h3>
-            <p className="text-muted-foreground leading-relaxed">
-              بیش از ۵۰۰ دانشجوی خوشحال و موفق که مهارت‌های آینده را در آرمانیان فرا گرفته‌اند. 
-              از کودکان که اولین خط کد خود را نوشته‌اند تا بزرگسالانی که مسیر شغلی جدیدی آغاز کرده‌اند.
-            </p>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="text-center p-4 bg-card rounded-xl border">
-                <div className="text-2xl font-bold text-primary">۵۰۰+</div>
-                <div className="text-sm text-muted-foreground">دانشجوی فارغ‌التحصیل</div>
-              </div>
-              <div className="text-center p-4 bg-card rounded-xl border">
-                <div className="text-2xl font-bold text-accent">۹۵٪</div>
-                <div className="text-sm text-muted-foreground">رضایت والدین</div>
-              </div>
-            </div>
-          </div>
-        </div>
         
         {/* Video Section */}
         <div className="mt-20">
