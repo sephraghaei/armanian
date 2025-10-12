@@ -112,7 +112,7 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
     direction: rtl;
     text-align: right;
-    font-family: 'Peyda', system-ui, sans-serif;
+    font-family: 'PELAK-Economic', system-ui, sans-serif;
     font-weight: 400;
   }
 }

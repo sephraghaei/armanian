@@ -1,0 +1,81 @@
+/* PELAK-Economic Font */
+@font-face {
+  font-family: 'PELAK-Economic';
+  src: url('./PELAK-Economic-Thin.woff2') format('woff2'),
+       url('./PELAK-Economic-Thin.woff') format('woff');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PELAK-Economic';
+  src: url('./PELAK-Economic-ExtraLight.woff2') format('woff2'),
+       url('./PELAK-Economic-ExtraLight.woff') format('woff');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PELAK-Economic';
+  src: url('./PELAK-Economic-Light.woff2') format('woff2'),
+       url('./PELAK-Economic-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PELAK-Economic';
+  src: url('./PELAK-Economic-Regular.woff2') format('woff2'),
+       url('./PELAK-Economic-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PELAK-Economic';
+  src: url('./PELAK-Economic-Medium.woff2') format('woff2'),
+       url('./PELAK-Economic-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PELAK-Economic';
+  src: url('./PELAK-Economic-SemiBold.woff2') format('woff2'),
+       url('./PELAK-Economic-SemiBold.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PELAK-Economic';
+  src: url('./PELAK-Economic-Bold.woff2') format('woff2'),
+       url('./PELAK-Economic-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PELAK-Economic';
+  src: url('./PELAK-Economic-ExtraBold.woff2') format('woff2'),
+       url('./PELAK-Economic-ExtraBold.woff') format('woff');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PELAK-Economic';
+  src: url('./PELAK-Economic-Black.woff2') format('woff2'),
+       url('./PELAK-Economic-Black.woff') format('woff');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
