@@ -33,11 +33,11 @@ const Footer = () => {
                 <Code className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-foreground">آرمانیان</h3>
-                <p className="text-xs text-muted-foreground">برنامه‌نویسان آینده</p>
+                <h3 className="text-xl font-black text-foreground">آرمانیان</h3>
+                <p className="text-xs text-muted-foreground font-semibold">برنامه‌نویسان آینده</p>
               </div>
             </div>
-            <p className="text-muted-foreground text-sm">
+            <p className="text-muted-foreground text-sm font-medium">
               توانمندسازی ذهن‌های جوان با مهارت‌های برنامه‌نویسی و سواد دیجیتال 
               برای آینده‌ای محور فناوری.
             </p>
@@ -57,7 +57,7 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-lg font-semibold text-foreground mb-4">لینک‌های سریع</h4>
+            <h4 className="text-lg font-extrabold text-foreground mb-4">لینک‌های سریع</h4>
             <ul className="space-y-2">
               {quickLinks.map((link, index) => (
                 <li key={index}>
@@ -74,7 +74,7 @@ const Footer = () => {
 
           {/* Programs */}
           <div>
-            <h4 className="text-lg font-semibold text-foreground mb-4">دوره‌ها</h4>
+            <h4 className="text-lg font-extrabold text-foreground mb-4">دوره‌ها</h4>
             <ul className="space-y-2">
               {programs.map((program, index) => (
                 <li key={index}>
@@ -91,7 +91,7 @@ const Footer = () => {
 
           {/* Contact Info */}
           <div>
-            <h4 className="text-lg font-semibold text-foreground mb-4">اطلاعات تماس</h4>
+            <h4 className="text-lg font-extrabold text-foreground mb-4">اطلاعات تماس</h4>
             <div className="space-y-3">
               <div className="flex items-center space-x-3">
                 <Mail className="w-4 h-4 text-accent" />

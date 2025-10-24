@@ -52,10 +52,10 @@ const About = () => {
     <section id="about" className="py-20 bg-transparent">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+          <h2 className="text-3xl md:text-4xl font-black text-foreground mb-4">
             درباره آرمانیان
           </h2>
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto font-medium">
             ما فراتر از یک مدرسه کدنویسی هستیم. ما جامعه‌ای هستیم که به پرورش استعدادهای جوان، 
             ایجاد اعتماد به نفس و آماده کردن کودکان برای آینده‌ای محور فناوری اختصاص دارد.
           </p>
@@ -68,10 +68,10 @@ const About = () => {
                 <div className="w-16 h-16 bg-gradient-primary rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
                   <feature.icon className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-xl font-semibold text-foreground mb-3">
+                <h3 className="text-xl font-extrabold text-foreground mb-3">
                   {feature.title}
                 </h3>
-                <p className="text-muted-foreground">
+                <p className="text-muted-foreground font-medium">
                   {feature.description}
                 </p>
               </CardContent>
@@ -82,7 +82,7 @@ const About = () => {
         
         {/* Video Section */}
         <div className="mt-20">
-          <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-foreground mb-6 md:mb-8 text-center px-4">
+          <h3 className="text-xl md:text-2xl lg:text-3xl font-black text-foreground mb-6 md:mb-8 text-center px-4">
             ویدیوهای آموزشی ما
           </h3>
           
@@ -100,7 +100,7 @@ const About = () => {
                         : 'hover:bg-muted/50'
                     }`}
                   >
-                    <h4 className="text-right text-xs md:text-sm lg:text-base font-medium text-foreground flex-1 leading-relaxed">
+                    <h4 className="text-right text-xs md:text-sm lg:text-base font-bold text-foreground flex-1 leading-relaxed">
                       {video.title}
                     </h4>
                     
@@ -138,7 +138,7 @@ const About = () => {
                   />
                 </div>
                 
-                <p className="text-center text-foreground mt-3 md:mt-4 font-semibold text-sm md:text-base lg:text-lg px-2">
+                <p className="text-center text-foreground mt-3 md:mt-4 font-extrabold text-sm md:text-base lg:text-lg px-2">
                   {videos[selectedVideo].title}
                 </p>
               </div>

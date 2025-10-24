@@ -69,7 +69,7 @@ const Programs = () => {
     <section id="programs" className="py-20 bg-transparent">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+          <h2 className="text-3xl md:text-4xl font-black text-foreground mb-4">
             مسیر یادگیری خود را انتخاب کنید
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
@@ -112,7 +112,7 @@ const Programs = () => {
 
                 {/* Features List */}
                 <div>
-                  <h4 className="font-semibold text-foreground mb-3">شامل موارد:</h4>
+                  <h4 className="font-extrabold text-foreground mb-3">شامل موارد:</h4>
                   <ul className="space-y-2">
                     {program.features.map((feature, idx) => (
                       <li key={idx} className="flex items-start space-x-reverse space-x-2 text-sm text-muted-foreground">

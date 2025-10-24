@@ -28,10 +28,10 @@ const Contact = () => {
     <section id="contact" className="py-20 bg-gradient-hero">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+          <h2 className="text-3xl md:text-4xl font-black text-foreground mb-4">
             با ما در تماس باشید
           </h2>
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto font-medium">
             آماده شروع سفر کدنویسی فرزندتان هستید؟ همین امروز با ما تماس بگیرید تا درباره برنامه‌هایمان 
             بیشتر بدانید یا برای بازدید از امکانات مدرن ما وقت بگیرید.
           </p>
@@ -41,10 +41,10 @@ const Contact = () => {
           {/* Contact Information */}
           <div className="space-y-8">
             <div>
-              <h3 className="text-2xl font-bold text-foreground mb-6">
+              <h3 className="text-2xl font-black text-foreground mb-6">
                 بیایید ارتباط برقرار کنیم
               </h3>
-              <p className="text-muted-foreground mb-8">
+              <p className="text-muted-foreground mb-8 font-medium">
                 ما دوست داریم از شما بشنویم! چه سوالی درباره برنامه‌هایمان داشته باشید، 
                 بخواهید کلاس آزمایشی رزرو کنید، یا اطلاعات بیشتری نیاز داشته باشید، ما اینجا هستیم تا کمک کنیم.
               </p>
@@ -72,10 +72,10 @@ const Contact = () => {
                             <info.icon className="w-6 h-6 text-white" />
                           </div>
                           <div>
-                            <h4 className="font-semibold text-foreground mb-2">{info.title}</h4>
+                            <h4 className="font-extrabold text-foreground mb-2">{info.title}</h4>
                             <div className="space-y-1">
                               {info.details.map((detail, idx) => (
-                                <p key={idx} className={`text-muted-foreground text-sm ${(isInstagram || isPhone) ? 'hover:text-primary transition-colors duration-300' : ''}`}>
+                                <p key={idx} className={`text-muted-foreground text-sm font-semibold ${(isInstagram || isPhone) ? 'hover:text-primary transition-colors duration-300' : ''}`}>
                                   {detail}
                                 </p>
                               ))}

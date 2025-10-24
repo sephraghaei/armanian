@@ -30,7 +30,7 @@ const DepartmentCard = ({ title, description, icon: Icon, image, courses, onLear
               <Icon className="w-7 h-7 text-white" />
             </div>
             <div>
-              <h3 className="text-xl font-bold text-foreground drop-shadow-2xl">{title}</h3>
+              <h3 className="text-xl font-black text-foreground drop-shadow-2xl">{title}</h3>
             </div>
           </div>
         </div>
@@ -46,7 +46,7 @@ const DepartmentCard = ({ title, description, icon: Icon, image, courses, onLear
               >
                 <div className="flex items-center gap-3 flex-1">
                   <div className="w-2 h-2 bg-gradient-primary rounded-full flex-shrink-0 group-hover/item:scale-125 transition-transform" />
-                  <span className="text-sm font-medium text-foreground/90 group-hover/item:text-foreground text-right">{course}</span>
+                  <span className="text-sm font-bold text-foreground/90 group-hover/item:text-foreground text-right">{course}</span>
                 </div>
                 <ArrowRight className="w-4 h-4 text-primary/60 opacity-0 group-hover/item:opacity-100 group-hover/item:-translate-x-1 transition-all flex-shrink-0" />
               </div>

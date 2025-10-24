@@ -135,16 +135,16 @@ const Hero = () => {
           {/* Stats */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-8 pt-6 md:pt-8 max-w-2xl mx-auto">
             <div className="text-center space-y-1 sm:space-y-2">
-              <div className="text-2xl md:text-4xl font-bold text-primary">۵۰۰+</div>
-              <div className="text-sm md:text-base text-muted-foreground">دانشجوی خوشحال</div>
+              <div className="text-2xl md:text-4xl font-black text-primary">۵۰۰+</div>
+              <div className="text-sm md:text-base text-muted-foreground font-semibold">دانشجوی خوشحال</div>
             </div>
             <div className="text-center space-y-1 sm:space-y-2">
-              <div className="text-2xl md:text-4xl font-bold text-accent">۱۵+</div>
-              <div className="text-sm md:text-base text-muted-foreground">معلم متخصص</div>
+              <div className="text-2xl md:text-4xl font-black text-accent">۱۵+</div>
+              <div className="text-sm md:text-base text-muted-foreground font-semibold">معلم متخصص</div>
             </div>
             <div className="text-center space-y-1 sm:space-y-2">
-              <div className="text-2xl md:text-4xl font-bold text-primary">۱۲</div>
-              <div className="text-sm md:text-base text-muted-foreground">دوره آموزشی</div>
+              <div className="text-2xl md:text-4xl font-black text-primary">۱۲</div>
+              <div className="text-sm md:text-base text-muted-foreground font-semibold">دوره آموزشی</div>
             </div>
           </div>
         </div>
