@@ -3,29 +3,24 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { MapPin, Phone, Mail, Clock, Send } from 'lucide-react';
+import { MapPin, Phone, Instagram, Send } from 'lucide-react';
 
 const Contact = () => {
   const contactInfo = [
     {
       icon: MapPin,
       title: 'به ما سر بزنید',
-      details: ['کیاشهر', 'خیابان فناوری ۱۲۳', 'ایران']
+      details: ['گیلان، کیاشهر', 'خیابان آدینه']
     },
     {
       icon: Phone,
       title: 'تماس بگیرید',
-      details: ['۰۱۳-۳۳۱۲۳۴۵۶', '۰۹۱۲-۳۴۵۶۷۸۹']
+      details: ['۰۹۰۰۱۹۶۰۰۱۰']
     },
     {
-      icon: Mail,
-      title: 'ایمیل بزنید',
-      details: ['info@armanian.ir', 'admissions@armanian.ir']
-    },
-    {
-      icon: Clock,
-      title: 'ساعات کاری',
-      details: ['شنبه-چهارشنبه: ۹:۰۰ تا ۱۸:۰۰', 'پنج‌شنبه: ۱۰:۰۰ تا ۱۶:۰۰', 'جمعه: تعطیل']
+      icon: Instagram,
+      title: 'اینستاگرام',
+      details: ['@armanian_edu_group']
     }
   ];
 
@@ -56,27 +51,42 @@ const Contact = () => {
             </div>
 
             <div className="grid gap-6">
-              {contactInfo.map((info, index) => (
-                <Card key={index} className="hover:shadow-glow-primary transition-all duration-300">
-                  <CardContent className="p-8 bg-background/50 backdrop-blur-sm hover:bg-background/70 transition-all duration-300">
-                    <div className="flex items-start space-x-reverse space-x-4">
-                      <div className="w-12 h-12 bg-gradient-primary rounded-lg flex items-center justify-center flex-shrink-0">
-                        <info.icon className="w-6 h-6 text-white" />
-                      </div>
-                      <div>
-                        <h4 className="font-semibold text-foreground mb-2">{info.title}</h4>
-                        <div className="space-y-1">
-                          {info.details.map((detail, idx) => (
-                            <p key={idx} className="text-muted-foreground text-sm">
-                              {detail}
-                            </p>
-                          ))}
+              {contactInfo.map((info, index) => {
+                const isInstagram = info.title === 'اینستاگرام';
+                const isPhone = info.title === 'تماس بگیرید';
+                const CardWrapper = (isInstagram || isPhone) ? 'a' : 'div';
+                const cardProps = isInstagram ? {
+                  href: 'https://instagram.com/armanian_edu_group',
+                  target: '_blank',
+                  rel: 'noopener noreferrer'
+                } : isPhone ? {
+                  href: 'tel:09001960010'
+                } : {};
+                
+                return (
+                  <Card key={index} className={`hover:shadow-glow-primary transition-all duration-300 ${(isInstagram || isPhone) ? 'cursor-pointer hover:scale-105' : ''}`}>
+                    <CardContent className="p-8 bg-background/50 backdrop-blur-sm hover:bg-background/70 transition-all duration-300">
+                      <CardWrapper {...cardProps} className={(isInstagram || isPhone) ? "block" : ""}>
+                        <div className="flex items-start space-x-reverse space-x-4">
+                          <div className={`w-12 h-12 bg-gradient-primary rounded-lg flex items-center justify-center flex-shrink-0 ${(isInstagram || isPhone) ? 'hover:bg-gradient-to-r hover:from-primary hover:to-accent' : ''}`}>
+                            <info.icon className="w-6 h-6 text-white" />
+                          </div>
+                          <div>
+                            <h4 className="font-semibold text-foreground mb-2">{info.title}</h4>
+                            <div className="space-y-1">
+                              {info.details.map((detail, idx) => (
+                                <p key={idx} className={`text-muted-foreground text-sm ${(isInstagram || isPhone) ? 'hover:text-primary transition-colors duration-300' : ''}`}>
+                                  {detail}
+                                </p>
+                              ))}
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+                      </CardWrapper>
+                    </CardContent>
+                  </Card>
+                );
+              })}
             </div>
           </div>
 

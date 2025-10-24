@@ -4,7 +4,7 @@ const Footer = () => {
   const socialLinks = [
     { icon: Facebook, href: '#', label: 'Facebook' },
     { icon: Twitter, href: '#', label: 'Twitter' },
-    { icon: Instagram, href: '#', label: 'Instagram' },
+    { icon: Instagram, href: 'https://instagram.com/armanian_edu_group', label: 'Instagram' },
     { icon: Youtube, href: '#', label: 'YouTube' },
   ];
 
@@ -99,13 +99,12 @@ const Footer = () => {
               </div>
               <div className="flex items-center space-x-3">
                 <Phone className="w-4 h-4 text-accent" />
-                <span className="text-muted-foreground text-sm">۰۱۳-۳۳۱۲۳۴۵۶</span>
+                <span className="text-muted-foreground text-sm">۰۹۰۰۱۹۶۰۰۱۰</span>
               </div>
               <div className="mt-4">
                 <p className="text-muted-foreground text-sm">
-                  کیاشهر<br />
-                  خیابان فناوری ۱۲۳<br />
-                  ایران
+                  گیلان، کیاشهر<br />
+                  خیابان آدینه
                 </p>
               </div>
             </div>

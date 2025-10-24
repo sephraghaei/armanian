@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ChevronUp, ChevronDown } from "lucide-react";
+import { ChevronUp, ChevronDown, Phone } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const ScrollArrows = () => {
@@ -39,18 +39,38 @@ const ScrollArrows = () => {
     window.scrollTo({ top: nextY, behavior: 'smooth' });
   };
 
-  const commonBtn = "flex items-center justify-center w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-border/30 bg-card/70 backdrop-blur-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105";
+  const commonBtn = "flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-primary/30 bg-gradient-to-br from-primary/90 to-accent/90 backdrop-blur-xl shadow-2xl hover:shadow-primary/50 transition-all duration-300 hover:scale-110 hover:border-primary";
+  
+  const consultationBtn = "flex items-center justify-center w-16 h-16 sm:w-18 sm:h-18 rounded-full border-3 border-green-400/50 bg-gradient-to-br from-green-500 via-emerald-500 to-teal-500 backdrop-blur-xl shadow-2xl hover:shadow-green-400/60 transition-all duration-300 hover:scale-110 hover:border-green-300 relative overflow-hidden group";
 
   return (
-    <div className="fixed right-4 bottom-4 z-50 flex flex-col gap-2 sm:gap-3">
+    <div className="fixed right-4 bottom-4 z-50 flex flex-col gap-3 sm:gap-4">
+      {/* Consultation Button */}
+      <a 
+        href="tel:09001960010"
+        aria-label="تماس برای مشاوره"
+        className={consultationBtn}
+        title="تماس برای مشاوره"
+      >
+        {/* Ripple effect */}
+        <div className="absolute inset-0 rounded-full bg-white/20 scale-0 group-hover:scale-100 transition-transform duration-500"></div>
+        
+        {/* Phone icon */}
+        <Phone className="w-7 h-7 sm:w-8 sm:h-8 text-white relative z-10 drop-shadow-lg" />
+        
+        {/* Pulse ring */}
+        <div className="absolute inset-0 rounded-full border-2 border-green-300/40 animate-pulse"></div>
+      </a>
+      
+      {/* Scroll Buttons */}
       {showDown && (
         <button aria-label="Scroll down" className={commonBtn} onClick={scrollDown}>
-          <ChevronDown className="w-5 h-5 text-foreground/80" />
+          <ChevronDown className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
         </button>
       )}
       {showUp && (
         <button aria-label="Back to top" className={commonBtn} onClick={scrollToTop}>
-          <ChevronUp className="w-5 h-5 text-foreground/80" />
+          <ChevronUp className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
         </button>
       )}
     </div>
