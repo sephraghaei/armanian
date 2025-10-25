@@ -81,13 +81,24 @@ const Departments = () => {
   ];
 
   return (
-    <section id="departments" className="py-20 bg-transparent">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-black text-foreground mb-4">
+    <section id="departments" className="py-24 bg-gradient-to-b from-transparent via-background/30 to-transparent relative overflow-hidden">
+      {/* Background decorative elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-20 left-10 w-32 h-32 bg-primary/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 right-10 w-40 h-40 bg-accent/5 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-60 h-60 bg-gradient-to-r from-primary/3 to-accent/3 rounded-full blur-3xl" />
+      </div>
+      
+      <div className="container mx-auto px-4 relative z-10">
+        <div className="text-center mb-20">
+          <div className="inline-flex items-center gap-2 bg-primary/10 px-4 py-2 rounded-full mb-6">
+            <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
+            <span className="text-sm font-bold text-primary">دپارتمان‌های تخصصی</span>
+          </div>
+          <h2 className="text-4xl md:text-5xl font-black text-foreground mb-6 bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent">
             دپارتمان‌های آموزشی
           </h2>
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+          <p className="text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
             طیف جامعی از دپارتمان‌های تخصصی ما را که برای آموزش مهارت‌های فنی و حرفه‌ای طراحی شده‌اند، کاوش کنید.
           </p>
         </div>
@@ -97,7 +108,7 @@ const Departments = () => {
           <Button
             variant="outline"
             size="icon"
-            className="absolute right-2 md:right-0 top-1/2 -translate-y-1/2 z-10 rounded-full bg-background/90 backdrop-blur-md hover:bg-primary hover:text-primary-foreground hover:border-primary shadow-xl transition-all duration-300"
+            className="absolute right-2 md:right-0 top-1/2 -translate-y-1/2 z-20 rounded-full bg-background/95 backdrop-blur-md hover:bg-gradient-to-r hover:from-primary hover:to-accent hover:text-white hover:border-transparent shadow-2xl hover:shadow-primary/25 transition-all duration-300 hover:scale-110"
             onClick={() => scroll('right')}
           >
             <ChevronRight className="w-5 h-5" />
@@ -105,7 +116,7 @@ const Departments = () => {
           <Button
             variant="outline"
             size="icon"
-            className="absolute left-2 md:left-0 top-1/2 -translate-y-1/2 z-10 rounded-full bg-background/90 backdrop-blur-md hover:bg-primary hover:text-primary-foreground hover:border-primary shadow-xl transition-all duration-300"
+            className="absolute left-2 md:left-0 top-1/2 -translate-y-1/2 z-20 rounded-full bg-background/95 backdrop-blur-md hover:bg-gradient-to-r hover:from-primary hover:to-accent hover:text-white hover:border-transparent shadow-2xl hover:shadow-primary/25 transition-all duration-300 hover:scale-110"
             onClick={() => scroll('left')}
           >
             <ChevronLeft className="w-5 h-5" />
@@ -114,9 +125,9 @@ const Departments = () => {
           {/* Scrollable Container */}
           <div 
             ref={scrollContainerRef}
-            className="overflow-x-auto pb-10 -mx-4 px-4 scrollbar-hide scroll-smooth"
+            className="overflow-x-auto pb-12 -mx-4 px-4 scrollbar-hide scroll-smooth"
           >
-            <div className="flex gap-8 px-4 md:px-16">
+            <div className="flex gap-10 px-4 md:px-16">
               {departments.map((dept, index) => (
                 <DepartmentCard
                   key={index}
@@ -132,8 +143,12 @@ const Departments = () => {
           </div>
         </div>
 
-        <div className="text-center mt-12">
-          <Button variant="hero" size="lg">
+        <div className="text-center mt-16">
+          <Button 
+            variant="hero" 
+            size="lg"
+            className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white font-bold px-8 py-4 rounded-xl shadow-2xl hover:shadow-primary/25 transition-all duration-300 hover:scale-105"
+          >
             مشاهده همه دوره‌ها
           </Button>
         </div>

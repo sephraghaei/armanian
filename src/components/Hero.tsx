@@ -104,28 +104,28 @@ const Hero = () => {
         {/* Content - Full Width */}
         <div className="text-center space-y-12 mb-20">
           <div className="space-y-6 md:space-y-8">
-          <h1 className="text-[3rem] sm:text-[5rem] md:text-[8rem] lg:text-[10rem] font-extrabold leading-[1.1] md:leading-tight max-w-5xl mx-auto mb-4 md:mb-8 tracking-tight bg-clip-text text-transparent animate-gradient-x" style={{ backgroundImage: 'linear-gradient(90deg, hsl(233,63%,67%), hsl(200 51% 65%), hsl(233,63%,67%))' }}>
+          <h1 className="text-[3rem] sm:text-[5rem] md:text-[8rem] lg:text-[10rem] font-extrabold leading-[1.1] md:leading-tight max-w-5xl mx-auto mb-4 md:mb-8 tracking-tight bg-clip-text text-transparent animate-gradient-x animate-bounce-in" style={{ backgroundImage: 'linear-gradient(90deg, hsl(233,63%,67%), hsl(200 51% 65%), hsl(233,63%,67%))' }}>
               آرمانیان
           </h1>
             <div className="space-y-6">
-              <h2 className="text-lg sm:text-xl md:text-2xl lg:text-4xl font-bold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent leading-relaxed md:leading-tight max-w-4xl mx-auto">
+              <h2 className="text-lg sm:text-xl md:text-2xl lg:text-4xl font-bold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent leading-relaxed md:leading-tight max-w-4xl mx-auto animate-slide-in-up">
                 آموزشگاه آزاد فنی و حرفه‌ای کامپیوتر و معماری
               </h2>
             </div>
             
             <div className="pt-6">
-              <p className="text-base sm:text-lg md:text-2xl text-muted-foreground/90 max-w-3xl mx-auto leading-loose md:leading-relaxed font-medium overflow-visible">
+              <p className="text-base sm:text-lg md:text-2xl text-muted-foreground/90 max-w-3xl mx-auto leading-loose md:leading-relaxed font-medium overflow-visible animate-slide-in-up" style={{ animationDelay: '0.3s' }}>
                 <Typewriter text="مسیر آینده از آرمانیان می گذرد ..." />
               </p>
             </div>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center pt-2 md:pt-4">
-            <Button variant="hero" size="lg" className="group w-full sm:w-auto" onClick={handleSignUp}>
+            <Button variant="hero" size="lg" className="group w-full sm:w-auto animate-bounce-in hover-scale" style={{ animationDelay: '0.6s' }} onClick={handleSignUp}>
               همین امروز شروع کن
-              <ArrowRight className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+              <ArrowRight className="w-4 h-4 group-hover:-translate-x-2 group-hover:rotate-12 transition-all duration-300" />
             </Button>
-            <Button variant="outline" size="lg" asChild className="w-full sm:w-auto">
+            <Button variant="outline" size="lg" asChild className="w-full sm:w-auto animate-bounce-in hover-scale" style={{ animationDelay: '0.8s' }}>
               <a href="/courses">
                 مشاهده دوره‌ها
               </a>
@@ -134,38 +134,38 @@ const Hero = () => {
 
           {/* Stats */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-8 pt-6 md:pt-8 max-w-2xl mx-auto">
-            <div className="text-center space-y-1 sm:space-y-2">
-              <div className="text-2xl md:text-4xl font-black text-primary">۵۰۰+</div>
+            <div className="text-center space-y-1 sm:space-y-2 animate-slide-in-up" style={{ animationDelay: '1s' }}>
+              <div className="text-2xl md:text-4xl font-black text-primary animate-heartbeat">۵۰۰+</div>
               <div className="text-sm md:text-base text-muted-foreground font-semibold">دانشجوی خوشحال</div>
             </div>
-            <div className="text-center space-y-1 sm:space-y-2">
-              <div className="text-2xl md:text-4xl font-black text-accent">۱۵+</div>
+            <div className="text-center space-y-1 sm:space-y-2 animate-slide-in-up" style={{ animationDelay: '1.2s' }}>
+              <div className="text-2xl md:text-4xl font-black text-accent animate-heartbeat">۱۵+</div>
               <div className="text-sm md:text-base text-muted-foreground font-semibold">معلم متخصص</div>
             </div>
-            <div className="text-center space-y-1 sm:space-y-2">
-              <div className="text-2xl md:text-4xl font-black text-primary">۱۲</div>
+            <div className="text-center space-y-1 sm:space-y-2 animate-slide-in-up" style={{ animationDelay: '1.4s' }}>
+              <div className="text-2xl md:text-4xl font-black text-primary animate-heartbeat">۱۲</div>
               <div className="text-sm md:text-base text-muted-foreground font-semibold">دوره آموزشی</div>
             </div>
           </div>
         </div>
 
         {/* Image - Below Text */}
-        <div className="relative max-w-4xl mx-auto mt-10 md:mt-16">
-          <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+        <div className="relative max-w-4xl mx-auto mt-10 md:mt-16 animate-slide-in-up" style={{ animationDelay: '1.6s' }}>
+          <div className="relative rounded-2xl overflow-hidden shadow-2xl hover:shadow-primary/25 transition-all duration-500 hover:scale-105">
             <img 
               src={heroImage} 
               alt="کودکان در حال یادگیری برنامه‌نویسی در کلاس مدرن"
-              className="w-full h-[260px] sm:h-[360px] md:h-[500px] object-cover"
+              className="w-full h-[260px] sm:h-[360px] md:h-[500px] object-cover hover:scale-110 transition-transform duration-700"
             />
-            <div className="absolute inset-0 bg-gradient-to-tr from-primary/15 to-accent/15 md:from-primary/20 md:to-accent/20"></div>
+            <div className="absolute inset-0 bg-gradient-to-tr from-primary/15 to-accent/15 md:from-primary/20 md:to-accent/20 hover:from-primary/25 hover:to-accent/25 transition-all duration-500"></div>
           </div>
           
           {/* Floating Elements */}
-          <div className="absolute -top-4 -right-4 bg-card border border-border rounded-lg p-2 sm:p-3 shadow-lg animate-bounce">
-            <Code className="w-6 h-6 text-primary" />
+          <div className="absolute -top-4 -right-4 bg-card border border-border rounded-lg p-2 sm:p-3 shadow-lg animate-float hover:animate-wiggle transition-all duration-300">
+            <Code className="w-6 h-6 text-primary animate-heartbeat" />
           </div>
-          <div className="absolute -bottom-4 -left-4 bg-card border border-border rounded-lg p-2 sm:p-3 shadow-lg animate-bounce delay-1000">
-            <Sparkles className="w-6 h-6 text-accent" />
+          <div className="absolute -bottom-4 -left-4 bg-card border border-border rounded-lg p-2 sm:p-3 shadow-lg animate-float hover:animate-wiggle transition-all duration-300" style={{ animationDelay: '1s' }}>
+            <Sparkles className="w-6 h-6 text-accent animate-heartbeat" />
           </div>
         </div>
       </div>

@@ -157,6 +157,127 @@ All colors MUST be HSL.
   100% { background-position: 100% 50%; }
 }
 
+@keyframes fadeInUp {
+  0% { 
+    opacity: 0; 
+    transform: translateY(30px) scale(0.95); 
+  }
+  100% { 
+    opacity: 1; 
+    transform: translateY(0) scale(1); 
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes slideInUp {
+  0% { 
+    opacity: 0; 
+    transform: translateY(50px); 
+  }
+  100% { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+@keyframes slideInRight {
+  0% { 
+    opacity: 0; 
+    transform: translateX(50px); 
+  }
+  100% { 
+    opacity: 1; 
+    transform: translateX(0); 
+  }
+}
+
+@keyframes slideInLeft {
+  0% { 
+    opacity: 0; 
+    transform: translateX(-50px); 
+  }
+  100% { 
+    opacity: 1; 
+    transform: translateX(0); 
+  }
+}
+
+@keyframes scaleIn {
+  0% { 
+    opacity: 0; 
+    transform: scale(0.8); 
+  }
+  100% { 
+    opacity: 1; 
+    transform: scale(1); 
+  }
+}
+
+@keyframes bounceIn {
+  0% { 
+    opacity: 0; 
+    transform: scale(0.3); 
+  }
+  50% { 
+    opacity: 1; 
+    transform: scale(1.05); 
+  }
+  70% { 
+    transform: scale(0.9); 
+  }
+  100% { 
+    opacity: 1; 
+    transform: scale(1); 
+  }
+}
+
+@keyframes rotateIn {
+  0% { 
+    opacity: 0; 
+    transform: rotate(-180deg) scale(0.5); 
+  }
+  100% { 
+    opacity: 1; 
+    transform: rotate(0deg) scale(1); 
+  }
+}
+
+@keyframes glow {
+  0%, 100% { 
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.3); 
+  }
+  50% { 
+    box-shadow: 0 0 40px hsl(var(--primary) / 0.6), 0 0 60px hsl(var(--primary) / 0.3); 
+  }
+}
+
+@keyframes wiggle {
+  0%, 7% { transform: rotateZ(0); }
+  15% { transform: rotateZ(-15deg); }
+  20% { transform: rotateZ(10deg); }
+  25% { transform: rotateZ(-10deg); }
+  30% { transform: rotateZ(6deg); }
+  35% { transform: rotateZ(-4deg); }
+  40%, 100% { transform: rotateZ(0); }
+}
+
+@keyframes heartbeat {
+  0% { transform: scale(1); }
+  14% { transform: scale(1.1); }
+  28% { transform: scale(1); }
+  42% { transform: scale(1.1); }
+  70% { transform: scale(1); }
+}
+
 @layer utilities {
   .animate-gradient-x {
     background-size: 200% 200%;
@@ -164,6 +285,51 @@ All colors MUST be HSL.
   }
   .animate-page-in {
     animation: pageFadeIn 420ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .animate-fade-in-up {
+    animation: fadeInUp 800ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+  .animate-shimmer {
+    animation: shimmer 2s ease-in-out infinite;
+  }
+  .animate-slide-in-up {
+    animation: slideInUp 600ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .animate-slide-in-right {
+    animation: slideInRight 500ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .animate-slide-in-left {
+    animation: slideInLeft 500ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .animate-scale-in {
+    animation: scaleIn 400ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .animate-bounce-in {
+    animation: bounceIn 800ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .animate-rotate-in {
+    animation: rotateIn 600ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .animate-glow {
+    animation: glow 2s ease-in-out infinite;
+  }
+  .animate-wiggle {
+    animation: wiggle 1s ease-in-out;
+  }
+  .animate-heartbeat {
+    animation: heartbeat 1.5s ease-in-out infinite;
+  }
+  .hover-scale {
+    transition: transform 0.3s ease;
+  }
+  .hover-scale:hover {
+    transform: scale(1.05);
+  }
+  .pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
   
   .custom-scrollbar::-webkit-scrollbar {
