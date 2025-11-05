@@ -43,30 +43,50 @@ serve(async (req: Request) => {
 
       const resetLink = `${Deno.env.get("SITE_URL") || 'http://localhost:5173'}/reset-password?token=${resetToken}`;
       
+      console.log('Attempting to send email to:', email);
+      console.log('Reset link:', resetLink);
+      
       // ارسال ایمیل
-      await fetch(`${url}/functions/v1/send-email`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${key}`,
-        },
-        body: JSON.stringify({
-          to: email,
-          subject: 'بازیابی رمز عبور',
-          html: `
-            <div style="font-family: Tahoma, sans-serif; direction: rtl; text-align: right;">
-              <h2>بازیابی رمز عبور</h2>
-              <p>برای بازیابی رمز عبور خود روی لینک زیر کلیک کنید:</p>
-              <a href="${resetLink}" style="display: inline-block; padding: 10px 20px; background: #4F46E5; color: white; text-decoration: none; border-radius: 5px; margin: 20px 0;">
-                بازیابی رمز عبور
-              </a>
-              <p>این لینک برای ۱ ساعت معتبر است.</p>
-              <p>اگر شما این درخواست را نداده‌اید، این ایمیل را نادیده بگیرید.</p>
-            </div>
-          `,
-          type: 'reset_password',
-        }),
-      });
+      try {
+        const emailResponse = await fetch(`${url}/functions/v1/send-email`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${key}`,
+          },
+          body: JSON.stringify({
+            to: email,
+            subject: 'بازیابی رمز عبور',
+            html: `
+              <div style="font-family: Tahoma, sans-serif; direction: rtl; text-align: right;">
+                <h2>بازیابی رمز عبور</h2>
+                <p>برای بازیابی رمز عبور خود روی لینک زیر کلیک کنید:</p>
+                <a href="${resetLink}" style="display: inline-block; padding: 10px 20px; background: #4F46E5; color: white; text-decoration: none; border-radius: 5px; margin: 20px 0;">
+                  بازیابی رمز عبور
+                </a>
+                <p>این لینک برای ۱ ساعت معتبر است.</p>
+                <p>اگر شما این درخواست را نداده‌اید، این ایمیل را نادیده بگیرید.</p>
+              </div>
+            `,
+            type: 'reset_password',
+          }),
+        });
+
+        const emailResult = await emailResponse.json();
+        
+        if (!emailResponse.ok) {
+          console.error('Email send failed:', emailResult);
+          throw new Error('Failed to send email');
+        }
+        
+        console.log('Email sent successfully:', emailResult);
+      } catch (emailError) {
+        console.error('Error sending email:', emailError);
+        return new Response(
+          JSON.stringify({ error: 'خطا در ارسال ایمیل' }), 
+          { status: 500, headers: { ...corsHeaders, 'content-type': 'application/json' } }
+        );
+      }
 
       return new Response(
         JSON.stringify({ message: "اگر این ایمیل در سیستم ثبت شده باشد، لینک بازیابی ارسال می‌شود" }), 
