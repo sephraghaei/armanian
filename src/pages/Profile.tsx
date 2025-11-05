@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
+import { useUserProfile } from '@/hooks/useUserProfile';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -38,43 +39,25 @@ interface Enrollment {
 
 const Profile = () => {
   const { user, loading, signOut } = useAuth();
+  const { profile: userProfile, loading: profileLoading } = useUserProfile(user);
   const navigate = useNavigate();
   const { toast } = useToast();
-  const [profile, setProfile] = useState<Profile | null>(null);
   const [enrollments, setEnrollments] = useState<Enrollment[]>([]);
   const [displayName, setDisplayName] = useState('');
-  const [profileLoading, setProfileLoading] = useState(true);
   const [updating, setUpdating] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
     if (user) {
-      fetchProfile();
       fetchEnrollments();
     }
   }, [user]);
 
-  const fetchProfile = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('user_id', user?.id)
-        .single();
-
-      if (error && error.code !== 'PGRST116') {
-        console.error('Error fetching profile:', error);
-        return;
-      }
-
-      if (data) {
-        setProfile(data);
-        setDisplayName(data.display_name || '');
-      }
-    } finally {
-      setProfileLoading(false);
+  useEffect(() => {
+    if (userProfile) {
+      setDisplayName(userProfile.display_name || '');
     }
-  };
+  }, [userProfile]);
 
   const fetchEnrollments = async () => {
     try {
@@ -123,8 +106,6 @@ const Profile = () => {
         title: 'موفق',
         description: 'پروفایل با موفقیت به‌روزرسانی شد',
       });
-
-      fetchProfile();
     } finally {
       setUpdating(false);
     }
@@ -264,15 +245,15 @@ const Profile = () => {
           <div className="bg-gradient-hero rounded-2xl p-8 mb-8">
             <div className="flex flex-col md:flex-row items-center gap-6">
               <Avatar className="w-24 h-24 border-4 border-white/20">
-                <AvatarImage src={profile?.avatar_url || undefined} />
+                <AvatarImage src={userProfile?.avatar_url || undefined} />
                 <AvatarFallback className="text-2xl font-bold bg-white/10 text-white">
-                  {getInitials(user.first_name, user.last_name)}
+                  {getInitials(userProfile?.first_name, userProfile?.last_name)}
                 </AvatarFallback>
               </Avatar>
               
               <div className="text-center md:text-right flex-1">
                 <h1 className="text-3xl font-bold text-foreground mb-2">
-                  {profile?.display_name || `${user.first_name} ${user.last_name}`}
+                  {userProfile?.display_name || `${userProfile?.first_name || ''} ${userProfile?.last_name || ''}`}
                 </h1>
                 <p className="text-muted-foreground mb-4">
                   عضو آکادمی ارمانیان

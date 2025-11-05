@@ -18,7 +18,7 @@ const Auth = () => {
   const [password, setPassword] = useState('');
   const [showOtpInput, setShowOtpInput] = useState(false);
   const [isSignUp, setIsSignUp] = useState(false);
-  const { signUpWithCredentials, signInWithCredentials, user } = useAuth();
+  const { signUp, signIn, user } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
 
@@ -87,9 +87,12 @@ const Auth = () => {
     }
 
     try {
+      // برای Supabase Auth از ایمیل استفاده می‌کنیم
+      const email = `${formattedPhone.replace(/\+/g, '')}@armanian.academy`;
+      
       const { error } = isSignUpMode 
-        ? await signUpWithCredentials(formattedPhone, firstName, lastName, password)
-        : await signInWithCredentials(formattedPhone, password);
+        ? await signUp(email, password, firstName, lastName, formattedPhone)
+        : await signIn(email, password);
       
       if (error) {
         toast({
@@ -189,6 +192,11 @@ const Auth = () => {
                     {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                     ورود
                   </Button>
+                  <div className="text-center text-sm">
+                    <Link to="/reset-password" className="text-primary hover:underline">
+                      فراموشی رمز عبور
+                    </Link>
+                  </div>
                 </form>
               </CardContent>
             </Card>
