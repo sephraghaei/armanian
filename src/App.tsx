@@ -13,6 +13,7 @@ import Auth from "./pages/Auth";
 import Profile from "./pages/Profile";
 import Admin from "./pages/Admin";
 import ResetPassword from "./pages/ResetPassword";
+import TestEmail from "./pages/TestEmail";
 import NotFound from "./pages/NotFound";
 import ConsultationPrompt from "@/components/ConsultationPrompt";
 import ScrollArrows from "@/components/ScrollArrows";
@@ -40,6 +41,7 @@ const App = () => {
               <Route path="/course-detail/:courseId" element={<CourseDetailPage />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/reset-password" element={<ResetPassword />} />
+              <Route path="/test-email" element={<TestEmail />} />
               <Route path="/profile" element={<RequireAuth><Profile /></RequireAuth>} />
               <Route path="/admin" element={<RequireAuth><Admin /></RequireAuth>} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
