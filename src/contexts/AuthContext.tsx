@@ -129,17 +129,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const resetPassword = async (email: string) => {
     try {
-      const response = await fetch(
-        `https://drthfkbvxqjhuurmxjrk.supabase.co/functions/v1/password-reset`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email }),
-        }
-      );
+      const { data, error } = await supabase.functions.invoke('password-reset', {
+        body: { email }
+      });
       
-      const data = await response.json();
-      if (!response.ok) return { error: data };
+      if (error) return { error };
       return { error: null };
     } catch (e: any) {
       return { error: { message: 'خطای شبکه' } };
@@ -148,17 +142,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const updatePassword = async (token: string, newPassword: string) => {
     try {
-      const response = await fetch(
-        `https://drthfkbvxqjhuurmxjrk.supabase.co/functions/v1/password-reset`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ token, newPassword }),
-        }
-      );
+      const { data, error } = await supabase.functions.invoke('password-reset', {
+        body: { token, newPassword }
+      });
       
-      const data = await response.json();
-      if (!response.ok) return { error: data };
+      if (error) return { error };
       return { error: null };
     } catch (e: any) {
       return { error: { message: 'خطای شبکه' } };
