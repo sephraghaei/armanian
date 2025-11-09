@@ -37,11 +37,13 @@ const CourseDetail = () => {
   }, [courseId]);
 
   const fetchCourse = async () => {
+    if (!courseId) return;
+
     try {
       const { data, error } = await supabase
         .from('courses')
         .select('*')
-        .eq('title', courseId) // Search by title since courseId is actually the title
+        .eq('id', courseId)
         .single();
 
       if (error) {
