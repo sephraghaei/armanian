@@ -87,8 +87,9 @@ const Auth = () => {
     }
 
     try {
-      // برای Supabase Auth از ایمیل استفاده می‌کنیم
-      const email = `${formattedPhone.replace(/\+/g, '')}@armanian.academy`;
+      // برای Supabase Auth از ایمیل استفاده می‌کنیم - فرمت phone+domain
+      const cleanPhone = formattedPhone.replace(/\+/g, '');
+      const email = `user${cleanPhone}@armanian.academy`;
       
       const { error } = isSignUpMode 
         ? await signUp(email, password, firstName, lastName, formattedPhone)
