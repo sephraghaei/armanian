@@ -87,13 +87,9 @@ const Auth = () => {
     }
 
     try {
-      // برای Supabase Auth از ایمیل استفاده می‌کنیم - فرمت phone+domain
-      const cleanPhone = formattedPhone.replace(/\+/g, '');
-      const email = `user${cleanPhone}@armanian.academy`;
-      
       const { error } = isSignUpMode 
-        ? await signUp(email, password, firstName, lastName, formattedPhone)
-        : await signIn(email, password);
+        ? await signUp(formattedPhone, password, firstName, lastName)
+        : await signIn(formattedPhone, password);
       
       if (error) {
         toast({
@@ -101,6 +97,12 @@ const Auth = () => {
           title: "خطا در احراز هویت",
           description: error.message,
         });
+      } else {
+        toast({
+          title: isSignUpMode ? "ثبت نام موفق" : "ورود موفق",
+          description: isSignUpMode ? "حساب شما با موفقیت ایجاد شد" : "خوش آمدید",
+        });
+        navigate('/');
       }
     } catch (error) {
       toast({

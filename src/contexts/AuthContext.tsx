@@ -1,16 +1,19 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 
+interface AppUser {
+  id: string;
+  first_name: string;
+  last_name: string;
+  phone: string;
+}
+
 interface AuthContextType {
-  user: User | null;
-  session: Session | null;
+  user: AppUser | null;
   loading: boolean;
-  signUp: (email: string, password: string, firstName: string, lastName: string, phone?: string) => Promise<{ error: any }>;
-  signIn: (email: string, password: string) => Promise<{ error: any }>;
+  signUp: (phone: string, password: string, firstName: string, lastName: string) => Promise<{ error: any }>;
+  signIn: (phone: string, password: string) => Promise<{ error: any }>;
   signOut: () => Promise<{ error: any }>;
-  resetPassword: (email: string) => Promise<{ error: any }>;
-  updatePassword: (token: string, newPassword: string) => Promise<{ error: any }>;
   isAdmin: boolean;
 }
 
@@ -25,28 +28,27 @@ export const useAuth = () => {
 };
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
-  const [session, setSession] = useState<Session | null>(null);
+  const [user, setUser] = useState<AppUser | null>(null);
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    // بررسی session موجود
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setUser(session?.user ?? null);
-      checkAdminStatus(session?.user?.id);
-    });
-
-    // گوش دادن به تغییرات احراز هویت
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-      setUser(session?.user ?? null);
-      checkAdminStatus(session?.user?.id);
-    });
-
+    // بررسی توکن ذخیره شده
+    const token = localStorage.getItem('app_token');
+    const userStr = localStorage.getItem('app_user');
+    
+    if (token && userStr) {
+      try {
+        const userData = JSON.parse(userStr);
+        setUser(userData);
+        checkAdminStatus(userData.id);
+      } catch (e) {
+        localStorage.removeItem('app_token');
+        localStorage.removeItem('app_user');
+      }
+    }
+    
     setLoading(false);
-    return () => subscription.unsubscribe();
   }, []);
 
   const checkAdminStatus = async (userId?: string) => {
@@ -55,113 +57,83 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       return;
     }
     
-    const { data } = await supabase
-      .from('user_roles')
-      .select('role')
-      .eq('user_id', userId)
-      .eq('role', 'admin')
-      .maybeSingle();
-    
-    setIsAdmin(!!data);
+    // فعلاً admin check غیرفعال است - بعداً باید به users_app اضافه شود
+    setIsAdmin(false);
   };
 
-  const signUp = async (email: string, password: string, firstName: string, lastName: string, phone?: string) => {
+  const signUp = async (phone: string, password: string, firstName: string, lastName: string) => {
     try {
-      const { data, error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          data: {
-            first_name: firstName,
-            last_name: lastName,
-            phone: phone,
-            display_name: `${firstName} ${lastName}`,
-          },
-          emailRedirectTo: `${window.location.origin}/`,
+      const { data, error } = await supabase.functions.invoke('auth-register', {
+        body: { 
+          phone,
+          password,
+          firstName,
+          lastName
         }
       });
 
-      if (error) return { error };
+      if (error) throw error;
+      
+      const responseData = await data;
+      if (responseData.error) {
+        return { error: { message: responseData.error } };
+      }
 
-      // ارسال ایمیل خوش‌آمدگویی
-      if (data.user) {
-        await supabase.functions.invoke('send-email', {
-          body: {
-            to: email,
-            subject: 'خوش آمدید به آرمانیان آکادمی',
-            html: `
-              <div style="font-family: Tahoma, sans-serif; direction: rtl; text-align: right;">
-                <h2>سلام ${firstName} ${lastName}!</h2>
-                <p>به آرمانیان آکادمی خوش آمدید.</p>
-                <p>اکنون می‌توانید در دوره‌های مختلف ثبت‌نام کنید و یادگیری خود را شروع کنید.</p>
-                <a href="${window.location.origin}/courses" style="display: inline-block; padding: 10px 20px; background: #4F46E5; color: white; text-decoration: none; border-radius: 5px; margin: 20px 0;">
-                  مشاهده دوره‌ها
-                </a>
-              </div>
-            `,
-            type: 'welcome',
-          },
-        }).catch(err => console.error('Email send error:', err));
+      // ذخیره توکن و اطلاعات کاربر
+      if (responseData.token && responseData.user) {
+        localStorage.setItem('app_token', responseData.token);
+        localStorage.setItem('app_user', JSON.stringify(responseData.user));
+        setUser(responseData.user);
+        checkAdminStatus(responseData.user.id);
       }
 
       return { error: null };
     } catch (e: any) {
-      return { error: { message: 'خطای شبکه. لطفاً اتصال اینترنت خود را بررسی کنید' } };
+      return { error: { message: e.message || 'خطای شبکه. لطفاً اتصال اینترنت خود را بررسی کنید' } };
     }
   };
 
-  const signIn = async (email: string, password: string) => {
+  const signIn = async (phone: string, password: string) => {
     try {
-      const { error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
+      const { data, error } = await supabase.functions.invoke('auth-login', {
+        body: { phone, password }
       });
-      return { error };
+
+      if (error) throw error;
+      
+      const responseData = await data;
+      if (responseData.error) {
+        return { error: { message: responseData.error } };
+      }
+
+      // ذخیره توکن و اطلاعات کاربر
+      if (responseData.token && responseData.user) {
+        localStorage.setItem('app_token', responseData.token);
+        localStorage.setItem('app_user', JSON.stringify(responseData.user));
+        setUser(responseData.user);
+        checkAdminStatus(responseData.user.id);
+      }
+
+      return { error: null };
     } catch (e: any) {
-      return { error: { message: 'خطای شبکه. لطفاً اتصال اینترنت خود را بررسی کنید' } };
+      return { error: { message: e.message || 'خطای شبکه. لطفاً اتصال اینترنت خود را بررسی کنید' } };
     }
   };
 
   const signOut = async () => {
-    const { error } = await supabase.auth.signOut();
-    return { error };
-  };
-
-  const resetPassword = async (email: string) => {
-    try {
-      const { data, error } = await supabase.functions.invoke('password-reset', {
-        body: { email }
-      });
-      
-      if (error) return { error };
-      return { error: null };
-    } catch (e: any) {
-      return { error: { message: 'خطای شبکه' } };
-    }
-  };
-
-  const updatePassword = async (token: string, newPassword: string) => {
-    try {
-      const { data, error } = await supabase.functions.invoke('password-reset', {
-        body: { token, newPassword }
-      });
-      
-      if (error) return { error };
-      return { error: null };
-    } catch (e: any) {
-      return { error: { message: 'خطای شبکه' } };
-    }
+    localStorage.removeItem('app_token');
+    localStorage.removeItem('app_user');
+    setUser(null);
+    setIsAdmin(false);
+    return { error: null };
   };
 
   const value = {
     user,
-    session,
     loading,
     signUp,
     signIn,
     signOut,
-    resetPassword,
-    updatePassword,
     isAdmin,
   };
 
