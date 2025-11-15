@@ -57,8 +57,25 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       return;
     }
     
-    // فعلاً admin check غیرفعال است - بعداً باید به users_app اضافه شود
-    setIsAdmin(false);
+    try {
+      const { data, error } = await supabase
+        .from('user_roles')
+        .select('role')
+        .eq('user_id', userId)
+        .eq('role', 'admin')
+        .maybeSingle();
+      
+      if (error) {
+        console.error('Error checking admin status:', error);
+        setIsAdmin(false);
+        return;
+      }
+      
+      setIsAdmin(!!data);
+    } catch (e) {
+      console.error('Error in checkAdminStatus:', e);
+      setIsAdmin(false);
+    }
   };
 
   const signUp = async (phone: string, password: string, firstName: string, lastName: string) => {
