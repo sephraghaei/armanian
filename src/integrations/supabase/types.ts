@@ -151,6 +151,13 @@ export type Database = {
             referencedRelation: "courses"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "fk_enrollments_users_app"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users_app"
+            referencedColumns: ["id"]
+          },
         ]
       }
       password_reset_tokens: {
