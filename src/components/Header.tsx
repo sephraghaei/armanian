@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Menu, X, Code, Brain, Monitor, User, LogOut } from 'lucide-react';
+import { Menu, X, Code, Brain, Monitor, User, LogOut, Shield } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import {
@@ -18,8 +18,8 @@ const Header = () => {
   // Add debugging to see if AuthProvider is available
   console.log('Header rendering, checking auth context...');
   
-  const { user, signOut, loading } = useAuth();
-  console.log('Auth context loaded:', { user: !!user, loading });
+  const { user, signOut, loading, isAdmin } = useAuth();
+  console.log('Auth context loaded:', { user: !!user, loading, isAdmin });
   const { toast } = useToast();
   const navigate = useNavigate();
   const location = useLocation();
@@ -224,6 +224,15 @@ const Header = () => {
                     <User className="w-4 h-4" />
                     <span>پروفایل کاربری</span>
                   </DropdownMenuItem>
+                  {isAdmin && (
+                    <DropdownMenuItem 
+                      className="flex items-center gap-2 cursor-pointer hover:bg-primary/10 transition-colors" 
+                      onClick={() => window.location.href = '/admin'}
+                    >
+                      <Shield className="w-4 h-4" />
+                      <span>پنل مدیریت</span>
+                    </DropdownMenuItem>
+                  )}
                   <DropdownMenuItem className="flex items-center gap-2 opacity-60">
                     <span className="text-sm text-muted-foreground">{user.phone || 'کاربر'}</span>
                   </DropdownMenuItem>
