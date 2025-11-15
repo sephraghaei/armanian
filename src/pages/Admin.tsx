@@ -19,6 +19,25 @@ interface Course {
   level: string;
   features: string[];
   learning_outcomes: string[];
+  department_id?: number;
+  is_popular?: boolean;
+}
+
+interface Enrollment {
+  id: string;
+  user_id: string;
+  course_id: string;
+  enrolled_at: string;
+  expires_at: string;
+  status: string;
+  courses: {
+    title: string;
+  };
+  users_app: {
+    first_name: string;
+    last_name: string;
+    phone: string;
+  };
 }
 
 export default function Admin() {
@@ -27,7 +46,9 @@ export default function Admin() {
   const { toast } = useToast();
   
   const [courses, setCourses] = useState<Course[]>([]);
+  const [enrollments, setEnrollments] = useState<Enrollment[]>([]);
   const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState<'courses' | 'enrollments'>('courses');
   const [editingCourse, setEditingCourse] = useState<Course | null>(null);
   const [formData, setFormData] = useState({
     title: '',
@@ -36,6 +57,8 @@ export default function Admin() {
     level: '',
     features: '',
     learning_outcomes: '',
+    department_id: '',
+    is_popular: false,
   });
 
   useEffect(() => {
@@ -47,6 +70,7 @@ export default function Admin() {
   useEffect(() => {
     if (user && isAdmin) {
       fetchCourses();
+      fetchEnrollments();
     }
   }, [user, isAdmin]);
 
@@ -68,6 +92,28 @@ export default function Admin() {
     setLoading(false);
   };
 
+  const fetchEnrollments = async () => {
+    const { data, error } = await supabase
+      .from('enrollments')
+      .select(`
+        *,
+        courses (title),
+        users_app (first_name, last_name, phone)
+      `)
+      .order('enrolled_at', { ascending: false });
+
+    if (error) {
+      console.error('Error fetching enrollments:', error);
+      toast({
+        variant: 'destructive',
+        title: 'خطا',
+        description: 'خطا در بارگذاری ثبت‌نام‌ها',
+      });
+    } else {
+      setEnrollments(data || []);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -78,6 +124,8 @@ export default function Admin() {
       level: formData.level,
       features: formData.features.split('\n').filter(f => f.trim()),
       learning_outcomes: formData.learning_outcomes.split('\n').filter(l => l.trim()),
+      department_id: formData.department_id ? parseInt(formData.department_id) : null,
+      is_popular: formData.is_popular,
     };
 
     if (editingCourse) {
@@ -125,7 +173,10 @@ export default function Admin() {
       level: course.level || '',
       features: (course.features || []).join('\n'),
       learning_outcomes: (course.learning_outcomes || []).join('\n'),
+      department_id: course.department_id?.toString() || '',
+      is_popular: course.is_popular || false,
     });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleDelete = async (id: string) => {
@@ -157,7 +208,27 @@ export default function Admin() {
       level: '',
       features: '',
       learning_outcomes: '',
+      department_id: '',
+      is_popular: false,
     });
+  };
+
+  const deleteEnrollment = async (enrollmentId: string) => {
+    const { error } = await supabase
+      .from('enrollments')
+      .delete()
+      .eq('id', enrollmentId);
+
+    if (error) {
+      toast({
+        variant: 'destructive',
+        title: 'خطا',
+        description: 'خطا در حذف ثبت‌نام',
+      });
+    } else {
+      toast({ title: 'موفق', description: 'ثبت‌نام با موفقیت حذف شد' });
+      fetchEnrollments();
+    }
   };
 
   if (authLoading || loading) {
