@@ -25,6 +25,7 @@ export type Database = {
           is_popular: boolean | null
           learning_outcomes: string[] | null
           level: string | null
+          price: string | null
           title: string
           updated_at: string | null
         }
@@ -38,6 +39,7 @@ export type Database = {
           is_popular?: boolean | null
           learning_outcomes?: string[] | null
           level?: string | null
+          price?: string | null
           title: string
           updated_at?: string | null
         }
@@ -51,6 +53,7 @@ export type Database = {
           is_popular?: boolean | null
           learning_outcomes?: string[] | null
           level?: string | null
+          price?: string | null
           title?: string
           updated_at?: string | null
         }
@@ -119,26 +122,44 @@ export type Database = {
           enrolled_at: string
           expires_at: string
           id: string
+          amount_due: string
+          amount_paid: string
+          paid_at: string | null
+          payment_method: string
+          payment_notes: string | null
+          payment_status: string
           status: string
           updated_at: string
           user_id: string
         }
         Insert: {
+          amount_due?: string
+          amount_paid?: string
           course_id: string
           created_at?: string
           enrolled_at?: string
           expires_at: string
           id?: string
+          paid_at?: string | null
+          payment_method?: string
+          payment_notes?: string | null
+          payment_status?: string
           status?: string
           updated_at?: string
           user_id: string
         }
         Update: {
+          amount_due?: string
+          amount_paid?: string
           course_id?: string
           created_at?: string
           enrolled_at?: string
           expires_at?: string
           id?: string
+          paid_at?: string | null
+          payment_method?: string
+          payment_notes?: string | null
+          payment_status?: string
           status?: string
           updated_at?: string
           user_id?: string

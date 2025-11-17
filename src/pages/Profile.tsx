@@ -12,7 +12,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Separator } from '@/components/ui/separator';
 import { useToast } from '@/hooks/use-toast';
-import { Trash2, Clock, Plus, ArrowLeft, User, Phone, Calendar, BookOpen, Trophy, Settings, Edit, LogOut, Star } from 'lucide-react';
+import { Trash2, Clock, Plus, ArrowLeft, User, Phone, Calendar, BookOpen, Trophy, Settings, Edit, LogOut, Star, CreditCard } from 'lucide-react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -30,10 +30,17 @@ interface Enrollment {
   enrolled_at: string;
   expires_at: string;
   status: string;
+  payment_status: string;
+  payment_method: string;
+  amount_due: string;
+  amount_paid: string;
+  paid_at: string | null;
+  payment_notes: string | null;
   courses: {
     title: string;
     description: string;
     duration: string;
+    price?: string | null;
   };
 }
 
@@ -68,7 +75,8 @@ const Profile = () => {
           courses (
             title,
             description,
-            duration
+            duration,
+            price
           )
         `)
         .eq('user_id', user?.id)
@@ -83,6 +91,13 @@ const Profile = () => {
     } catch (error) {
       console.error('Error:', error);
     }
+  };
+
+  const formatPrice = (amount?: string | null) => {
+    if (!amount) return '۰ تومان';
+    const numeric = Number(amount);
+    if (Number.isNaN(numeric)) return amount;
+    return numeric.toLocaleString('fa-IR', { style: 'currency', currency: 'IRR' });
   };
 
   const updateProfile = async () => {
@@ -190,6 +205,27 @@ const Profile = () => {
       return <Badge variant="secondary">در حال اتمام</Badge>;
     }
     return <Badge variant="default">فعال</Badge>;
+  };
+
+  const getPaymentBadge = (status: Enrollment['payment_status']) => {
+    switch (status) {
+      case 'paid':
+        return <Badge variant="default" className="bg-emerald-500/20 text-emerald-700">پرداخت شده</Badge>;
+      case 'failed':
+        return <Badge variant="destructive">پرداخت ناموفق</Badge>;
+      default:
+        return <Badge variant="secondary">در انتظار پرداخت</Badge>;
+    }
+  };
+
+  const getPaymentDescription = (enrollment: Enrollment) => {
+    if (enrollment.payment_status === 'paid') {
+      return `پرداخت شده در ${enrollment.paid_at ? new Date(enrollment.paid_at).toLocaleDateString('fa-IR') : 'تاریخ نامشخص'}`;
+    }
+    if (enrollment.payment_status === 'failed') {
+      return 'پرداخت ناموفق—لطفاً با پشتیبانی تماس بگیرید';
+    }
+    return 'در انتظار تایید پرداخت توسط مدیریت';
   };
 
   const handleLogout = async () => {
@@ -466,6 +502,10 @@ const Profile = () => {
                                       مدت: {enrollment.courses.duration}
                                     </div>
                                     <div className="flex items-center gap-1">
+                                      <CreditCard className="w-4 h-4" />
+                                      مبلغ دوره: {formatPrice(enrollment.amount_due)}
+                                    </div>
+                                    <div className="flex items-center gap-1">
                                       <Trophy className="w-4 h-4" />
                                       {daysRemaining > 0 ? `${daysRemaining} روز باقی‌مانده` : 'منقضی شده'}
                                     </div>
@@ -473,7 +513,13 @@ const Profile = () => {
                                 </div>
                                 
                                 <div className="flex flex-col gap-2 md:items-end">
-                                  {getStatusBadge(enrollment.status, daysRemaining)}
+                                  <div className="flex gap-2 flex-wrap justify-end">
+                                    {getStatusBadge(enrollment.status, daysRemaining)}
+                                    {getPaymentBadge(enrollment.payment_status)}
+                                  </div>
+                                  <p className="text-sm text-muted-foreground text-right">
+                                    {getPaymentDescription(enrollment)}
+                                  </p>
                                   <div className="flex gap-2">
                                     <Button
                                       variant="outline"

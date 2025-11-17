@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -21,11 +21,13 @@ interface Course {
   learning_outcomes: string[];
   department_id: number;
   is_popular: boolean;
+  price?: string | number | null;
 }
 
 const CourseDetail = () => {
   const { courseId } = useParams(); // This is actually the course title
   const navigate = useNavigate();
+  const location = useLocation();
   const { user } = useAuth();
   const { toast } = useToast();
   const [course, setCourse] = useState<Course | null>(null);
@@ -35,6 +37,25 @@ const CourseDetail = () => {
   useEffect(() => {
     fetchCourse();
   }, [courseId]);
+
+  const persianDigitMap: Record<string, string> = {
+    '۰': '0', '۱': '1', '۲': '2', '۳': '3', '۴': '4',
+    '۵': '5', '۶': '6', '۷': '7', '۸': '8', '۹': '9'
+  };
+
+  const parsePriceToNumber = (price?: string | number | null) => {
+    if (price == null) return 0;
+    if (typeof price === 'number') return price;
+    const normalized = price.replace(/[۰-۹]/g, (d) => persianDigitMap[d] ?? d).replace(/[^0-9.]/g, '');
+    const numeric = Number(normalized);
+    return Number.isNaN(numeric) ? 0 : numeric;
+  };
+
+  const formatPrice = (price?: string | number | null) => {
+    const numeric = parsePriceToNumber(price);
+    if (!numeric) return 'رایگان';
+    return numeric.toLocaleString('fa-IR', { style: 'currency', currency: 'IRR' });
+  };
 
   const fetchCourse = async () => {
     if (!courseId) return;
@@ -65,7 +86,7 @@ const CourseDetail = () => {
 
   const handleEnroll = async () => {
     if (!user) {
-      navigate('/auth');
+      navigate('/auth', { state: { from: location.pathname } });
       return;
     }
 
@@ -76,8 +97,8 @@ const CourseDetail = () => {
         .from('enrollments')
         .select('id')
         .eq('user_id', user.id)
-        .eq('course_id', course.id) // Use course.id from the fetched course
-        .single();
+        .eq('course_id', course.id)
+        .maybeSingle();
 
       if (existingEnrollment) {
         toast({
@@ -89,12 +110,19 @@ const CourseDetail = () => {
       }
 
       // Create enrollment
+      const amountDue = parsePriceToNumber(course.price).toString();
+
       const { error } = await supabase
         .from('enrollments')
         .insert({
           user_id: user.id,
           course_id: course.id, // Use course.id from the fetched course
           expires_at: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString(), // 1 year from now
+          payment_status: 'pending',
+          payment_method: 'manual',
+          amount_due: amountDue,
+          amount_paid: '0',
+          payment_notes: 'در انتظار تایید پرداخت توسط مدیریت'
         });
 
       if (error) {
@@ -271,9 +299,13 @@ const CourseDetail = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-foreground mb-2">رایگان</div>
-                  <p className="text-sm text-muted-foreground">دسترسی کامل به تمام مطالب</p>
+                <div className="text-center space-y-2">
+                  <div className="text-3xl font-bold text-foreground">
+                    {formatPrice(course.price)}
+                  </div>
+                  <div className="text-sm text-muted-foreground">
+                    وضعیت پرداخت پس از تایید مدیریت ثبت می‌شود
+                  </div>
                 </div>
                 
                 <Separator />
@@ -300,7 +332,7 @@ const CourseDetail = () => {
                   onClick={handleEnroll}
                   disabled={enrolling}
                 >
-                  {enrolling ? 'در حال ثبت نام...' : 'ثبت نام رایگان'}
+                  {enrolling ? 'در حال ثبت نام...' : 'ثبت نام و انتظار تایید پرداخت'}
                 </Button>
                 
                 {!user && (

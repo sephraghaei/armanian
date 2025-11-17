@@ -8,8 +8,8 @@ import Footer from '@/components/Footer';
 const DepartmentsPage = () => {
   const navigate = useNavigate();
   
-  const handleSignUp = () => {
-    navigate('/auth');
+  const handleSignUp = (slug: string) => {
+    navigate(`/course/${slug}`);
   };
   const departments = [
     {
@@ -274,7 +274,11 @@ const DepartmentsPage = () => {
                       </CardHeader>
                       <CardContent>
                         <div className="flex gap-2">
-                          <Button variant="outline" className="flex-1 group" onClick={handleSignUp}>
+                          <Button 
+                            variant="outline" 
+                            className="flex-1 group" 
+                            onClick={() => handleSignUp(course.slug)}
+                          >
                             ثبت نام
                             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                           </Button>
