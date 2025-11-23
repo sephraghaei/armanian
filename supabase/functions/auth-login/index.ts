@@ -1,4 +1,5 @@
 // deno-lint-ignore-file no-explicit-any
+declare const Deno: any;
 import { serve } from "https://deno.land/std@0.224.0/http/server.ts";
 import { createClient, SupabaseClient } from "https://esm.sh/@supabase/supabase-js@2.45.4";
 
@@ -12,6 +13,12 @@ function jsonResponse(data: unknown, status = 200): Response {
     status,
     headers: { ...corsHeaders, "content-type": "application/json" },
   });
+}
+
+function bufferToHex(buffer: ArrayBuffer): string {
+  return Array.from(new Uint8Array(buffer))
+    .map((byte) => byte.toString(16).padStart(2, "0"))
+    .join("");
 }
 
 serve(async (req: Request): Promise<Response> => {
@@ -93,8 +100,7 @@ serve(async (req: Request): Promise<Response> => {
     const inputHashBuffer = await crypto.subtle.digest("SHA-256", encoder.encode(password));
     const storedHashBuffer = await crypto.subtle.digest("SHA-256", encoder.encode(user.password_hash));
 
-    const hashesMatch =
-      Buffer.from(inputHashBuffer).toString("hex") === Buffer.from(storedHashBuffer).toString("hex");
+    const hashesMatch = bufferToHex(inputHashBuffer) === bufferToHex(storedHashBuffer);
 
     if (!hashesMatch) {
       return jsonResponse({ error: "شماره تلفن یا رمز عبور اشتباه است" }, 401);

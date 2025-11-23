@@ -10,6 +10,18 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+function bufferToHex(buffer: ArrayBuffer): string {
+  return Array.from(new Uint8Array(buffer))
+    .map((byte) => byte.toString(16).padStart(2, '0'))
+    .join('');
+}
+
+async function hashPassword(password: string): Promise<string> {
+  const encoder = new TextEncoder();
+  const hashBuffer = await crypto.subtle.digest('SHA-256', encoder.encode(password));
+  return bufferToHex(hashBuffer);
+}
+
 serve(async (req: Request) => {
   console.log("Auth register function called");
   
@@ -96,7 +108,9 @@ serve(async (req: Request) => {
       });
     }
 
-    // For now, store password as plain text (NOT RECOMMENDED FOR PRODUCTION)
+    console.log("Hashing password...");
+    const passwordHash = await hashPassword(password);
+
     console.log("Creating user...");
     const { data: user, error: insErr } = await supabase
       .from("users_app")
@@ -104,7 +118,7 @@ serve(async (req: Request) => {
         first_name: firstName, 
         last_name: lastName, 
         phone: normalizedPhone, 
-        password_hash: password // Temporary - should be hashed
+        password_hash: passwordHash
       })
       .select("id, first_name, last_name, phone")
       .single();
@@ -130,10 +144,12 @@ serve(async (req: Request) => {
     }), { 
       headers: { ...corsHeaders, 'content-type': 'application/json' }
     });
-  } catch (e) {
-    console.error("Registration error:", e);
-    console.error("Error stack:", e.stack);
-    return new Response(JSON.stringify({ error: "خطای سرور: " + e.message }), { 
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    const stack = error instanceof Error ? error.stack : undefined;
+    console.error("Registration error:", error);
+    if (stack) console.error("Error stack:", stack);
+    return new Response(JSON.stringify({ error: "خطای سرور: " + message }), { 
       status: 500,
       headers: { ...corsHeaders, 'content-type': 'application/json' }
     });
