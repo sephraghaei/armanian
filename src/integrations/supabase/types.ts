@@ -310,6 +310,7 @@ export type Database = {
       users_app: {
         Row: {
           created_at: string
+          email: string | null
           first_name: string
           id: string
           last_name: string
@@ -319,6 +320,7 @@ export type Database = {
         }
         Insert: {
           created_at?: string
+          email?: string | null
           first_name: string
           id?: string
           last_name: string
@@ -328,6 +330,7 @@ export type Database = {
         }
         Update: {
           created_at?: string
+          email?: string | null
           first_name?: string
           id?: string
           last_name?: string
@@ -336,6 +339,41 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      users_app_password_reset_tokens: {
+        Row: {
+          created_at: string | null
+          expires_at: string
+          id: string
+          token: string
+          used: boolean | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          expires_at: string
+          id?: string
+          token: string
+          used?: boolean | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          expires_at?: string
+          id?: string
+          token?: string
+          used?: boolean | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "users_app_password_reset_tokens_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users_app"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {

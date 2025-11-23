@@ -15,16 +15,15 @@ const PHONE_REGEX = /^(\+98|0)?9\d{9}$/;
 const Auth = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [phone, setPhone] = useState('');
-  const [otp, setOtp] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showOtpInput, setShowOtpInput] = useState(false);
   const [isSignUp, setIsSignUp] = useState(false);
   const [isForgotDialogOpen, setIsForgotDialogOpen] = useState(false);
-  const [forgotPhone, setForgotPhone] = useState('');
+  const [forgotEmail, setForgotEmail] = useState('');
   const [isResetSending, setIsResetSending] = useState(false);
-  const [resetToken, setResetToken] = useState<string | null>(null);
   const { signUpWithCredentials, signInWithCredentials, requestPasswordReset, user } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -105,7 +104,7 @@ const Auth = () => {
 
     try {
       const { error } = isSignUpMode 
-        ? await signUpWithCredentials(formattedPhone, firstName, lastName, password, redirectTo)
+        ? await signUpWithCredentials(formattedPhone, firstName, lastName, email.trim().toLowerCase(), password, redirectTo)
         : await signInWithCredentials(formattedPhone, password, redirectTo);
       
       if (error) {
@@ -128,37 +127,33 @@ const Auth = () => {
 
   const resetForm = () => {
     setShowOtpInput(false);
-    setOtp('');
     setIsLoading(false);
   };
 
   const handleForgotPasswordClick = () => {
-    setForgotPhone(phone);
-    setResetToken(null);
+    setForgotEmail('');
     setIsForgotDialogOpen(true);
   };
 
   const handlePasswordReset = async () => {
-    if (!PHONE_REGEX.test(forgotPhone)) {
+    const emailRegex = /^[\w-.]+@[\w-]+\.[A-Za-z]{2,}$/;
+    if (!emailRegex.test(forgotEmail.trim().toLowerCase())) {
       toast({
         variant: 'destructive',
-        title: 'شماره نادرست',
-        description: 'لطفاً شماره موبایل معتبر وارد کنید (مثال: 09123456789)',
+        title: 'ایمیل نادرست',
+        description: 'لطفاً ایمیل معتبر وارد کنید',
       });
       return;
     }
 
     setIsResetSending(true);
-    setResetToken(null);
-
-    const formattedPhone = formatPhoneNumber(forgotPhone);
 
     try {
-      const { error, message, token } = await requestPasswordReset(formattedPhone);
+      const { error, message } = await requestPasswordReset(forgotEmail.trim().toLowerCase());
       if (error) {
         toast({
           variant: 'destructive',
-          title: 'خطا در ارسال کد بازیابی',
+          title: 'خطا در ارسال لینک بازیابی',
           description: error.message,
         });
         return;
@@ -167,11 +162,9 @@ const Auth = () => {
       toast({
         variant: 'default',
         title: 'درخواست با موفقیت ثبت شد',
-        description: message || 'کد بازیابی برای شما ارسال شد.',
+        description: message || 'اگر ایمیل در سیستم وجود داشته باشد، لینک بازیابی ارسال شد.',
       });
-      if (token) {
-        setResetToken(token);
-      }
+      setIsForgotDialogOpen(false);
     } catch (error) {
       toast({
         variant: 'destructive',
@@ -332,6 +325,18 @@ const Auth = () => {
                     </div>
                   </div>
                   <div className="space-y-2">
+                    <Label htmlFor="signup-email">ایمیل</Label>
+                    <Input
+                      id="signup-email"
+                      type="email"
+                      placeholder="example@email.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                      disabled={isLoading}
+                    />
+                  </div>
+                  <div className="space-y-2">
                     <Label htmlFor="signup-password">رمز عبور</Label>
                     <div className="relative">
                       <Lock className="absolute right-3 top-3 h-4 w-4 text-muted-foreground" />
@@ -363,7 +368,6 @@ const Auth = () => {
             setIsForgotDialogOpen(open);
             if (!open) {
               setIsResetSending(false);
-              setResetToken(null);
             }
           }}
         >
@@ -371,35 +375,24 @@ const Auth = () => {
             <DialogHeader>
               <DialogTitle>بازیابی رمز عبور</DialogTitle>
               <DialogDescription>
-                شماره موبایل ثبت‌شده در سامانه را وارد کنید تا کد بازیابی برای شما ارسال شود.
+                ایمیلی را که با آن ثبت‌نام کرده‌اید وارد کنید تا لینک بازیابی برای شما ارسال شود.
               </DialogDescription>
             </DialogHeader>
             <div className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="forgot-phone">شماره موبایل</Label>
-                <div className="relative">
-                  <Phone className="absolute right-3 top-3 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    id="forgot-phone"
-                    type="tel"
-                    placeholder="09123456789"
-                    value={forgotPhone}
-                    onChange={(e) => setForgotPhone(e.target.value)}
-                    disabled={isResetSending}
-                    className="pr-10 placeholder:text-muted-foreground/50"
-                  />
-                </div>
+                <Label htmlFor="forgot-email">ایمیل</Label>
+                <Input
+                  id="forgot-email"
+                  type="email"
+                  placeholder="example@email.com"
+                  value={forgotEmail}
+                  onChange={(e) => setForgotEmail(e.target.value)}
+                  disabled={isResetSending}
+                />
               </div>
               <p className="text-xs text-muted-foreground">
-                در حال حاضر کد بازیابی به‌صورت پیامکی ارسال نمی‌شود. پس از دریافت کد در همین صفحه، آن را برای تیم پشتیبانی ارسال کنید تا رمز جدید تنظیم شود.
+                اگر ایمیل شما در سیستم ثبت شده باشد، لینک بازیابی ظرف چند دقیقه ارسال خواهد شد.
               </p>
-              {resetToken && (
-                <div className="rounded-lg border border-primary/20 bg-primary/5 p-3 text-sm leading-6">
-                  <p className="font-semibold text-primary">کد بازیابی شما:</p>
-                  <code className="block select-all text-lg text-foreground">{resetToken}</code>
-                  <p className="mt-2 text-muted-foreground">این کد را برای ادامه مراحل در اختیار پشتیبانی قرار دهید.</p>
-                </div>
-              )}
             </div>
             <DialogFooter className="gap-2 sm:gap-0">
               <Button

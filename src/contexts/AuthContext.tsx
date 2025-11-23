@@ -1,22 +1,22 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { User, Session } from '@supabase/supabase-js';
-import { supabase } from '@/integrations/supabase/client';
 
 type AppUser = {
   id: string;
   phone: string;
   first_name: string;
   last_name: string;
+  email?: string | null;
 };
 
 interface AuthContextType {
   user: AppUser | null;
   session: Session | null;
   loading: boolean;
-  signUpWithCredentials: (phone: string, firstName: string, lastName: string, password: string, redirectTo?: string) => Promise<{ error: any }>;
+  signUpWithCredentials: (phone: string, firstName: string, lastName: string, email: string, password: string, redirectTo?: string) => Promise<{ error: any }>;
   signInWithCredentials: (phone: string, password: string, redirectTo?: string) => Promise<{ error: any }>;
   signOut: () => Promise<{ error: any }>;
-  requestPasswordReset: (phone: string) => Promise<{ error: any; message?: string; token?: string }>;
+  requestPasswordReset: (email: string) => Promise<{ error: any; message?: string }>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -33,6 +33,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [user, setUser] = useState<AppUser | null>(null);
   const [session, setSession] = useState<null>(null);
   const [loading, setLoading] = useState(true);
+  const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 
   useEffect(() => {
     try {
@@ -44,19 +45,28 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setLoading(false);
   }, []);
 
-  const toEmailFromPhone = (phone: string): string => {
-    const normalized = phone.replace(/[^\d]/g, '').replace(/^98/, '0');
-    // synthetic, unique per phone
-    return `u${normalized}@example.com`;
+  const ensureFunctionUrl = () => {
+    if (!supabaseUrl) {
+      throw new Error('SUPABASE_URL is not defined');
+    }
+    return supabaseUrl;
   };
 
-  const signUpWithCredentials = async (phone: string, firstName: string, lastName: string, password: string, redirectTo: string = '/courses') => {
+  const signUpWithCredentials = async (
+    phone: string,
+    firstName: string,
+    lastName: string,
+    email: string,
+    password: string,
+    redirectTo: string = '/courses'
+  ) => {
     try {
-      const functionUrl = `https://drthfkbvxqjhuurmxjrk.supabase.co/functions/v1/auth-register`;
+      const baseUrl = ensureFunctionUrl();
+      const functionUrl = `${baseUrl}/functions/v1/auth-register`;
       const res = await fetch(functionUrl, {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ phone, firstName, lastName, password }),
+        body: JSON.stringify({ phone, firstName, lastName, email, password }),
       });
       if (!res.ok) {
         const text = await res.text();
@@ -76,7 +86,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signInWithCredentials = async (phone: string, password: string, redirectTo: string = '/') => {
     try {
-      const functionUrl = `https://drthfkbvxqjhuurmxjrk.supabase.co/functions/v1/auth-login`;
+      const baseUrl = ensureFunctionUrl();
+      const functionUrl = `${baseUrl}/functions/v1/auth-login`;
       const res = await fetch(functionUrl, {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
@@ -97,13 +108,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  const requestPasswordReset = async (phone: string) => {
+  const requestPasswordReset = async (email: string) => {
     try {
-      const functionUrl = `https://drthfkbvxqjhuurmxjrk.supabase.co/functions/v1/auth-login/forgot`;
+      const baseUrl = ensureFunctionUrl();
+      const functionUrl = `${baseUrl}/functions/v1/password-reset`;
       const res = await fetch(functionUrl, {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ phone }),
+        body: JSON.stringify({ email }),
       });
       if (!res.ok) {
         const text = await res.text();
@@ -111,7 +123,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return { error: { message: body.error || 'خطا در ارسال درخواست بازیابی' } };
       }
       const body = await res.json();
-      return { error: null, message: body.message, token: body.token };
+      return { error: null, message: body.message };
     } catch (e: any) {
       return { error: { message: 'خطای شبکه. لطفاً اتصال اینترنت خود را بررسی کنید' } };
     }

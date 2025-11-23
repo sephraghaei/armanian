@@ -42,10 +42,10 @@ serve(async (req: Request) => {
     const body = await req.json();
     console.log("Request body parsed successfully");
     
-    const { firstName, lastName, phone, password } = body;
-    console.log("Extracted fields:", { firstName, lastName, phoneLength: phone?.length });
+    const { firstName, lastName, phone, email, password } = body;
+    console.log("Extracted fields:", { firstName, lastName, phoneLength: phone?.length, email });
 
-    if (!firstName || !lastName || !phone || !password) {
+    if (!firstName || !lastName || !phone || !password || !email) {
       console.log("Missing required fields");
       return new Response(JSON.stringify({ error: "تمام فیلدها الزامی هستند" }), { 
         status: 400,
@@ -80,9 +80,18 @@ serve(async (req: Request) => {
     console.log("Supabase client created successfully");
 
     const normalizedPhone = String(phone).replace(/[^\d]/g, "");
+    const normalizedEmail = String(email).trim().toLowerCase();
+
+    const emailRegex = /^[\w-.]+@[\w-]+\.[A-Za-z]{2,}$/;
+    if (!emailRegex.test(normalizedEmail)) {
+      return new Response(JSON.stringify({ error: "ایمیل معتبر نیست" }), {
+        status: 400,
+        headers: { ...corsHeaders, 'content-type': 'application/json' }
+      });
+    }
     console.log("Normalized phone length:", normalizedPhone.length);
 
-    // Check if user exists
+    // Check if user exists by phone
     console.log("Checking if user exists...");
     const { data: exist, error: existErr } = await supabase
       .from("users_app")
@@ -108,6 +117,27 @@ serve(async (req: Request) => {
       });
     }
 
+    const { data: emailExist, error: emailErr } = await supabase
+      .from("users_app")
+      .select("id")
+      .eq("email", normalizedEmail)
+      .maybeSingle();
+
+    if (emailErr) {
+      console.error("Database error checking existing email:", emailErr);
+      return new Response(JSON.stringify({ error: "خطای پایگاه داده در بررسی ایمیل" }), {
+        status: 500,
+        headers: { ...corsHeaders, 'content-type': 'application/json' }
+      });
+    }
+
+    if (emailExist) {
+      return new Response(JSON.stringify({ error: "این ایمیل قبلاً ثبت شده است" }), {
+        status: 409,
+        headers: { ...corsHeaders, 'content-type': 'application/json' }
+      });
+    }
+
     console.log("Hashing password...");
     const passwordHash = await hashPassword(password);
 
@@ -118,9 +148,10 @@ serve(async (req: Request) => {
         first_name: firstName, 
         last_name: lastName, 
         phone: normalizedPhone, 
+        email: normalizedEmail,
         password_hash: passwordHash
       })
-      .select("id, first_name, last_name, phone")
+      .select("id, first_name, last_name, phone, email")
       .single();
     
     console.log("User creation result:", { user: !!user, error: insErr });

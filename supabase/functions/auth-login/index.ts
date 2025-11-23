@@ -1,6 +1,8 @@
 // deno-lint-ignore-file no-explicit-any
 declare const Deno: any;
+// @ts-ignore
 import { serve } from "https://deno.land/std@0.224.0/http/server.ts";
+// @ts-ignore
 import { createClient, SupabaseClient } from "https://esm.sh/@supabase/supabase-js@2.45.4";
 
 const corsHeaders: Record<string, string> = {
@@ -82,7 +84,7 @@ serve(async (req: Request): Promise<Response> => {
     const normalizedPhone = String(phone).replace(/[^\d]/g, "");
     const { data: user, error } = await supabase
       .from("users_app")
-      .select("id, first_name, last_name, phone, password_hash")
+      .select("id, first_name, last_name, phone, email, password_hash")
       .eq("phone", normalizedPhone)
       .maybeSingle();
 
