@@ -95,12 +95,15 @@ serve(async (req: Request): Promise<Response> => {
       return jsonResponse({ error: "شماره تلفن یا رمز عبور اشتباه است" }, 401);
     }
 
-    // Compare password hash safely
+    // Compare password hash safely – supports new hashed entries and legacy plain text
     const encoder = new TextEncoder();
     const inputHashBuffer = await crypto.subtle.digest("SHA-256", encoder.encode(password));
-    const storedHashBuffer = await crypto.subtle.digest("SHA-256", encoder.encode(user.password_hash));
+    const inputHashHex = bufferToHex(inputHashBuffer);
+    const storedHash = user.password_hash;
 
-    const hashesMatch = bufferToHex(inputHashBuffer) === bufferToHex(storedHashBuffer);
+    const hashesMatch = storedHash.length === 64
+      ? inputHashHex === storedHash // new hashed records
+      : password === storedHash; // legacy plain-text records
 
     if (!hashesMatch) {
       return jsonResponse({ error: "شماره تلفن یا رمز عبور اشتباه است" }, 401);
