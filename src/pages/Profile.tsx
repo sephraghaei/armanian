@@ -75,8 +75,7 @@ const Profile = () => {
           courses (
             title,
             description,
-            duration,
-            price
+            duration
           )
         `)
         .eq('user_id', user?.id)
@@ -87,7 +86,22 @@ const Profile = () => {
         return;
       }
 
-      setEnrollments(data || []);
+      // Map data to match expected type
+      const mappedData = (data || []).map((item: any) => ({
+        ...item,
+        payment_status: item.payment_status || 'pending',
+        payment_method: item.payment_method || 'manual',
+        amount_due: item.amount_due || '0',
+        amount_paid: item.amount_paid || '0',
+        paid_at: item.paid_at || null,
+        payment_notes: item.payment_notes || null,
+        courses: {
+          ...item.courses,
+          price: null
+        }
+      }));
+
+      setEnrollments(mappedData);
     } catch (error) {
       console.error('Error:', error);
     }

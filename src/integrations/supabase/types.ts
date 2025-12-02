@@ -25,7 +25,6 @@ export type Database = {
           is_popular: boolean | null
           learning_outcomes: string[] | null
           level: string | null
-          price: string | null
           title: string
           updated_at: string | null
         }
@@ -39,7 +38,6 @@ export type Database = {
           is_popular?: boolean | null
           learning_outcomes?: string[] | null
           level?: string | null
-          price?: string | null
           title: string
           updated_at?: string | null
         }
@@ -53,7 +51,6 @@ export type Database = {
           is_popular?: boolean | null
           learning_outcomes?: string[] | null
           level?: string | null
-          price?: string | null
           title?: string
           updated_at?: string | null
         }
@@ -97,24 +94,6 @@ export type Database = {
         }
         Relationships: []
       }
-      Departments: {
-        Row: {
-          created_at: string
-          id: number
-          Name: string | null
-        }
-        Insert: {
-          created_at?: string
-          id?: number
-          Name?: string | null
-        }
-        Update: {
-          created_at?: string
-          id?: number
-          Name?: string | null
-        }
-        Relationships: []
-      }
       enrollments: {
         Row: {
           course_id: string
@@ -122,44 +101,26 @@ export type Database = {
           enrolled_at: string
           expires_at: string
           id: string
-          amount_due: string
-          amount_paid: string
-          paid_at: string | null
-          payment_method: string
-          payment_notes: string | null
-          payment_status: string
           status: string
           updated_at: string
           user_id: string
         }
         Insert: {
-          amount_due?: string
-          amount_paid?: string
           course_id: string
           created_at?: string
           enrolled_at?: string
           expires_at: string
           id?: string
-          paid_at?: string | null
-          payment_method?: string
-          payment_notes?: string | null
-          payment_status?: string
           status?: string
           updated_at?: string
           user_id: string
         }
         Update: {
-          amount_due?: string
-          amount_paid?: string
           course_id?: string
           created_at?: string
           enrolled_at?: string
           expires_at?: string
           id?: string
-          paid_at?: string | null
-          payment_method?: string
-          payment_notes?: string | null
-          payment_status?: string
           status?: string
           updated_at?: string
           user_id?: string
@@ -283,27 +244,6 @@ export type Database = {
           level?: string | null
           title?: string
           updated_at?: string | null
-        }
-        Relationships: []
-      }
-      user_roles: {
-        Row: {
-          created_at: string | null
-          id: string
-          role: Database["public"]["Enums"]["app_role"]
-          user_id: string
-        }
-        Insert: {
-          created_at?: string | null
-          id?: string
-          role?: Database["public"]["Enums"]["app_role"]
-          user_id: string
-        }
-        Update: {
-          created_at?: string | null
-          id?: string
-          role?: Database["public"]["Enums"]["app_role"]
-          user_id?: string
         }
         Relationships: []
       }
