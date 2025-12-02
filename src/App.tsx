@@ -14,6 +14,7 @@ import Profile from "./pages/Profile";
 import Admin from "./pages/Admin";
 import ResetPassword from "./pages/ResetPassword";
 import TestEmail from "./pages/TestEmail";
+import Payment from "./pages/Payment";
 import NotFound from "./pages/NotFound";
 import ConsultationPrompt from "@/components/ConsultationPrompt";
 import ScrollArrows from "@/components/ScrollArrows";
@@ -44,6 +45,7 @@ const App = () => {
               <Route path="/test-email" element={<TestEmail />} />
               <Route path="/profile" element={<RequireAuth><Profile /></RequireAuth>} />
               <Route path="/admin" element={<RequireAuth><Admin /></RequireAuth>} />
+              <Route path="/payment/:enrollmentId" element={<RequireAuth><Payment /></RequireAuth>} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>

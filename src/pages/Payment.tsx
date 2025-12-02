@@ -101,7 +101,7 @@ const Payment = () => {
           paid_at: new Date().toISOString(),
           amount_paid: enrollment?.amount_due || '0',
           payment_notes: 'پرداخت آزمایشی موفق'
-        })
+        } as any)
         .eq('id', enrollmentId);
 
       if (error) {
