@@ -96,31 +96,49 @@ export type Database = {
       }
       enrollments: {
         Row: {
+          amount_due: string | null
+          amount_paid: string | null
           course_id: string
           created_at: string
           enrolled_at: string
           expires_at: string
           id: string
+          paid_at: string | null
+          payment_method: string | null
+          payment_notes: string | null
+          payment_status: string | null
           status: string
           updated_at: string
           user_id: string
         }
         Insert: {
+          amount_due?: string | null
+          amount_paid?: string | null
           course_id: string
           created_at?: string
           enrolled_at?: string
           expires_at: string
           id?: string
+          paid_at?: string | null
+          payment_method?: string | null
+          payment_notes?: string | null
+          payment_status?: string | null
           status?: string
           updated_at?: string
           user_id: string
         }
         Update: {
+          amount_due?: string | null
+          amount_paid?: string | null
           course_id?: string
           created_at?: string
           enrolled_at?: string
           expires_at?: string
           id?: string
+          paid_at?: string | null
+          payment_method?: string | null
+          payment_notes?: string | null
+          payment_status?: string | null
           status?: string
           updated_at?: string
           user_id?: string
