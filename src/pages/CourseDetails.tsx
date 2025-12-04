@@ -1,4 +1,5 @@
-import { useParams, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -12,47 +13,40 @@ import {
   ArrowRight,
   ArrowLeft,
   Calendar,
-  DollarSign
+  DollarSign,
+  Loader2
 } from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 const CourseDetailsPage = () => {
   const { courseId } = useParams<{ courseId: string }>();
   const navigate = useNavigate();
+  const location = useLocation();
+  const { user } = useAuth();
+  const { toast } = useToast();
+  const [enrolling, setEnrolling] = useState(false);
 
   // Sample course data - in real app, this would come from API/database
-  const courseData = {
+  const courseData: Record<string, any> = {
     'icdl-kids': {
       title: 'دوره مهارت های پنجگانه ICDL کودکان',
-      description: 'در این دوره کودکان از پایه با سخت افزار کامپیوتر، فناوری اطلاعات، کار با سیستم عامل ویندوز و نرم افزار های آفیس شامل ورد و پاورپورینت و کار با ایمیل و اینترنت آشنا می شوند. این دوره مخصوص کودکان ۷ تا ۱۴ سال می باشد و با متد های بازی و سرگرمی همراه با یادگیری برای کودکان فضایی مفرح و جذاب فراهم کرده است.',
+      description: 'در این دوره کودکان از پایه با سخت افزار کامپیوتر، فناوری اطلاعات، کار با سیستم عامل ویندوز و نرم افزار های آفیس شامل ورد و پاورپورینت و کار با ایمیل و اینترنت آشنا می شوند.',
       duration: '۱۰ هفته',
       sessions: '۲۵ جلسه',
       price: '۴,۶۰۰,۰۰۰ تومان',
+      priceNumber: 4600000,
       oldPrice: '۴,۹۰۰,۰۰۰ تومان',
       level: 'مقدماتی',
       ageGroup: '۷ تا ۱۴ سال',
       classSize: '۱۰ نفر',
-      schedule: null,
-      suitableFor: undefined,
       prerequisites: ['علاقه به یادگیری'],
       certificate: 'گواهینامه معتبر بین المللی ICDL',
-      features: [
-        'پروژه‌های عملی تعاملی',
-        'بازی‌های آموزشی',
-        'پشتیبانی آنلاین والدین'
-      ],
-      learningOutcomes: [
-        'کار با سیستم عامل ویندوز ۷ و ۱۰',
-        'مدیریت فایل ها و پوشه ها',
-        'شناخت سخت افزار و نرم افزار کامپیوتر',
-        'تایپ ده انگشتی',
-        'ارایه مطالب با power point',
-        'طراحی جلد کتاب با word',
-        'طراحی تراکت با word',
-        'ساخت ایمیل',
-        'سرچ اصولی در گوگل و copilot'
-      ]
+      features: ['پروژه‌های عملی تعاملی', 'بازی‌های آموزشی', 'پشتیبانی آنلاین والدین'],
+      learningOutcomes: ['کار با سیستم عامل ویندوز', 'مدیریت فایل ها', 'تایپ ده انگشتی', 'ارایه مطالب با PowerPoint']
     },
     'icdl-adults': {
       title: 'مهارت های هفتگانه بزرگسالان',
@@ -60,184 +54,364 @@ const CourseDetailsPage = () => {
       duration: '۱۰ هفته',
       sessions: '۲۵ جلسه',
       price: '۲,۲۰۰,۰۰۰ تومان',
-      oldPrice: undefined,
+      priceNumber: 2200000,
       level: 'متوسط',
       ageGroup: '۱۴ سال به بالا',
       classSize: '۱۰ نفر',
-      schedule: null,
-      suitableFor: [
-        'کارمندانی که به دنبال ارتقای شغلی هستند',
-        'شرکت کننده های آزمون های استخدامی',
-        'کسانی که قصد دارند وارد بازار کار شوند',
-        'کسانی که برای مهاجرت نیاز به مدرک فنی و حرفه ای برای کامپیوتر دارند'
-      ],
       prerequisites: ['علاقه به یادگیری'],
-      certificate: 'مدرک معتبر سازمان فنی و حرفه ای ICDL\nمدرک بین المللی آموزشگاهی',
-      features: [
-        'گواهینامه بین‌المللی ICDL',
-        'نرم‌افزارهای Microsoft Office',
-        'آمادگی آزمون بین‌المللی',
-        'پروژه‌های کاربردی',
-        'مشاوره رایگان'
-      ],
-      learningOutcomes: [
-        'کار با سیستم عامل ویندوز ۷ و ۱۰',
-        'استفاده از مرورگر و جستجوی اینترنت',
-        'ساخت ایمیل و ارسال آن',
-        'تایپ ده انگشتی',
-        'ارایه مطالب پاورپوینت',
-        'طراحی تراکت با ورد',
-        'طراحی جلدکتاب با ورد',
-        'طراحی فاکتور با اکسل',
-        'طراحی لیست مخاطبان با اکس'
-      ]
+      certificate: 'مدرک معتبر سازمان فنی و حرفه ای ICDL',
+      features: ['گواهینامه بین‌المللی ICDL', 'نرم‌افزارهای Microsoft Office', 'پروژه‌های کاربردی'],
+      learningOutcomes: ['کار با سیستم عامل ویندوز', 'استفاده از مرورگر', 'تایپ ده انگشتی', 'طراحی فاکتور با اکسل']
     },
     'scratch-kids': {
       title: 'برنامه‌نویسی اسکرچ کودکان',
-      description: 'آموزش برنامه‌نویسی بصری با نرم‌افزار Scratch برای کودکان. ایجاد بازی، انیمیشن و پروژه‌های تعاملی.',
+      description: 'آموزش برنامه‌نویسی بصری با نرم‌افزار Scratch برای کودکان.',
       duration: '۱۲ هفته',
       sessions: '۲۴ جلسه',
       price: '۱,۸۰۰,۰۰۰ تومان',
-      oldPrice: undefined,
+      priceNumber: 1800000,
       level: 'مقدماتی',
       ageGroup: '۸ تا ۱۴ سال',
       classSize: '۱۰ نفر',
-      schedule: 'چهارشنبه و جمعه - ۱۶:۳۰ تا ۱۸:۰۰',
-      suitableFor: undefined,
-      prerequisites: ['آشنایی با کامپیوتر', 'علاقه به خلاقیت'],
-      certificate: undefined,
-      features: [
-        'پروژه‌های بازی‌سازی',
-        'انیمیشن‌های تعاملی',
-        'منطق برنامه‌نویسی',
-        'ارائه پروژه‌های نهایی'
-      ],
-      learningOutcomes: [
-        'مفاهیم پایه برنامه‌نویسی',
-        'ساخت بازی‌های ساده',
-        'ایجاد انیمیشن‌های تعاملی',
-        'حل مسئله خلاقانه',
-        'کار تیمی و ارائه'
-      ]
+      prerequisites: ['آشنایی با کامپیوتر'],
+      features: ['پروژه‌های بازی‌سازی', 'انیمیشن‌های تعاملی', 'منطق برنامه‌نویسی'],
+      learningOutcomes: ['مفاهیم پایه برنامه‌نویسی', 'ساخت بازی‌های ساده', 'حل مسئله خلاقانه']
     },
-    'python-teens': {
-      title: 'برنامه‌نویسی پایتون نوجوانان',
-      description: 'آموزش زبان برنامه‌نویسی Python برای نوجوانان با تمرکز بر پروژه‌های عملی و ساخت برنامه‌های کاربردی.',
-      duration: '۱۴ هفته',
-      sessions: '۲۸ جلسه',
-      price: '۲,۵۰۰,۰۰۰ تومان',
-      oldPrice: undefined,
-      level: 'متوسط',
-      ageGroup: '۱۳ تا ۱۷ سال',
-      classSize: '۱۲ نفر',
-      schedule: 'شنبه و دوشنبه - ۱۷:۰۰ تا ۱۹:۰۰',
-      suitableFor: undefined,
-      prerequisites: ['منطق ریاضی', 'علاقه به برنامه‌نویسی'],
-      certificate: undefined,
-      features: [
-        'پروژه‌های عملی',
-        'یادگیری تعاملی',
-        'کار با کتابخانه‌های Python',
-        'ساخت برنامه‌های کاربردی'
-      ],
-      learningOutcomes: [
-        'دستور زبان Python',
-        'برنامه‌نویسی شی‌گرا',
-        'کار با فایل و داده',
-        'ایجاد رابط کاربری',
-        'مهارت‌های حل مسئله'
-      ]
-    },
-    'photoshop-teens': {
-      title: 'فتوشاپ نوجوانان',
-      description: 'آموزش Adobe Photoshop برای نوجوانان با پروژه‌های خلاقانه، طراحی پوستر، ویرایش تصاویر و ساخت آثار هنری دیجیتال.',
-      duration: '۱۰ هفته',
-      sessions: '۲۰ جلسه',
-      price: '۲,۰۰۰,۰۰۰ تومان',
-      oldPrice: undefined,
-      level: 'مقدماتی',
-      ageGroup: '۱۲ تا ۱۷ سال',
-      classSize: '۱۲ نفر',
-      schedule: 'یکشنبه و چهارشنبه - ۱۶:۰۰ تا ۱۸:۰۰',
-      suitableFor: undefined,
-      prerequisites: ['علاقه به هنر', 'آشنایی با کامپیوتر'],
-      certificate: undefined,
-      features: [
-        'پروژه‌های خلاقانه',
-        'تکنیک‌های حرفه‌ای',
-        'طراحی پوستر و کارت',
-        'ویرایش عکس‌های دیجیتال'
-      ],
-      learningOutcomes: [
-        'ابزارهای اصلی Photoshop',
-        'لایه‌بندی و ماسک',
-        'فیلترها و افکت‌ها',
-        'ویرایش رنگ و نور',
-        'طراحی گرافیک‌های کاربردی'
-      ]
-    },
-    'interior-design': {
-      title: 'طراحی داخلی معماری',
-      description: 'آموزش اصول طراحی داخلی، دکوراسیون، انتخاب رنگ و چیدمان فضا با نرم‌افزارهای تخصصی معماری.',
+    'python-basic': {
+      title: 'برنامه نویسی پایتون مقدماتی',
+      description: 'آموزش پایتون از مبتدی با پروژه‌های عملی',
       duration: '۱۲ هفته',
       sessions: '۲۴ جلسه',
-      price: '۳,۰۰۰,۰۰۰ تومان',
-      oldPrice: undefined,
+      price: '۲,۲۰۰,۰۰۰ تومان',
+      priceNumber: 2200000,
+      level: 'مقدماتی',
+      ageGroup: '۱۳ سال به بالا',
+      classSize: '۱۲ نفر',
+      prerequisites: ['منطق ریاضی'],
+      features: ['پروژه‌های عملی', 'یادگیری تعاملی'],
+      learningOutcomes: ['دستور زبان Python', 'برنامه‌نویسی پایه', 'کار با فایل']
+    },
+    'python-advanced': {
+      title: 'برنامه نویسی پایتون پیشرفته',
+      description: 'تکنیک‌های پیشرفته Python و توسعه پروژه‌های حرفه‌ای',
+      duration: '۱۴ هفته',
+      sessions: '۲۸ جلسه',
+      price: '۲,۸۰۰,۰۰۰ تومان',
+      priceNumber: 2800000,
+      level: 'پیشرفته',
+      ageGroup: '۱۶ سال به بالا',
+      classSize: '۱۰ نفر',
+      prerequisites: ['پایتون مقدماتی'],
+      features: ['پروژه‌های حرفه‌ای', 'کتابخانه‌های پیشرفته'],
+      learningOutcomes: ['برنامه‌نویسی شی‌گرا', 'وب اسکریپینگ', 'API ها']
+    },
+    'photoshop-basic': {
+      title: 'فتوشاپ مقدماتی',
+      description: 'اصول اولیه فتوشاپ، ویرایش تصاویر و طراحی‌های ساده',
+      duration: '۸ هفته',
+      sessions: '۱۶ جلسه',
+      price: '۱,۸۰۰,۰۰۰ تومان',
+      priceNumber: 1800000,
+      level: 'مقدماتی',
+      ageGroup: '۱۲ سال به بالا',
+      classSize: '۱۲ نفر',
+      prerequisites: ['علاقه به هنر'],
+      features: ['پروژه‌های خلاقانه', 'تکنیک‌های پایه'],
+      learningOutcomes: ['ابزارهای اصلی', 'لایه‌بندی', 'ویرایش رنگ']
+    },
+    'photoshop-professional': {
+      title: 'فتوشاپ جامع مخصوص بازارکار',
+      description: 'تکنیک‌های حرفه‌ای طراحی گرافیک برای ورود به بازار کار',
+      duration: '۱۴ هفته',
+      sessions: '۲۸ جلسه',
+      price: '۳,۲۰۰,۰۰۰ تومان',
+      priceNumber: 3200000,
+      level: 'پیشرفته',
+      ageGroup: '۱۶ سال به بالا',
+      classSize: '۱۰ نفر',
+      prerequisites: ['فتوشاپ مقدماتی'],
+      features: ['پروژه‌های واقعی', 'آماده‌سازی بازار کار'],
+      learningOutcomes: ['طراحی حرفه‌ای', 'رتوش پیشرفته', 'موکاپ']
+    },
+    'after-effects-basic': {
+      title: 'افترافکت مقدماتی',
+      description: 'آموزش اصول انیمیشن و جلوه‌های ویژه برای مبتدیان',
+      duration: '۱۰ هفته',
+      sessions: '۲۰ جلسه',
+      price: '۲,۵۰۰,۰۰۰ تومان',
+      priceNumber: 2500000,
+      level: 'مقدماتی',
+      ageGroup: '۱۵ سال به بالا',
+      classSize: '۱۰ نفر',
+      prerequisites: ['آشنایی با فتوشاپ'],
+      features: ['انیمیشن پایه', 'جلوه‌های ویژه'],
+      learningOutcomes: ['اصول انیمیشن', 'کیفریم‌ها', 'اکسپرشن‌ها']
+    },
+    'after-effects-advanced': {
+      title: 'افترافکت پیشرفته',
+      description: 'تکنیک‌های حرفه‌ای موشن گرافیک و انیمیشن پیشرفته',
+      duration: '۱۴ هفته',
+      sessions: '۲۸ جلسه',
+      price: '۳,۸۰۰,۰۰۰ تومان',
+      priceNumber: 3800000,
+      level: 'پیشرفته',
+      ageGroup: '۱۸ سال به بالا',
+      classSize: '۸ نفر',
+      prerequisites: ['افترافکت مقدماتی'],
+      features: ['موشن گرافیک', 'پلاگین‌ها'],
+      learningOutcomes: ['انیمیشن پیشرفته', 'VFX', 'کامپوزیت']
+    },
+    'interior-design-complete': {
+      title: 'طراحی داخلی معماری جامع',
+      description: 'آموزش جامع طراحی داخلی، دکوراسیون و چیدمان فضا',
+      duration: '۱۶ هفته',
+      sessions: '۳۲ جلسه',
+      price: '۳,۵۰۰,۰۰۰ تومان',
+      priceNumber: 3500000,
       level: 'متوسط',
       ageGroup: '۱۸ سال به بالا',
       classSize: '۱۰ نفر',
-      schedule: 'شنبه و سه‌شنبه - ۱۹:۰۰ تا ۲۱:۰۰',
-      suitableFor: undefined,
-      prerequisites: ['علاقه به طراحی', 'حس زیبایی‌شناسی'],
-      certificate: undefined,
-      features: [
-        'پروژه‌های واقعی',
-        'نرم‌افزارهای حرفه‌ای',
-        'بازدید از پروژه‌ها',
-        'کارگاه عملی طراحی'
-      ],
-      learningOutcomes: [
-        'اصول طراحی داخلی',
-        'انتخاب رنگ و بافت',
-        'چیدمان و فضاسازی',
-        'طراحی با نرم‌افزار',
-        'ارائه پروژه به کارفرما'
-      ]
+      prerequisites: ['علاقه به طراحی'],
+      features: ['پروژه‌های واقعی', 'نرم‌افزارهای حرفه‌ای'],
+      learningOutcomes: ['طراحی داخلی', 'دکوراسیون', 'رندرگیری']
+    },
+    'sketchup': {
+      title: 'اسکچاپ',
+      description: 'آموزش مدل‌سازی سه بعدی و طراحی معماری با اسکچاپ',
+      duration: '۱۰ هفته',
+      sessions: '۲۰ جلسه',
+      price: '۲,۲۰۰,۰۰۰ تومان',
+      priceNumber: 2200000,
+      level: 'مقدماتی',
+      ageGroup: '۱۶ سال به بالا',
+      classSize: '۱۲ نفر',
+      prerequisites: ['آشنایی با کامپیوتر'],
+      features: ['مدل‌سازی 3D', 'پروژه عملی'],
+      learningOutcomes: ['مدل‌سازی', 'متریال', 'رندر']
+    },
+    'autocad-complete': {
+      title: 'اتوکد جامع',
+      description: 'نقشه‌کشی و طراحی فنی حرفه‌ای با اتوکد',
+      duration: '۱۴ هفته',
+      sessions: '۲۸ جلسه',
+      price: '۳,۰۰۰,۰۰۰ تومان',
+      priceNumber: 3000000,
+      level: 'متوسط',
+      ageGroup: '۱۶ سال به بالا',
+      classSize: '۱۰ نفر',
+      prerequisites: ['آشنایی با کامپیوتر'],
+      features: ['نقشه‌کشی', 'طراحی فنی'],
+      learningOutcomes: ['نقشه‌کشی 2D', 'مدل‌سازی 3D', 'پلات']
+    },
+    '3ds-max': {
+      title: '3DS Max',
+      description: 'مدل‌سازی و رندرگیری حرفه‌ای با تریدی مکس',
+      duration: '۱۶ هفته',
+      sessions: '۳۲ جلسه',
+      price: '۴,۲۰۰,۰۰۰ تومان',
+      priceNumber: 4200000,
+      level: 'پیشرفته',
+      ageGroup: '۱۸ سال به بالا',
+      classSize: '۸ نفر',
+      prerequisites: ['آشنایی با طراحی 3D'],
+      features: ['مدل‌سازی', 'رندر V-Ray'],
+      learningOutcomes: ['مدل‌سازی حرفه‌ای', 'نورپردازی', 'انیمیشن']
+    },
+    'facade-design': {
+      title: 'طراحی نما مخصوص بازارکار',
+      description: 'طراحی نمای ساختمان برای ورود به بازار کار',
+      duration: '۱۲ هفته',
+      sessions: '۲۴ جلسه',
+      price: '۲,۸۰۰,۰۰۰ تومان',
+      priceNumber: 2800000,
+      level: 'متوسط',
+      ageGroup: '۱۸ سال به بالا',
+      classSize: '۱۰ نفر',
+      prerequisites: ['آشنایی با اتوکد'],
+      features: ['طراحی نما', 'پروژه واقعی'],
+      learningOutcomes: ['طراحی نما', 'متریال', 'ارائه']
+    },
+    'architectural-drawing': {
+      title: 'نقشه کشی و معماری',
+      description: 'اصول نقشه‌کشی، طراحی نقشه‌های فنی و جزئیات اجرایی',
+      duration: '۱۲ هفته',
+      sessions: '۲۴ جلسه',
+      price: '۲,۶۰۰,۰۰۰ تومان',
+      priceNumber: 2600000,
+      level: 'متوسط',
+      ageGroup: '۱۸ سال به بالا',
+      classSize: '۱۰ نفر',
+      prerequisites: ['آشنایی با معماری'],
+      features: ['نقشه‌کشی', 'جزئیات اجرایی'],
+      learningOutcomes: ['نقشه‌کشی فنی', 'استاندارد‌ها', 'جزئیات']
     },
     'english-computer': {
       title: 'آموزش زبان با کامپیوتر',
-      description: 'آموزش زبان انگلیسی با استفاده از نرم‌افزارهای تعاملی، بازی‌های آموزشی و تکنولوژی‌های نوین یادگیری.',
+      description: 'زبان انگلیسی با نرم‌افزارهای تعاملی و تکنولوژی نوین',
       duration: '۱۲ هفته',
       sessions: '۲۴ جلسه',
       price: '۱,۶۰۰,۰۰۰ تومان',
-      oldPrice: undefined,
-      level: 'مقدماتی تا متوسط',
+      priceNumber: 1600000,
+      level: 'مقدماتی',
       ageGroup: '۱۰ سال به بالا',
       classSize: '۱۵ نفر',
-      schedule: 'دوشنبه و پنج‌شنبه - ۱۷:۰۰ تا ۱۸:۳۰',
-      suitableFor: undefined,
-      prerequisites: ['انگیزه یادگیری', 'آشنایی اولیه با انگلیسی'],
-      certificate: undefined,
-      features: [
-        'نرم‌افزارهای تعاملی',
-        'بازی‌های آموزشی',
-        'تست‌های آنلاین',
-        'گفتگوی تعاملی'
-      ],
-      learningOutcomes: [
-        'مهارت‌های چهارگانه زبان',
-        'واژگان کاربردی',
-        'گرامر عملی',
-        'تلفظ صحیح',
-        'اعتماد به نفس در مکالمه'
-      ]
+      prerequisites: ['انگیزه یادگیری'],
+      features: ['نرم‌افزارهای تعاملی', 'بازی‌های آموزشی'],
+      learningOutcomes: ['مهارت‌های چهارگانه', 'واژگان کاربردی', 'گرامر']
+    },
+    'english-thermic': {
+      title: 'زبان ترمیک',
+      description: 'روش نوین ترمیک برای یادگیری سریع و مؤثر زبان انگلیسی',
+      duration: '۱۰ هفته',
+      sessions: '۲۰ جلسه',
+      price: '۱,۴۰۰,۰۰۰ تومان',
+      priceNumber: 1400000,
+      level: 'مقدماتی',
+      ageGroup: '۱۵ سال به بالا',
+      classSize: '۱۵ نفر',
+      prerequisites: ['انگیزه یادگیری'],
+      features: ['روش نوین', 'یادگیری سریع'],
+      learningOutcomes: ['مکالمه روان', 'گرامر کاربردی']
+    },
+    'english-conversation': {
+      title: 'زبان مکالمه محور',
+      description: 'تمرکز بر مکالمه و ارتباط روان به زبان انگلیسی',
+      duration: '۱۲ هفته',
+      sessions: '۲۴ جلسه',
+      price: '۱,۸۰۰,۰۰۰ تومان',
+      priceNumber: 1800000,
+      level: 'متوسط',
+      ageGroup: '۱۲ سال به بالا',
+      classSize: '۱۲ نفر',
+      prerequisites: ['آشنایی اولیه با انگلیسی'],
+      features: ['مکالمه عملی', 'تمرین گروهی'],
+      learningOutcomes: ['مکالمه روان', 'تلفظ صحیح', 'اعتماد به نفس']
+    },
+    'english-movies': {
+      title: 'یادگیری زبان با فیلم و سریال خارجی',
+      description: 'یادگیری زبان انگلیسی از طریق تماشای فیلم و سریال',
+      duration: '۸ هفته',
+      sessions: '۱۶ جلسه',
+      price: '۱,۵۰۰,۰۰۰ تومان',
+      priceNumber: 1500000,
+      level: 'متوسط',
+      ageGroup: '۱۴ سال به بالا',
+      classSize: '۱۵ نفر',
+      prerequisites: ['انگلیسی پایه'],
+      features: ['یادگیری جذاب', 'زبان روزمره'],
+      learningOutcomes: ['لهجه طبیعی', 'اصطلاحات روزمره', 'درک شنیداری']
+    },
+    'robotics-kids': {
+      title: 'رباتیک کودکان',
+      description: 'آموزش ساخت و برنامه‌نویسی ربات‌ها با پروژه‌های عملی',
+      duration: '۱۲ هفته',
+      sessions: '۲۴ جلسه',
+      price: '۲,۵۰۰,۰۰۰ تومان',
+      priceNumber: 2500000,
+      level: 'مقدماتی',
+      ageGroup: '۷ تا ۱۴ سال',
+      classSize: '۸ نفر',
+      prerequisites: ['علاقه به فناوری'],
+      features: ['ساخت ربات', 'برنامه‌نویسی'],
+      learningOutcomes: ['ساخت ربات', 'برنامه‌نویسی ربات', 'حل مسئله']
+    },
+    'wordpress': {
+      title: 'طراحی سایت با وردپرس',
+      description: 'آموزش جامع طراحی و مدیریت وب سایت با وردپرس',
+      duration: '۱۰ هفته',
+      sessions: '۲۰ جلسه',
+      price: '۲,۰۰۰,۰۰۰ تومان',
+      priceNumber: 2000000,
+      level: 'مقدماتی',
+      ageGroup: '۱۵ سال به بالا',
+      classSize: '۱۲ نفر',
+      prerequisites: ['آشنایی با اینترنت'],
+      features: ['طراحی سایت', 'سئو پایه'],
+      learningOutcomes: ['ساخت سایت', 'مدیریت محتوا', 'افزونه‌ها']
     }
   };
 
-  const course = courseData[courseId as keyof typeof courseData] || courseData['icdl-kids'];
+  const course = courseData[courseId as string] || courseData['icdl-kids'];
 
-  const handleEnroll = () => {
-    navigate('/auth');
+  const handleEnroll = async () => {
+    if (!user) {
+      navigate('/auth', { state: { from: location.pathname } });
+      return;
+    }
+
+    setEnrolling(true);
+    try {
+      // Check if already enrolled
+      const { data: existingEnrollment } = await supabase
+        .from('enrollments')
+        .select('id')
+        .eq('user_id', user.id)
+        .eq('course_id', courseId)
+        .maybeSingle();
+
+      if (existingEnrollment) {
+        toast({
+          title: "قبلاً ثبت نام شده",
+          description: "شما قبلاً در این دوره ثبت نام کرده‌اید",
+          variant: "destructive",
+        });
+        setEnrolling(false);
+        return;
+      }
+
+      // Create enrollment
+      const { error } = await supabase
+        .from('enrollments')
+        .insert({
+          user_id: user.id,
+          course_id: courseId,
+          expires_at: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString(),
+          payment_status: 'pending',
+          payment_method: 'manual',
+          amount_due: (course.priceNumber || 0).toString(),
+          amount_paid: '0',
+          payment_notes: 'در انتظار تایید پرداخت توسط مدیریت'
+        } as any);
+
+      if (error) {
+        console.error('Enrollment error:', error);
+        toast({
+          title: "خطا",
+          description: "خطا در ثبت نام. لطفاً دوباره تلاش کنید",
+          variant: "destructive",
+        });
+      } else {
+        // Get the enrollment ID
+        const { data: newEnrollment } = await supabase
+          .from('enrollments')
+          .select('id')
+          .eq('user_id', user.id)
+          .eq('course_id', courseId)
+          .order('created_at', { ascending: false })
+          .limit(1)
+          .single();
+
+        toast({
+          title: "ثبت نام موفق",
+          description: "در حال انتقال به صفحه پرداخت...",
+        });
+        
+        if (newEnrollment) {
+          navigate(`/payment/${newEnrollment.id}`);
+        } else {
+          navigate('/profile');
+        }
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      toast({
+        title: "خطا",
+        description: "خطای غیرمنتظره رخ داد",
+        variant: "destructive",
+      });
+    } finally {
+      setEnrolling(false);
+    }
   };
 
   const handleBack = () => {
@@ -315,31 +489,21 @@ const CourseDetailsPage = () => {
                       </div>
                     </div>
                   </div>
-
-                  {course.schedule && (
-                    <>
-                      <Separator />
-                      <div>
-                        <h3 className="font-semibold mb-3">زمان‌بندی کلاس‌ها</h3>
-                        <p className="text-muted-foreground">{course.schedule}</p>
-                      </div>
-                    </>
-                  )}
                 </CardContent>
               </Card>
 
-              {/* Suitable For */}
-              {course.suitableFor && (
+              {/* Prerequisites */}
+              {course.prerequisites && (
                 <Card>
                   <CardHeader>
-                    <CardTitle>این دوره مناسب چه کسانی است؟</CardTitle>
+                    <CardTitle>پیش نیاز ها</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <ul className="space-y-2">
-                      {course.suitableFor.map((item, index) => (
+                      {course.prerequisites.map((prerequisite: string, index: number) => (
                         <li key={index} className="flex items-center gap-2">
                           <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
-                          <span>{item}</span>
+                          <span>{prerequisite}</span>
                         </li>
                       ))}
                     </ul>
@@ -347,42 +511,27 @@ const CourseDetailsPage = () => {
                 </Card>
               )}
 
-              {/* Prerequisites */}
-              <Card>
-                <CardHeader>
-                  <CardTitle>پیش نیاز ها</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-2">
-                    {course.prerequisites.map((prerequisite, index) => (
-                      <li key={index} className="flex items-center gap-2">
-                        <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
-                        <span>{prerequisite}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-
               {/* Learning Outcomes */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Award className="w-5 h-5" />
-                    توانایی هایی که بعد از اتمام این دوره کسب می کنید
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-3">
-                    {course.learningOutcomes.map((outcome, index) => (
-                      <li key={index} className="flex items-start gap-3">
-                        <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                        <span>{outcome}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
+              {course.learningOutcomes && (
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Award className="w-5 h-5" />
+                      توانایی هایی که کسب می کنید
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="space-y-3">
+                      {course.learningOutcomes.map((outcome: string, index: number) => (
+                        <li key={index} className="flex items-start gap-3">
+                          <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                          <span>{outcome}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
+              )}
 
               {/* Certificate */}
               {course.certificate && (
@@ -394,40 +543,38 @@ const CourseDetailsPage = () => {
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <ul className="space-y-2">
-                      {course.certificate.split('\n').map((cert, index) => (
-                        <li key={index} className="flex items-center gap-3">
-                          <CheckCircle className="w-5 h-5 text-primary flex-shrink-0" />
-                          <span>{cert}</span>
-                        </li>
-                      ))}
-                    </ul>
+                    <div className="flex items-center gap-3">
+                      <CheckCircle className="w-5 h-5 text-primary flex-shrink-0" />
+                      <span>{course.certificate}</span>
+                    </div>
                   </CardContent>
                 </Card>
               )}
 
               {/* Course Features */}
-              <Card>
-                <CardHeader>
-                  <CardTitle>ویژگی‌های دوره</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid md:grid-cols-2 gap-3">
-                    {course.features.map((feature, index) => (
-                      <div key={index} className="flex items-center gap-2">
-                        <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
-                        <span>{feature}</span>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
+              {course.features && (
+                <Card>
+                  <CardHeader>
+                    <CardTitle>ویژگی‌های دوره</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid md:grid-cols-2 gap-3">
+                      {course.features.map((feature: string, index: number) => (
+                        <div key={index} className="flex items-center gap-2">
+                          <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
+                          <span>{feature}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
             </div>
 
             {/* Sidebar */}
             <div className="space-y-6">
               {/* Enrollment Card */}
-              <Card className="border-primary/20">
+              <Card className="border-primary/20 sticky top-24">
                 <CardHeader>
                   <CardTitle className="text-center">ثبت نام در دوره</CardTitle>
                 </CardHeader>
@@ -440,13 +587,29 @@ const CourseDetailsPage = () => {
                     <p className="text-muted-foreground">هزینه کل دوره</p>
                   </div>
                   <Button 
-                    className="w-full" 
+                    className="w-full text-white" 
                     size="lg"
                     onClick={handleEnroll}
+                    disabled={enrolling}
+                    style={{ background: 'linear-gradient(135deg, hsl(28,92%,56%), hsl(24,95%,55%))' }}
                   >
-                    ثبت نام کنید
-                    <ArrowRight className="w-4 h-4 mr-2" />
+                    {enrolling ? (
+                      <>
+                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                        در حال ثبت نام...
+                      </>
+                    ) : (
+                      <>
+                        ثبت نام کنید
+                        <ArrowRight className="w-4 h-4 mr-2" />
+                      </>
+                    )}
                   </Button>
+                  {!user && (
+                    <p className="text-sm text-muted-foreground text-center">
+                      برای ثبت نام ابتدا وارد حساب کاربری خود شوید
+                    </p>
+                  )}
                   <p className="text-sm text-muted-foreground text-center">
                     امکان پرداخت قسطی موجود است
                   </p>
