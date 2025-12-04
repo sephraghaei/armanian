@@ -145,13 +145,6 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "enrollments_course_id_fkey"
-            columns: ["course_id"]
-            isOneToOne: false
-            referencedRelation: "courses"
-            referencedColumns: ["id"]
-          },
-          {
             foreignKeyName: "fk_enrollments_users_app"
             columns: ["user_id"]
             isOneToOne: false
