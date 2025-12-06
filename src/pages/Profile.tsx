@@ -91,9 +91,7 @@ const Profile = () => {
         .select('id, title, description, duration')
         .in('id', courseIds);
 
-      if (coursesError) {
-        console.error('Error fetching courses:', coursesError);
-      }
+      // Silently handle course fetch errors (may happen with legacy data)
 
       // Create course lookup map
       const coursesMap = new Map(
