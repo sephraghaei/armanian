@@ -1,22 +1,6 @@
 {
   "rewrites": [
     {
-      "source": "/assets/:path*",
-      "destination": "/assets/:path*"
-    },
-    {
-      "source": "/fonts/:path*",
-      "destination": "/fonts/:path*"
-    },
-    {
-      "source": "/favicon.ico",
-      "destination": "/favicon.ico"
-    },
-    {
-      "source": "/robots.txt",
-      "destination": "/robots.txt"
-    },
-    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
