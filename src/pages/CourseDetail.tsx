@@ -134,21 +134,22 @@ const CourseDetail = () => {
         });
       } else {
         // Get the enrollment ID from the insert response
-        const { data: newEnrollment } = await supabase
+        const { data: newEnrollment, error: fetchError } = await supabase
           .from('enrollments')
           .select('id')
           .eq('user_id', user.id)
           .eq('course_id', course!.id)
           .order('created_at', { ascending: false })
           .limit(1)
-          .single();
+          .maybeSingle();
 
+        // Show success message first, regardless of redirect
         toast({
           title: "ثبت نام موفق",
           description: "در حال انتقال به صفحه پرداخت...",
         });
         
-        if (newEnrollment) {
+        if (newEnrollment && !fetchError) {
           navigate(`/payment/${newEnrollment.id}`);
         } else {
           navigate('/profile');
