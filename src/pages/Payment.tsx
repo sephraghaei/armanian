@@ -44,24 +44,15 @@ const Payment = () => {
 
   const fetchEnrollment = async () => {
     try {
-      const { data, error } = await supabase
+      // Fetch enrollment first
+      const { data: enrollmentData, error: enrollmentError } = await supabase
         .from('enrollments')
-        .select(`
-          id,
-          course_id,
-          status,
-          amount_due,
-          courses (
-            title,
-            description,
-            duration
-          )
-        `)
+        .select('id, course_id, status, amount_due')
         .eq('id', enrollmentId)
         .eq('user_id', user?.id)
-        .single();
+        .maybeSingle();
 
-      if (error || !data) {
+      if (enrollmentError || !enrollmentData) {
         toast({
           title: 'خطا',
           description: 'ثبت‌نام یافت نشد',
@@ -71,7 +62,21 @@ const Payment = () => {
         return;
       }
 
-      setEnrollment(data as unknown as EnrollmentData);
+      // Fetch course info separately (course_id might be a slug or UUID)
+      const { data: courseData } = await supabase
+        .from('courses')
+        .select('title, description, duration')
+        .or(`id.eq.${enrollmentData.course_id},title.ilike.%${enrollmentData.course_id}%`)
+        .maybeSingle();
+
+      setEnrollment({
+        ...enrollmentData,
+        courses: courseData || { 
+          title: enrollmentData.course_id, 
+          description: '', 
+          duration: '' 
+        }
+      });
     } catch (error) {
       console.error('Error:', error);
     } finally {
