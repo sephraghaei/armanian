@@ -109,13 +109,13 @@ export default function Admin() {
       const enrichedEnrollments = await Promise.all(
         (enrollmentData || []).map(async (enrollment) => {
           const [courseResult, userResult] = await Promise.all([
-            supabase.from('courses').select('title').eq('id', enrollment.course_id).single(),
-            supabase.from('users_app').select('first_name, last_name, phone').eq('id', enrollment.user_id).single()
+            supabase.from('courses').select('title').eq('id', enrollment.course_id).maybeSingle(),
+            supabase.from('users_app').select('first_name, last_name, phone').eq('id', enrollment.user_id).maybeSingle()
           ]);
 
           return {
             ...enrollment,
-            courses: courseResult.data || { title: 'Unknown' },
+            courses: courseResult.data || { title: 'نامشخص' },
             users_app: userResult.data || { first_name: '', last_name: '', phone: '' }
           };
         })
