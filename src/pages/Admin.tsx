@@ -7,10 +7,11 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2, Plus, Edit, Trash2, ArrowRight, Users, BookOpen, Calendar, Phone } from 'lucide-react';
+import { Loader2, Plus, Edit, Trash2, ArrowRight, Users, BookOpen, Calendar, Phone, FileText, Eye, EyeOff } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Checkbox } from '@/components/ui/checkbox';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
@@ -43,6 +44,20 @@ interface Enrollment {
   };
 }
 
+interface Post {
+  id: string;
+  title: string;
+  slug: string;
+  content: string;
+  excerpt: string;
+  featured_image: string;
+  status: 'draft' | 'published';
+  category: string;
+  tags: string[];
+  published_at: string | null;
+  created_at: string;
+}
+
 export default function Admin() {
   const { user, isAdmin, loading: authLoading } = useAuth();
   const navigate = useNavigate();
@@ -50,9 +65,11 @@ export default function Admin() {
   
   const [courses, setCourses] = useState<Course[]>([]);
   const [enrollments, setEnrollments] = useState<Enrollment[]>([]);
+  const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<'courses' | 'enrollments'>('courses');
+  const [activeTab, setActiveTab] = useState<'courses' | 'enrollments' | 'posts'>('courses');
   const [editingCourse, setEditingCourse] = useState<Course | null>(null);
+  const [editingPost, setEditingPost] = useState<Post | null>(null);
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -62,6 +79,16 @@ export default function Admin() {
     learning_outcomes: '',
     department_id: '',
     is_popular: false,
+  });
+  const [postFormData, setPostFormData] = useState({
+    title: '',
+    slug: '',
+    content: '',
+    excerpt: '',
+    featured_image: '',
+    status: 'draft' as 'draft' | 'published',
+    category: '',
+    tags: '',
   });
 
   useEffect(() => {
@@ -74,6 +101,7 @@ export default function Admin() {
     if (user && isAdmin) {
       fetchCourses();
       fetchEnrollments();
+      fetchPosts();
     }
   }, [user, isAdmin]);
 
@@ -97,7 +125,6 @@ export default function Admin() {
 
   const fetchEnrollments = async () => {
     try {
-      // Fetch enrollments first
       const { data: enrollmentData, error: enrollmentError } = await supabase
         .from('enrollments')
         .select('*')
@@ -105,7 +132,6 @@ export default function Admin() {
 
       if (enrollmentError) throw enrollmentError;
 
-      // Then fetch related data separately
       const enrichedEnrollments = await Promise.all(
         (enrollmentData || []).map(async (enrollment) => {
           const [courseResult, userResult] = await Promise.all([
@@ -129,6 +155,19 @@ export default function Admin() {
         title: 'خطا',
         description: 'خطا در بارگذاری ثبت‌نام‌ها',
       });
+    }
+  };
+
+  const fetchPosts = async () => {
+    const { data, error } = await supabase
+      .from('posts')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      console.error('Error fetching posts:', error);
+    } else {
+      setPosts((data || []) as Post[]);
     }
   };
 
@@ -182,6 +221,59 @@ export default function Admin() {
     }
   };
 
+  const handlePostSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    const slug = postFormData.slug || postFormData.title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w\u0600-\u06FF-]/g, '');
+    
+    const postData = {
+      title: postFormData.title,
+      slug,
+      content: postFormData.content,
+      excerpt: postFormData.excerpt,
+      featured_image: postFormData.featured_image,
+      status: postFormData.status,
+      category: postFormData.category,
+      tags: postFormData.tags.split(',').map(t => t.trim()).filter(Boolean),
+      published_at: postFormData.status === 'published' ? new Date().toISOString() : null,
+    };
+
+    if (editingPost) {
+      const { error } = await supabase
+        .from('posts')
+        .update(postData)
+        .eq('id', editingPost.id);
+
+      if (error) {
+        toast({
+          variant: 'destructive',
+          title: 'خطا',
+          description: 'خطا در ویرایش مطلب',
+        });
+      } else {
+        toast({ title: 'موفق', description: 'مطلب با موفقیت ویرایش شد' });
+        resetPostForm();
+        fetchPosts();
+      }
+    } else {
+      const { error } = await supabase
+        .from('posts')
+        .insert([postData]);
+
+      if (error) {
+        toast({
+          variant: 'destructive',
+          title: 'خطا',
+          description: error.message.includes('duplicate') ? 'این slug قبلاً استفاده شده است' : 'خطا در ایجاد مطلب',
+        });
+      } else {
+        toast({ title: 'موفق', description: 'مطلب با موفقیت ایجاد شد' });
+        resetPostForm();
+        fetchPosts();
+      }
+    }
+  };
+
   const handleEdit = (course: Course) => {
     setEditingCourse(course);
     setFormData({
@@ -193,6 +285,21 @@ export default function Admin() {
       learning_outcomes: (course.learning_outcomes || []).join('\n'),
       department_id: course.department_id?.toString() || '',
       is_popular: course.is_popular || false,
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleEditPost = (post: Post) => {
+    setEditingPost(post);
+    setPostFormData({
+      title: post.title,
+      slug: post.slug,
+      content: post.content || '',
+      excerpt: post.excerpt || '',
+      featured_image: post.featured_image || '',
+      status: post.status,
+      category: post.category || '',
+      tags: (post.tags || []).join(', '),
     });
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -217,6 +324,48 @@ export default function Admin() {
     }
   };
 
+  const handleDeletePost = async (id: string) => {
+    if (!confirm('آیا مطمئن هستید که می‌خواهید این مطلب را حذف کنید؟')) return;
+
+    const { error } = await supabase
+      .from('posts')
+      .delete()
+      .eq('id', id);
+
+    if (error) {
+      toast({
+        variant: 'destructive',
+        title: 'خطا',
+        description: 'خطا در حذف مطلب',
+      });
+    } else {
+      toast({ title: 'موفق', description: 'مطلب با موفقیت حذف شد' });
+      fetchPosts();
+    }
+  };
+
+  const togglePostStatus = async (post: Post) => {
+    const newStatus = post.status === 'published' ? 'draft' : 'published';
+    const { error } = await supabase
+      .from('posts')
+      .update({ 
+        status: newStatus,
+        published_at: newStatus === 'published' ? new Date().toISOString() : null
+      })
+      .eq('id', post.id);
+
+    if (error) {
+      toast({
+        variant: 'destructive',
+        title: 'خطا',
+        description: 'خطا در تغییر وضعیت',
+      });
+    } else {
+      toast({ title: 'موفق', description: newStatus === 'published' ? 'مطلب منتشر شد' : 'مطلب به پیش‌نویس تبدیل شد' });
+      fetchPosts();
+    }
+  };
+
   const resetForm = () => {
     setEditingCourse(null);
     setFormData({
@@ -228,6 +377,20 @@ export default function Admin() {
       learning_outcomes: '',
       department_id: '',
       is_popular: false,
+    });
+  };
+
+  const resetPostForm = () => {
+    setEditingPost(null);
+    setPostFormData({
+      title: '',
+      slug: '',
+      content: '',
+      excerpt: '',
+      featured_image: '',
+      status: 'draft',
+      category: '',
+      tags: '',
     });
   };
 
@@ -270,11 +433,15 @@ export default function Admin() {
 
         <h1 className="text-3xl font-bold mb-8">پنل مدیریت</h1>
 
-        <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as 'courses' | 'enrollments')} className="space-y-6">
-          <TabsList className="grid w-full max-w-md grid-cols-2">
+        <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as typeof activeTab)} className="space-y-6">
+          <TabsList className="grid w-full max-w-lg grid-cols-3">
             <TabsTrigger value="courses" className="gap-2">
               <BookOpen className="h-4 w-4" />
-              مدیریت دوره‌ها
+              دوره‌ها
+            </TabsTrigger>
+            <TabsTrigger value="posts" className="gap-2">
+              <FileText className="h-4 w-4" />
+              مطالب
             </TabsTrigger>
             <TabsTrigger value="enrollments" className="gap-2">
               <Users className="h-4 w-4" />
@@ -282,6 +449,7 @@ export default function Admin() {
             </TabsTrigger>
           </TabsList>
 
+          {/* Courses Tab */}
           <TabsContent value="courses" className="space-y-6">
             <div className="grid md:grid-cols-2 gap-8">
               <Card>
@@ -411,6 +579,184 @@ export default function Admin() {
             </div>
           </TabsContent>
 
+          {/* Posts Tab */}
+          <TabsContent value="posts" className="space-y-6">
+            <div className="grid md:grid-cols-2 gap-8">
+              <Card>
+                <CardHeader>
+                  <CardTitle>{editingPost ? 'ویرایش مطلب' : 'ایجاد مطلب جدید'}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <form onSubmit={handlePostSubmit} className="space-y-4">
+                    <div>
+                      <label className="text-sm font-medium">عنوان</label>
+                      <Input
+                        value={postFormData.title}
+                        onChange={(e) => setPostFormData({ ...postFormData, title: e.target.value })}
+                        required
+                      />
+                    </div>
+
+                    <div>
+                      <label className="text-sm font-medium">Slug (اختیاری - خودکار ساخته می‌شود)</label>
+                      <Input
+                        value={postFormData.slug}
+                        onChange={(e) => setPostFormData({ ...postFormData, slug: e.target.value })}
+                        placeholder="my-post-slug"
+                        dir="ltr"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="text-sm font-medium">خلاصه</label>
+                      <Textarea
+                        value={postFormData.excerpt}
+                        onChange={(e) => setPostFormData({ ...postFormData, excerpt: e.target.value })}
+                        rows={2}
+                        placeholder="خلاصه‌ای کوتاه از مطلب..."
+                      />
+                    </div>
+
+                    <div>
+                      <label className="text-sm font-medium">محتوا</label>
+                      <Textarea
+                        value={postFormData.content}
+                        onChange={(e) => setPostFormData({ ...postFormData, content: e.target.value })}
+                        rows={8}
+                        placeholder="متن کامل مطلب..."
+                      />
+                    </div>
+
+                    <div>
+                      <label className="text-sm font-medium">تصویر شاخص (URL)</label>
+                      <Input
+                        value={postFormData.featured_image}
+                        onChange={(e) => setPostFormData({ ...postFormData, featured_image: e.target.value })}
+                        placeholder="https://example.com/image.jpg"
+                        dir="ltr"
+                      />
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <label className="text-sm font-medium">دسته‌بندی</label>
+                        <Input
+                          value={postFormData.category}
+                          onChange={(e) => setPostFormData({ ...postFormData, category: e.target.value })}
+                          placeholder="اخبار"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="text-sm font-medium">وضعیت</label>
+                        <Select
+                          value={postFormData.status}
+                          onValueChange={(v) => setPostFormData({ ...postFormData, status: v as 'draft' | 'published' })}
+                        >
+                          <SelectTrigger>
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="draft">پیش‌نویس</SelectItem>
+                            <SelectItem value="published">منتشر شده</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="text-sm font-medium">برچسب‌ها (با کاما جدا کنید)</label>
+                      <Input
+                        value={postFormData.tags}
+                        onChange={(e) => setPostFormData({ ...postFormData, tags: e.target.value })}
+                        placeholder="آموزش, برنامه‌نویسی, طراحی"
+                      />
+                    </div>
+
+                    <div className="flex gap-2">
+                      <Button type="submit" className="flex-1">
+                        {editingPost ? <Edit className="ml-2 h-4 w-4" /> : <Plus className="ml-2 h-4 w-4" />}
+                        {editingPost ? 'ویرایش' : 'ایجاد'}
+                      </Button>
+                      {editingPost && (
+                        <Button type="button" variant="outline" onClick={resetPostForm}>
+                          انصراف
+                        </Button>
+                      )}
+                    </div>
+                  </form>
+                </CardContent>
+              </Card>
+
+              <div className="space-y-4">
+                <h2 className="text-xl font-semibold">مطالب ({posts.length})</h2>
+                {posts.length === 0 ? (
+                  <Card>
+                    <CardContent className="py-8 text-center text-muted-foreground">
+                      هنوز مطلبی ایجاد نشده است
+                    </CardContent>
+                  </Card>
+                ) : (
+                  posts.map((post) => (
+                    <Card key={post.id}>
+                      <CardContent className="pt-6">
+                        <div className="flex justify-between items-start mb-2">
+                          <div className="flex-1">
+                            <h3 className="font-semibold text-lg">{post.title}</h3>
+                            <p className="text-xs text-muted-foreground mt-1">/{post.slug}</p>
+                          </div>
+                          <div className="flex gap-2">
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => togglePostStatus(post)}
+                              title={post.status === 'published' ? 'پیش‌نویس کردن' : 'انتشار'}
+                            >
+                              {post.status === 'published' ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => handleEditPost(post)}
+                            >
+                              <Edit className="h-4 w-4" />
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="destructive"
+                              onClick={() => handleDeletePost(post.id)}
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        </div>
+                        {post.excerpt && (
+                          <p className="text-sm text-muted-foreground mb-2 line-clamp-2">{post.excerpt}</p>
+                        )}
+                        <div className="flex flex-wrap gap-2 text-xs">
+                          <span className={`px-2 py-0.5 rounded-full ${
+                            post.status === 'published' 
+                              ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' 
+                              : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200'
+                          }`}>
+                            {post.status === 'published' ? 'منتشر شده' : 'پیش‌نویس'}
+                          </span>
+                          {post.category && (
+                            <span className="bg-muted px-2 py-0.5 rounded-full">{post.category}</span>
+                          )}
+                          <span className="text-muted-foreground">
+                            {new Date(post.created_at).toLocaleDateString('fa-IR')}
+                          </span>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))
+                )}
+              </div>
+            </div>
+          </TabsContent>
+
+          {/* Enrollments Tab */}
           <TabsContent value="enrollments">
             <Card>
               <CardHeader>
@@ -470,7 +816,7 @@ export default function Admin() {
                               {enrollment.status === 'active' ? 'فعال' : 'غیرفعال'}
                             </span>
                           </TableCell>
-                          <TableCell className="text-left">
+                          <TableCell>
                             <Button
                               size="sm"
                               variant="destructive"
