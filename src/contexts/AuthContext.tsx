@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { User, Session } from '@supabase/supabase-js';
+import { supabase } from '@/integrations/supabase/client';
 
 type AppUser = {
   id: string;
@@ -13,6 +14,7 @@ interface AuthContextType {
   user: AppUser | null;
   session: Session | null;
   loading: boolean;
+  isAdmin: boolean;
   signUpWithCredentials: (phone: string, firstName: string, lastName: string, email: string, password: string, redirectTo?: string) => Promise<{ error: any }>;
   signInWithCredentials: (phone: string, password: string, redirectTo?: string) => Promise<{ error: any }>;
   signOut: () => Promise<{ error: any }>;
@@ -33,16 +35,43 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [user, setUser] = useState<AppUser | null>(null);
   const [session, setSession] = useState<null>(null);
   const [loading, setLoading] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
   const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 
-  useEffect(() => {
+  const checkAdminRole = async (userId: string) => {
     try {
-      const rawUser = localStorage.getItem('app_user');
-      if (rawUser) {
-        setUser(JSON.parse(rawUser));
+      const { data, error } = await supabase
+        .from('user_roles' as any)
+        .select('role')
+        .eq('user_id', userId)
+        .eq('role', 'admin')
+        .maybeSingle();
+      
+      if (error) {
+        console.error('Error checking admin role:', error);
+        return false;
       }
-    } catch {}
-    setLoading(false);
+      return !!data;
+    } catch (e) {
+      console.error('Error checking admin role:', e);
+      return false;
+    }
+  };
+
+  useEffect(() => {
+    const initAuth = async () => {
+      try {
+        const rawUser = localStorage.getItem('app_user');
+        if (rawUser) {
+          const parsedUser = JSON.parse(rawUser);
+          setUser(parsedUser);
+          const adminStatus = await checkAdminRole(parsedUser.id);
+          setIsAdmin(adminStatus);
+        }
+      } catch {}
+      setLoading(false);
+    };
+    initAuth();
   }, []);
 
   const ensureFunctionUrl = () => {
@@ -76,6 +105,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const body = await res.json();
       try { localStorage.setItem('app_user', JSON.stringify(body.user)); } catch {}
       setUser(body.user);
+      const adminStatus = await checkAdminRole(body.user.id);
+      setIsAdmin(adminStatus);
       // Redirect to target page after successful signup
       window.location.href = redirectTo;
       return { error: null };
@@ -101,6 +132,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const body = await res.json();
       try { localStorage.setItem('app_user', JSON.stringify(body.user)); } catch {}
       setUser(body.user);
+      const adminStatus = await checkAdminRole(body.user.id);
+      setIsAdmin(adminStatus);
       window.location.href = redirectTo;
       return { error: null };
     } catch (e: any) {
@@ -132,6 +165,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const signOut = async () => {
     try { localStorage.removeItem('app_user'); } catch {}
     setUser(null);
+    setIsAdmin(false);
     return { error: null };
   };
 
@@ -139,6 +173,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     user,
     session,
     loading,
+    isAdmin,
     signUpWithCredentials,
     signInWithCredentials,
     signOut,

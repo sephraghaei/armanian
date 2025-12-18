@@ -126,7 +126,7 @@ const Hero = () => {
               <ArrowRight className="w-4 h-4 group-hover:-translate-x-2 group-hover:rotate-12 transition-all duration-300" />
             </Button>
             <Button variant="outline" size="lg" asChild className="w-full sm:w-auto animate-bounce-in hover-scale" style={{ animationDelay: '0.8s' }}>
-              <a href="/courses">
+              <a href="#programs">
                 مشاهده دوره‌ها
               </a>
             </Button>

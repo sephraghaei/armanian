@@ -36,12 +36,9 @@ interface Enrollment {
   amount_paid: string;
   paid_at: string | null;
   payment_notes: string | null;
-  courses: {
-    title: string;
-    description: string;
-    duration: string;
-    price?: string | null;
-  };
+  course_title?: string;
+  course_description?: string;
+  course_duration?: string;
 }
 
 const Profile = () => {
@@ -68,26 +65,57 @@ const Profile = () => {
 
   const fetchEnrollments = async () => {
     try {
-      const { data, error } = await supabase
+      // Fetch enrollments first
+      const { data: enrollmentsData, error: enrollmentsError } = await supabase
         .from('enrollments')
-        .select(`
-          *,
-          courses (
-            title,
-            description,
-            duration,
-            price
-          )
-        `)
+        .select('*')
         .eq('user_id', user?.id)
         .order('enrolled_at', { ascending: false });
 
-      if (error) {
-        console.error('Error fetching enrollments:', error);
+      if (enrollmentsError) {
+        console.error('Error fetching enrollments:', enrollmentsError);
         return;
       }
 
-      setEnrollments(data || []);
+      if (!enrollmentsData || enrollmentsData.length === 0) {
+        setEnrollments([]);
+        return;
+      }
+
+      // Get unique course IDs
+      const courseIds = [...new Set(enrollmentsData.map(e => e.course_id))];
+
+      // Fetch courses separately
+      const { data: coursesData, error: coursesError } = await supabase
+        .from('courses')
+        .select('id, title, description, duration')
+        .in('id', courseIds);
+
+      // Silently handle course fetch errors (may happen with legacy data)
+
+      // Create course lookup map
+      const coursesMap = new Map(
+        (coursesData || []).map(c => [c.id, c])
+      );
+
+      // Map data to match expected type
+      const mappedData = enrollmentsData.map((item) => {
+        const course = coursesMap.get(item.course_id);
+        return {
+          ...item,
+          payment_status: item.payment_status || 'pending',
+          payment_method: item.payment_method || 'manual',
+          amount_due: item.amount_due || '0',
+          amount_paid: item.amount_paid || '0',
+          paid_at: item.paid_at || null,
+          payment_notes: item.payment_notes || null,
+          course_title: course?.title || item.course_id,
+          course_description: course?.description || '',
+          course_duration: course?.duration || '',
+        };
+      });
+
+      setEnrollments(mappedData);
     } catch (error) {
       console.error('Error:', error);
     }
@@ -487,10 +515,10 @@ const Profile = () => {
                               <div className="flex flex-col md:flex-row md:items-center gap-4">
                                 <div className="flex-1">
                                   <h3 className="font-semibold text-lg mb-2">
-                                    {enrollment.courses.title}
+                                    {enrollment.course_title}
                                   </h3>
                                   <p className="text-muted-foreground text-sm mb-3">
-                                    {enrollment.courses.description}
+                                    {enrollment.course_description}
                                   </p>
                                   <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
                                     <div className="flex items-center gap-1">
@@ -499,7 +527,7 @@ const Profile = () => {
                                     </div>
                                     <div className="flex items-center gap-1">
                                       <Clock className="w-4 h-4" />
-                                      مدت: {enrollment.courses.duration}
+                                      مدت: {enrollment.course_duration}
                                     </div>
                                     <div className="flex items-center gap-1">
                                       <CreditCard className="w-4 h-4" />

@@ -110,20 +110,20 @@ const CourseDetail = () => {
       }
 
       // Create enrollment
-      const amountDue = parsePriceToNumber(course.price).toString();
+      const amountDue = parsePriceToNumber(course!.price).toString();
 
       const { error } = await supabase
         .from('enrollments')
         .insert({
           user_id: user.id,
-          course_id: course.id, // Use course.id from the fetched course
-          expires_at: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString(), // 1 year from now
+          course_id: course!.id,
+          expires_at: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString(),
           payment_status: 'pending',
           payment_method: 'manual',
           amount_due: amountDue,
           amount_paid: '0',
           payment_notes: 'در انتظار تایید پرداخت توسط مدیریت'
-        });
+        } as any);
 
       if (error) {
         console.error('Enrollment error:', error);
@@ -133,11 +133,27 @@ const CourseDetail = () => {
           variant: "destructive",
         });
       } else {
+        // Get the enrollment ID from the insert response
+        const { data: newEnrollment, error: fetchError } = await supabase
+          .from('enrollments')
+          .select('id')
+          .eq('user_id', user.id)
+          .eq('course_id', course!.id)
+          .order('created_at', { ascending: false })
+          .limit(1)
+          .maybeSingle();
+
+        // Show success message first, regardless of redirect
         toast({
           title: "ثبت نام موفق",
-          description: "با موفقیت در دوره ثبت نام شدید",
+          description: "در حال انتقال به صفحه پرداخت...",
         });
-        navigate('/profile');
+        
+        if (newEnrollment && !fetchError) {
+          navigate(`/payment/${newEnrollment.id}`);
+        } else {
+          navigate('/profile');
+        }
       }
     } catch (error) {
       console.error('Error:', error);

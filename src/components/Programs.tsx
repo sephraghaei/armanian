@@ -3,9 +3,12 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Clock, Users, Trophy, Star } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useState, useMemo } from 'react';
+import HomeSearch from './HomeSearch';
 
 const Programs = () => {
   const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState('');
 
   const handleSignUp = () => {
     navigate('/auth');
@@ -65,6 +68,18 @@ const Programs = () => {
     }
   ];
 
+  const filteredPrograms = useMemo(() => {
+    if (!searchQuery.trim()) return programs;
+    const query = searchQuery.toLowerCase();
+    return programs.filter(program => 
+      program.title.toLowerCase().includes(query) ||
+      program.description.toLowerCase().includes(query) ||
+      program.features.some(feature => feature.toLowerCase().includes(query)) ||
+      program.level.toLowerCase().includes(query) ||
+      program.ages.toLowerCase().includes(query)
+    );
+  }, [searchQuery]);
+
   return (
     <section id="programs" className="py-20 bg-gradient-to-b from-transparent via-background/30 to-transparent relative overflow-hidden">
       {/* Background decorative elements */}
@@ -79,14 +94,24 @@ const Programs = () => {
           <h2 className="text-3xl md:text-4xl font-black text-foreground mb-4 animate-bounce-in">
             مسیر یادگیری خود را انتخاب کنید
           </h2>
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto animate-slide-in-up" style={{ animationDelay: '0.3s' }}>
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto animate-slide-in-up mb-8" style={{ animationDelay: '0.3s' }}>
             برنامه‌های ساختارمندی که فراگیران را در گروه‌های سنی مختلف به متخصصین آینده تبدیل می‌کند. 
             هر مسیر به دقت برای نیازهای ویژه هر رده سنی طراحی شده است.
           </p>
+          <HomeSearch 
+            searchQuery={searchQuery}
+            onSearchChange={setSearchQuery}
+            placeholder="جستجوی برنامه‌ها..."
+          />
         </div>
 
+        {filteredPrograms.length === 0 ? (
+          <div className="text-center py-12">
+            <p className="text-muted-foreground text-lg">برنامه‌ای با این مشخصات یافت نشد</p>
+          </div>
+        ) : (
         <div className="grid md:grid-cols-3 gap-8">
-          {programs.map((program, index) => (
+          {filteredPrograms.map((program, index) => (
             <Card key={index} className={`relative transition-all duration-700 hover:-translate-y-4 hover:rotate-1 border-orange-300/70 hover:shadow-[0_0_50px_hsl(28_92%_56%_/_0.4)] ${program.popular ? 'border-2 animate-glow' : 'border'} bg-white/95 hover:bg-white animate-slide-in-up`} style={{ animationDelay: `${index * 0.3}s` }}>
               
               {program.popular && (
@@ -151,6 +176,7 @@ const Programs = () => {
             </Card>
           ))}
         </div>
+        )}
 
       </div>
     </section>

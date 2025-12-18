@@ -1,8 +1,9 @@
 import { Button } from '@/components/ui/button';
 import { Code, Palette, Home, Globe, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { useRef } from 'react';
+import { useRef, useState, useMemo } from 'react';
 import DepartmentCard from './DepartmentCard';
+import HomeSearch from './HomeSearch';
 import computerDeptImage from '@/assets/computer-department.jpg';
 import graphicDeptImage from '@/assets/graphic-department.jpg';
 import architectureDeptImage from '@/assets/architecture-department.jpg';
@@ -11,6 +12,7 @@ import englishDeptImage from '@/assets/english-department.jpg';
 const Departments = () => {
   const navigate = useNavigate();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const scroll = (direction: 'left' | 'right') => {
     if (scrollContainerRef.current) {
@@ -80,6 +82,16 @@ const Departments = () => {
     }
   ];
 
+  const filteredDepartments = useMemo(() => {
+    if (!searchQuery.trim()) return departments;
+    const query = searchQuery.toLowerCase();
+    return departments.filter(dept => 
+      dept.title.toLowerCase().includes(query) ||
+      dept.description.toLowerCase().includes(query) ||
+      dept.courses.some(course => course.toLowerCase().includes(query))
+    );
+  }, [searchQuery]);
+
   return (
     <section id="departments" className="py-24 bg-gradient-to-b from-transparent via-background/30 to-transparent relative overflow-hidden">
       {/* Background decorative elements */}
@@ -98,11 +110,21 @@ const Departments = () => {
           <h2 className="text-4xl md:text-5xl font-black text-foreground mb-6 bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent">
             دپارتمان‌های آموزشی
           </h2>
-          <p className="text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
+          <p className="text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed mb-8">
             طیف جامعی از دپارتمان‌های تخصصی ما را که برای آموزش مهارت‌های فنی و حرفه‌ای طراحی شده‌اند، کاوش کنید.
           </p>
+          <HomeSearch 
+            searchQuery={searchQuery}
+            onSearchChange={setSearchQuery}
+            placeholder="جستجوی دپارتمان یا دوره..."
+          />
         </div>
 
+        {filteredDepartments.length === 0 ? (
+          <div className="text-center py-12">
+            <p className="text-muted-foreground text-lg">دپارتمانی با این مشخصات یافت نشد</p>
+          </div>
+        ) : (
         <div className="relative">
           {/* Navigation Arrows */}
           <Button
@@ -128,7 +150,7 @@ const Departments = () => {
             className="overflow-x-auto pb-12 -mx-4 px-4 scrollbar-hide scroll-smooth"
           >
             <div className="flex gap-10 px-4 md:px-16">
-              {departments.map((dept, index) => (
+              {filteredDepartments.map((dept, index) => (
                 <DepartmentCard
                   key={index}
                   title={dept.title}
@@ -142,6 +164,7 @@ const Departments = () => {
             </div>
           </div>
         </div>
+        )}
 
         <div className="text-center mt-16">
           <Button 

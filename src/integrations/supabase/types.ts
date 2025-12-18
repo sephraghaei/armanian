@@ -25,7 +25,6 @@ export type Database = {
           is_popular: boolean | null
           learning_outcomes: string[] | null
           level: string | null
-          price: string | null
           title: string
           updated_at: string | null
         }
@@ -39,7 +38,6 @@ export type Database = {
           is_popular?: boolean | null
           learning_outcomes?: string[] | null
           level?: string | null
-          price?: string | null
           title: string
           updated_at?: string | null
         }
@@ -53,7 +51,6 @@ export type Database = {
           is_popular?: boolean | null
           learning_outcomes?: string[] | null
           level?: string | null
-          price?: string | null
           title?: string
           updated_at?: string | null
         }
@@ -97,81 +94,56 @@ export type Database = {
         }
         Relationships: []
       }
-      Departments: {
-        Row: {
-          created_at: string
-          id: number
-          Name: string | null
-        }
-        Insert: {
-          created_at?: string
-          id?: number
-          Name?: string | null
-        }
-        Update: {
-          created_at?: string
-          id?: number
-          Name?: string | null
-        }
-        Relationships: []
-      }
       enrollments: {
         Row: {
+          amount_due: string | null
+          amount_paid: string | null
           course_id: string
           created_at: string
           enrolled_at: string
           expires_at: string
           id: string
-          amount_due: string
-          amount_paid: string
           paid_at: string | null
-          payment_method: string
+          payment_method: string | null
           payment_notes: string | null
-          payment_status: string
+          payment_status: string | null
           status: string
           updated_at: string
           user_id: string
         }
         Insert: {
-          amount_due?: string
-          amount_paid?: string
+          amount_due?: string | null
+          amount_paid?: string | null
           course_id: string
           created_at?: string
           enrolled_at?: string
           expires_at: string
           id?: string
           paid_at?: string | null
-          payment_method?: string
+          payment_method?: string | null
           payment_notes?: string | null
-          payment_status?: string
+          payment_status?: string | null
           status?: string
           updated_at?: string
           user_id: string
         }
         Update: {
-          amount_due?: string
-          amount_paid?: string
+          amount_due?: string | null
+          amount_paid?: string | null
           course_id?: string
           created_at?: string
           enrolled_at?: string
           expires_at?: string
           id?: string
           paid_at?: string | null
-          payment_method?: string
+          payment_method?: string | null
           payment_notes?: string | null
-          payment_status?: string
+          payment_status?: string | null
           status?: string
           updated_at?: string
           user_id?: string
         }
         Relationships: [
-          {
-            foreignKeyName: "enrollments_course_id_fkey"
-            columns: ["course_id"]
-            isOneToOne: false
-            referencedRelation: "courses"
-            referencedColumns: ["id"]
-          },
           {
             foreignKeyName: "fk_enrollments_users_app"
             columns: ["user_id"]
@@ -207,6 +179,62 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      posts: {
+        Row: {
+          author_id: string | null
+          category: string | null
+          content: string | null
+          created_at: string
+          excerpt: string | null
+          featured_image: string | null
+          id: string
+          published_at: string | null
+          slug: string
+          status: string
+          tags: string[] | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          author_id?: string | null
+          category?: string | null
+          content?: string | null
+          created_at?: string
+          excerpt?: string | null
+          featured_image?: string | null
+          id?: string
+          published_at?: string | null
+          slug: string
+          status?: string
+          tags?: string[] | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          author_id?: string | null
+          category?: string | null
+          content?: string | null
+          created_at?: string
+          excerpt?: string | null
+          featured_image?: string | null
+          id?: string
+          published_at?: string | null
+          slug?: string
+          status?: string
+          tags?: string[] | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "posts_author_id_fkey"
+            columns: ["author_id"]
+            isOneToOne: false
+            referencedRelation: "users_app"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       profiles: {
         Row: {
@@ -296,7 +324,7 @@ export type Database = {
         Insert: {
           created_at?: string | null
           id?: string
-          role?: Database["public"]["Enums"]["app_role"]
+          role: Database["public"]["Enums"]["app_role"]
           user_id: string
         }
         Update: {
