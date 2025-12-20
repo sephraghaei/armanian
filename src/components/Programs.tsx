@@ -11,7 +11,7 @@ const Programs = () => {
   const [searchQuery, setSearchQuery] = useState('');
 
   const handleSignUp = () => {
-    navigate('/auth');
+    navigate('/courses');
   };
 
   const programs = [

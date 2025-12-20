@@ -1,11 +1,122 @@
 import { Button } from '@/components/ui/button';
-import { Code, Sparkles, ArrowRight } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { ArrowRight, Search, BookOpen, Building2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import heroImage from '@/assets/hero-coding.jpg';
+import { useEffect, useState, useMemo } from 'react';
+import { supabase } from '@/integrations/supabase/client';
 import Typewriter from '@/components/Typewriter';
+import {
+  Command,
+  CommandDialog,
+  CommandInput,
+  CommandList,
+  CommandEmpty,
+  CommandGroup,
+  CommandItem,
+} from '@/components/ui/command';
+
+interface Course {
+  id: string;
+  title: string;
+  description: string | null;
+  department_id: number | null;
+}
+
+interface Department {
+  id: number;
+  name: string;
+  slug: string | null;
+}
 
 const Hero = () => {
   const navigate = useNavigate();
+  const [courses, setCourses] = useState<Course[]>([]);
+  const [departments, setDepartments] = useState<Department[]>([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const [coursesRes, departmentsRes] = await Promise.all([
+        supabase.from('courses').select('id, title, description, department_id'),
+        supabase.from('departments').select('id, name, slug')
+      ]);
+
+      if (coursesRes.data) setCourses(coursesRes.data);
+      if (departmentsRes.data) setDepartments(departmentsRes.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  const filteredCourses = useMemo(() => {
+    return courses.filter(course => {
+      const matchesSearch = searchQuery === '' || 
+        course.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        course.description?.toLowerCase().includes(searchQuery.toLowerCase());
+      
+      const matchesCategory = selectedCategory === null || course.department_id === selectedCategory;
+      
+      return matchesSearch && matchesCategory;
+    });
+  }, [courses, searchQuery, selectedCategory]);
+
+  const filteredDepartments = useMemo(() => {
+    if (selectedCategory) {
+      return departments.filter(dept => dept.id === selectedCategory);
+    }
+    if (searchQuery) {
+      return departments.filter(dept => 
+        dept.name.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+    return departments;
+  }, [departments, searchQuery, selectedCategory]);
+
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+    if (query.length > 0) {
+      setOpen(true);
+    } else {
+      setOpen(false);
+    }
+  };
+
+  const handleSelectCourse = (courseId: string) => {
+    navigate(`/course-detail/${courseId}`);
+    setOpen(false);
+    setSearchQuery('');
+  };
+
+  const handleSelectDepartment = (departmentId: number) => {
+    navigate('/departments');
+    setOpen(false);
+    setSearchQuery('');
+    // Scroll to department section if needed
+    setTimeout(() => {
+      const element = document.getElementById(`department-${departmentId}`);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
+  };
+
+  const handleCategoryClick = (departmentId: number | null) => {
+    setSelectedCategory(departmentId);
+    setSearchQuery('');
+    setOpen(false);
+    if (departmentId) {
+      // Navigate to courses page with department filter
+      navigate('/courses');
+      // The courses page will need to handle the filter via URL params or state
+      // For now, just navigate to courses page
+    }
+  };
 
   const handleSignUp = () => {
     navigate('/auth');
@@ -104,7 +215,7 @@ const Hero = () => {
         {/* Content - Full Width */}
         <div className="text-center space-y-12 mb-20">
           <div className="space-y-6 md:space-y-8">
-          <h1 className="text-[3rem] sm:text-[5rem] md:text-[8rem] lg:text-[10rem] font-extrabold leading-[1.1] md:leading-tight max-w-5xl mx-auto mb-4 md:mb-8 tracking-tight bg-clip-text text-transparent animate-gradient-x animate-bounce-in" style={{ backgroundImage: 'linear-gradient(90deg, hsl(233,63%,67%), hsl(200 51% 65%), hsl(233,63%,67%))' }}>
+          <h1 className="text-[4.5rem] sm:text-[5rem] md:text-[8rem] lg:text-[10rem] font-extrabold leading-[1.1] md:leading-tight max-w-5xl mx-auto mb-4 md:mb-8 tracking-tight bg-clip-text text-transparent animate-gradient-x animate-bounce-in" style={{ backgroundImage: 'linear-gradient(90deg, hsl(233,63%,67%), hsl(200 51% 65%), hsl(233,63%,67%))' }}>
               آرمانیان
           </h1>
             <div className="space-y-6">
@@ -120,52 +231,109 @@ const Hero = () => {
             </div>
           </div>
 
+          {/* Search Bar */}
+          <div className="max-w-3xl mx-auto pt-6 animate-slide-in-up" style={{ animationDelay: '0.4s' }}>
+            <div className="relative">
+              <Search className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground z-10" />
+              <Input
+                type="text"
+                placeholder="جستجوی دوره یا دپارتمان..."
+                value={searchQuery}
+                onChange={(e) => handleSearch(e.target.value)}
+                onFocus={() => {
+                  if (searchQuery.length > 0 || courses.length > 0 || departments.length > 0) {
+                    setOpen(true);
+                  }
+                }}
+                className="w-full h-14 pr-12 text-lg bg-background/95 backdrop-blur-sm border-2 border-primary/20 focus:border-primary/50 rounded-xl shadow-lg"
+              />
+            </div>
+
+            {/* Categories */}
+            <div className="flex flex-wrap gap-3 justify-center mt-6">
+              <Button
+                variant={selectedCategory === null ? "default" : "outline"}
+                size="sm"
+                onClick={() => handleCategoryClick(null)}
+                className={selectedCategory === null ? "bg-gradient-to-r from-primary to-accent text-white" : ""}
+              >
+                همه
+              </Button>
+              {departments.map((dept) => (
+                <Button
+                  key={dept.id}
+                  variant={selectedCategory === dept.id ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => handleCategoryClick(dept.id)}
+                  className={selectedCategory === dept.id ? "bg-gradient-to-r from-primary to-accent text-white" : ""}
+                >
+                  {dept.name}
+                </Button>
+              ))}
+            </div>
+          </div>
+
+          {/* Search Results Dialog */}
+          <CommandDialog open={open} onOpenChange={setOpen}>
+            <CommandInput 
+              placeholder="جستجوی دوره یا دپارتمان..." 
+              value={searchQuery}
+              onValueChange={setSearchQuery}
+            />
+            <CommandList>
+              <CommandEmpty>نتیجه‌ای یافت نشد.</CommandEmpty>
+              
+              {filteredDepartments.length > 0 && (
+                <CommandGroup heading="دپارتمان‌ها">
+                  {filteredDepartments.map((dept) => (
+                    <CommandItem
+                      key={dept.id}
+                      onSelect={() => handleSelectDepartment(dept.id)}
+                      className="cursor-pointer"
+                    >
+                      <Building2 className="w-4 h-4 ml-2" />
+                      {dept.name}
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              )}
+
+              {filteredCourses.length > 0 && (
+                <CommandGroup heading="دوره‌ها">
+                  {filteredCourses.map((course) => (
+                    <CommandItem
+                      key={course.id}
+                      onSelect={() => handleSelectCourse(course.id)}
+                      className="cursor-pointer"
+                    >
+                      <BookOpen className="w-4 h-4 ml-2" />
+                      <div className="flex flex-col">
+                        <span>{course.title}</span>
+                        {course.description && (
+                          <span className="text-xs text-muted-foreground">{course.description.substring(0, 60)}...</span>
+                        )}
+                      </div>
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              )}
+            </CommandList>
+          </CommandDialog>
+
           <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center pt-2 md:pt-4">
             <Button variant="hero" size="lg" className="group w-full sm:w-auto animate-bounce-in hover-scale" style={{ animationDelay: '0.6s' }} onClick={handleSignUp}>
               همین امروز شروع کن
               <ArrowRight className="w-4 h-4 group-hover:-translate-x-2 group-hover:rotate-12 transition-all duration-300" />
             </Button>
-            <Button variant="outline" size="lg" asChild className="w-full sm:w-auto animate-bounce-in hover-scale" style={{ animationDelay: '0.8s' }}>
-              <a href="#programs">
-                مشاهده دوره‌ها
-              </a>
+            <Button
+              variant="outline"
+              size="lg"
+              className="w-full sm:w-auto animate-bounce-in hover-scale"
+              style={{ animationDelay: '0.8s' }}
+              onClick={() => navigate('/courses')}
+            >
+              مشاهده دوره‌ها
             </Button>
-          </div>
-
-          {/* Stats */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-8 pt-6 md:pt-8 max-w-2xl mx-auto">
-            <div className="text-center space-y-1 sm:space-y-2 animate-slide-in-up" style={{ animationDelay: '1s' }}>
-              <div className="text-2xl md:text-4xl font-black text-primary animate-heartbeat">۵۰۰+</div>
-              <div className="text-sm md:text-base text-muted-foreground font-semibold">دانشجوی خوشحال</div>
-            </div>
-            <div className="text-center space-y-1 sm:space-y-2 animate-slide-in-up" style={{ animationDelay: '1.2s' }}>
-              <div className="text-2xl md:text-4xl font-black text-accent animate-heartbeat">۱۵+</div>
-              <div className="text-sm md:text-base text-muted-foreground font-semibold">معلم متخصص</div>
-            </div>
-            <div className="text-center space-y-1 sm:space-y-2 animate-slide-in-up" style={{ animationDelay: '1.4s' }}>
-              <div className="text-2xl md:text-4xl font-black text-primary animate-heartbeat">۱۲</div>
-              <div className="text-sm md:text-base text-muted-foreground font-semibold">دوره آموزشی</div>
-            </div>
-          </div>
-        </div>
-
-        {/* Image - Below Text */}
-        <div className="relative max-w-4xl mx-auto mt-10 md:mt-16 animate-slide-in-up" style={{ animationDelay: '1.6s' }}>
-          <div className="relative rounded-2xl overflow-hidden shadow-2xl hover:shadow-primary/25 transition-all duration-500 hover:scale-105">
-            <img 
-              src={heroImage} 
-              alt="کودکان در حال یادگیری برنامه‌نویسی در کلاس مدرن"
-              className="w-full h-[260px] sm:h-[360px] md:h-[500px] object-cover hover:scale-110 transition-transform duration-700"
-            />
-            <div className="absolute inset-0 bg-gradient-to-tr from-primary/15 to-accent/15 md:from-primary/20 md:to-accent/20 hover:from-primary/25 hover:to-accent/25 transition-all duration-500"></div>
-          </div>
-          
-          {/* Floating Elements */}
-          <div className="absolute -top-4 -right-4 bg-card border border-border rounded-lg p-2 sm:p-3 shadow-lg animate-float hover:animate-wiggle transition-all duration-300">
-            <Code className="w-6 h-6 text-primary animate-heartbeat" />
-          </div>
-          <div className="absolute -bottom-4 -left-4 bg-card border border-border rounded-lg p-2 sm:p-3 shadow-lg animate-float hover:animate-wiggle transition-all duration-300" style={{ animationDelay: '1s' }}>
-            <Sparkles className="w-6 h-6 text-accent animate-heartbeat" />
           </div>
         </div>
       </div>

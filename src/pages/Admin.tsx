@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2, Plus, Edit, Trash2, ArrowRight, Users, BookOpen, Calendar, Phone, FileText, Eye, EyeOff } from 'lucide-react';
+import { Loader2, Plus, Edit, Trash2, ArrowRight, Users, BookOpen, Calendar, Phone, FileText, Eye, EyeOff, UploadCloud, Image as ImageIcon, Video, Wand2, Building2 } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -64,10 +64,17 @@ export default function Admin() {
   const { toast } = useToast();
   
   const [courses, setCourses] = useState<Course[]>([]);
+  const [departments, setDepartments] = useState<any[]>([]);
+  const [departmentForm, setDepartmentForm] = useState({ name: '', description: '', icon: '', slug: '' });
+  const [editingDepartment, setEditingDepartment] = useState<any | null>(null);
+  const [mediaList, setMediaList] = useState<{ name: string; url: string }[]>([]);
+  const [uploading, setUploading] = useState(false);
+  const [siteContent, setSiteContent] = useState<Record<string, string>>({});
+  const [savingContent, setSavingContent] = useState(false);
   const [enrollments, setEnrollments] = useState<Enrollment[]>([]);
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<'courses' | 'enrollments' | 'posts'>('courses');
+  const [activeTab, setActiveTab] = useState<'courses' | 'enrollments' | 'posts' | 'departments' | 'media' | 'content'>('courses');
   const [editingCourse, setEditingCourse] = useState<Course | null>(null);
   const [editingPost, setEditingPost] = useState<Post | null>(null);
   const [formData, setFormData] = useState({
@@ -102,6 +109,9 @@ export default function Admin() {
       fetchCourses();
       fetchEnrollments();
       fetchPosts();
+      fetchDepartments();
+      fetchMedia();
+      fetchSiteContent();
     }
   }, [user, isAdmin]);
 
@@ -168,6 +178,56 @@ export default function Admin() {
       console.error('Error fetching posts:', error);
     } else {
       setPosts((data || []) as Post[]);
+    }
+  };
+
+  const fetchDepartments = async () => {
+    const { data, error } = await supabase
+      .from('departments')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      console.error('Error fetching departments:', error);
+      toast({
+        variant: 'destructive',
+        title: 'خطا',
+        description: 'خطا در بارگذاری دپارتمان‌ها',
+      });
+    } else {
+      setDepartments(data || []);
+    }
+  };
+
+  const fetchMedia = async () => {
+    try {
+      const { data, error } = await supabase.storage.from('media').list('', { limit: 100 });
+      if (error) {
+        console.error('Storage list error:', error);
+        return;
+      }
+      const mapped = (data || []).map((item) => {
+        const { data: publicUrl } = supabase.storage.from('media').getPublicUrl(item.name);
+        return { name: item.name, url: publicUrl.publicUrl };
+      });
+      setMediaList(mapped);
+    } catch (err) {
+      console.error('Error fetching media:', err);
+    }
+  };
+
+  const fetchSiteContent = async () => {
+    try {
+      const { data, error } = await supabase.from('site_content').select('key, value');
+      if (error) {
+        console.error('Error fetching site content:', error);
+        return;
+      }
+      const map: Record<string, string> = {};
+      (data || []).forEach((row: any) => { map[row.key] = row.value; });
+      setSiteContent(map);
+    } catch (err) {
+      console.error('Error fetching site content:', err);
     }
   };
 
@@ -344,6 +404,103 @@ export default function Admin() {
     }
   };
 
+  const handleDepartmentSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const payload = {
+      name: departmentForm.name,
+      description: departmentForm.description,
+      icon: departmentForm.icon || null,
+      slug: departmentForm.slug || departmentForm.name?.trim().toLowerCase().replace(/\s+/g, '-'),
+    };
+
+    const query = editingDepartment
+      ? supabase.from('departments').update(payload).eq('id', editingDepartment.id)
+      : supabase.from('departments').insert([payload]);
+
+    const { error } = await query;
+    if (error) {
+      toast({
+        variant: 'destructive',
+        title: 'خطا',
+        description: 'خطا در ذخیره دپارتمان',
+      });
+    } else {
+      toast({ title: 'موفق', description: 'دپارتمان با موفقیت ذخیره شد' });
+      setDepartmentForm({ name: '', description: '', icon: '', slug: '' });
+      setEditingDepartment(null);
+      fetchDepartments();
+    }
+  };
+
+  const handleDepartmentDelete = async (id: number) => {
+    if (!confirm('دپارتمان حذف شود؟')) return;
+    const { error } = await supabase.from('departments').delete().eq('id', id);
+    if (error) {
+      toast({ variant: 'destructive', title: 'خطا', description: 'حذف دپارتمان ناموفق بود' });
+    } else {
+      toast({ title: 'موفق', description: 'دپارتمان حذف شد' });
+      fetchDepartments();
+    }
+  };
+
+  const handleUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    setUploading(true);
+    try {
+      const fileName = `${Date.now()}-${file.name}`;
+      const { error } = await supabase.storage.from('media').upload(fileName, file, {
+        cacheControl: '3600',
+        upsert: false,
+      });
+      if (error) {
+        toast({ variant: 'destructive', title: 'خطا', description: 'آپلود فایل ناموفق بود' });
+      } else {
+        toast({ title: 'موفق', description: 'فایل با موفقیت آپلود شد' });
+        fetchMedia();
+      }
+    } catch (err) {
+      console.error('Upload error:', err);
+      toast({ variant: 'destructive', title: 'خطا', description: 'آپلود فایل ناموفق بود' });
+    } finally {
+      setUploading(false);
+      event.target.value = '';
+    }
+  };
+
+  const handleDeleteMedia = async (name: string) => {
+    const { error } = await supabase.storage.from('media').remove([name]);
+    if (error) {
+      toast({ variant: 'destructive', title: 'خطا', description: 'حذف فایل ناموفق بود' });
+    } else {
+      toast({ title: 'موفق', description: 'فایل حذف شد' });
+      fetchMedia();
+    }
+  };
+
+  const handleContentChange = (key: string, value: string) => {
+    setSiteContent((prev) => ({ ...prev, [key]: value }));
+  };
+
+  const handleSaveContent = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSavingContent(true);
+    try {
+      const rows = Object.entries(siteContent).map(([key, value]) => ({ key, value }));
+      const { error } = await supabase.from('site_content').upsert(rows);
+      if (error) {
+        toast({ variant: 'destructive', title: 'خطا', description: 'خطا در ذخیره محتوا' });
+      } else {
+        toast({ title: 'موفق', description: 'محتوا ذخیره شد' });
+        fetchSiteContent();
+      }
+    } catch (err) {
+      console.error('Content save error:', err);
+    } finally {
+      setSavingContent(false);
+    }
+  };
+
   const togglePostStatus = async (post: Post) => {
     const newStatus = post.status === 'published' ? 'draft' : 'published';
     const { error } = await supabase
@@ -434,7 +591,7 @@ export default function Admin() {
         <h1 className="text-3xl font-bold mb-8">پنل مدیریت</h1>
 
         <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as typeof activeTab)} className="space-y-6">
-          <TabsList className="grid w-full max-w-lg grid-cols-3">
+          <TabsList className="grid w-full max-w-4xl grid-cols-6">
             <TabsTrigger value="courses" className="gap-2">
               <BookOpen className="h-4 w-4" />
               دوره‌ها
@@ -446,6 +603,18 @@ export default function Admin() {
             <TabsTrigger value="enrollments" className="gap-2">
               <Users className="h-4 w-4" />
               ثبت‌نام‌ها
+            </TabsTrigger>
+            <TabsTrigger value="departments" className="gap-2">
+              <Building2 className="h-4 w-4" />
+              دپارتمان‌ها
+            </TabsTrigger>
+            <TabsTrigger value="media" className="gap-2">
+              <ImageIcon className="h-4 w-4" />
+              رسانه
+            </TabsTrigger>
+            <TabsTrigger value="content" className="gap-2">
+              <Wand2 className="h-4 w-4" />
+              متن‌ها
             </TabsTrigger>
           </TabsList>
 
@@ -830,6 +999,197 @@ export default function Admin() {
                     )}
                   </TableBody>
                 </Table>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Departments Tab */}
+          <TabsContent value="departments" className="space-y-6">
+            <div className="grid md:grid-cols-2 gap-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle>{editingDepartment ? 'ویرایش دپارتمان' : 'افزودن دپارتمان'}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <form onSubmit={handleDepartmentSubmit} className="space-y-4">
+                    <div>
+                      <label className="text-sm font-medium">نام دپارتمان</label>
+                      <Input
+                        value={departmentForm.name}
+                        onChange={(e) => setDepartmentForm({ ...departmentForm, name: e.target.value })}
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium">Slug</label>
+                      <Input
+                        value={departmentForm.slug}
+                        onChange={(e) => setDepartmentForm({ ...departmentForm, slug: e.target.value })}
+                        placeholder="english-slug"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium">آیکن (اختیاری)</label>
+                      <Input
+                        value={departmentForm.icon}
+                        onChange={(e) => setDepartmentForm({ ...departmentForm, icon: e.target.value })}
+                        placeholder="نام آیکن یا آدرس"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium">توضیحات</label>
+                      <Textarea
+                        value={departmentForm.description}
+                        onChange={(e) => setDepartmentForm({ ...departmentForm, description: e.target.value })}
+                        rows={3}
+                      />
+                    </div>
+                    <div className="flex gap-3">
+                      <Button type="submit" className="text-white" style={{ background: 'linear-gradient(135deg, hsl(28,92%,56%), hsl(24,95%,55%))' }}>
+                        {editingDepartment ? 'ذخیره تغییرات' : 'ایجاد دپارتمان'}
+                      </Button>
+                      {editingDepartment && (
+                        <Button variant="outline" type="button" onClick={() => { setEditingDepartment(null); setDepartmentForm({ name: '', description: '', icon: '', slug: '' }); }}>
+                          انصراف
+                        </Button>
+                      )}
+                    </div>
+                  </form>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Building2 className="h-4 w-4" />
+                    دپارتمان‌ها ({departments.length})
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>نام</TableHead>
+                        <TableHead>Slug</TableHead>
+                        <TableHead>توضیحات</TableHead>
+                        <TableHead className="text-left">عملیات</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {departments.length === 0 ? (
+                        <TableRow>
+                          <TableCell colSpan={4} className="text-center text-muted-foreground py-6">
+                            دپارتمانی ثبت نشده است
+                          </TableCell>
+                        </TableRow>
+                      ) : (
+                        departments.map((dept: any) => (
+                          <TableRow key={dept.id}>
+                            <TableCell className="font-semibold">{dept.name}</TableCell>
+                            <TableCell>{dept.slug}</TableCell>
+                            <TableCell className="max-w-sm truncate text-muted-foreground">{dept.description}</TableCell>
+                            <TableCell className="flex gap-2">
+                              <Button size="sm" variant="outline" onClick={() => { setEditingDepartment(dept); setDepartmentForm({ name: dept.name || '', description: dept.description || '', icon: dept.icon || '', slug: dept.slug || '' }); }}>
+                                <Edit className="h-4 w-4" />
+                              </Button>
+                              <Button size="sm" variant="destructive" onClick={() => handleDepartmentDelete(dept.id)}>
+                                <Trash2 className="h-4 w-4" />
+                              </Button>
+                            </TableCell>
+                          </TableRow>
+                        ))
+                      )}
+                    </TableBody>
+                  </Table>
+                </CardContent>
+              </Card>
+            </div>
+          </TabsContent>
+
+          {/* Media Tab */}
+          <TabsContent value="media" className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <UploadCloud className="h-5 w-5" />
+                  بارگذاری تصویر/ویدیو
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <Input type="file" accept="image/*,video/*" onChange={handleUpload} disabled={uploading} />
+                {uploading && <p className="text-sm text-muted-foreground">در حال آپلود...</p>}
+                <Separator />
+                <div className="grid md:grid-cols-2 gap-4">
+                  {mediaList.length === 0 && (
+                    <p className="text-muted-foreground">فایلی بارگذاری نشده است</p>
+                  )}
+                  {mediaList.map((file) => (
+                    <div key={file.name} className="border rounded-lg p-3 flex items-center justify-between gap-3">
+                      <div className="flex items-center gap-2 overflow-hidden">
+                        {file.name.match(/\.(mp4|mov|avi|mkv)$/i) ? <Video className="h-5 w-5 text-primary" /> : <ImageIcon className="h-5 w-5 text-primary" />}
+                        <div className="truncate">
+                          <p className="font-semibold truncate">{file.name}</p>
+                          <a className="text-sm text-blue-600 truncate" href={file.url} target="_blank" rel="noreferrer">مشاهده</a>
+                        </div>
+                      </div>
+                      <Button size="sm" variant="destructive" onClick={() => handleDeleteMedia(file.name)}>
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Content Tab */}
+          <TabsContent value="content" className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Wand2 className="h-5 w-5" />
+                  مدیریت متن‌های سایت
+                </CardTitle>
+                <CardDescription>متن‌های کلیدی صفحه اصلی (مثلاً هدر/هیرو)</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <form onSubmit={handleSaveContent} className="space-y-4">
+                  <div>
+                    <label className="text-sm font-medium">عنوان هدر</label>
+                    <Input
+                      value={siteContent.hero_title || ''}
+                      onChange={(e) => handleContentChange('hero_title', e.target.value)}
+                      placeholder="مثال: آرمانیان"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium">زیرعنوان هدر</label>
+                    <Textarea
+                      value={siteContent.hero_subtitle || ''}
+                      onChange={(e) => handleContentChange('hero_subtitle', e.target.value)}
+                      rows={2}
+                    />
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium">متن CTA</label>
+                    <Input
+                      value={siteContent.hero_cta || ''}
+                      onChange={(e) => handleContentChange('hero_cta', e.target.value)}
+                      placeholder="همین امروز شروع کن"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium">متن فوتر</label>
+                    <Textarea
+                      value={siteContent.footer_text || ''}
+                      onChange={(e) => handleContentChange('footer_text', e.target.value)}
+                      rows={2}
+                    />
+                  </div>
+                  <Button type="submit" disabled={savingContent} className="text-white" style={{ background: 'linear-gradient(135deg, hsl(28,92%,56%), hsl(24,95%,55%))' }}>
+                    {savingContent ? 'در حال ذخیره...' : 'ذخیره تغییرات'}
+                  </Button>
+                </form>
               </CardContent>
             </Card>
           </TabsContent>
