@@ -219,7 +219,7 @@ const CoursesPage = () => {
             <>
                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
                 {filteredCourses.map((course) => (
-                  <Card key={course.id} className={`group relative overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-xl hover:shadow-primary/10 border-border/50 bg-card/80 backdrop-blur-sm hover:border-primary/30 ${course.is_popular ? 'border-2 border-primary/40' : 'border'}`}>
+                  <Card key={course.id} className={`group relative flex flex-col overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-xl hover:shadow-primary/10 border-border/50 bg-card/80 backdrop-blur-sm hover:border-primary/30 ${course.is_popular ? 'border-2 border-primary/40' : 'border'}`}>
                     {/* Hover gradient overlay */}
                     <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                     
@@ -232,24 +232,24 @@ const CoursesPage = () => {
                       </div>
                     )}
                     
-                    <CardHeader className="relative pb-3 pt-6">
+                    <CardHeader className="relative pb-4 pt-8">
                       <CardTitle className="text-xl font-bold text-foreground leading-relaxed">{course.title}</CardTitle>
-                      <CardDescription className="text-muted-foreground mt-1 line-clamp-2">
+                      <CardDescription className="text-muted-foreground mt-2 line-clamp-2 leading-relaxed">
                         {course.description}
                       </CardDescription>
                     </CardHeader>
                     
-                    <CardContent className="relative space-y-5">
+                    <CardContent className="relative flex flex-col flex-1 space-y-6 pt-2">
                       {/* Tags */}
-                      <div className="flex flex-wrap gap-2 text-xs">
+                      <div className="flex flex-wrap gap-3 text-xs">
                         {course.duration && (
-                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/10 text-primary font-medium">
+                          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/10 text-primary font-medium">
                             <Clock className="w-3.5 h-3.5" />
                             {course.duration}
                           </span>
                         )}
                         {course.level && (
-                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-secondary text-secondary-foreground font-medium">
+                          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-secondary text-secondary-foreground font-medium">
                             <Trophy className="w-3.5 h-3.5" />
                             {course.level}
                           </span>
@@ -258,12 +258,12 @@ const CoursesPage = () => {
 
                       {/* Features List */}
                       {course.features && course.features.length > 0 && (
-                        <div>
-                          <h4 className="font-semibold text-foreground mb-2 text-sm">شامل موارد:</h4>
-                          <ul className="space-y-1.5">
+                        <div className="flex-1">
+                          <h4 className="font-semibold text-foreground mb-3 text-sm">شامل موارد:</h4>
+                          <ul className="space-y-2.5">
                             {course.features.map((feature, idx) => (
-                              <li key={idx} className="flex items-start gap-2 text-sm text-muted-foreground">
-                                <CheckCircle className="w-3.5 h-3.5 mt-0.5 flex-shrink-0 text-primary" />
+                              <li key={idx} className="flex items-start gap-2.5 text-sm text-muted-foreground">
+                                <CheckCircle className="w-4 h-4 mt-0.5 flex-shrink-0 text-primary" />
                                 <span>{feature}</span>
                               </li>
                             ))}
@@ -271,9 +271,12 @@ const CoursesPage = () => {
                         </div>
                       )}
 
+                      {/* Spacer when no features */}
+                      {(!course.features || course.features.length === 0) && <div className="flex-1" />}
+
                       <Button 
                         variant={course.is_popular ? "default" : "outline"} 
-                        className="w-full group/btn"
+                        className="w-full mt-auto"
                         size="lg"
                         onClick={() => navigate(`/course-detail/${course.id}`)}
                       >
