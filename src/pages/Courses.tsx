@@ -217,50 +217,53 @@ const CoursesPage = () => {
             </div>
           ) : (
             <>
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
                 {filteredCourses.map((course) => (
-                  <Card key={course.id} className={`relative transition-all duration-500 hover:-translate-y-2 border-orange-300/70 hover:shadow-[0_0_40px_hsl(28_92%_56%_/_0.35)] ${course.is_popular ? 'border-2' : 'border'} bg-white/95`}>
+                  <Card key={course.id} className={`group relative overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-xl hover:shadow-primary/10 border-border/50 bg-card/80 backdrop-blur-sm hover:border-primary/30 ${course.is_popular ? 'border-2 border-primary/40' : 'border'}`}>
+                    {/* Hover gradient overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    
                     {course.is_popular && (
-                      <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                        <Badge variant="default" className="text-white" style={{ background: 'linear-gradient(135deg, hsl(28,92%,56%), hsl(24,95%,55%))' }}>
+                      <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 z-10">
+                        <Badge variant="default" className="bg-primary text-primary-foreground shadow-lg">
                           <Star className="w-3 h-3 mr-1" />
                           محبوب‌ترین
                         </Badge>
                       </div>
                     )}
                     
-                    <CardHeader className="pb-4">
-                      <CardTitle className="text-2xl text-foreground mb-2">{course.title}</CardTitle>
-                      <CardDescription className="text-muted-foreground">
+                    <CardHeader className="relative pb-3 pt-6">
+                      <CardTitle className="text-xl font-bold text-foreground leading-relaxed">{course.title}</CardTitle>
+                      <CardDescription className="text-muted-foreground mt-1 line-clamp-2">
                         {course.description}
                       </CardDescription>
                     </CardHeader>
                     
-                    <CardContent className="space-y-6">
-                      {/* Course Details */}
-                      <div className="grid grid-cols-2 gap-4 text-sm">
+                    <CardContent className="relative space-y-5">
+                      {/* Tags */}
+                      <div className="flex flex-wrap gap-2 text-xs">
                         {course.duration && (
-                          <div className="flex items-center space-x-2">
-                            <Clock className="w-4 h-4" style={{ color: 'hsl(28,92%,56%)' }} />
-                            <span className="text-muted-foreground">{course.duration}</span>
-                          </div>
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/10 text-primary font-medium">
+                            <Clock className="w-3.5 h-3.5" />
+                            {course.duration}
+                          </span>
                         )}
                         {course.level && (
-                          <div className="flex items-center space-x-2">
-                            <Trophy className="w-4 h-4" style={{ color: 'hsl(28,92%,56%)' }} />
-                            <span className="text-muted-foreground">{course.level}</span>
-                          </div>
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-secondary text-secondary-foreground font-medium">
+                            <Trophy className="w-3.5 h-3.5" />
+                            {course.level}
+                          </span>
                         )}
                       </div>
 
                       {/* Features List */}
                       {course.features && course.features.length > 0 && (
                         <div>
-                          <h4 className="font-semibold text-foreground mb-3">شامل موارد:</h4>
-                          <ul className="space-y-2">
+                          <h4 className="font-semibold text-foreground mb-2 text-sm">شامل موارد:</h4>
+                          <ul className="space-y-1.5">
                             {course.features.map((feature, idx) => (
-                              <li key={idx} className="flex items-start space-x-2 text-sm text-muted-foreground">
-                                <CheckCircle className="w-4 h-4 mt-0.5 flex-shrink-0" style={{ color: 'hsl(28,92%,56%)' }} />
+                              <li key={idx} className="flex items-start gap-2 text-sm text-muted-foreground">
+                                <CheckCircle className="w-3.5 h-3.5 mt-0.5 flex-shrink-0 text-primary" />
                                 <span>{feature}</span>
                               </li>
                             ))}
@@ -270,8 +273,7 @@ const CoursesPage = () => {
 
                       <Button 
                         variant={course.is_popular ? "default" : "outline"} 
-                        className="w-full text-white"
-                        style={course.is_popular ? { background: 'linear-gradient(135deg, hsl(28,92%,56%), hsl(24,95%,55%))' } : {}}
+                        className="w-full group/btn"
                         size="lg"
                         onClick={() => navigate(`/course-detail/${course.id}`)}
                       >
