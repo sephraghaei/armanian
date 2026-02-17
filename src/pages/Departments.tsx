@@ -260,7 +260,7 @@ const DepartmentsPage = () => {
                   <div className="w-16 h-16 bg-gradient-primary rounded-xl flex items-center justify-center ml-4">
                     <dept.icon className="w-8 h-8 text-white" />
                   </div>
-                  <div>
+                  <div className="space-y-2">
                     <h2 className="text-3xl font-bold text-foreground">{dept.title}</h2>
                     <p className="text-muted-foreground">{dept.description}</p>
                   </div>
