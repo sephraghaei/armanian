@@ -5,7 +5,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { Loader2, Plus, Edit, Trash2, ArrowRight, Users, BookOpen, Calendar, Phone, FileText, Eye, EyeOff, UploadCloud, Image as ImageIcon, Video, Wand2, Building2 } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -14,6 +14,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { Separator } from '@/components/ui/separator';
 
 interface Course {
   id: string;
@@ -218,7 +219,7 @@ export default function Admin() {
 
   const fetchSiteContent = async () => {
     try {
-      const { data, error } = await supabase.from('site_content').select('key, value');
+      const { data, error } = await (supabase as any).from('site_content').select('key, value');
       if (error) {
         console.error('Error fetching site content:', error);
         return;
@@ -487,7 +488,7 @@ export default function Admin() {
     setSavingContent(true);
     try {
       const rows = Object.entries(siteContent).map(([key, value]) => ({ key, value }));
-      const { error } = await supabase.from('site_content').upsert(rows);
+      const { error } = await (supabase as any).from('site_content').upsert(rows);
       if (error) {
         toast({ variant: 'destructive', title: 'خطا', description: 'خطا در ذخیره محتوا' });
       } else {

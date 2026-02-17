@@ -268,26 +268,39 @@ const DepartmentsPage = () => {
 
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {dept.courses.map((course, courseIndex) => (
-                    <Card key={courseIndex} className="hover:shadow-glow-primary transition-all duration-300 hover:-translate-y-1">
-                      <CardHeader>
-                        <CardTitle className="text-lg text-foreground">{course.name}</CardTitle>
+                    <Card key={courseIndex} className="group relative overflow-hidden border-border/50 bg-card/80 backdrop-blur-sm hover:shadow-xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-2 hover:border-primary/30">
+                      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      <CardHeader className="relative pb-3">
+                        <CardTitle className="text-lg font-bold text-foreground leading-relaxed">{course.name}</CardTitle>
+                        <p className="text-sm text-muted-foreground mt-1 line-clamp-2">{course.description}</p>
                       </CardHeader>
-                      <CardContent>
-                        <div className="flex gap-2">
+                      <CardContent className="relative space-y-4">
+                        <div className="flex flex-wrap gap-2 text-xs">
+                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-primary/10 text-primary font-medium">
+                            ⏱ {course.duration}
+                          </span>
+                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-accent/10 text-accent-foreground font-medium">
+                            👤 {course.ageGroup}
+                          </span>
+                        </div>
+                        <p className="text-sm font-semibold text-primary">{course.price}</p>
+                        <div className="flex gap-2 pt-1">
                           <Button 
-                            variant="outline" 
-                            className="flex-1 group" 
+                            variant="default" 
+                            size="sm"
+                            className="flex-1 group/btn" 
                             onClick={() => handleSignUp(course.slug)}
                           >
                             ثبت نام
-                            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                            <ArrowRight className="w-3.5 h-3.5 mr-1 group-hover/btn:-translate-x-1 transition-transform" />
                           </Button>
                           <Button 
-                            variant="ghost" 
+                            variant="outline" 
+                            size="sm"
                             className="flex-1"
                             onClick={() => navigate(`/course/${course.slug}`)}
                           >
-                            بیشتر بدانید
+                            جزئیات دوره
                           </Button>
                         </div>
                       </CardContent>
