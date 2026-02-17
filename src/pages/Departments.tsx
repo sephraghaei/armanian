@@ -279,7 +279,7 @@ const DepartmentsPage = () => {
                           <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-primary/10 text-primary font-medium">
                             ⏱ {course.duration}
                           </span>
-                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-accent/10 text-accent-foreground font-medium">
+                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-secondary text-secondary-foreground font-medium">
                             👤 {course.ageGroup}
                           </span>
                         </div>
