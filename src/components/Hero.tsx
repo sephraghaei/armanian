@@ -215,7 +215,7 @@ const Hero = () => {
         {/* Content - Full Width */}
         <div className="text-center space-y-12 mb-20">
           <div className="space-y-6 md:space-y-8">
-          <h1 className="text-[5.5rem] sm:text-[7rem] md:text-[10rem] lg:text-[13rem] font-black leading-[0.95] max-w-6xl mx-auto mb-4 md:mb-8 tracking-[-0.04em] bg-clip-text text-transparent animate-gradient-x animate-bounce-in drop-shadow-sm" style={{ backgroundImage: 'linear-gradient(135deg, hsl(217,100%,55%), hsl(210,80%,65%), hsl(233,63%,67%))', WebkitTextStroke: '1px transparent' }}>
+          <h1 className="text-[4.5rem] sm:text-[5rem] md:text-[8rem] lg:text-[10rem] font-extrabold leading-[1.1] md:leading-tight max-w-5xl mx-auto mb-4 md:mb-8 tracking-tight bg-clip-text text-transparent animate-gradient-x animate-bounce-in" style={{ backgroundImage: 'linear-gradient(90deg, hsl(233,63%,67%), hsl(200 51% 65%), hsl(233,63%,67%))' }}>
               آرمانیان
           </h1>
             <div className="space-y-6">
