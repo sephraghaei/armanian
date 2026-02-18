@@ -112,51 +112,51 @@ const Programs = () => {
         ) : (
         <div className="grid md:grid-cols-3 gap-8">
           {filteredPrograms.map((program, index) => (
-            <Card key={index} className={`relative transition-all duration-700 hover:-translate-y-4 hover:rotate-1 border-orange-300/70 hover:shadow-[0_0_50px_hsl(28_92%_56%_/_0.4)] ${program.popular ? 'border-2 animate-glow' : 'border'} bg-white/95 hover:bg-white animate-slide-in-up`} style={{ animationDelay: `${index * 0.3}s` }}>
+            <Card key={index} className={`relative flex flex-col transition-all duration-300 hover:-translate-y-2 hover:shadow-lg border-blue-200/60 hover:border-blue-400/80 ${program.popular ? 'border-2 border-blue-500/70' : 'border'} bg-white animate-fade-in`} style={{ animationDelay: `${index * 0.15}s` }}>
               
               {program.popular && (
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10">
-                  <Badge className="bg-gradient-to-r from-orange-500 to-orange-600 text-white font-bold px-4 py-1 animate-heartbeat">
+                  <Badge className="bg-blue-500 text-white font-bold px-4 py-1">
                     محبوب ترین
                   </Badge>
                 </div>
               )}
               
               <CardHeader className="pb-4">
-                <CardTitle className="text-2xl text-foreground mb-2 group-hover:text-orange-600 transition-colors duration-300">{program.title}</CardTitle>
-                <CardDescription className="text-muted-foreground group-hover:text-foreground transition-colors duration-300">
+                <CardTitle className="text-xl text-foreground mb-2">{program.title}</CardTitle>
+                <CardDescription className="text-muted-foreground">
                   {program.description}
                 </CardDescription>
               </CardHeader>
               
-              <CardContent className="space-y-6">
+              <CardContent className="space-y-5 flex-1 flex flex-col">
                 {/* Program Details */}
-                <div className="grid grid-cols-2 gap-4 text-sm">
-                  <div className="flex items-center space-x-reverse space-x-2 hover:scale-105 transition-transform duration-300">
-                    <Clock className="w-4 h-4 animate-heartbeat" style={{ color: 'hsl(28,92%,56%)' }} />
+                <div className="grid grid-cols-2 gap-3 text-sm">
+                  <div className="flex items-center space-x-reverse space-x-2">
+                    <Clock className="w-4 h-4 text-blue-500" />
                     <span className="text-muted-foreground">{program.duration}</span>
                   </div>
-                  <div className="flex items-center space-x-reverse space-x-2 hover:scale-105 transition-transform duration-300">
-                    <Users className="w-4 h-4 animate-heartbeat" style={{ color: 'hsl(28,92%,56%)' }} />
+                  <div className="flex items-center space-x-reverse space-x-2">
+                    <Users className="w-4 h-4 text-blue-500" />
                     <span className="text-muted-foreground">{program.classSize}</span>
                   </div>
-                  <div className="flex items-center space-x-reverse space-x-2 hover:scale-105 transition-transform duration-300">
-                    <Trophy className="w-4 h-4 animate-heartbeat" style={{ color: 'hsl(28,92%,56%)' }} />
+                  <div className="flex items-center space-x-reverse space-x-2">
+                    <Trophy className="w-4 h-4 text-blue-500" />
                     <span className="text-muted-foreground">{program.level}</span>
                   </div>
-                  <div className="flex items-center space-x-reverse space-x-2 hover:scale-105 transition-transform duration-300">
-                    <Star className="w-4 h-4 animate-heartbeat" style={{ color: 'hsl(28,92%,56%)' }} />
+                  <div className="flex items-center space-x-reverse space-x-2">
+                    <Star className="w-4 h-4 text-blue-500" />
                     <span className="text-muted-foreground">{program.ages}</span>
                   </div>
                 </div>
 
                 {/* Features List */}
-                <div>
-                  <h4 className="font-extrabold text-foreground mb-3">شامل موارد:</h4>
+                <div className="flex-1">
+                  <h4 className="font-bold text-foreground mb-3">شامل موارد:</h4>
                   <ul className="space-y-2">
                     {program.features.map((feature, idx) => (
-                      <li key={idx} className="flex items-start space-x-reverse space-x-2 text-sm text-muted-foreground hover:text-foreground hover:scale-105 transition-all duration-300">
-                        <div className="w-1.5 h-1.5 rounded-full mt-2 flex-shrink-0 animate-heartbeat" style={{ backgroundColor: 'hsl(28,92%,56%)' }}></div>
+                      <li key={idx} className="flex items-start space-x-reverse space-x-2 text-sm text-muted-foreground">
+                        <div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 flex-shrink-0"></div>
                         <span>{feature}</span>
                       </li>
                     ))}
@@ -165,12 +165,11 @@ const Programs = () => {
 
                 <Button 
                   variant="default" 
-                  className="w-full group hover-scale transition-all duration-500 text-white hover:-translate-y-1 hover:shadow-xl hover:shadow-orange-500/25"
-                  style={{ background: 'linear-gradient(135deg, hsl(28,92%,56%), hsl(24,95%,55%))' }}
+                  className="w-full mt-auto bg-blue-500 hover:bg-blue-600 text-white transition-colors duration-300"
                   size="lg"
                   onClick={handleSignUp}
                 >
-                  <span className="transition-transform duration-300 group-hover:translate-x-2 group-hover:scale-105">انتخاب دوره</span>
+                  انتخاب دوره
                 </Button>
               </CardContent>
             </Card>
