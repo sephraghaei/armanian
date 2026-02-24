@@ -110,7 +110,7 @@ const Departments = () => {
           <h2 className="text-4xl md:text-5xl font-black text-foreground mb-6 bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent">
             دپارتمان‌های آموزشی
           </h2>
-          <p className="text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed mb-8">
+          <p className="text-lg text-muted-foreground/70 max-w-4xl mx-auto leading-relaxed mb-8">
             طیف جامعی از دپارتمان‌های تخصصی ما را که برای آموزش مهارت‌های فنی و حرفه‌ای طراحی شده‌اند، کاوش کنید.
           </p>
           <HomeSearch 
