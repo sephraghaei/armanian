@@ -40,12 +40,7 @@ const Contact = () => {
         <div className="grid lg:grid-cols-2 gap-12">
           {/* Contact Information */}
           <div className="space-y-8">
-            <div>
-              <p className="text-muted-foreground mb-8 font-medium text-center">
-                ما دوست داریم از شما بشنویم! چه سوالی درباره برنامه‌هایمان داشته باشید، 
-                بخواهید کلاس آزمایشی رزرو کنید، یا اطلاعات بیشتری نیاز داشته باشید، ما اینجا هستیم تا کمک کنیم.
-              </p>
-            </div>
+            <div />
 
             <div className="grid gap-6">
               {contactInfo.map((info, index) => {
