@@ -95,8 +95,7 @@ const Programs = () => {
             مسیر یادگیری خود را انتخاب کنید
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto animate-slide-in-up mb-8" style={{ animationDelay: '0.3s' }}>
-            برنامه‌های ساختارمندی که فراگیران را در گروه‌های سنی مختلف به متخصصین آینده تبدیل می‌کند. 
-            هر مسیر به دقت برای نیازهای ویژه هر رده سنی طراحی شده است.
+            دوره‌های تخصصی ما برای هر سن و سطحی طراحی شده‌اند تا شما را از مبتدی به حرفه‌ای تبدیل کنند.
           </p>
           <HomeSearch 
             searchQuery={searchQuery}
