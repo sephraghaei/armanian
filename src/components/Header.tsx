@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Menu, X, Code, Brain, Monitor, User, LogOut, Shield } from 'lucide-react';
+import ThemeToggle from '@/components/ThemeToggle';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import {
@@ -206,7 +207,7 @@ const Header = () => {
           </nav>
 
           {/* Auth Section */}
-          <div className="hidden md:block">
+          <div className="hidden md:flex items-center gap-2">
             {loading ? (
               <div className="w-28 h-10 bg-muted/40 animate-pulse rounded-lg" />
             ) : user ? (
@@ -249,6 +250,7 @@ const Header = () => {
                 ورود / ثبت نام
               </Button>
             )}
+            <ThemeToggle />
           </div>
 
           {/* Mobile Menu Button */}
@@ -304,7 +306,10 @@ const Header = () => {
                 );
               })}
               
-              <div className="pt-3 mt-3 border-t border-border/20">
+              <div className="pt-3 mt-3 border-t border-border/20 space-y-2">
+                <div className="flex justify-center">
+                  <ThemeToggle />
+                </div>
                 {user ? (
                   <div className="space-y-2">
                     <Button 
