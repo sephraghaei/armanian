@@ -111,11 +111,11 @@ const Programs = () => {
         ) : (
         <div className="grid md:grid-cols-3 gap-8">
           {filteredPrograms.map((program, index) => (
-            <Card key={index} className={`relative flex flex-col transition-all duration-300 hover:-translate-y-2 hover:shadow-lg border-blue-200/60 hover:border-blue-400/80 ${program.popular ? 'border-2 border-blue-500/70' : 'border'} bg-white animate-fade-in`} style={{ animationDelay: `${index * 0.15}s` }}>
+            <Card key={index} className={`relative flex flex-col transition-all duration-300 hover:-translate-y-2 hover:shadow-lg border-primary/20 hover:border-primary/50 ${program.popular ? 'border-2 border-primary/50' : 'border'} bg-card animate-fade-in`} style={{ animationDelay: `${index * 0.15}s` }}>
               
               {program.popular && (
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10">
-                  <Badge className="bg-blue-500 text-white font-bold px-4 py-1">
+                  <Badge className="bg-primary text-primary-foreground font-bold px-4 py-1">
                     محبوب ترین
                   </Badge>
                 </div>
@@ -132,19 +132,19 @@ const Programs = () => {
                 {/* Program Details */}
                 <div className="grid grid-cols-2 gap-3 text-sm">
                   <div className="flex items-center space-x-reverse space-x-2">
-                    <Clock className="w-4 h-4 text-blue-500" />
+                    <Clock className="w-4 h-4 text-primary" />
                     <span className="text-muted-foreground">{program.duration}</span>
                   </div>
                   <div className="flex items-center space-x-reverse space-x-2">
-                    <Users className="w-4 h-4 text-blue-500" />
+                    <Users className="w-4 h-4 text-primary" />
                     <span className="text-muted-foreground">{program.classSize}</span>
                   </div>
                   <div className="flex items-center space-x-reverse space-x-2">
-                    <Trophy className="w-4 h-4 text-blue-500" />
+                    <Trophy className="w-4 h-4 text-primary" />
                     <span className="text-muted-foreground">{program.level}</span>
                   </div>
                   <div className="flex items-center space-x-reverse space-x-2">
-                    <Star className="w-4 h-4 text-blue-500" />
+                    <Star className="w-4 h-4 text-primary" />
                     <span className="text-muted-foreground">{program.ages}</span>
                   </div>
                 </div>
@@ -155,7 +155,7 @@ const Programs = () => {
                   <ul className="space-y-2">
                     {program.features.map((feature, idx) => (
                       <li key={idx} className="flex items-start space-x-reverse space-x-2 text-sm text-muted-foreground">
-                        <div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 flex-shrink-0"></div>
+                        <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0"></div>
                         <span>{feature}</span>
                       </li>
                     ))}
@@ -164,7 +164,7 @@ const Programs = () => {
 
                 <Button 
                   variant="default" 
-                  className="w-full mt-auto bg-blue-500 hover:bg-blue-600 text-white transition-colors duration-300"
+                  className="w-full mt-auto bg-primary hover:bg-primary/90 text-primary-foreground transition-colors duration-300"
                   size="lg"
                   onClick={handleSignUp}
                 >
