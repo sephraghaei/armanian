@@ -111,7 +111,7 @@ const About = () => {
                     </h4>
                     
                     <div className="relative flex-shrink-0">
-                      <div className="w-16 h-12 md:w-24 md:h-16 bg-black rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all duration-300">
+                      <div className="w-16 h-12 md:w-24 md:h-16 bg-muted rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all duration-300">
                         <video
                         src={video.src}
                         className="w-full h-full object-cover hover:scale-110 transition-transform duration-300" />
@@ -135,7 +135,7 @@ const About = () => {
 
               {/* Main Video Player */}
               <div className="p-4 md:p-6 bg-muted/30">
-                <div className="relative rounded-xl overflow-hidden shadow-2xl bg-black hover:shadow-primary/25 transition-all duration-500">
+                <div className="relative rounded-xl overflow-hidden shadow-2xl bg-muted hover:shadow-primary/25 transition-all duration-500">
                   <video
                     key={selectedVideo}
                     src={videos[selectedVideo].src}
