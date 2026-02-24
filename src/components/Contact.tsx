@@ -44,7 +44,7 @@ const Contact = () => {
               <h3 className="text-2xl font-black text-foreground mb-6">
                 بیایید ارتباط برقرار کنیم
               </h3>
-              <p className="text-muted-foreground mb-8 font-medium">
+              <p className="text-muted-foreground mb-8 font-medium text-center">
                 ما دوست داریم از شما بشنویم! چه سوالی درباره برنامه‌هایمان داشته باشید، 
                 بخواهید کلاس آزمایشی رزرو کنید، یا اطلاعات بیشتری نیاز داشته باشید، ما اینجا هستیم تا کمک کنیم.
               </p>
