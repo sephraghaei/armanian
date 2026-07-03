@@ -15,10 +15,22 @@ const Departments = () => {
   const [searchQuery, setSearchQuery] = useState('');
 
   const scroll = (direction: 'left' | 'right') => {
-    if (scrollContainerRef.current) {
-      const scrollAmount = direction === 'left' ? -400 : 400;
-      scrollContainerRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-    }
+    const el = scrollContainerRef.current;
+    if (!el) return;
+    const distance = direction === 'left' ? -420 : 420;
+    const start = el.scrollLeft;
+    const target = start + distance;
+    const duration = 900; // ms — smooth, gentle
+    const startTime = performance.now();
+    const ease = (t: number) => 1 - Math.pow(1 - t, 3); // easeOutCubic
+
+    const step = (now: number) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      el.scrollLeft = start + (target - start) * ease(progress);
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
   };
 
   const handleLearnMore = (departmentTitle: string) => {
