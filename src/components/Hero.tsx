@@ -219,7 +219,7 @@ const Hero = () => {
               آرمانیان
           </h1>
             <div className="space-y-6">
-              <h2 className="text-lg sm:text-xl md:text-2xl lg:text-4xl font-bold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent leading-relaxed md:leading-tight max-w-4xl mx-auto animate-slide-in-up">
+              <h2 className="text-lg sm:text-xl md:text-2xl lg:text-4xl font-bold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent leading-[1.9] md:leading-[1.7] max-w-4xl mx-auto animate-slide-in-up py-2 overflow-visible">
                 آموزشگاه آزاد فنی و حرفه‌ای کامپیوتر و معماری
               </h2>
             </div>
