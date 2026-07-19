@@ -189,6 +189,7 @@ export type Database = {
           excerpt: string | null
           featured_image: string | null
           id: string
+          internal_note: string | null
           published_at: string | null
           slug: string
           status: string
@@ -204,6 +205,7 @@ export type Database = {
           excerpt?: string | null
           featured_image?: string | null
           id?: string
+          internal_note?: string | null
           published_at?: string | null
           slug: string
           status?: string
@@ -219,6 +221,7 @@ export type Database = {
           excerpt?: string | null
           featured_image?: string | null
           id?: string
+          internal_note?: string | null
           published_at?: string | null
           slug?: string
           status?: string
