@@ -108,6 +108,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
       const body = await res.json();
       try { localStorage.setItem('app_user', JSON.stringify(body.user)); } catch {}
+      try { if (body.token) localStorage.setItem('app_token', body.token); } catch {}
+      if (body.token) setAppToken(body.token);
       setUser(body.user);
       const adminStatus = await checkAdminRole(body.user.id);
       setIsAdmin(adminStatus);
@@ -135,6 +137,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
       const body = await res.json();
       try { localStorage.setItem('app_user', JSON.stringify(body.user)); } catch {}
+      try { if (body.token) localStorage.setItem('app_token', body.token); } catch {}
+      if (body.token) setAppToken(body.token);
       setUser(body.user);
       const adminStatus = await checkAdminRole(body.user.id);
       setIsAdmin(adminStatus);
@@ -168,8 +172,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signOut = async () => {
     try { localStorage.removeItem('app_user'); } catch {}
+    try { localStorage.removeItem('app_token'); } catch {}
     setUser(null);
     setIsAdmin(false);
+    setAppToken(null);
     return { error: null };
   };
 
@@ -178,6 +184,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     session,
     loading,
     isAdmin,
+    appToken,
     signUpWithCredentials,
     signInWithCredentials,
     signOut,
