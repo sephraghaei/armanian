@@ -169,7 +169,7 @@ const Payment = () => {
 
           <Card className="border-primary/20">
             <CardHeader className="text-center pb-2">
-              <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-primary/20 to-primary/10 rounded-full flex items-center justify-center">
+              <div className="w-16 h-16 mx-auto mb-4 bg-primary/15 rounded-full flex items-center justify-center">
                 <CreditCard className="w-8 h-8 text-primary" />
               </div>
               <CardTitle className="text-2xl">پرداخت و تکمیل ثبت‌نام</CardTitle>

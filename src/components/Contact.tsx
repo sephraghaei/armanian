@@ -60,7 +60,7 @@ const Contact = () => {
                     <CardContent className="p-8 bg-background/50 backdrop-blur-sm hover:bg-background/70 transition-all duration-300">
                       <CardWrapper {...cardProps} className={(isInstagram || isPhone) ? "block" : ""}>
                         <div className="flex items-start space-x-reverse space-x-4">
-                          <div className={`w-12 h-12 bg-gradient-primary rounded-lg flex items-center justify-center flex-shrink-0 ${(isInstagram || isPhone) ? 'hover:bg-gradient-to-r hover:from-primary hover:to-accent' : ''}`}>
+                          <div className={`w-12 h-12 bg-primary rounded-lg flex items-center justify-center flex-shrink-0 ${(isInstagram || isPhone) ? 'hover:bg-primary/90' : ''}`}>
                             <info.icon className="w-6 h-6 text-white" />
                           </div>
                           <div>

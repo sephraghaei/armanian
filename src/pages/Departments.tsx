@@ -257,7 +257,7 @@ const DepartmentsPage = () => {
             {departments.map((dept, index) => (
               <div key={index} className="bg-gradient-hero rounded-2xl p-8">
                 <div className="flex items-center mb-8">
-                  <div className="w-16 h-16 bg-gradient-primary rounded-xl flex items-center justify-center ml-4">
+                  <div className="w-16 h-16 bg-primary rounded-xl flex items-center justify-center ml-4">
                     <dept.icon className="w-8 h-8 text-white" />
                   </div>
                   <div className="space-y-2">
@@ -269,7 +269,7 @@ const DepartmentsPage = () => {
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {dept.courses.map((course, courseIndex) => (
                     <Card key={courseIndex} className="group relative overflow-hidden border-border/50 bg-card/80 backdrop-blur-sm hover:shadow-xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-2 hover:border-primary/30">
-                      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                       <CardHeader className="relative pb-3">
                         <CardTitle className="text-lg font-bold text-foreground leading-relaxed">{course.name}</CardTitle>
                         <p className="text-sm text-muted-foreground mt-1 line-clamp-2">{course.description}</p>

@@ -153,17 +153,17 @@ const Header = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-reverse space-x-2 group hover-scale flex-shrink-0">
             <div className="relative">
-              <div className="w-8 h-8 md:w-10 md:h-10 bg-gradient-primary rounded-lg flex items-center justify-center shadow-md group-hover:shadow-lg group-hover:shadow-primary/30 transition-all duration-300 group-hover:rotate-3">
-                <Code className="w-4 h-4 md:w-5 md:h-5 text-white" />
+              <div className="w-8 h-8 md:w-10 md:h-10 bg-primary rounded-lg flex items-center justify-center shadow-md group-hover:shadow-lg group-hover:shadow-primary/30 transition-all duration-300 group-hover:rotate-3">
+                <Code className="w-4 h-4 md:w-5 md:h-5 text-primary-foreground" />
               </div>
               <div className="absolute -top-1 -right-1 w-2 h-2 md:w-3 md:h-3 bg-accent rounded-full border-2 border-background pulse"></div>
             </div>
             <div className="hidden sm:block">
-              <h1 className="text-lg font-black transition-colors duration-300 bg-clip-text text-transparent animate-gradient-x" style={{ backgroundImage: 'linear-gradient(90deg, hsl(233,63%,67%), hsl(200 51% 65%), hsl(233,63%,67%))' }}>آرمانیان</h1>
+              <h1 className="text-lg font-black transition-colors duration-300 text-primary">آرمانیان</h1>
               <p className="text-xs text-muted-foreground/70 font-medium">آموزشگاه آزاد فنی و حرفه‌ای</p>
             </div>
             <div className="sm:hidden">
-              <h1 className="text-sm font-black transition-colors duration-300 bg-clip-text text-transparent animate-gradient-x" style={{ backgroundImage: 'linear-gradient(90deg, hsl(233,63%,67%), hsl(200 51% 65%), hsl(233,63%,67%))' }}>آرمانیان</h1>
+              <h1 className="text-sm font-black transition-colors duration-300 text-primary">آرمانیان</h1>
             </div>
           </Link>
 

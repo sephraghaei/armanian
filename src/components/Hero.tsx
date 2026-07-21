@@ -128,11 +128,11 @@ const Hero = () => {
         {/* Content - Full Width */}
         <div className="text-center space-y-12 mb-20">
           <div className="space-y-6 md:space-y-8">
-          <h1 className="text-[4.5rem] sm:text-[5rem] md:text-[8rem] lg:text-[10rem] font-extrabold leading-[1.1] md:leading-tight max-w-5xl mx-auto mb-4 md:mb-8 tracking-tight bg-clip-text text-transparent animate-gradient-x animate-bounce-in" style={{ backgroundImage: 'linear-gradient(90deg, hsl(233,63%,67%), hsl(200 51% 65%), hsl(233,63%,67%))' }}>
+          <h1 className="text-[4.5rem] sm:text-[5rem] md:text-[8rem] lg:text-[10rem] font-extrabold leading-[1.1] md:leading-tight max-w-5xl mx-auto mb-4 md:mb-8 tracking-tight text-primary animate-bounce-in">
               آرمانیان
           </h1>
             <div className="space-y-6">
-              <h2 className="text-lg sm:text-xl md:text-2xl lg:text-4xl font-bold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent leading-[1.9] md:leading-[1.7] max-w-4xl mx-auto animate-slide-in-up py-2 overflow-visible">
+              <h2 className="text-lg sm:text-xl md:text-2xl lg:text-4xl font-bold text-foreground leading-[1.9] md:leading-[1.7] max-w-4xl mx-auto animate-slide-in-up py-2 overflow-visible">
                 آموزشگاه آزاد فنی و حرفه‌ای کامپیوتر و معماری
               </h2>
             </div>
@@ -168,7 +168,7 @@ const Hero = () => {
                 variant={selectedCategory === null ? "default" : "outline"}
                 size="sm"
                 onClick={() => handleCategoryClick(null)}
-                className={selectedCategory === null ? "bg-gradient-to-r from-primary to-accent text-white" : ""}
+                className={selectedCategory === null ? "bg-primary text-primary-foreground" : ""}
               >
                 همه
               </Button>
@@ -178,7 +178,7 @@ const Hero = () => {
                   variant={selectedCategory === dept.id ? "default" : "outline"}
                   size="sm"
                   onClick={() => handleCategoryClick(dept.id)}
-                  className={selectedCategory === dept.id ? "bg-gradient-to-r from-primary to-accent text-white" : ""}
+                  className={selectedCategory === dept.id ? "bg-primary text-primary-foreground" : ""}
                 >
                   {dept.name}
                 </Button>
