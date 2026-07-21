@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
+import { callEnrollments } from '@/lib/enrollmentsApi';
 import { useUserProfile } from '@/hooks/useUserProfile';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -65,12 +66,8 @@ const Profile = () => {
 
   const fetchEnrollments = async () => {
     try {
-      // Fetch enrollments first
-      const { data: enrollmentsData, error: enrollmentsError } = await supabase
-        .from('enrollments')
-        .select('*')
-        .eq('user_id', user?.id)
-        .order('enrolled_at', { ascending: false });
+      // Fetch enrollments via secure edge function
+      const { data: enrollmentsData, error: enrollmentsError } = await callEnrollments<any[]>('list_mine');
 
       if (enrollmentsError) {
         console.error('Error fetching enrollments:', enrollmentsError);
