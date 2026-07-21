@@ -39,7 +39,7 @@ const ScrollArrows = () => {
     window.scrollTo({ top: nextY, behavior: 'smooth' });
   };
 
-  const commonBtn = "flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-primary/30 bg-gradient-to-br from-primary/90 to-accent/90 backdrop-blur-xl shadow-2xl hover:shadow-primary/50 transition-all duration-300 hover:scale-110 hover:border-primary";
+  const commonBtn = "flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-primary/30 bg-primary/90 backdrop-blur-xl shadow-2xl hover:shadow-primary/50 transition-all duration-300 hover:scale-110 hover:border-primary";
   
   const consultationBtn = "flex items-center justify-center w-16 h-16 sm:w-18 sm:h-18 rounded-full border-3 border-green-400/50 bg-gradient-to-br from-green-500 via-emerald-500 to-teal-500 backdrop-blur-xl shadow-2xl hover:shadow-green-400/60 transition-all duration-300 hover:scale-110 hover:border-green-300 relative overflow-hidden group";
 
