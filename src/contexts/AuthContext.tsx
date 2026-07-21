@@ -15,6 +15,7 @@ interface AuthContextType {
   session: Session | null;
   loading: boolean;
   isAdmin: boolean;
+  appToken: string | null;
   signUpWithCredentials: (phone: string, firstName: string, lastName: string, email: string, password: string, redirectTo?: string) => Promise<{ error: any }>;
   signInWithCredentials: (phone: string, password: string, redirectTo?: string) => Promise<{ error: any }>;
   signOut: () => Promise<{ error: any }>;
@@ -36,6 +37,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [session, setSession] = useState<null>(null);
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [appToken, setAppToken] = useState<string | null>(null);
   const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 
   const checkAdminRole = async (userId: string) => {
@@ -62,6 +64,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const initAuth = async () => {
       try {
         const rawUser = localStorage.getItem('app_user');
+        const rawToken = localStorage.getItem('app_token');
+        if (rawToken) setAppToken(rawToken);
         if (rawUser) {
           const parsedUser = JSON.parse(rawUser);
           setUser(parsedUser);
