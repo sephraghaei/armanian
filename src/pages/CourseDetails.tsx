@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
+import { callEnrollments } from '@/lib/enrollmentsApi';
 import { useToast } from '@/hooks/use-toast';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -342,12 +343,10 @@ const CourseDetailsPage = () => {
     setEnrolling(true);
     try {
       // Check if already enrolled
-      const { data: existingEnrollment } = await supabase
-        .from('enrollments')
-        .select('id')
-        .eq('user_id', user.id)
-        .eq('course_id', courseId)
-        .maybeSingle();
+      const { data: existingEnrollment } = await callEnrollments<{ id: string } | null>(
+        'check_existing',
+        { course_id: courseId }
+      );
 
       if (existingEnrollment) {
         toast({
@@ -360,18 +359,13 @@ const CourseDetailsPage = () => {
       }
 
       // Create enrollment
-      const { error } = await supabase
-        .from('enrollments')
-        .insert({
-          user_id: user.id,
-          course_id: courseId,
-          expires_at: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString(),
-          payment_status: 'pending',
-          payment_method: 'manual',
-          amount_due: (course.priceNumber || 0).toString(),
-          amount_paid: '0',
-          payment_notes: 'در انتظار تایید پرداخت توسط مدیریت'
-        } as any);
+      const { data: newEnrollment, error } = await callEnrollments<{ id: string }>('create', {
+        course_id: courseId,
+        amount_due: (course.priceNumber || 0).toString(),
+        payment_status: 'pending',
+        payment_method: 'manual',
+        payment_notes: 'در انتظار تایید پرداخت توسط مدیریت',
+      });
 
       if (error) {
         console.error('Enrollment error:', error);
@@ -381,22 +375,11 @@ const CourseDetailsPage = () => {
           variant: "destructive",
         });
       } else {
-        // Get the enrollment ID
-        const { data: newEnrollment } = await supabase
-          .from('enrollments')
-          .select('id')
-          .eq('user_id', user.id)
-          .eq('course_id', courseId)
-          .order('created_at', { ascending: false })
-          .limit(1)
-          .single();
-
         toast({
           title: "ثبت نام موفق",
           description: "در حال انتقال به صفحه پرداخت...",
         });
-        
-        if (newEnrollment) {
+        if (newEnrollment?.id) {
           navigate(`/payment/${newEnrollment.id}`);
         } else {
           navigate('/profile');
