@@ -86,7 +86,7 @@ const Programs = () => {
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-20 left-20 w-48 h-48 bg-primary/5 rounded-full blur-3xl animate-float" />
         <div className="absolute bottom-20 right-20 w-36 h-36 bg-accent/5 rounded-full blur-3xl animate-float" style={{ animationDelay: '3s' }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-60 h-60 bg-gradient-to-r from-primary/3 to-accent/3 rounded-full blur-3xl animate-float" style={{ animationDelay: '1.5s' }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-60 h-60 bg-primary/3 rounded-full blur-3xl animate-float" style={{ animationDelay: '1.5s' }} />
       </div>
       
       <div className="container mx-auto px-4 relative z-10">

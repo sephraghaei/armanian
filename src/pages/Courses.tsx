@@ -221,7 +221,7 @@ const CoursesPage = () => {
                 {filteredCourses.map((course) => (
                   <Card key={course.id} className={`group relative flex flex-col overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-xl hover:shadow-primary/10 border-border/50 bg-card/80 backdrop-blur-sm hover:border-primary/30 ${course.is_popular ? 'border-2 border-primary/40' : 'border'}`}>
                     {/* Hover gradient overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                     
                     {course.is_popular && (
                       <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 z-10">
@@ -299,7 +299,7 @@ const CoursesPage = () => {
                             <h3 className="text-2xl font-bold text-foreground mb-4 flex items-center">
                               {course.title}
                               {course.is_popular && (
-                                <Badge variant="default" className="bg-gradient-primary text-white mr-2">
+                                <Badge variant="default" className="bg-primary text-primary-foreground mr-2">
                                   محبوب
                                 </Badge>
                               )}

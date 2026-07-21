@@ -16,14 +16,14 @@ const DepartmentCard = ({ title, description, icon: Icon, courses, onLearnMore }
     <div className="w-[340px] shrink-0">
       <Card className="h-full border bg-card overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col">
         {/* Illustration Header */}
-        <div className="relative h-44 bg-gradient-to-br from-primary/10 via-accent/5 to-primary/5 flex items-center justify-center overflow-hidden">
+        <div className="relative h-44 bg-primary/5 flex items-center justify-center overflow-hidden">
           {/* Decorative circles */}
           <div className="absolute top-4 left-6 w-16 h-16 rounded-full border-2 border-primary/10 animate-pulse" />
-          <div className="absolute bottom-6 right-8 w-10 h-10 rounded-full bg-accent/10" />
+          <div className="absolute bottom-6 right-8 w-10 h-10 rounded-full bg-primary/10" />
           <div className="absolute top-10 right-12 w-6 h-6 rounded-full bg-primary/8" />
 
           {/* Main icon */}
-          <div className="w-20 h-20 bg-gradient-to-br from-primary to-accent rounded-2xl flex items-center justify-center shadow-md group-hover:scale-105 transition-transform duration-300">
+          <div className="w-20 h-20 bg-primary rounded-2xl flex items-center justify-center shadow-md group-hover:scale-105 transition-transform duration-300">
             <Icon className="w-10 h-10 text-white" />
           </div>
         </div>

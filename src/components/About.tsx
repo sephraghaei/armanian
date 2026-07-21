@@ -71,7 +71,7 @@ const About = () => {
           {features.map((feature, index) =>
           <Card key={index} className="group hover:shadow-glow-primary transition-all duration-500 hover:-translate-y-3 hover:rotate-1 animate-slide-in-up" style={{ animationDelay: `${index * 0.2}s` }}>
               <CardContent className="p-6 text-center">
-                <div className="w-16 h-16 bg-gradient-primary rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-125 group-hover:rotate-12 transition-all duration-500 animate-heartbeat">
+                <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-125 group-hover:rotate-12 transition-all duration-500 animate-heartbeat">
                   <feature.icon className="w-8 h-8 text-white group-hover:animate-wiggle" />
                 </div>
                 <h3 className="text-xl font-extrabold text-foreground mb-3 group-hover:text-primary transition-colors duration-300">

@@ -205,7 +205,7 @@ const CourseDetail = () => {
                 <div>
                   <h1 className="text-3xl font-bold text-foreground mb-2">{course.title}</h1>
                   {course.is_popular && (
-                    <Badge variant="default" className="text-white" style={{ background: 'linear-gradient(135deg, hsl(28,92%,56%), hsl(24,95%,55%))' }}>
+                    <Badge variant="default" className="bg-primary text-primary-foreground">
                       <Star className="w-3 h-3 mr-1" />
                       محبوب‌ترین
                     </Badge>
