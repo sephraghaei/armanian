@@ -153,25 +153,12 @@ const Profile = () => {
 
   const removeEnrollment = async (enrollmentId: string) => {
     try {
-      const { error } = await supabase
-        .from('enrollments')
-        .delete()
-        .eq('id', enrollmentId);
-
+      const { error } = await callEnrollments('delete', { id: enrollmentId });
       if (error) {
-        toast({
-          title: 'خطا',
-          description: 'خطا در حذف دوره',
-          variant: 'destructive',
-        });
+        toast({ title: 'خطا', description: 'خطا در حذف دوره', variant: 'destructive' });
         return;
       }
-
-      toast({
-        title: 'موفق',
-        description: 'دوره با موفقیت حذف شد',
-      });
-
+      toast({ title: 'موفق', description: 'دوره با موفقیت حذف شد' });
       fetchEnrollments();
     } catch (error) {
       console.error('Error removing enrollment:', error);
@@ -180,31 +167,12 @@ const Profile = () => {
 
   const extendEnrollment = async (enrollmentId: string) => {
     try {
-      const newExpiryDate = new Date();
-      newExpiryDate.setMonth(newExpiryDate.getMonth() + 1);
-
-      const { error } = await supabase
-        .from('enrollments')
-        .update({ 
-          expires_at: newExpiryDate.toISOString(),
-          status: 'active'
-        })
-        .eq('id', enrollmentId);
-
+      const { error } = await callEnrollments('extend', { id: enrollmentId });
       if (error) {
-        toast({
-          title: 'خطا',
-          description: 'خطا در تمدید دوره',
-          variant: 'destructive',
-        });
+        toast({ title: 'خطا', description: 'خطا در تمدید دوره', variant: 'destructive' });
         return;
       }
-
-      toast({
-        title: 'موفق',
-        description: 'دوره با موفقیت تمدید شد',
-      });
-
+      toast({ title: 'موفق', description: 'دوره با موفقیت تمدید شد' });
       fetchEnrollments();
     } catch (error) {
       console.error('Error extending enrollment:', error);
