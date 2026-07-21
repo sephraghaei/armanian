@@ -45,13 +45,8 @@ const Payment = () => {
 
   const fetchEnrollment = async () => {
     try {
-      // Fetch enrollment first
-      const { data: enrollmentData, error: enrollmentError } = await supabase
-        .from('enrollments')
-        .select('id, course_id, status, amount_due')
-        .eq('id', enrollmentId)
-        .eq('user_id', user?.id)
-        .maybeSingle();
+      // Fetch enrollment via edge function
+      const { data: enrollmentData, error: enrollmentError } = await callEnrollments<any>('get', { id: enrollmentId });
 
       if (enrollmentError || !enrollmentData) {
         toast({
@@ -99,16 +94,11 @@ const Payment = () => {
     await new Promise(resolve => setTimeout(resolve, 2000));
     
     try {
-      // Update enrollment status to paid (simulated)
-      const { error } = await supabase
-        .from('enrollments')
-        .update({
-          payment_status: 'paid',
-          paid_at: new Date().toISOString(),
-          amount_paid: enrollment?.amount_due || '0',
-          payment_notes: 'پرداخت آزمایشی موفق'
-        } as any)
-        .eq('id', enrollmentId);
+      // Update enrollment status to paid via edge function
+      const { error } = await callEnrollments('mark_paid', {
+        id: enrollmentId,
+        amount_paid: enrollment?.amount_due || '0',
+      });
 
       if (error) {
         toast({
