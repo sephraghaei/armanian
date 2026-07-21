@@ -167,6 +167,13 @@ serve(async (req: Request) => {
     console.log("User registered successfully:", user.id);
 
     const token = crypto.randomUUID();
+    const expiresAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString();
+    const { error: sessionErr } = await supabase
+      .from("user_sessions")
+      .insert({ token, user_id: user.id, expires_at: expiresAt });
+    if (sessionErr) {
+      console.error("Session create failed:", sessionErr);
+    }
 
     return new Response(JSON.stringify({ 
       message: "ثبت نام با موفقیت انجام شد",

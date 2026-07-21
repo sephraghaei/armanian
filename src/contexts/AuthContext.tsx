@@ -15,6 +15,7 @@ interface AuthContextType {
   session: Session | null;
   loading: boolean;
   isAdmin: boolean;
+  appToken: string | null;
   signUpWithCredentials: (phone: string, firstName: string, lastName: string, email: string, password: string, redirectTo?: string) => Promise<{ error: any }>;
   signInWithCredentials: (phone: string, password: string, redirectTo?: string) => Promise<{ error: any }>;
   signOut: () => Promise<{ error: any }>;
@@ -36,6 +37,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [session, setSession] = useState<null>(null);
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [appToken, setAppToken] = useState<string | null>(null);
   const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 
   const checkAdminRole = async (userId: string) => {
@@ -62,6 +64,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const initAuth = async () => {
       try {
         const rawUser = localStorage.getItem('app_user');
+        const rawToken = localStorage.getItem('app_token');
+        if (rawToken) setAppToken(rawToken);
         if (rawUser) {
           const parsedUser = JSON.parse(rawUser);
           setUser(parsedUser);
@@ -104,6 +108,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
       const body = await res.json();
       try { localStorage.setItem('app_user', JSON.stringify(body.user)); } catch {}
+      try { if (body.token) localStorage.setItem('app_token', body.token); } catch {}
+      if (body.token) setAppToken(body.token);
       setUser(body.user);
       const adminStatus = await checkAdminRole(body.user.id);
       setIsAdmin(adminStatus);
@@ -131,6 +137,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
       const body = await res.json();
       try { localStorage.setItem('app_user', JSON.stringify(body.user)); } catch {}
+      try { if (body.token) localStorage.setItem('app_token', body.token); } catch {}
+      if (body.token) setAppToken(body.token);
       setUser(body.user);
       const adminStatus = await checkAdminRole(body.user.id);
       setIsAdmin(adminStatus);
@@ -164,8 +172,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signOut = async () => {
     try { localStorage.removeItem('app_user'); } catch {}
+    try { localStorage.removeItem('app_token'); } catch {}
     setUser(null);
     setIsAdmin(false);
+    setAppToken(null);
     return { error: null };
   };
 
@@ -174,6 +184,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     session,
     loading,
     isAdmin,
+    appToken,
     signUpWithCredentials,
     signInWithCredentials,
     signOut,

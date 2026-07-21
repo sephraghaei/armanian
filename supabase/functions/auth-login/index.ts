@@ -112,6 +112,15 @@ serve(async (req: Request): Promise<Response> => {
     }
 
     const token = crypto.randomUUID();
+    const expiresAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString();
+    const { error: sessionErr } = await supabase
+      .from("user_sessions")
+      .insert({ token, user_id: user.id, expires_at: expiresAt });
+    if (sessionErr) {
+      console.error("Session create failed:", sessionErr);
+      return jsonResponse({ error: "خطای ایجاد نشست" }, 500);
+    }
+
     const { password_hash, ...safeUser } = user;
 
     const headers = new Headers({
@@ -121,7 +130,7 @@ serve(async (req: Request): Promise<Response> => {
 
     headers.append(
       "set-cookie",
-      `app_token=${token}; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=${60 * 60 * 24 * 7}`,
+      `app_token=${token}; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=${60 * 60 * 24 * 30}`,
     );
 
     return new Response(

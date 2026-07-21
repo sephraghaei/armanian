@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
+import { callEnrollments } from '@/lib/enrollmentsApi';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -136,29 +137,9 @@ export default function Admin() {
 
   const fetchEnrollments = async () => {
     try {
-      const { data: enrollmentData, error: enrollmentError } = await supabase
-        .from('enrollments')
-        .select('*')
-        .order('enrolled_at', { ascending: false });
-
-      if (enrollmentError) throw enrollmentError;
-
-      const enrichedEnrollments = await Promise.all(
-        (enrollmentData || []).map(async (enrollment) => {
-          const [courseResult, userResult] = await Promise.all([
-            supabase.from('courses').select('title').eq('id', enrollment.course_id).maybeSingle(),
-            supabase.from('users_app').select('first_name, last_name, phone').eq('id', enrollment.user_id).maybeSingle()
-          ]);
-
-          return {
-            ...enrollment,
-            courses: courseResult.data || { title: 'نامشخص' },
-            users_app: userResult.data || { first_name: '', last_name: '', phone: '' }
-          };
-        })
-      );
-
-      setEnrollments(enrichedEnrollments);
+      const { data, error } = await callEnrollments<any[]>('admin_list');
+      if (error) throw new Error(error);
+      setEnrollments(data || []);
     } catch (error) {
       console.error('Error fetching enrollments:', error);
       toast({
@@ -553,11 +534,7 @@ export default function Admin() {
   };
 
   const deleteEnrollment = async (enrollmentId: string) => {
-    const { error } = await supabase
-      .from('enrollments')
-      .delete()
-      .eq('id', enrollmentId);
-
+    const { error } = await callEnrollments('delete', { id: enrollmentId });
     if (error) {
       toast({
         variant: 'destructive',
