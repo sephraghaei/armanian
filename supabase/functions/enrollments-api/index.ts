@@ -155,12 +155,26 @@ serve(async (req: Request) => {
 
     if (action === "admin_list") {
       if (!isAdmin) return json({ error: "Forbidden" }, 403);
-      const { data, error } = await supabase
+      const { data: enrollments, error } = await supabase
         .from("enrollments")
         .select("*")
         .order("enrolled_at", { ascending: false });
       if (error) throw error;
-      return json({ data });
+      const list = enrollments || [];
+      const userIds = [...new Set(list.map((e: any) => e.user_id))];
+      const courseIds = [...new Set(list.map((e: any) => e.course_id))];
+      const [{ data: users }, { data: courses }] = await Promise.all([
+        supabase.from("users_app").select("id, first_name, last_name, phone").in("id", userIds),
+        supabase.from("courses").select("id, title").in("id", courseIds),
+      ]);
+      const usersMap = new Map((users || []).map((u: any) => [u.id, u]));
+      const coursesMap = new Map((courses || []).map((c: any) => [c.id, c]));
+      const enriched = list.map((e: any) => ({
+        ...e,
+        users_app: usersMap.get(e.user_id) || { first_name: "", last_name: "", phone: "" },
+        courses: coursesMap.get(e.course_id) || { title: "نامشخص" },
+      }));
+      return json({ data: enriched });
     }
 
     return json({ error: "Unknown action" }, 400);
