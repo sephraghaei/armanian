@@ -160,7 +160,7 @@ const Header = () => {
             </div>
             <div className="hidden sm:block">
               <h1 className="text-lg font-black transition-colors duration-300 text-primary">آرمانیان</h1>
-              <p className="text-xs text-muted-foreground/70 font-medium">آموزشگاه آزاد فنی و حرفه‌ای</p>
+              <p className="text-xs text-muted-foreground font-medium">آموزشگاه آزاد فنی و حرفه‌ای</p>
             </div>
             <div className="sm:hidden">
               <h1 className="text-sm font-black transition-colors duration-300 text-primary">آرمانیان</h1>
