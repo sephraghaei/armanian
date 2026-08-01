@@ -62,7 +62,7 @@ const ConsultationPrompt = () => {
     <div
       role="dialog"
       aria-label="پیشنهاد مشاوره رایگان"
-      className="fixed bottom-6 right-6 z-40 w-[min(20rem,calc(100vw-3rem))] animate-slide-in-up"
+      className="fixed bottom-6 left-6 z-40 w-[min(20rem,calc(100vw-3rem))] animate-slide-in-up"
     >
       <div className="relative rounded-2xl border border-border bg-card p-5 shadow-lifted">
         <Button
