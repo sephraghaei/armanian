@@ -137,56 +137,32 @@ const Departments = () => {
             <p className="text-muted-foreground text-lg">دپارتمانی با این مشخصات یافت نشد</p>
           </div>
         ) : (
-        <div className="relative">
-          {/* Navigation Arrows */}
-          <Button
-            variant="outline"
-            size="icon"
-            className="absolute right-2 md:right-0 top-1/2 -translate-y-1/2 z-20 rounded-full bg-background/95 backdrop-blur-md hover:bg-primary hover:text-primary-foreground hover:border-transparent shadow-2xl hover:shadow-primary/25 transition-all duration-300 hover:scale-110"
-            onClick={() => scroll('right')}
-          >
-            <ChevronRight className="w-5 h-5" />
-          </Button>
-          <Button
-            variant="outline"
-            size="icon"
-            className="absolute left-2 md:left-0 top-1/2 -translate-y-1/2 z-20 rounded-full bg-background/95 backdrop-blur-md hover:bg-primary hover:text-primary-foreground hover:border-transparent shadow-2xl hover:shadow-primary/25 transition-all duration-300 hover:scale-110"
-            onClick={() => scroll('left')}
-          >
-            <ChevronLeft className="w-5 h-5" />
-          </Button>
-
-          {/* Scrollable Container */}
-          <div 
-            ref={scrollContainerRef}
-            className="overflow-x-auto pb-12 -mx-4 px-4 scrollbar-hide scroll-smooth"
-          >
-            <div className="flex gap-10 px-4 md:px-16">
-              {filteredDepartments.map((dept, index) => (
-                <DepartmentCard
-                  key={index}
-                  title={dept.title}
-                  description={dept.description}
-                  icon={dept.icon}
-                  image={dept.image}
-                  courses={dept.courses}
-                  onLearnMore={() => handleLearnMore(dept.title)}
-                />
-              ))}
-            </div>
+          <div className="grid gap-8 sm:grid-cols-2 xl:grid-cols-4">
+            {filteredDepartments.map((dept, index) => (
+              <DepartmentCard
+                key={index}
+                title={dept.title}
+                description={dept.description}
+                icon={dept.icon}
+                image={dept.image}
+                courses={dept.courses}
+                onLearnMore={() => handleLearnMore(dept.title)}
+              />
+            ))}
           </div>
-        </div>
         )}
 
         <div className="text-center mt-16">
-          <Button 
-            variant="hero" 
+          <Button
+            variant="hero"
             size="lg"
-            className="font-bold px-8 py-4 rounded-xl shadow-2xl hover:shadow-primary/25 transition-all duration-300 hover:scale-105"
+            className="font-bold px-8"
+            onClick={() => navigate('/courses')}
           >
             مشاهده همه دوره‌ها
           </Button>
         </div>
+
       </div>
     </section>
   );
