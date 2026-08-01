@@ -47,6 +47,7 @@ export default {
 					DEFAULT: 'hsl(var(--accent))',
 					foreground: 'hsl(var(--accent-foreground))'
 				},
+				gold: 'hsl(var(--gold))',
 				popover: {
 					DEFAULT: 'hsl(var(--popover))',
 					foreground: 'hsl(var(--popover-foreground))'
@@ -74,7 +75,10 @@ export default {
 			boxShadow: {
 				'glow-primary': 'var(--glow-primary)',
 				'glow-accent': 'var(--glow-accent)',
+				'soft': 'var(--shadow-soft)',
+				'lifted': 'var(--shadow-lifted)',
 			},
+
 			borderRadius: {
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',
