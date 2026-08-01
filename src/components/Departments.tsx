@@ -87,26 +87,26 @@ const Departments = () => {
   }, [searchQuery]);
 
   return (
-    <section id="departments" className="py-24 bg-gradient-to-b from-transparent via-background/30 to-transparent relative overflow-hidden">
+    <section id="departments" className="py-20 md:py-24 bg-secondary/40 border-y border-border relative overflow-hidden">
       {/* Background decorative elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-20 left-10 w-32 h-32 bg-primary/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 right-10 w-40 h-40 bg-accent/5 rounded-full blur-3xl" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-60 h-60 bg-primary/3 rounded-full blur-3xl" />
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 left-10 w-40 h-40 bg-primary/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 right-10 w-40 h-40 bg-accent/10 rounded-full blur-3xl" />
       </div>
       
       <div className="container mx-auto px-4 relative z-10">
-        <div className="text-center mb-20">
-          <div className="inline-flex items-center gap-2 bg-primary/10 px-4 py-2 rounded-full mb-6">
-            <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
+        <div className="text-center mb-14 max-w-2xl mx-auto">
+          <div className="inline-flex items-center gap-2 bg-primary/10 px-4 py-1.5 rounded-full mb-5">
+            <div className="w-2 h-2 bg-accent rounded-full" />
             <span className="text-sm font-bold text-primary">دپارتمان‌های تخصصی</span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-black text-foreground mb-6">
+          <h2 className="text-3xl md:text-4xl font-extrabold text-foreground mb-4">
             دپارتمان‌های آموزشی
           </h2>
-          <p className="text-lg text-muted-foreground max-w-4xl mx-auto leading-relaxed mb-8">
+          <p className="text-base md:text-lg text-muted-foreground mx-auto mb-8">
             طیف جامعی از دپارتمان‌های تخصصی ما را که برای آموزش مهارت‌های فنی و حرفه‌ای طراحی شده‌اند، کاوش کنید.
           </p>
+
           <HomeSearch 
             searchQuery={searchQuery}
             onSearchChange={setSearchQuery}
