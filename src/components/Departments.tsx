@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
-import { Code, Palette, Home, Globe, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Code, Palette, Home, Globe } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { useRef, useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import DepartmentCard from './DepartmentCard';
 import HomeSearch from './HomeSearch';
 import computerDeptImage from '@/assets/computer-department.jpg';
@@ -11,27 +11,9 @@ import englishDeptImage from '@/assets/english-department.jpg';
 
 const Departments = () => {
   const navigate = useNavigate();
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [searchQuery, setSearchQuery] = useState('');
 
-  const scroll = (direction: 'left' | 'right') => {
-    const el = scrollContainerRef.current;
-    if (!el) return;
-    const distance = direction === 'left' ? -420 : 420;
-    const start = el.scrollLeft;
-    const target = start + distance;
-    const duration = 900; // ms — smooth, gentle
-    const startTime = performance.now();
-    const ease = (t: number) => 1 - Math.pow(1 - t, 3); // easeOutCubic
 
-    const step = (now: number) => {
-      const elapsed = now - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      el.scrollLeft = start + (target - start) * ease(progress);
-      if (progress < 1) requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
-  };
 
   const handleLearnMore = (departmentTitle: string) => {
     // Convert department title to slug for navigation
