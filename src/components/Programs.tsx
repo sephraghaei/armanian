@@ -81,22 +81,22 @@ const Programs = () => {
   }, [searchQuery]);
 
   return (
-    <section id="programs" className="py-20 bg-gradient-to-b from-transparent via-background/30 to-transparent relative overflow-hidden">
+    <section id="programs" className="py-20 md:py-24 relative overflow-hidden">
       {/* Background decorative elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-20 left-20 w-48 h-48 bg-primary/5 rounded-full blur-3xl animate-float" />
-        <div className="absolute bottom-20 right-20 w-36 h-36 bg-accent/5 rounded-full blur-3xl animate-float" style={{ animationDelay: '3s' }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-60 h-60 bg-primary/3 rounded-full blur-3xl animate-float" style={{ animationDelay: '1.5s' }} />
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 left-20 w-48 h-48 bg-primary/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 right-20 w-36 h-36 bg-accent/10 rounded-full blur-3xl" />
       </div>
       
       <div className="container mx-auto px-4 relative z-10">
-        <div className="text-center mb-16 animate-slide-in-up">
-          <h2 className="text-3xl md:text-4xl font-black text-foreground mb-4 animate-bounce-in">
+        <div className="text-center mb-14 max-w-2xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-extrabold text-foreground mb-4">
             مسیر یادگیری خود را انتخاب کنید
           </h2>
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto animate-slide-in-up mb-8" style={{ animationDelay: '0.3s' }}>
+          <p className="text-base md:text-lg text-muted-foreground mx-auto mb-8">
             دوره‌های تخصصی ما برای هر سن و سطحی طراحی شده‌اند تا شما را از مبتدی به حرفه‌ای تبدیل کنند.
           </p>
+
           <HomeSearch 
             searchQuery={searchQuery}
             onSearchChange={setSearchQuery}
@@ -109,9 +109,10 @@ const Programs = () => {
             <p className="text-muted-foreground text-lg">برنامه‌ای با این مشخصات یافت نشد</p>
           </div>
         ) : (
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-3 gap-8 pt-4">
           {filteredPrograms.map((program, index) => (
-            <Card key={index} className={`relative flex flex-col transition-all duration-300 hover:-translate-y-2 hover:shadow-lg border-primary/20 hover:border-primary/50 ${program.popular ? 'border-2 border-primary/50' : 'border'} bg-card animate-fade-in`} style={{ animationDelay: `${index * 0.15}s` }}>
+            <Card key={index} className={`relative flex flex-col shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-lifted hover:border-primary/40 ${program.popular ? 'border-2 border-primary/50' : 'border-border'} bg-card animate-fade-in`} style={{ animationDelay: `${index * 0.15}s` }}>
+
               
               {program.popular && (
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10">

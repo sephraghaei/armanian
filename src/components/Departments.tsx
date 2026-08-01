@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
-import { Code, Palette, Home, Globe, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Code, Palette, Home, Globe } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { useRef, useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import DepartmentCard from './DepartmentCard';
 import HomeSearch from './HomeSearch';
 import computerDeptImage from '@/assets/computer-department.jpg';
@@ -11,27 +11,9 @@ import englishDeptImage from '@/assets/english-department.jpg';
 
 const Departments = () => {
   const navigate = useNavigate();
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [searchQuery, setSearchQuery] = useState('');
 
-  const scroll = (direction: 'left' | 'right') => {
-    const el = scrollContainerRef.current;
-    if (!el) return;
-    const distance = direction === 'left' ? -420 : 420;
-    const start = el.scrollLeft;
-    const target = start + distance;
-    const duration = 900; // ms — smooth, gentle
-    const startTime = performance.now();
-    const ease = (t: number) => 1 - Math.pow(1 - t, 3); // easeOutCubic
 
-    const step = (now: number) => {
-      const elapsed = now - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      el.scrollLeft = start + (target - start) * ease(progress);
-      if (progress < 1) requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
-  };
 
   const handleLearnMore = (departmentTitle: string) => {
     // Convert department title to slug for navigation
@@ -105,26 +87,26 @@ const Departments = () => {
   }, [searchQuery]);
 
   return (
-    <section id="departments" className="py-24 bg-gradient-to-b from-transparent via-background/30 to-transparent relative overflow-hidden">
+    <section id="departments" className="py-20 md:py-24 bg-secondary/40 border-y border-border relative overflow-hidden">
       {/* Background decorative elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-20 left-10 w-32 h-32 bg-primary/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 right-10 w-40 h-40 bg-accent/5 rounded-full blur-3xl" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-60 h-60 bg-primary/3 rounded-full blur-3xl" />
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 left-10 w-40 h-40 bg-primary/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 right-10 w-40 h-40 bg-accent/10 rounded-full blur-3xl" />
       </div>
       
       <div className="container mx-auto px-4 relative z-10">
-        <div className="text-center mb-20">
-          <div className="inline-flex items-center gap-2 bg-primary/10 px-4 py-2 rounded-full mb-6">
-            <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
+        <div className="text-center mb-14 max-w-2xl mx-auto">
+          <div className="inline-flex items-center gap-2 bg-primary/10 px-4 py-1.5 rounded-full mb-5">
+            <div className="w-2 h-2 bg-accent rounded-full" />
             <span className="text-sm font-bold text-primary">دپارتمان‌های تخصصی</span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-black text-foreground mb-6">
+          <h2 className="text-3xl md:text-4xl font-extrabold text-foreground mb-4">
             دپارتمان‌های آموزشی
           </h2>
-          <p className="text-lg text-muted-foreground max-w-4xl mx-auto leading-relaxed mb-8">
+          <p className="text-base md:text-lg text-muted-foreground mx-auto mb-8">
             طیف جامعی از دپارتمان‌های تخصصی ما را که برای آموزش مهارت‌های فنی و حرفه‌ای طراحی شده‌اند، کاوش کنید.
           </p>
+
           <HomeSearch 
             searchQuery={searchQuery}
             onSearchChange={setSearchQuery}
@@ -137,56 +119,32 @@ const Departments = () => {
             <p className="text-muted-foreground text-lg">دپارتمانی با این مشخصات یافت نشد</p>
           </div>
         ) : (
-        <div className="relative">
-          {/* Navigation Arrows */}
-          <Button
-            variant="outline"
-            size="icon"
-            className="absolute right-2 md:right-0 top-1/2 -translate-y-1/2 z-20 rounded-full bg-background/95 backdrop-blur-md hover:bg-primary hover:text-primary-foreground hover:border-transparent shadow-2xl hover:shadow-primary/25 transition-all duration-300 hover:scale-110"
-            onClick={() => scroll('right')}
-          >
-            <ChevronRight className="w-5 h-5" />
-          </Button>
-          <Button
-            variant="outline"
-            size="icon"
-            className="absolute left-2 md:left-0 top-1/2 -translate-y-1/2 z-20 rounded-full bg-background/95 backdrop-blur-md hover:bg-primary hover:text-primary-foreground hover:border-transparent shadow-2xl hover:shadow-primary/25 transition-all duration-300 hover:scale-110"
-            onClick={() => scroll('left')}
-          >
-            <ChevronLeft className="w-5 h-5" />
-          </Button>
-
-          {/* Scrollable Container */}
-          <div 
-            ref={scrollContainerRef}
-            className="overflow-x-auto pb-12 -mx-4 px-4 scrollbar-hide scroll-smooth"
-          >
-            <div className="flex gap-10 px-4 md:px-16">
-              {filteredDepartments.map((dept, index) => (
-                <DepartmentCard
-                  key={index}
-                  title={dept.title}
-                  description={dept.description}
-                  icon={dept.icon}
-                  image={dept.image}
-                  courses={dept.courses}
-                  onLearnMore={() => handleLearnMore(dept.title)}
-                />
-              ))}
-            </div>
+          <div className="grid gap-8 sm:grid-cols-2 xl:grid-cols-4">
+            {filteredDepartments.map((dept, index) => (
+              <DepartmentCard
+                key={index}
+                title={dept.title}
+                description={dept.description}
+                icon={dept.icon}
+                image={dept.image}
+                courses={dept.courses}
+                onLearnMore={() => handleLearnMore(dept.title)}
+              />
+            ))}
           </div>
-        </div>
         )}
 
         <div className="text-center mt-16">
-          <Button 
-            variant="hero" 
+          <Button
+            variant="hero"
             size="lg"
-            className="font-bold px-8 py-4 rounded-xl shadow-2xl hover:shadow-primary/25 transition-all duration-300 hover:scale-105"
+            className="font-bold px-8"
+            onClick={() => navigate('/courses')}
           >
             مشاهده همه دوره‌ها
           </Button>
         </div>
+
       </div>
     </section>
   );
