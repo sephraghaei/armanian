@@ -109,9 +109,10 @@ const Programs = () => {
             <p className="text-muted-foreground text-lg">برنامه‌ای با این مشخصات یافت نشد</p>
           </div>
         ) : (
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-3 gap-8 pt-4">
           {filteredPrograms.map((program, index) => (
-            <Card key={index} className={`relative flex flex-col transition-all duration-300 hover:-translate-y-2 hover:shadow-lg border-primary/20 hover:border-primary/50 ${program.popular ? 'border-2 border-primary/50' : 'border'} bg-card animate-fade-in`} style={{ animationDelay: `${index * 0.15}s` }}>
+            <Card key={index} className={`relative flex flex-col shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-lifted hover:border-primary/40 ${program.popular ? 'border-2 border-primary/50' : 'border-border'} bg-card animate-fade-in`} style={{ animationDelay: `${index * 0.15}s` }}>
+
               
               {program.popular && (
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10">
