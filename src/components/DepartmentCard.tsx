@@ -13,8 +13,9 @@ interface DepartmentCardProps {
 
 const DepartmentCard = ({ title, description, icon: Icon, courses, onLearnMore }: DepartmentCardProps) => {
   return (
-    <div className="w-[340px] shrink-0">
-      <Card className="h-full border bg-card overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col">
+    <div className="h-full w-full">
+      <Card className="group flex h-full flex-col overflow-hidden border bg-card shadow-soft transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-lifted">
+
         {/* Illustration Header */}
         <div className="relative h-44 bg-primary/5 flex items-center justify-center overflow-hidden">
           {/* Decorative circles */}
@@ -23,8 +24,9 @@ const DepartmentCard = ({ title, description, icon: Icon, courses, onLearnMore }
           <div className="absolute top-10 right-12 w-6 h-6 rounded-full bg-primary/8" />
 
           {/* Main icon */}
-          <div className="w-20 h-20 bg-primary rounded-2xl flex items-center justify-center shadow-md group-hover:scale-105 transition-transform duration-300">
-            <Icon className="w-10 h-10 text-white" />
+          <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-primary shadow-md transition-transform duration-300 group-hover:scale-105">
+            <Icon className="h-10 w-10 text-primary-foreground" />
+
           </div>
         </div>
 
