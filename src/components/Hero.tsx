@@ -124,31 +124,31 @@ const Hero = () => {
   return (
     <section
       id="home"
-      className="relative overflow-hidden bg-transparent pt-28 pb-16 md:pt-36 md:pb-24"
+      className="relative overflow-hidden bg-transparent pt-24 pb-12 sm:pt-28 sm:pb-16 md:pt-36 md:pb-24"
     >
       <div className="container mx-auto px-4 relative z-10">
-        <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
+        <div className="grid items-center gap-10 sm:gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
           {/* Text column */}
-          <div className="max-w-2xl animate-slide-in-up">
-            <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-1.5 text-sm font-bold text-primary shadow-soft">
+          <div className="mx-auto w-full max-w-2xl text-center animate-slide-in-up lg:mx-0 lg:text-right">
+            <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-1.5 text-xs font-bold text-primary shadow-soft sm:text-sm">
               <span className="h-2 w-2 rounded-full bg-accent" />
               آموزشگاه آزاد فنی و حرفه‌ای
             </span>
 
-            <h1 className="mt-6 pr-4 text-6xl font-extrabold tracking-tight text-primary sm:text-7xl md:text-8xl">
+            <h1 className="mt-5 text-5xl font-extrabold tracking-tight text-primary sm:mt-6 sm:text-6xl md:text-7xl lg:pr-4 lg:text-8xl">
               آرمانیان
             </h1>
 
-            <h2 className="mt-2 text-xl font-bold text-foreground sm:text-2xl md:text-3xl">
+            <h2 className="mt-2 text-lg font-bold text-foreground sm:text-2xl md:text-3xl">
               آموزش کامپیوتر، گرافیک، معماری و زبان
             </h2>
 
-            <p className="mt-5 max-w-xl text-base text-muted-foreground sm:text-lg">
+            <p className="mx-auto mt-4 max-w-xl text-sm text-muted-foreground sm:mt-5 sm:text-lg lg:mx-0">
               <Typewriter text="مسیر آینده از آرمانیان می گذرد ..." />
             </p>
 
             {/* Search Bar */}
-            <div className="mt-8 max-w-xl">
+            <div className="mx-auto mt-7 w-full max-w-xl sm:mt-8 lg:mx-0">
               <div className="relative">
                 <Search className="absolute right-4 top-1/2 z-10 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
                 <Input
@@ -161,12 +161,12 @@ const Hero = () => {
                       setOpen(true);
                     }
                   }}
-                  className="h-14 w-full rounded-xl border-border bg-card pr-12 text-base shadow-soft focus-visible:ring-primary"
+                  className="h-12 w-full rounded-xl border-border bg-card pr-12 text-sm shadow-soft focus-visible:ring-primary sm:h-14 sm:text-base"
                 />
               </div>
 
               {/* Categories */}
-              <div className="mt-4 flex flex-wrap gap-2">
+              <div className="mt-4 flex flex-wrap justify-center gap-2 lg:justify-start">
                 <Button
                   variant={selectedCategory === null ? 'default' : 'outline'}
                   size="sm"
@@ -187,7 +187,7 @@ const Hero = () => {
               </div>
             </div>
 
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:gap-4">
+            <div className="mx-auto mt-7 flex w-full max-w-xl flex-col items-center justify-center gap-3 sm:mt-8 sm:flex-row sm:gap-4 lg:mx-0 lg:justify-start">
               <Button variant="hero" size="lg" className="group w-full sm:w-auto" onClick={handleSignUp}>
                 همین امروز شروع کن
                 <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1" />
@@ -204,9 +204,9 @@ const Hero = () => {
           </div>
 
           {/* Visual column */}
-          <div className="relative animate-scale-in">
-            <div className="rounded-3xl border border-border bg-card p-6 shadow-lifted md:p-8">
-              <div className="grid grid-cols-2 gap-4">
+          <div className="relative mx-auto w-full max-w-xl animate-scale-in lg:mx-0 lg:max-w-none">
+            <div className="rounded-3xl border border-border bg-card p-4 shadow-lifted sm:p-6 md:p-8">
+              <div className="grid grid-cols-2 gap-3 sm:gap-4">
                 {[
                   { icon: Building2, label: 'دپارتمان تخصصی', value: '۴' },
                   { icon: BookOpen, label: 'دوره فعال', value: '+۱۴' },
@@ -215,16 +215,17 @@ const Hero = () => {
                 ].map(({ icon: Icon, label, value }) => (
                   <div
                     key={label}
-                    className="rounded-2xl border border-border/70 bg-secondary/60 p-4 transition-colors duration-300 hover:border-primary/40"
+                    className="flex flex-col items-center rounded-2xl border border-border/70 bg-secondary/60 p-3 text-center transition-colors duration-300 hover:border-primary/40 sm:p-4 lg:items-start lg:text-right"
                   >
                     <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
                       <Icon className="h-5 w-5" />
                     </span>
-                    <p className="mt-3 text-lg font-bold text-foreground">{value}</p>
-                    <p className="text-sm text-muted-foreground">{label}</p>
+                    <p className="mt-3 text-base font-bold text-foreground sm:text-lg">{value}</p>
+                    <p className="text-xs text-muted-foreground sm:text-sm">{label}</p>
                   </div>
                 ))}
               </div>
+
 
               <div className="mt-6 rounded-2xl bg-primary p-5 text-primary-foreground">
                 <p className="text-sm font-bold">ثبت‌نام ترم جدید آغاز شد</p>
