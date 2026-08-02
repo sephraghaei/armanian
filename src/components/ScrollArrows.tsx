@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ChevronUp, ChevronDown, Phone } from "lucide-react";
+import { ChevronUp, ChevronDown, PhoneCall } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const ScrollArrows = () => {
@@ -56,7 +56,7 @@ const ScrollArrows = () => {
         <div className="absolute inset-0 rounded-full bg-white/20 scale-0 group-hover:scale-100 transition-transform duration-500"></div>
         
         {/* Phone icon */}
-        <Phone className="w-7 h-7 sm:w-8 sm:h-8 text-white relative z-10 drop-shadow-lg" />
+        <PhoneCall className="w-5 h-5 sm:w-6 sm:h-6 text-white relative z-10 drop-shadow-lg" />
         
         {/* Pulse ring */}
         <div className="absolute inset-0 rounded-full border-2 border-green-300/40 animate-pulse"></div>
