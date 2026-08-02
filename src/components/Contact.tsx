@@ -25,24 +25,23 @@ const Contact = () => {
   ];
 
   return (
-    <section id="contact" className="py-20 bg-gradient-hero">
+    <section id="contact" className="py-14 sm:py-20 bg-gradient-hero">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-black text-foreground mb-4">
+        <div className="text-center mb-10 sm:mb-16">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-foreground mb-4">
             با ما در تماس باشید
           </h2>
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto font-medium">
+          <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-3xl mx-auto font-medium">
             آماده شروع سفر کدنویسی فرزندتان هستید؟ همین امروز با ما تماس بگیرید تا درباره برنامه‌هایمان 
             بیشتر بدانید یا برای بازدید از امکانات مدرن ما وقت بگیرید.
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12">
+        <div className="grid gap-8 lg:grid-cols-2 lg:gap-12">
           {/* Contact Information */}
           <div className="space-y-8">
-            <div />
-
             <div className="grid gap-6">
+
               {contactInfo.map((info, index) => {
                 const isInstagram = info.title === 'اینستاگرام';
                 const isPhone = info.title === 'تماس بگیرید';
@@ -57,12 +56,13 @@ const Contact = () => {
                 
                 return (
                   <Card key={index} className={`hover:shadow-glow-primary transition-all duration-300 ${(isInstagram || isPhone) ? 'cursor-pointer hover:scale-105' : ''}`}>
-                    <CardContent className="p-8 bg-background/50 backdrop-blur-sm hover:bg-background/70 transition-all duration-300">
+                    <CardContent className="p-6 sm:p-8 bg-background/50 backdrop-blur-sm hover:bg-background/70 transition-all duration-300">
                       <CardWrapper {...cardProps} className={(isInstagram || isPhone) ? "block" : ""}>
-                        <div className="flex items-start space-x-reverse space-x-4">
+                        <div className="flex flex-col items-center gap-4 text-center sm:flex-row sm:items-start sm:text-right">
                           <div className={`w-12 h-12 bg-primary rounded-lg flex items-center justify-center flex-shrink-0 ${(isInstagram || isPhone) ? 'hover:bg-primary/90' : ''}`}>
-                            <info.icon className="w-6 h-6 text-white" />
+                            <info.icon className="w-6 h-6 text-primary-foreground" />
                           </div>
+
                           <div>
                             <h4 className="font-extrabold text-foreground mb-2">{info.title}</h4>
                             <div className="space-y-1">
