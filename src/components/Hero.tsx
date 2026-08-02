@@ -135,7 +135,7 @@ const Hero = () => {
               آموزشگاه آزاد فنی و حرفه‌ای
             </span>
 
-            <h1 className="mt-6 text-5xl font-extrabold tracking-tight text-primary sm:text-6xl md:text-7xl">
+            <h1 className="mt-6 pr-4 text-6xl font-extrabold tracking-tight text-primary sm:text-7xl md:text-8xl">
               آرمانیان
             </h1>
 
