@@ -24,24 +24,24 @@ const Footer = () => {
 
   return (
     <footer className="bg-card border-t border-border">
-      <div className="container mx-auto px-4 py-16">
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="container mx-auto px-4 py-12 sm:py-16">
+        <div className="grid gap-10 text-center sm:text-right md:grid-cols-2 lg:grid-cols-4 sm:gap-8">
           {/* Brand Section */}
           <div className="space-y-4">
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center justify-center gap-2 sm:justify-start">
               <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-                <Code className="w-6 h-6 text-white" />
+                <Code className="w-6 h-6 text-primary-foreground" />
               </div>
-              <div>
+              <div className="text-right">
                 <h3 className="text-xl font-black text-foreground">آرمانیان</h3>
                 <p className="text-xs text-muted-foreground font-semibold">برنامه‌نویسان آینده</p>
               </div>
             </div>
-            <p className="text-muted-foreground text-sm font-medium">
+            <p className="mx-auto max-w-sm text-muted-foreground text-sm font-medium sm:mx-0">
               توانمندسازی ذهن‌های جوان با مهارت‌های برنامه‌نویسی و سواد دیجیتال 
               برای آینده‌ای محور فناوری.
             </p>
-            <div className="flex space-x-4">
+            <div className="flex justify-center gap-3 sm:justify-start">
               {socialLinks.map((social, index) => (
                 <a
                   key={index}
@@ -54,6 +54,7 @@ const Footer = () => {
               ))}
             </div>
           </div>
+
 
           {/* Quick Links */}
           <div>
@@ -93,11 +94,11 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-extrabold text-foreground mb-4">اطلاعات تماس</h4>
             <div className="space-y-3">
-              <div className="flex items-center space-x-3">
+              <div className="flex items-center justify-center gap-3 sm:justify-start">
                 <Mail className="w-4 h-4 text-primary" />
                 <span className="text-muted-foreground text-sm">info@armanian.ir</span>
               </div>
-              <div className="flex items-center space-x-3">
+              <div className="flex items-center justify-center gap-3 sm:justify-start">
                 <Phone className="w-4 h-4 text-primary" />
                 <span className="text-muted-foreground text-sm">۰۹۰۰۱۹۶۰۰۱۰</span>
               </div>
@@ -112,12 +113,12 @@ const Footer = () => {
         </div>
 
         {/* Bottom Section */}
-        <div className="border-t border-border mt-12 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <p className="text-muted-foreground text-sm">
+        <div className="border-t border-border mt-10 pt-8 sm:mt-12">
+          <div className="flex flex-col items-center justify-between gap-4 md:flex-row md:gap-0">
+            <p className="text-muted-foreground text-sm text-center">
               © ۱۴۰۳ آرمانیان. تمامی حقوق محفوظ است.
             </p>
-            <div className="flex space-x-6 text-sm">
+            <div className="flex flex-wrap justify-center gap-4 text-sm sm:gap-6">
               <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
                 سیاست حفظ حریم خصوصی
               </a>
@@ -130,6 +131,7 @@ const Footer = () => {
             </div>
           </div>
         </div>
+
       </div>
     </footer>
   );
