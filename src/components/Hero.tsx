@@ -127,7 +127,7 @@ const Hero = () => {
 
 
             {/* Search Bar */}
-            <div className="mx-auto mt-7 w-full max-w-xl sm:mt-8 lg:mx-0">
+            <div className="mx-auto mt-9 w-full max-w-xl sm:mt-10 lg:mx-0">
               <div className="relative">
                 <Search className="absolute right-4 top-1/2 z-10 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
                 <Input
@@ -146,7 +146,7 @@ const Hero = () => {
 
             </div>
 
-            <div className="mx-auto mt-7 flex w-full max-w-xl flex-col items-center justify-center gap-3 sm:mt-8 sm:flex-row sm:gap-4 lg:mx-0 lg:justify-start">
+            <div className="mx-auto mt-6 flex w-full max-w-xl flex-col items-center justify-center gap-3 sm:mt-7 sm:flex-row sm:gap-4 lg:mx-0 lg:justify-start">
               <Button variant="hero" size="lg" className="group w-full sm:w-auto" onClick={handleSignUp}>
                 همین امروز شروع کن
                 <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1" />
@@ -160,6 +160,7 @@ const Hero = () => {
                 مشاهده دوره‌ها
               </Button>
             </div>
+
           </div>
 
           {/* Visual column */}
