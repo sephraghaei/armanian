@@ -24,7 +24,7 @@ const DepartmentCard = ({ title, description, icon: Icon, courses, onLearnMore }
           <div className="absolute top-10 right-12 w-6 h-6 rounded-full bg-primary/8" />
 
           {/* Main icon */}
-          <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-primary shadow-md transition-transform duration-300 group-hover:scale-105">
+          <div className="flex h-20 w-20 items-center justify-center rounded-lg bg-primary shadow-md transition-transform duration-300 group-hover:scale-105">
             <Icon className="h-10 w-10 text-primary-foreground" />
 
           </div>

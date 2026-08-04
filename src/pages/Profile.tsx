@@ -271,7 +271,7 @@ const Profile = () => {
           </Button>
 
           {/* Profile Header */}
-          <div className="bg-gradient-hero rounded-2xl p-8 mb-8">
+          <div className="bg-gradient-hero rounded-lg p-8 mb-8">
             <div className="flex flex-col md:flex-row items-center gap-6">
               <Avatar className="w-24 h-24 border-4 border-white/20">
                 <AvatarImage src={userProfile?.avatar_url || undefined} />
