@@ -147,9 +147,9 @@ const Header = () => {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 animate-fade-in">
-      <div className="absolute inset-0 bg-gradient-to-b from-background/95 via-background/90 to-background/85 backdrop-blur-2xl border-b border-border/10"></div>
-      <div className="relative container mx-auto px-2 md:px-6 py-3">
-        <div className="flex items-center justify-between h-14 gap-2 px-2 md:px-6 rounded-2xl border border-border/20 bg-card/70 backdrop-blur-md shadow-xl hover:shadow-2xl transition-all duration-500">
+      <div className="absolute inset-0 bg-background/95 backdrop-blur-xl border-b border-border"></div>
+      <div className="relative container mx-auto px-3 md:px-6">
+        <div className="flex items-center justify-between h-16 gap-2">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-reverse space-x-2 group hover-scale flex-shrink-0">
             <div className="relative">
@@ -179,10 +179,10 @@ const Header = () => {
                 <a
                   key={item.label}
                   href={item.href}
-                  className={`story-link relative px-3 py-2 rounded-lg font-bold transition-all duration-300 group animate-fade-in ${
+                  className={`relative px-4 py-2 text-sm font-bold transition-colors duration-200 border-b-2 animate-fade-in ${
                     isActive 
-                      ? 'text-primary bg-primary/10 shadow-sm' 
-                      : 'text-foreground/80 hover:text-primary hover:bg-primary/5'
+                      ? 'text-primary border-primary' 
+                      : 'text-foreground/80 border-transparent hover:text-primary hover:border-primary/40'
                   }`}
                   style={{ animationDelay: `${index * 100}ms` }}
                   onClick={(e) => handleHashClick(e, item.href)}
@@ -193,10 +193,10 @@ const Header = () => {
                 <Link
                   key={item.label}
                   to={item.href}
-                  className={`story-link relative px-3 py-2 rounded-lg font-bold transition-all duration-300 group animate-fade-in ${
+                  className={`relative px-4 py-2 text-sm font-bold transition-colors duration-200 border-b-2 animate-fade-in ${
                     isActive 
-                      ? 'text-primary bg-primary/10 shadow-sm' 
-                      : 'text-foreground/80 hover:text-primary hover:bg-primary/5'
+                      ? 'text-primary border-primary' 
+                      : 'text-foreground/80 border-transparent hover:text-primary hover:border-primary/40'
                   }`}
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
@@ -267,7 +267,7 @@ const Header = () => {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden mt-3 p-4 rounded-xl border border-border/20 bg-card/90 backdrop-blur-xl shadow-xl animate-slide-in-right">
+          <div className="md:hidden mt-0 p-4 border-t border-border bg-card backdrop-blur-xl shadow-xl animate-slide-in-right">
             <nav className="flex flex-col space-y-2">
               {menuItems.map((item, index) => {
                 const isHashLink = item.href.startsWith('#');
