@@ -33,7 +33,6 @@ const Hero = () => {
   const [courses, setCourses] = useState<Course[]>([]);
   const [departments, setDepartments] = useState<Department[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -55,28 +54,19 @@ const Hero = () => {
   };
 
   const filteredCourses = useMemo(() => {
-    return courses.filter(course => {
-      const matchesSearch = searchQuery === '' || 
-        course.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        course.description?.toLowerCase().includes(searchQuery.toLowerCase());
-      
-      const matchesCategory = selectedCategory === null || course.department_id === selectedCategory;
-      
-      return matchesSearch && matchesCategory;
-    });
-  }, [courses, searchQuery, selectedCategory]);
+    if (!searchQuery.trim()) return courses;
+    return courses.filter(course => 
+      course.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      course.description?.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [courses, searchQuery]);
 
   const filteredDepartments = useMemo(() => {
-    if (selectedCategory) {
-      return departments.filter(dept => dept.id === selectedCategory);
-    }
-    if (searchQuery) {
-      return departments.filter(dept => 
-        dept.name.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-    }
-    return departments;
-  }, [departments, searchQuery, selectedCategory]);
+    if (!searchQuery.trim()) return departments;
+    return departments.filter(dept => 
+      dept.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [departments, searchQuery]);
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
@@ -104,18 +94,6 @@ const Hero = () => {
         element.scrollIntoView({ behavior: 'smooth' });
       }
     }, 100);
-  };
-
-  const handleCategoryClick = (departmentId: number | null) => {
-    setSelectedCategory(departmentId);
-    setSearchQuery('');
-    setOpen(false);
-    if (departmentId) {
-      // Navigate to courses page with department filter
-      navigate('/courses');
-      // The courses page will need to handle the filter via URL params or state
-      // For now, just navigate to courses page
-    }
   };
 
   const handleSignUp = () => {
@@ -165,26 +143,6 @@ const Hero = () => {
                 />
               </div>
 
-              {/* Categories */}
-              <div className="mt-4 flex flex-wrap justify-center gap-2 lg:justify-start">
-                <Button
-                  variant={selectedCategory === null ? 'default' : 'outline'}
-                  size="sm"
-                  onClick={() => handleCategoryClick(null)}
-                >
-                  همه
-                </Button>
-                {departments.map((dept) => (
-                  <Button
-                    key={dept.id}
-                    variant={selectedCategory === dept.id ? 'default' : 'outline'}
-                    size="sm"
-                    onClick={() => handleCategoryClick(dept.id)}
-                  >
-                    {dept.name}
-                  </Button>
-                ))}
-              </div>
             </div>
 
             <div className="mx-auto mt-7 flex w-full max-w-xl flex-col items-center justify-center gap-3 sm:mt-8 sm:flex-row sm:gap-4 lg:mx-0 lg:justify-start">
