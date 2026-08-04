@@ -200,7 +200,7 @@ const CourseDetail = () => {
           {/* Course Details */}
           <div className="lg:col-span-2 space-y-8">
             {/* Header */}
-            <div className="bg-gradient-hero rounded-2xl p-8">
+            <div className="bg-gradient-hero rounded-lg p-8">
               <div className="flex items-start justify-between mb-4">
                 <div>
                   <h1 className="text-3xl font-bold text-foreground mb-2">{course.title}</h1>

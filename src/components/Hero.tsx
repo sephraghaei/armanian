@@ -163,7 +163,7 @@ const Hero = () => {
 
           {/* Visual column */}
           <div className="relative mx-auto w-full max-w-xl animate-scale-in lg:mx-0 lg:max-w-none">
-            <div className="rounded-3xl border border-border bg-card p-4 shadow-lifted sm:p-6 md:p-8">
+            <div className="rounded-xl border border-border bg-card p-4 shadow-lifted sm:p-6 md:p-8">
               <div className="grid grid-cols-2 gap-3 sm:gap-4">
                 {[
                   { icon: Building2, label: 'دپارتمان تخصصی', value: '۴' },
@@ -173,7 +173,7 @@ const Hero = () => {
                 ].map(({ icon: Icon, label, value }) => (
                   <div
                     key={label}
-                    className="flex flex-col items-center rounded-2xl border border-border/70 bg-secondary/60 p-3 text-center transition-colors duration-300 hover:border-primary/40 sm:p-4 lg:items-start lg:text-right"
+                    className="flex flex-col items-center rounded-lg border border-border/70 bg-secondary/60 p-3 text-center transition-colors duration-300 hover:border-primary/40 sm:p-4 lg:items-start lg:text-right"
                   >
                     <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
                       <Icon className="h-5 w-5" />
@@ -185,7 +185,7 @@ const Hero = () => {
               </div>
 
 
-              <div className="mt-6 rounded-2xl bg-primary p-5 text-primary-foreground">
+              <div className="mt-6 rounded-lg bg-primary p-5 text-primary-foreground">
                 <p className="text-sm font-bold">ثبت‌نام ترم جدید آغاز شد</p>
                 <p className="mt-1 text-sm opacity-90">
                   مشاوره رایگان انتخاب دوره برای همه‌ی سنین.

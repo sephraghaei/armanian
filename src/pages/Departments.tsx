@@ -255,7 +255,7 @@ const DepartmentsPage = () => {
         <div className="container mx-auto px-4">
           <div className="space-y-16">
             {departments.map((dept, index) => (
-              <div key={index} className="bg-gradient-hero rounded-2xl p-8">
+              <div key={index} className="bg-gradient-hero rounded-lg p-8">
                 <div className="flex items-center mb-8">
                   <div className="w-16 h-16 bg-primary rounded-xl flex items-center justify-center ml-4">
                     <dept.icon className="w-8 h-8 text-white" />
@@ -312,7 +312,7 @@ const DepartmentsPage = () => {
           </div>
 
           <div className="text-center mt-16">
-            <div className="bg-card rounded-2xl p-8 border">
+            <div className="bg-card rounded-lg p-8 border">
               <h3 className="text-2xl font-bold text-foreground mb-4">
                 آماده شروع هستید؟
               </h3>

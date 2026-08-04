@@ -420,7 +420,7 @@ const CourseDetailsPage = () => {
             {/* Main Content */}
             <div className="lg:col-span-2 space-y-8">
               {/* Course Header */}
-              <div className="bg-gradient-hero rounded-2xl p-8">
+              <div className="bg-gradient-hero rounded-lg p-8">
                 <div className="flex flex-wrap gap-2 mb-4">
                   <Badge variant="secondary">{course.level}</Badge>
                   <Badge variant="outline">{course.ageGroup}</Badge>

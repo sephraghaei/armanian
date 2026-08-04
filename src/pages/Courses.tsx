@@ -293,7 +293,7 @@ const CoursesPage = () => {
                   {courses
                     .filter(c => c.learning_outcomes && c.learning_outcomes.length > 0)
                     .map((course) => (
-                      <div key={course.id} className="bg-gradient-hero rounded-2xl p-8">
+                      <div key={course.id} className="bg-gradient-hero rounded-lg p-8">
                         <div className="grid md:grid-cols-2 gap-8 items-center">
                           <div>
                             <h3 className="text-2xl font-bold text-foreground mb-4 flex items-center">
@@ -334,7 +334,7 @@ const CoursesPage = () => {
           )}
 
           {/* CTA Section */}
-          <div className="mt-16 text-center bg-card rounded-2xl p-8 border">
+          <div className="mt-16 text-center bg-card rounded-lg p-8 border">
             <h3 className="text-2xl font-bold text-foreground mb-4">
               هنوز مطمئن نیستید؟
             </h3>
