@@ -179,10 +179,10 @@ const Header = () => {
                 <a
                   key={item.label}
                   href={item.href}
-                  className={`story-link relative px-3 py-2 rounded-lg font-bold transition-all duration-300 group animate-fade-in ${
+                  className={`relative px-4 py-2 text-sm font-bold transition-colors duration-200 border-b-2 animate-fade-in ${
                     isActive 
-                      ? 'text-primary bg-primary/10 shadow-sm' 
-                      : 'text-foreground/80 hover:text-primary hover:bg-primary/5'
+                      ? 'text-primary border-primary' 
+                      : 'text-foreground/80 border-transparent hover:text-primary hover:border-primary/40'
                   }`}
                   style={{ animationDelay: `${index * 100}ms` }}
                   onClick={(e) => handleHashClick(e, item.href)}
@@ -193,10 +193,10 @@ const Header = () => {
                 <Link
                   key={item.label}
                   to={item.href}
-                  className={`story-link relative px-3 py-2 rounded-lg font-bold transition-all duration-300 group animate-fade-in ${
+                  className={`relative px-4 py-2 text-sm font-bold transition-colors duration-200 border-b-2 animate-fade-in ${
                     isActive 
-                      ? 'text-primary bg-primary/10 shadow-sm' 
-                      : 'text-foreground/80 hover:text-primary hover:bg-primary/5'
+                      ? 'text-primary border-primary' 
+                      : 'text-foreground/80 border-transparent hover:text-primary hover:border-primary/40'
                   }`}
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
@@ -267,7 +267,7 @@ const Header = () => {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden mt-3 p-4 rounded-xl border border-border/20 bg-card/90 backdrop-blur-xl shadow-xl animate-slide-in-right">
+          <div className="md:hidden mt-0 p-4 border-t border-border bg-card backdrop-blur-xl shadow-xl animate-slide-in-right">
             <nav className="flex flex-col space-y-2">
               {menuItems.map((item, index) => {
                 const isHashLink = item.href.startsWith('#');
