@@ -54,28 +54,19 @@ const Hero = () => {
   };
 
   const filteredCourses = useMemo(() => {
-    return courses.filter(course => {
-      const matchesSearch = searchQuery === '' || 
-        course.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        course.description?.toLowerCase().includes(searchQuery.toLowerCase());
-      
-      const matchesCategory = selectedCategory === null || course.department_id === selectedCategory;
-      
-      return matchesSearch && matchesCategory;
-    });
-  }, [courses, searchQuery, selectedCategory]);
+    if (!searchQuery.trim()) return courses;
+    return courses.filter(course => 
+      course.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      course.description?.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [courses, searchQuery]);
 
   const filteredDepartments = useMemo(() => {
-    if (selectedCategory) {
-      return departments.filter(dept => dept.id === selectedCategory);
-    }
-    if (searchQuery) {
-      return departments.filter(dept => 
-        dept.name.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-    }
-    return departments;
-  }, [departments, searchQuery, selectedCategory]);
+    if (!searchQuery.trim()) return departments;
+    return departments.filter(dept => 
+      dept.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [departments, searchQuery]);
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
