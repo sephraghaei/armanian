@@ -96,18 +96,6 @@ const Hero = () => {
     }, 100);
   };
 
-  const handleCategoryClick = (departmentId: number | null) => {
-    setSelectedCategory(departmentId);
-    setSearchQuery('');
-    setOpen(false);
-    if (departmentId) {
-      // Navigate to courses page with department filter
-      navigate('/courses');
-      // The courses page will need to handle the filter via URL params or state
-      // For now, just navigate to courses page
-    }
-  };
-
   const handleSignUp = () => {
     navigate('/auth');
   };
