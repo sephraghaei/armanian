@@ -165,26 +165,6 @@ const Hero = () => {
                 />
               </div>
 
-              {/* Categories */}
-              <div className="mt-4 flex flex-wrap justify-center gap-2 lg:justify-start">
-                <Button
-                  variant={selectedCategory === null ? 'default' : 'outline'}
-                  size="sm"
-                  onClick={() => handleCategoryClick(null)}
-                >
-                  همه
-                </Button>
-                {departments.map((dept) => (
-                  <Button
-                    key={dept.id}
-                    variant={selectedCategory === dept.id ? 'default' : 'outline'}
-                    size="sm"
-                    onClick={() => handleCategoryClick(dept.id)}
-                  >
-                    {dept.name}
-                  </Button>
-                ))}
-              </div>
             </div>
 
             <div className="mx-auto mt-7 flex w-full max-w-xl flex-col items-center justify-center gap-3 sm:mt-8 sm:flex-row sm:gap-4 lg:mx-0 lg:justify-start">
