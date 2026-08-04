@@ -102,10 +102,10 @@ const Hero = () => {
   return (
     <section
       id="home"
-      className="relative overflow-hidden bg-transparent pt-24 pb-12 sm:pt-28 sm:pb-16 md:pt-36 md:pb-24"
+      className="relative overflow-hidden bg-transparent pt-28 pb-16 sm:pt-32 sm:pb-20 md:pt-40 md:pb-28"
     >
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="grid items-center gap-10 sm:gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
+      <div className="container mx-auto px-4 sm:px-6 relative z-10">
+        <div className="grid items-center gap-14 sm:gap-16 lg:grid-cols-[1.05fr_0.95fr] lg:gap-20 xl:gap-24">
           {/* Text column */}
           <div className="mx-auto w-full max-w-2xl text-center animate-slide-in-up lg:mx-0 lg:text-right">
             <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-1.5 text-xs font-bold text-primary shadow-soft sm:text-sm">
@@ -113,17 +113,18 @@ const Hero = () => {
               آموزشگاه آزاد فنی و حرفه‌ای
             </span>
 
-            <h1 className="mt-5 text-5xl font-extrabold tracking-tight text-primary sm:mt-6 sm:text-6xl md:text-7xl lg:pr-4 lg:text-8xl">
+            <h1 className="mt-7 text-5xl font-extrabold tracking-tight text-primary sm:mt-8 sm:text-6xl md:text-7xl lg:pr-4 lg:text-8xl">
               آرمانیان
             </h1>
 
-            <h2 className="mt-2 text-lg font-bold text-foreground sm:text-2xl md:text-3xl">
+            <h2 className="mt-4 text-lg font-bold text-foreground sm:mt-5 sm:text-2xl md:text-3xl">
               آموزش کامپیوتر، گرافیک، معماری و زبان
             </h2>
 
-            <p className="mx-auto mt-4 max-w-xl text-sm text-muted-foreground sm:mt-5 sm:text-lg lg:mx-0">
+            <p className="mx-auto mt-5 max-w-xl text-sm leading-relaxed text-muted-foreground sm:mt-6 sm:text-lg lg:mx-0">
               <Typewriter text="مسیر آینده از آرمانیان می گذرد ..." />
             </p>
+
 
             {/* Search Bar */}
             <div className="mx-auto mt-7 w-full max-w-xl sm:mt-8 lg:mx-0">
