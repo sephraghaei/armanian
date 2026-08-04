@@ -147,9 +147,9 @@ const Header = () => {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 animate-fade-in">
-      <div className="absolute inset-0 bg-gradient-to-b from-background/95 via-background/90 to-background/85 backdrop-blur-2xl border-b border-border/10"></div>
-      <div className="relative container mx-auto px-2 md:px-6 py-3">
-        <div className="flex items-center justify-between h-14 gap-2 px-2 md:px-6 rounded-2xl border border-border/20 bg-card/70 backdrop-blur-md shadow-xl hover:shadow-2xl transition-all duration-500">
+      <div className="absolute inset-0 bg-background/95 backdrop-blur-xl border-b border-border"></div>
+      <div className="relative container mx-auto px-3 md:px-6">
+        <div className="flex items-center justify-between h-16 gap-2">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-reverse space-x-2 group hover-scale flex-shrink-0">
             <div className="relative">
