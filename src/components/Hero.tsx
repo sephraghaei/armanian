@@ -165,8 +165,8 @@ const Hero = () => {
 
           {/* Visual column */}
           <div className="relative mx-auto w-full max-w-xl animate-scale-in lg:mx-0 lg:max-w-none">
-            <div className="rounded-xl border border-border bg-card p-4 shadow-lifted sm:p-6 md:p-8">
-              <div className="grid grid-cols-2 gap-3 sm:gap-4">
+            <div className="rounded-xl border border-border bg-card p-5 shadow-lifted sm:p-7 md:p-9">
+              <div className="grid grid-cols-2 gap-4 sm:gap-5">
                 {[
                   { icon: Building2, label: 'دپارتمان تخصصی', value: '۴' },
                   { icon: BookOpen, label: 'دوره فعال', value: '+۱۴' },
@@ -175,25 +175,26 @@ const Hero = () => {
                 ].map(({ icon: Icon, label, value }) => (
                   <div
                     key={label}
-                    className="flex flex-col items-center rounded-lg border border-border/70 bg-secondary/60 p-3 text-center transition-colors duration-300 hover:border-primary/40 sm:p-4 lg:items-start lg:text-right"
+                    className="flex flex-col items-center rounded-lg border border-border/70 bg-secondary/60 p-4 text-center transition-colors duration-300 hover:border-primary/40 sm:p-5 lg:items-start lg:text-right"
                   >
                     <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
                       <Icon className="h-5 w-5" />
                     </span>
-                    <p className="mt-3 text-base font-bold text-foreground sm:text-lg">{value}</p>
-                    <p className="text-xs text-muted-foreground sm:text-sm">{label}</p>
+                    <p className="mt-4 text-base font-bold text-foreground sm:text-lg">{value}</p>
+                    <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground sm:text-sm">{label}</p>
                   </div>
                 ))}
               </div>
 
 
-              <div className="mt-6 rounded-lg bg-primary p-5 text-primary-foreground">
+              <div className="mt-5 rounded-lg bg-primary p-5 text-primary-foreground sm:mt-6 sm:p-6">
                 <p className="text-sm font-bold">ثبت‌نام ترم جدید آغاز شد</p>
-                <p className="mt-1 text-sm opacity-90">
+                <p className="mt-2 text-sm leading-relaxed opacity-90">
                   مشاوره رایگان انتخاب دوره برای همه‌ی سنین.
                 </p>
               </div>
             </div>
+
             <div className="pointer-events-none absolute -bottom-6 -left-6 -z-10 h-32 w-32 rounded-full bg-accent/20 blur-2xl" />
             <div className="pointer-events-none absolute -top-6 -right-6 -z-10 h-32 w-32 rounded-full bg-primary/15 blur-2xl" />
           </div>
