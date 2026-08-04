@@ -33,7 +33,6 @@ const Hero = () => {
   const [courses, setCourses] = useState<Course[]>([]);
   const [departments, setDepartments] = useState<Department[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
