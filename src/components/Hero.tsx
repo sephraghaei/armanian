@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { ArrowRight, Search, BookOpen, Building2, GraduationCap, Award } from 'lucide-react';
+import { ArrowRight, Search } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState, useMemo } from 'react';
 import { supabase } from '@/integrations/supabase/client';
@@ -105,7 +105,7 @@ const Hero = () => {
       className="relative overflow-hidden bg-transparent pt-28 pb-16 sm:pt-32 sm:pb-20 md:pt-40 md:pb-28"
     >
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
-        <div className="grid items-center gap-14 sm:gap-16 lg:grid-cols-[1.05fr_0.95fr] lg:gap-20 xl:gap-24">
+        <div className="grid items-center justify-center gap-14 sm:gap-16">
           {/* Text column */}
           <div className="mx-auto w-full max-w-2xl text-center animate-slide-in-up lg:mx-0 lg:text-right">
             <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-1.5 text-xs font-bold text-primary shadow-soft sm:text-sm">
