@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { ArrowRight, Search, BookOpen, Building2, GraduationCap, Award } from 'lucide-react';
+import { ArrowRight, Search, BookOpen, Building2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState, useMemo } from 'react';
 import { supabase } from '@/integrations/supabase/client';
@@ -105,7 +105,7 @@ const Hero = () => {
       className="relative overflow-hidden bg-transparent pt-28 pb-16 sm:pt-32 sm:pb-20 md:pt-40 md:pb-28"
     >
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
-        <div className="grid items-center gap-14 sm:gap-16 lg:grid-cols-[1.05fr_0.95fr] lg:gap-20 xl:gap-24">
+        <div className="grid items-center justify-center gap-14 sm:gap-16">
           {/* Text column */}
           <div className="mx-auto w-full max-w-2xl text-center animate-slide-in-up lg:mx-0 lg:text-right">
             <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-1.5 text-xs font-bold text-primary shadow-soft sm:text-sm">
@@ -163,41 +163,6 @@ const Hero = () => {
 
           </div>
 
-          {/* Visual column */}
-          <div className="relative mx-auto w-full max-w-xl animate-scale-in lg:mx-0 lg:max-w-none">
-            <div className="rounded-xl border border-border bg-card p-5 shadow-lifted sm:p-7 md:p-9">
-              <div className="grid grid-cols-2 gap-4 sm:gap-5">
-                {[
-                  { icon: Building2, label: 'دپارتمان تخصصی', value: '۴' },
-                  { icon: BookOpen, label: 'دوره فعال', value: '+۱۴' },
-                  { icon: GraduationCap, label: 'دانشجوی آموزش‌دیده', value: '+۱۲۰۰' },
-                  { icon: Award, label: 'گواهینامه معتبر', value: 'فنی و حرفه‌ای' },
-                ].map(({ icon: Icon, label, value }) => (
-                  <div
-                    key={label}
-                    className="flex flex-col items-center rounded-lg border border-border/70 bg-secondary/60 p-4 text-center transition-colors duration-300 hover:border-primary/40 sm:p-5 lg:items-start lg:text-right"
-                  >
-                    <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                      <Icon className="h-5 w-5" />
-                    </span>
-                    <p className="mt-4 text-base font-bold text-foreground sm:text-lg">{value}</p>
-                    <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground sm:text-sm">{label}</p>
-                  </div>
-                ))}
-              </div>
-
-
-              <div className="mt-5 rounded-lg bg-primary p-5 text-primary-foreground sm:mt-6 sm:p-6">
-                <p className="text-sm font-bold">ثبت‌نام ترم جدید آغاز شد</p>
-                <p className="mt-2 text-sm leading-relaxed opacity-90">
-                  مشاوره رایگان انتخاب دوره برای همه‌ی سنین.
-                </p>
-              </div>
-            </div>
-
-            <div className="pointer-events-none absolute -bottom-6 -left-6 -z-10 h-32 w-32 rounded-full bg-accent/20 blur-2xl" />
-            <div className="pointer-events-none absolute -top-6 -right-6 -z-10 h-32 w-32 rounded-full bg-primary/15 blur-2xl" />
-          </div>
         </div>
 
         {/* Search Results Dialog */}
