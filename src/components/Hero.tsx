@@ -102,68 +102,62 @@ const Hero = () => {
   return (
     <section
       id="home"
-      className="relative overflow-hidden bg-transparent pt-28 pb-16 sm:pt-32 sm:pb-20 md:pt-40 md:pb-28"
+      className="relative overflow-hidden bg-transparent pt-32 pb-20 sm:pt-40 sm:pb-24 md:pt-48 md:pb-32"
     >
-      <div className="container mx-auto px-4 sm:px-6 relative z-10">
-        <div className="grid items-center justify-center gap-14 sm:gap-16">
-          {/* Text column */}
-          <div className="mx-auto w-full max-w-2xl text-center animate-slide-in-up lg:mx-0 lg:text-right">
-            <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-1.5 text-xs font-bold text-primary shadow-soft sm:text-sm">
-              <span className="h-2 w-2 rounded-full bg-accent" />
-              آموزشگاه آزاد فنی و حرفه‌ای
-            </span>
+      <div className="container mx-auto max-w-3xl px-5 sm:px-6 relative z-10">
+        <div className="flex flex-col items-center text-center animate-slide-in-up">
+          <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-muted-foreground">
+            <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+            آموزشگاه آزاد فنی و حرفه‌ای
+          </span>
 
-            <h1 className="mt-7 text-5xl font-extrabold tracking-tight text-primary sm:mt-8 sm:text-6xl md:text-7xl lg:pr-4 lg:text-8xl">
-              آرمانیان
-            </h1>
+          <h1 className="mt-8 text-4xl font-semibold tracking-tight text-foreground sm:text-6xl md:text-7xl">
+            آرمانیان
+          </h1>
 
-            <h2 className="mt-4 text-lg font-bold text-foreground sm:mt-5 sm:text-2xl md:text-3xl">
-              آموزش کامپیوتر، گرافیک، معماری و زبان
-            </h2>
+          <h2 className="mt-4 text-balance text-xl font-medium text-foreground/90 sm:text-2xl md:text-3xl">
+            آموزش کامپیوتر، گرافیک، معماری و زبان
+          </h2>
 
-            <p className="mx-auto mt-5 max-w-xl text-sm leading-relaxed text-muted-foreground sm:mt-6 sm:text-lg lg:mx-0">
-              <Typewriter text="مسیر آینده از آرمانیان می گذرد ..." />
-            </p>
+          <p className="mt-5 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+            <Typewriter text="مسیر آینده از آرمانیان می گذرد ..." />
+          </p>
 
-
-            {/* Search Bar */}
-            <div className="mx-auto mt-9 w-full max-w-xl sm:mt-10 lg:mx-0">
-              <div className="relative">
-                <Search className="absolute right-4 top-1/2 z-10 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
-                <Input
-                  type="text"
-                  placeholder="جستجوی دوره یا دپارتمان..."
-                  value={searchQuery}
-                  onChange={(e) => handleSearch(e.target.value)}
-                  onFocus={() => {
-                    if (searchQuery.length > 0 || courses.length > 0 || departments.length > 0) {
-                      setOpen(true);
-                    }
-                  }}
-                  className="h-12 w-full rounded-xl border-border bg-card pr-12 text-sm shadow-soft focus-visible:ring-primary sm:h-14 sm:text-base"
-                />
-              </div>
-
+          {/* Search Bar */}
+          <div className="mt-10 w-full max-w-lg">
+            <div className="relative">
+              <Search className="absolute right-4 top-1/2 z-10 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+              <Input
+                type="text"
+                placeholder="جستجوی دوره یا دپارتمان..."
+                value={searchQuery}
+                onChange={(e) => handleSearch(e.target.value)}
+                onFocus={() => {
+                  if (searchQuery.length > 0 || courses.length > 0 || departments.length > 0) {
+                    setOpen(true);
+                  }
+                }}
+                className="h-12 w-full rounded-lg border-border bg-card pr-11 text-sm shadow-soft focus-visible:ring-1 focus-visible:ring-ring"
+              />
             </div>
-
-            <div className="mx-auto mt-6 flex w-full max-w-xl flex-col items-center justify-center gap-3 sm:mt-7 sm:flex-row sm:gap-4 lg:mx-0 lg:justify-start">
-              <Button variant="hero" size="lg" className="group w-full sm:w-auto" onClick={handleSignUp}>
-                همین امروز شروع کن
-                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1" />
-              </Button>
-              <Button
-                variant="outline"
-                size="lg"
-                className="w-full sm:w-auto"
-                onClick={() => navigate('/courses')}
-              >
-                مشاهده دوره‌ها
-              </Button>
-            </div>
-
           </div>
 
+          <div className="mt-6 flex w-full max-w-lg flex-col items-center justify-center gap-3 sm:w-auto sm:flex-row">
+            <Button size="lg" className="group w-full shadow-none hover:shadow-none sm:w-auto" onClick={handleSignUp}>
+              همین امروز شروع کن
+              <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1" />
+            </Button>
+            <Button
+              variant="outline"
+              size="lg"
+              className="w-full bg-card sm:w-auto"
+              onClick={() => navigate('/courses')}
+            >
+              مشاهده دوره‌ها
+            </Button>
+          </div>
         </div>
+
 
         {/* Search Results Dialog */}
         <CommandDialog open={open} onOpenChange={setOpen}>
