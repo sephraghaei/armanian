@@ -59,19 +59,18 @@ const ScrollArrows = () => {
         <PhoneCall className="w-5 h-5 sm:w-6 sm:h-6 text-primary-foreground relative z-10" />
       </a>
 
-      </a>
-      
       {/* Scroll Buttons */}
       {showDown && (
         <button aria-label="Scroll down" className={commonBtn} onClick={scrollDown}>
-          <ChevronDown className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
+          <ChevronDown className="w-6 h-6 sm:w-7 sm:h-7" />
         </button>
       )}
       {showUp && (
         <button aria-label="Back to top" className={commonBtn} onClick={scrollToTop}>
-          <ChevronUp className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
+          <ChevronUp className="w-6 h-6 sm:w-7 sm:h-7" />
         </button>
       )}
+
     </div>
   );
 };
