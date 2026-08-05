@@ -39,9 +39,9 @@ const ScrollArrows = () => {
     window.scrollTo({ top: nextY, behavior: 'smooth' });
   };
 
-  const commonBtn = "flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-primary/30 bg-primary/90 backdrop-blur-xl shadow-2xl hover:shadow-primary/50 transition-all duration-300 hover:scale-110 hover:border-primary";
+  const commonBtn = "flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full border border-border bg-card text-foreground shadow-soft hover:shadow-lifted transition-all duration-300 hover:scale-105";
   
-  const consultationBtn = "flex items-center justify-center w-16 h-16 sm:w-18 sm:h-18 rounded-full border-3 border-green-400/50 bg-gradient-to-br from-green-500 via-emerald-500 to-teal-500 backdrop-blur-xl shadow-2xl hover:shadow-green-400/60 transition-all duration-300 hover:scale-110 hover:border-green-300 relative overflow-hidden group";
+  const consultationBtn = "flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-full border border-primary/20 bg-primary shadow-lifted transition-all duration-300 hover:scale-105 relative overflow-hidden group";
 
   return (
     <div className="fixed right-4 bottom-4 z-50 flex flex-col gap-3 sm:gap-4">
@@ -53,26 +53,24 @@ const ScrollArrows = () => {
         title="تماس برای مشاوره"
       >
         {/* Ripple effect */}
-        <div className="absolute inset-0 rounded-full bg-white/20 scale-0 group-hover:scale-100 transition-transform duration-500"></div>
+        <div className="absolute inset-0 rounded-full bg-primary-foreground/10 scale-0 group-hover:scale-100 transition-transform duration-500"></div>
         
         {/* Phone icon */}
-        <PhoneCall className="w-5 h-5 sm:w-6 sm:h-6 text-white relative z-10 drop-shadow-lg" />
-        
-        {/* Pulse ring */}
-        <div className="absolute inset-0 rounded-full border-2 border-green-300/40 animate-pulse"></div>
+        <PhoneCall className="w-5 h-5 sm:w-6 sm:h-6 text-primary-foreground relative z-10" />
       </a>
-      
+
       {/* Scroll Buttons */}
       {showDown && (
         <button aria-label="Scroll down" className={commonBtn} onClick={scrollDown}>
-          <ChevronDown className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
+          <ChevronDown className="w-6 h-6 sm:w-7 sm:h-7" />
         </button>
       )}
       {showUp && (
         <button aria-label="Back to top" className={commonBtn} onClick={scrollToTop}>
-          <ChevronUp className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
+          <ChevronUp className="w-6 h-6 sm:w-7 sm:h-7" />
         </button>
       )}
+
     </div>
   );
 };
