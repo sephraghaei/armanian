@@ -79,44 +79,40 @@ const About = () => {
         </div>
 
 
-        
         {/* Video Section */}
-        <div className="mt-20 animate-slide-in-up" style={{ animationDelay: '0.8s' }}>
-          <h3 className="text-xl md:text-2xl lg:text-3xl font-black text-foreground mb-6 md:mb-8 text-center px-4 animate-bounce-in">
+        <div className="mt-20">
+          <h3 className="mb-8 text-center text-2xl font-semibold tracking-tight text-foreground">
             ویدیوهای آموزشی ما
           </h3>
-          
-          <div className="max-w-2xl mx-auto px-4">
-            <Card className="overflow-hidden bg-card border-2 hover:shadow-xl hover:shadow-primary/10 transition-all duration-500 hover:scale-105">
+
+          <div className="mx-auto max-w-2xl">
+            <Card className="overflow-hidden border-border bg-card shadow-soft">
               {/* Video List */}
-              <div className="border-l-4 border-primary bg-card">
+              <div>
                 {videos.map((video, index) =>
                 <button
                   key={index}
                   onClick={() => setSelectedVideo(index)}
-                  className={`w-full flex items-center justify-between gap-2 md:gap-4 p-3 md:p-4 transition-all border-b last:border-b-0 hover:bg-primary/10 hover:scale-105 ${
-                  selectedVideo === index ?
-                  'bg-primary/5 animate-glow' :
-                  'hover:bg-muted/50'}`
+                  className={`flex w-full items-center justify-between gap-3 border-b border-border p-4 text-right transition-colors duration-150 last:border-b-0 ${
+                  selectedVideo === index ? 'bg-secondary' : 'hover:bg-secondary/60'}`
                   }>
 
-                    <h4 className="text-right text-xs md:text-sm lg:text-base font-bold text-foreground flex-1 leading-relaxed">
+                    <h4 className="flex-1 text-right text-sm font-medium leading-relaxed text-foreground">
                       {video.title}
                     </h4>
-                    
+
                     <div className="relative flex-shrink-0">
-                      <div className="w-16 h-12 md:w-24 md:h-16 bg-muted rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all duration-300">
+                      <div className="h-12 w-16 overflow-hidden rounded-md border border-border bg-muted md:h-14 md:w-20">
                         <video
                         src={video.src}
-                        className="w-full h-full object-cover hover:scale-110 transition-transform duration-300" />
+                        className="h-full w-full object-cover" />
 
                       </div>
                       <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-8 h-8 md:w-10 md:h-10 bg-primary/90 rounded-full flex items-center justify-center shadow-lg hover:scale-125 hover:bg-primary transition-all duration-300 animate-heartbeat">
+                        <div className="flex h-7 w-7 items-center justify-center rounded-full bg-primary">
                           <svg
                           viewBox="0 0 24 24"
-                          fill="white"
-                          className="w-4 h-4 md:w-5 md:h-5 mr-[-2px]">
+                          className="mr-[-2px] h-3.5 w-3.5 fill-primary-foreground">
 
                             <path d="M8 5v14l11-7z" />
                           </svg>
@@ -128,23 +124,24 @@ const About = () => {
               </div>
 
               {/* Main Video Player */}
-              <div className="p-4 md:p-6 bg-muted/30">
-                <div className="relative rounded-xl overflow-hidden shadow-2xl bg-muted hover:shadow-primary/25 transition-all duration-500">
+              <div className="border-t border-border bg-secondary/40 p-4 md:p-6">
+                <div className="relative overflow-hidden rounded-md border border-border bg-muted">
                   <video
                     key={selectedVideo}
                     src={videos[selectedVideo].src}
                     controls
-                    className="w-full aspect-video hover:scale-105 transition-transform duration-500" />
+                    className="aspect-video w-full" />
 
                 </div>
-                
-                <p className="text-center text-foreground mt-3 md:mt-4 font-extrabold text-sm md:text-base lg:text-lg px-2 animate-slide-in-up">
+
+                <p className="mt-4 text-center text-sm font-medium text-foreground">
                   {videos[selectedVideo].title}
                 </p>
               </div>
             </Card>
           </div>
         </div>
+
       </div>
     </section>);
 
