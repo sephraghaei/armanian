@@ -87,39 +87,36 @@ const Departments = () => {
   }, [searchQuery]);
 
   return (
-    <section id="departments" className="py-14 sm:py-20 md:py-24 bg-secondary/40 border-y border-border relative overflow-hidden">
-      {/* Background decorative elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-10 w-40 h-40 bg-primary/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 right-10 w-40 h-40 bg-accent/10 rounded-full blur-3xl" />
-      </div>
-      
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="text-center mb-10 sm:mb-14 max-w-2xl mx-auto">
-          <div className="inline-flex items-center gap-2 bg-primary/10 px-4 py-1.5 rounded-full mb-5">
-            <div className="w-2 h-2 bg-accent rounded-full" />
-            <span className="text-sm font-bold text-primary">دپارتمان‌های تخصصی</span>
-          </div>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-foreground mb-4">
+    <section id="departments" className="border-t border-border bg-secondary/30 py-20 sm:py-24 md:py-28">
+      <div className="container mx-auto max-w-6xl px-5 sm:px-6">
+        <div className="mx-auto mb-12 max-w-2xl text-center sm:mb-16">
+          <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-muted-foreground">
+            <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+            دپارتمان‌های تخصصی
+          </span>
+          <h2 className="mt-6 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
             دپارتمان‌های آموزشی
           </h2>
-          <p className="text-sm sm:text-base md:text-lg text-muted-foreground mx-auto mb-8">
+          <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-muted-foreground">
             طیف جامعی از دپارتمان‌های تخصصی ما را که برای آموزش مهارت‌های فنی و حرفه‌ای طراحی شده‌اند، کاوش کنید.
           </p>
 
-          <HomeSearch 
-            searchQuery={searchQuery}
-            onSearchChange={setSearchQuery}
-            placeholder="جستجوی دپارتمان یا دوره..."
-          />
+          <div className="mt-8">
+            <HomeSearch 
+              searchQuery={searchQuery}
+              onSearchChange={setSearchQuery}
+              placeholder="جستجوی دپارتمان یا دوره..."
+            />
+          </div>
         </div>
 
+
         {filteredDepartments.length === 0 ? (
-          <div className="text-center py-12">
-            <p className="text-muted-foreground text-lg">دپارتمانی با این مشخصات یافت نشد</p>
+          <div className="py-12 text-center">
+            <p className="text-muted-foreground">دپارتمانی با این مشخصات یافت نشد</p>
           </div>
         ) : (
-          <div className="mx-auto grid max-w-sm gap-6 sm:max-w-none sm:grid-cols-2 sm:gap-8 xl:grid-cols-4">
+          <div className="mx-auto grid max-w-sm gap-5 sm:max-w-none sm:grid-cols-2 xl:grid-cols-4">
             {filteredDepartments.map((dept, index) => (
               <DepartmentCard
                 key={index}
@@ -134,16 +131,16 @@ const Departments = () => {
           </div>
         )}
 
-        <div className="text-center mt-12 sm:mt-16">
+        <div className="mt-12 text-center">
           <Button
-            variant="hero"
             size="lg"
-            className="w-full font-bold px-8 sm:w-auto"
+            className="w-full px-8 shadow-none hover:shadow-none sm:w-auto"
             onClick={() => navigate('/courses')}
           >
             مشاهده همه دوره‌ها
           </Button>
         </div>
+
 
 
       </div>
