@@ -49,42 +49,35 @@ const About = () => {
   const [selectedVideo, setSelectedVideo] = React.useState(0);
 
   return (
-    <section id="about" className="py-14 sm:py-20 bg-gradient-to-b from-transparent via-background/20 to-transparent relative overflow-hidden">
-      {/* Background decorative elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-10 right-10 w-40 h-40 bg-primary/5 rounded-full blur-3xl animate-float" />
-        <div className="absolute bottom-10 left-10 w-32 h-32 bg-accent/5 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }} />
-      </div>
-      
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="text-center mb-10 sm:mb-16 animate-slide-in-up">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-foreground mb-4 animate-bounce-in">
+    <section id="about" className="border-t border-border py-20 sm:py-24 md:py-28">
+      <div className="container mx-auto max-w-6xl px-5 sm:px-6">
+        <div className="mx-auto mb-12 max-w-2xl text-center sm:mb-16">
+          <h2 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
             درباره آرمانیان
           </h2>
-          <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-3xl mx-auto font-medium animate-slide-in-up" style={{ animationDelay: '0.3s' }}>ما فراتر از یک مدرسه کدنویسی هستیم. ما جامعه‌ای هستیم که به پرورش استعدادهای جوان، ایجاد اعتماد به نفس و آماده کردن کودکان برای آینده‌ای محو فناوری اختصاص دارد.
-
-
+          <p className="mx-auto mt-4 text-base leading-relaxed text-muted-foreground">
+            ما فراتر از یک مدرسه کدنویسی هستیم؛ جامعه‌ای برای پرورش استعدادهای جوان، ساختن اعتماد به نفس و آماده کردن کودکان برای آینده‌ای فناورانه.
           </p>
         </div>
 
-        <div className="mx-auto grid max-w-sm gap-6 sm:max-w-none md:grid-cols-2 lg:grid-cols-4">
+        <div className="mx-auto grid max-w-sm gap-5 sm:max-w-none md:grid-cols-2 lg:grid-cols-4">
           {features.map((feature, index) =>
-          <Card key={index} className="group hover:shadow-glow-primary transition-all duration-500 hover:-translate-y-3 hover:rotate-1 animate-slide-in-up" style={{ animationDelay: `${index * 0.2}s` }}>
-
-              <CardContent className="p-6 text-center">
-                <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-125 group-hover:rotate-12 transition-all duration-500 animate-heartbeat">
-                  <feature.icon className="w-8 h-8 text-primary-foreground group-hover:animate-wiggle" />
+          <Card key={index} className="border-border bg-card shadow-soft transition-colors duration-200 hover:border-foreground/20">
+              <CardContent className="flex flex-col gap-4 p-6">
+                <div className="flex h-10 w-10 items-center justify-center rounded-md border border-border bg-secondary">
+                  <feature.icon className="h-5 w-5 text-foreground" />
                 </div>
-                <h3 className="text-xl font-extrabold text-foreground mb-3 group-hover:text-primary transition-colors duration-300">
+                <h3 className="text-base font-semibold text-foreground">
                   {feature.title}
                 </h3>
-                <p className="text-muted-foreground font-medium group-hover:text-foreground transition-colors duration-300">
+                <p className="text-sm leading-relaxed text-muted-foreground">
                   {feature.description}
                 </p>
               </CardContent>
             </Card>
           )}
         </div>
+
 
         
         {/* Video Section */}
