@@ -25,22 +25,21 @@ const Contact = () => {
   ];
 
   return (
-    <section id="contact" className="py-14 sm:py-20 bg-gradient-hero">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-10 sm:mb-16">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-foreground mb-4">
+    <section id="contact" className="border-t border-border bg-secondary/30 py-20 sm:py-24 md:py-28">
+      <div className="container mx-auto max-w-6xl px-5 sm:px-6">
+        <div className="mx-auto mb-12 max-w-2xl text-center sm:mb-16">
+          <h2 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
             با ما در تماس باشید
           </h2>
-          <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-3xl mx-auto font-medium">
-            آماده شروع سفر کدنویسی فرزندتان هستید؟ همین امروز با ما تماس بگیرید تا درباره برنامه‌هایمان 
-            بیشتر بدانید یا برای بازدید از امکانات مدرن ما وقت بگیرید.
+          <p className="mx-auto mt-4 text-base leading-relaxed text-muted-foreground">
+            آماده شروع سفر یادگیری هستید؟ همین امروز با ما تماس بگیرید تا درباره دوره‌ها بیشتر بدانید یا برای بازدید از آموزشگاه وقت بگیرید.
           </p>
         </div>
 
-        <div className="grid gap-8 lg:grid-cols-2 lg:gap-12">
+        <div className="grid gap-6 lg:grid-cols-2 lg:gap-8">
           {/* Contact Information */}
-          <div className="space-y-8">
-            <div className="grid gap-6">
+          <div className="space-y-4">
+            <div className="grid gap-4">
 
               {contactInfo.map((info, index) => {
                 const isInstagram = info.title === 'اینستاگرام';
@@ -53,21 +52,21 @@ const Contact = () => {
                 } : isPhone ? {
                   href: 'tel:09001960010'
                 } : {};
-                
+
                 return (
-                  <Card key={index} className={`hover:shadow-glow-primary transition-all duration-300 ${(isInstagram || isPhone) ? 'cursor-pointer hover:scale-105' : ''}`}>
-                    <CardContent className="p-6 sm:p-8 bg-background/50 backdrop-blur-sm hover:bg-background/70 transition-all duration-300">
+                  <Card key={index} className={`border-border bg-card shadow-soft transition-colors duration-200 hover:border-foreground/20 ${(isInstagram || isPhone) ? 'cursor-pointer' : ''}`}>
+                    <CardContent className="p-6">
                       <CardWrapper {...cardProps} className={(isInstagram || isPhone) ? "block" : ""}>
                         <div className="flex flex-col items-center gap-4 text-center sm:flex-row sm:items-start sm:text-right">
-                          <div className={`w-12 h-12 bg-primary rounded-lg flex items-center justify-center flex-shrink-0 ${(isInstagram || isPhone) ? 'hover:bg-primary/90' : ''}`}>
-                            <info.icon className="w-6 h-6 text-primary-foreground" />
+                          <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-md border border-border bg-secondary">
+                            <info.icon className="h-5 w-5 text-foreground" />
                           </div>
 
                           <div>
-                            <h4 className="font-extrabold text-foreground mb-2">{info.title}</h4>
+                            <h4 className="mb-1.5 text-base font-semibold text-foreground">{info.title}</h4>
                             <div className="space-y-1">
                               {info.details.map((detail, idx) => (
-                                <p key={idx} className={`text-muted-foreground text-sm font-semibold ${(isInstagram || isPhone) ? 'hover:text-primary transition-colors duration-300' : ''}`}>
+                                <p key={idx} className="text-sm text-muted-foreground">
                                   {detail}
                                 </p>
                               ))}
@@ -83,13 +82,14 @@ const Contact = () => {
           </div>
 
           {/* Contact Form */}
-          <Card className="shadow-glow-primary">
+          <Card className="border-border bg-card shadow-soft">
             <CardHeader>
-              <CardTitle className="text-2xl text-foreground">پیام خود را برای ما بفرستید</CardTitle>
-              <CardDescription className="text-muted-foreground">
+              <CardTitle className="text-xl font-semibold text-foreground">پیام خود را برای ما بفرستید</CardTitle>
+              <CardDescription className="text-sm text-muted-foreground">
                 فرم زیر را پر کنید و ما ظرف ۲۴ ساعت با شما تماس خواهیم گرفت.
               </CardDescription>
             </CardHeader>
+
             <CardContent className="space-y-6">
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="space-y-2">

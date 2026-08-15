@@ -14,56 +14,45 @@ interface DepartmentCardProps {
 const DepartmentCard = ({ title, description, icon: Icon, courses, onLearnMore }: DepartmentCardProps) => {
   return (
     <div className="h-full w-full">
-      <Card className="group flex h-full flex-col overflow-hidden border bg-card shadow-soft transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-lifted">
-
-        {/* Illustration Header */}
-        <div className="relative h-44 bg-primary/5 flex items-center justify-center overflow-hidden">
-          {/* Decorative circles */}
-          <div className="absolute top-4 left-6 w-16 h-16 rounded-full border-2 border-primary/10 animate-pulse" />
-          <div className="absolute bottom-6 right-8 w-10 h-10 rounded-full bg-primary/10" />
-          <div className="absolute top-10 right-12 w-6 h-6 rounded-full bg-primary/8" />
-
-          {/* Main icon */}
-          <div className="flex h-20 w-20 items-center justify-center rounded-lg bg-primary shadow-md transition-transform duration-300 group-hover:scale-105">
-            <Icon className="h-10 w-10 text-primary-foreground" />
-
+      <Card className="group flex h-full flex-col overflow-hidden border-border bg-card shadow-soft transition-colors duration-200 hover:border-foreground/20">
+        <CardContent className="flex flex-1 flex-col gap-5 p-6">
+          <div className="flex h-10 w-10 items-center justify-center rounded-md border border-border bg-secondary">
+            <Icon className="h-5 w-5 text-foreground" />
           </div>
-        </div>
 
-        {/* Content */}
-        <CardContent className="p-6 flex-1 flex flex-col space-y-5">
           <div>
-            <h3 className="text-lg font-bold text-foreground mb-2">{title}</h3>
-            <p className="text-sm text-muted-foreground leading-relaxed">{description}</p>
+            <h3 className="text-base font-semibold text-foreground">{title}</h3>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{description}</p>
           </div>
 
           {/* Courses List */}
-          <div className="space-y-2.5 flex-1">
+          <div className="flex-1 space-y-1">
             {courses.map((course, idx) => (
-              <div
+              <button
                 key={idx}
-                className="flex items-center gap-3 p-2.5 rounded-lg hover:bg-muted/50 transition-colors duration-200 cursor-pointer"
+                type="button"
+                className="flex w-full items-center gap-2.5 rounded-md px-2 py-1.5 text-right transition-colors duration-150 hover:bg-secondary"
                 onClick={onLearnMore}
               >
-                <div className="w-2 h-2 bg-primary rounded-full flex-shrink-0" />
-                <span className="text-sm text-foreground/85">{course}</span>
-              </div>
+                <span className="h-1 w-1 flex-shrink-0 rounded-full bg-muted-foreground" />
+                <span className="text-sm text-foreground/80">{course}</span>
+              </button>
             ))}
           </div>
 
-          {/* Button */}
           <Button
             variant="outline"
-            className="w-full mt-auto"
+            className="mt-auto w-full bg-card"
             onClick={onLearnMore}
           >
             مشاهده همه دوره‌ها
-            <ArrowRight className="w-4 h-4 mr-2" />
+            <ArrowRight className="mr-2 h-4 w-4 transition-transform duration-200 group-hover:-translate-x-0.5" />
           </Button>
         </CardContent>
       </Card>
     </div>
   );
 };
+
 
 export default DepartmentCard;

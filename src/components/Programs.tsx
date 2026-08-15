@@ -81,93 +81,88 @@ const Programs = () => {
   }, [searchQuery]);
 
   return (
-    <section id="programs" className="py-14 sm:py-20 md:py-24 relative overflow-hidden">
-      {/* Background decorative elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-20 w-48 h-48 bg-primary/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 right-20 w-36 h-36 bg-accent/10 rounded-full blur-3xl" />
-      </div>
-      
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="text-center mb-10 sm:mb-14 max-w-2xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-foreground mb-4">
+    <section id="programs" className="py-20 sm:py-24 md:py-28">
+      <div className="container mx-auto max-w-6xl px-5 sm:px-6">
+        <div className="mx-auto mb-12 max-w-2xl text-center sm:mb-16">
+          <h2 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
             مسیر یادگیری خود را انتخاب کنید
           </h2>
-          <p className="text-sm sm:text-base md:text-lg text-muted-foreground mx-auto mb-8">
+          <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-muted-foreground">
             دوره‌های تخصصی ما برای هر سن و سطحی طراحی شده‌اند تا شما را از مبتدی به حرفه‌ای تبدیل کنند.
           </p>
 
-          <HomeSearch 
-            searchQuery={searchQuery}
-            onSearchChange={setSearchQuery}
-            placeholder="جستجوی برنامه‌ها..."
-          />
+          <div className="mt-8">
+            <HomeSearch 
+              searchQuery={searchQuery}
+              onSearchChange={setSearchQuery}
+              placeholder="جستجوی برنامه‌ها..."
+            />
+          </div>
         </div>
 
+
         {filteredPrograms.length === 0 ? (
-          <div className="text-center py-12">
-            <p className="text-muted-foreground text-lg">برنامه‌ای با این مشخصات یافت نشد</p>
+          <div className="py-12 text-center">
+            <p className="text-muted-foreground">برنامه‌ای با این مشخصات یافت نشد</p>
           </div>
         ) : (
-        <div className="mx-auto grid max-w-sm gap-6 pt-4 sm:max-w-none md:grid-cols-3 md:gap-8">
-
+        <div className="mx-auto grid max-w-sm gap-5 sm:max-w-none md:grid-cols-3">
           {filteredPrograms.map((program, index) => (
-            <Card key={index} className={`relative flex flex-col shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-lifted hover:border-primary/40 ${program.popular ? 'border-2 border-primary/50' : 'border-border'} bg-card animate-fade-in`} style={{ animationDelay: `${index * 0.15}s` }}>
-
-              
+            <Card
+              key={index}
+              className={`relative flex flex-col bg-card shadow-soft transition-colors duration-200 hover:border-foreground/20 ${program.popular ? 'border-foreground/25' : 'border-border'}`}
+            >
               {program.popular && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10">
-                  <Badge className="bg-primary text-primary-foreground font-bold px-4 py-1">
-                    محبوب ترین
+                <div className="absolute -top-3 left-1/2 z-10 -translate-x-1/2">
+                  <Badge className="bg-primary px-3 py-0.5 text-xs font-medium text-primary-foreground">
+                    محبوب‌ترین
                   </Badge>
                 </div>
               )}
-              
+
               <CardHeader className="pb-4">
-                <CardTitle className="text-xl text-foreground mb-2">{program.title}</CardTitle>
-                <CardDescription className="text-muted-foreground">
+                <CardTitle className="text-lg font-semibold text-foreground">{program.title}</CardTitle>
+                <CardDescription className="text-sm leading-relaxed text-muted-foreground">
                   {program.description}
                 </CardDescription>
               </CardHeader>
-              
-              <CardContent className="space-y-5 flex-1 flex flex-col">
+
+              <CardContent className="flex flex-1 flex-col gap-6">
                 {/* Program Details */}
-                <div className="grid grid-cols-2 gap-3 text-sm">
-                  <div className="flex items-center space-x-reverse space-x-2">
-                    <Clock className="w-4 h-4 text-primary" />
-                    <span className="text-muted-foreground">{program.duration}</span>
+                <div className="grid grid-cols-2 gap-3 border-y border-border py-4 text-sm">
+                  <div className="flex items-center gap-2">
+                    <Clock className="h-4 w-4 text-muted-foreground" />
+                    <span className="text-foreground/80">{program.duration}</span>
                   </div>
-                  <div className="flex items-center space-x-reverse space-x-2">
-                    <Users className="w-4 h-4 text-primary" />
-                    <span className="text-muted-foreground">{program.classSize}</span>
+                  <div className="flex items-center gap-2">
+                    <Users className="h-4 w-4 text-muted-foreground" />
+                    <span className="text-foreground/80">{program.classSize}</span>
                   </div>
-                  <div className="flex items-center space-x-reverse space-x-2">
-                    <Trophy className="w-4 h-4 text-primary" />
-                    <span className="text-muted-foreground">{program.level}</span>
+                  <div className="flex items-center gap-2">
+                    <Trophy className="h-4 w-4 text-muted-foreground" />
+                    <span className="text-foreground/80">{program.level}</span>
                   </div>
-                  <div className="flex items-center space-x-reverse space-x-2">
-                    <Star className="w-4 h-4 text-primary" />
-                    <span className="text-muted-foreground">{program.ages}</span>
+                  <div className="flex items-center gap-2">
+                    <Star className="h-4 w-4 text-muted-foreground" />
+                    <span className="text-foreground/80">{program.ages}</span>
                   </div>
                 </div>
 
                 {/* Features List */}
                 <div className="flex-1">
-                  <h4 className="font-bold text-foreground mb-3">شامل موارد:</h4>
+                  <h4 className="mb-3 text-xs font-medium uppercase tracking-wide text-muted-foreground">شامل موارد</h4>
                   <ul className="space-y-2">
                     {program.features.map((feature, idx) => (
-                      <li key={idx} className="flex items-start space-x-reverse space-x-2 text-sm text-muted-foreground">
-                        <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0"></div>
+                      <li key={idx} className="flex items-start gap-2.5 text-sm text-foreground/80">
+                        <span className="mt-2 h-1 w-1 flex-shrink-0 rounded-full bg-muted-foreground" />
                         <span>{feature}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
 
-                <Button 
-                  variant="default" 
-                  className="w-full mt-auto bg-primary hover:bg-primary/90 text-primary-foreground transition-colors duration-300"
-                  size="lg"
+                <Button
+                  className="mt-auto w-full shadow-none hover:shadow-none"
                   onClick={handleSignUp}
                 >
                   انتخاب دوره
@@ -177,6 +172,7 @@ const Programs = () => {
           ))}
         </div>
         )}
+
 
       </div>
     </section>
