@@ -81,28 +81,25 @@ const Programs = () => {
   }, [searchQuery]);
 
   return (
-    <section id="programs" className="py-14 sm:py-20 md:py-24 relative overflow-hidden">
-      {/* Background decorative elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-20 w-48 h-48 bg-primary/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 right-20 w-36 h-36 bg-accent/10 rounded-full blur-3xl" />
-      </div>
-      
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="text-center mb-10 sm:mb-14 max-w-2xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-foreground mb-4">
+    <section id="programs" className="py-20 sm:py-24 md:py-28">
+      <div className="container mx-auto max-w-6xl px-5 sm:px-6">
+        <div className="mx-auto mb-12 max-w-2xl text-center sm:mb-16">
+          <h2 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
             مسیر یادگیری خود را انتخاب کنید
           </h2>
-          <p className="text-sm sm:text-base md:text-lg text-muted-foreground mx-auto mb-8">
+          <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-muted-foreground">
             دوره‌های تخصصی ما برای هر سن و سطحی طراحی شده‌اند تا شما را از مبتدی به حرفه‌ای تبدیل کنند.
           </p>
 
-          <HomeSearch 
-            searchQuery={searchQuery}
-            onSearchChange={setSearchQuery}
-            placeholder="جستجوی برنامه‌ها..."
-          />
+          <div className="mt-8">
+            <HomeSearch 
+              searchQuery={searchQuery}
+              onSearchChange={setSearchQuery}
+              placeholder="جستجوی برنامه‌ها..."
+            />
+          </div>
         </div>
+
 
         {filteredPrograms.length === 0 ? (
           <div className="text-center py-12">
