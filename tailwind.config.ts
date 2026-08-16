@@ -19,7 +19,8 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				sans: ['Vazirmatn', 'IRANYekan', 'system-ui', 'sans-serif'],
+				sans: ['DM Sans', 'Vazirmatn', 'IRANYekan', 'system-ui', 'sans-serif'],
+				heading: ['Space Grotesk', 'Vazirmatn', 'IRANYekan', 'system-ui', 'sans-serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',
