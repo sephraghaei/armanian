@@ -46,7 +46,6 @@ const Header = () => {
     { label: 'خانه', href: '/' },
     { label: 'دپارتمان ها', href: '/departments' },
     { label: 'دوره‌ها', href: '/courses' },
-    { label: 'مطالب', href: '/blog' },
     { label: 'درباره ما', href: '#about' },
     { label: 'تماس', href: '#contact' },
   ];
