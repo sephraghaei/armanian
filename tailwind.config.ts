@@ -19,7 +19,7 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				sans: ['IRANYekan', 'system-ui', 'sans-serif'],
+				sans: ['Vazirmatn', 'IRANYekan', 'system-ui', 'sans-serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',
