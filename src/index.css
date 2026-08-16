@@ -139,7 +139,7 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
     direction: rtl;
     text-align: right;
-    font-family: 'IRANYekan', system-ui, sans-serif;
+    font-family: 'Vazirmatn', 'IRANYekan', system-ui, sans-serif;
     font-weight: 400;
     font-size: 1rem;
     line-height: 1.85;
