@@ -8,65 +8,65 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Attio-inspired: near-white cool canvas, ink-black primary, soft neutrals */
-    --background: 220 33% 99%;
-    --foreground: 224 20% 9%;
+    /* Navy Trust: deep navy with crisp white. Professional education feel. */
+    --background: 213 31% 93%;
+    --foreground: 224 61% 15%;
 
     --card: 0 0% 100%;
-    --card-foreground: 224 20% 9%;
+    --card-foreground: 224 61% 15%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 224 20% 9%;
+    --popover-foreground: 224 61% 15%;
 
-    --primary: 224 18% 11%;
-    --primary-foreground: 220 33% 99%;
-    --primary-wave: 224 14% 22%;
+    --primary: 214 52% 25%;
+    --primary-foreground: 213 31% 93%;
+    --primary-wave: 214 45% 35%;
 
-    --secondary: 220 20% 96%;
-    --secondary-foreground: 224 18% 14%;
+    --secondary: 213 31% 90%;
+    --secondary-foreground: 224 61% 15%;
 
-    --muted: 220 20% 96%;
-    --muted-foreground: 220 9% 42%;
+    --muted: 213 31% 90%;
+    --muted-foreground: 214 30% 40%;
 
-    --accent: 222 83% 56%;
+    --accent: 209 46% 43%;
     --accent-foreground: 0 0% 100%;
-    --accent-wave: 222 70% 66%;
+    --accent-wave: 209 40% 55%;
 
-    --gold: 222 83% 56%;
+    --gold: 209 46% 43%;
 
     --destructive: 0 72% 46%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 15% 91%;
-    --input: 220 15% 91%;
-    --ring: 224 18% 11%;
+    --border: 213 25% 85%;
+    --input: 213 25% 85%;
+    --ring: 214 52% 25%;
 
     --radius: 0.625rem;
 
     /* Custom design tokens */
     --gradient-primary: hsl(var(--primary));
     --gradient-secondary: hsl(var(--primary));
-    --gradient-hero: linear-gradient(180deg, hsl(220 33% 99%) 0%, hsl(224 45% 97%) 60%, hsl(226 55% 95%) 100%);
-    --glow-primary: 0 0 40px hsl(224 20% 9% / 0.08);
-    --glow-accent: 0 0 40px hsl(222 83% 56% / 0.18);
-    --shadow-soft: 0 1px 2px hsl(224 20% 9% / 0.05), 0 6px 20px -10px hsl(224 20% 9% / 0.1);
-    --shadow-lifted: 0 1px 3px hsl(224 20% 9% / 0.06), 0 16px 36px -14px hsl(224 20% 9% / 0.16);
+    --gradient-hero: linear-gradient(180deg, hsl(213 31% 93%) 0%, hsl(214 35% 90%) 60%, hsl(214 40% 87%) 100%);
+    --glow-primary: 0 0 40px hsl(214 52% 25% / 0.12);
+    --glow-accent: 0 0 40px hsl(209 46% 43% / 0.22);
+    --shadow-soft: 0 1px 2px hsl(224 61% 15% / 0.05), 0 6px 20px -10px hsl(224 61% 15% / 0.1);
+    --shadow-lifted: 0 1px 3px hsl(224 61% 15% / 0.06), 0 16px 36px -14px hsl(224 61% 15% / 0.16);
 
-    --sidebar-background: 220 25% 98%;
+    --sidebar-background: 213 31% 95%;
 
-    --sidebar-foreground: 220 10% 30%;
+    --sidebar-foreground: 224 40% 25%;
 
-    --sidebar-primary: 224 18% 11%;
+    --sidebar-primary: 214 52% 25%;
 
-    --sidebar-primary-foreground: 220 33% 99%;
+    --sidebar-primary-foreground: 213 31% 93%;
 
-    --sidebar-accent: 220 20% 95%;
+    --sidebar-accent: 213 31% 90%;
 
-    --sidebar-accent-foreground: 224 18% 14%;
+    --sidebar-accent-foreground: 224 61% 15%;
 
-    --sidebar-border: 220 15% 91%;
+    --sidebar-border: 213 25% 85%;
 
-    --sidebar-ring: 224 18% 11%;
+    --sidebar-ring: 214 52% 25%;
   }
 
   .dark {
