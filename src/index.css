@@ -161,7 +161,7 @@ All colors MUST be HSL.
     letter-spacing: 0;
   }
   h2, .h2 {
-    font-weight: 800;
+    font-weight: 700;
     font-size: clamp(1.875rem, 2.5vw + 0.75rem, 2.75rem);
     line-height: 1.6;
     letter-spacing: 0;
