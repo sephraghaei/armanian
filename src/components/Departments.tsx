@@ -116,27 +116,18 @@ const Departments = () => {
             <p className="text-muted-foreground">دپارتمانی با این مشخصات یافت نشد</p>
           </div>
         ) : (
-          <div className="mx-auto grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {filteredDepartments.map((dept, index) => {
-              const isFeatured = index === 0;
-              const isWide = index === 3;
-              return (
-                <div
-                  key={index}
-                  className={`${isFeatured ? 'sm:col-span-2 sm:row-span-2' : ''} ${isWide ? 'sm:col-span-2 lg:col-span-1' : ''}`}
-                >
-                  <DepartmentCard
-                    title={dept.title}
-                    description={dept.description}
-                    icon={dept.icon}
-                    image={dept.image}
-                    courses={dept.courses}
-                    onLearnMore={() => handleLearnMore(dept.title)}
-                    featured={isFeatured}
-                  />
-                </div>
-              );
-            })}
+          <div className="mx-auto grid max-w-sm gap-5 sm:max-w-none sm:grid-cols-2 xl:grid-cols-4">
+            {filteredDepartments.map((dept, index) => (
+              <DepartmentCard
+                key={index}
+                title={dept.title}
+                description={dept.description}
+                icon={dept.icon}
+                image={dept.image}
+                courses={dept.courses}
+                onLearnMore={() => handleLearnMore(dept.title)}
+              />
+            ))}
           </div>
         )}
 

@@ -8,116 +8,116 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Navy Trust: deep navy with crisp white. Professional education feel. */
-    --background: 213 31% 93%;
-    --foreground: 224 61% 15%;
+    /* Attio-inspired: near-white cool canvas, ink-black primary, soft neutrals */
+    --background: 220 33% 99%;
+    --foreground: 224 20% 9%;
 
     --card: 0 0% 100%;
-    --card-foreground: 224 61% 15%;
+    --card-foreground: 224 20% 9%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 224 61% 15%;
+    --popover-foreground: 224 20% 9%;
 
-    --primary: 214 52% 25%;
-    --primary-foreground: 213 31% 93%;
-    --primary-wave: 214 45% 35%;
+    --primary: 224 18% 11%;
+    --primary-foreground: 220 33% 99%;
+    --primary-wave: 224 14% 22%;
 
-    --secondary: 213 31% 90%;
-    --secondary-foreground: 224 61% 15%;
+    --secondary: 220 20% 96%;
+    --secondary-foreground: 224 18% 14%;
 
-    --muted: 213 31% 90%;
-    --muted-foreground: 214 30% 40%;
+    --muted: 220 20% 96%;
+    --muted-foreground: 220 9% 42%;
 
-    --accent: 209 46% 43%;
+    --accent: 222 83% 56%;
     --accent-foreground: 0 0% 100%;
-    --accent-wave: 209 40% 55%;
+    --accent-wave: 222 70% 66%;
 
-    --gold: 209 46% 43%;
+    --gold: 222 83% 56%;
 
     --destructive: 0 72% 46%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 213 25% 85%;
-    --input: 213 25% 85%;
-    --ring: 214 52% 25%;
+    --border: 220 15% 91%;
+    --input: 220 15% 91%;
+    --ring: 224 18% 11%;
 
     --radius: 0.625rem;
 
     /* Custom design tokens */
     --gradient-primary: hsl(var(--primary));
     --gradient-secondary: hsl(var(--primary));
-    --gradient-hero: linear-gradient(180deg, hsl(213 31% 93%) 0%, hsl(214 35% 90%) 60%, hsl(214 40% 87%) 100%);
-    --glow-primary: 0 0 40px hsl(214 52% 25% / 0.12);
-    --glow-accent: 0 0 40px hsl(209 46% 43% / 0.22);
-    --shadow-soft: 0 1px 2px hsl(224 61% 15% / 0.05), 0 6px 20px -10px hsl(224 61% 15% / 0.1);
-    --shadow-lifted: 0 1px 3px hsl(224 61% 15% / 0.06), 0 16px 36px -14px hsl(224 61% 15% / 0.16);
+    --gradient-hero: linear-gradient(180deg, hsl(220 33% 99%) 0%, hsl(224 45% 97%) 60%, hsl(226 55% 95%) 100%);
+    --glow-primary: 0 0 40px hsl(224 20% 9% / 0.08);
+    --glow-accent: 0 0 40px hsl(222 83% 56% / 0.18);
+    --shadow-soft: 0 1px 2px hsl(224 20% 9% / 0.05), 0 6px 20px -10px hsl(224 20% 9% / 0.1);
+    --shadow-lifted: 0 1px 3px hsl(224 20% 9% / 0.06), 0 16px 36px -14px hsl(224 20% 9% / 0.16);
 
-    --sidebar-background: 213 31% 95%;
+    --sidebar-background: 220 25% 98%;
 
-    --sidebar-foreground: 224 40% 25%;
+    --sidebar-foreground: 220 10% 30%;
 
-    --sidebar-primary: 214 52% 25%;
+    --sidebar-primary: 224 18% 11%;
 
-    --sidebar-primary-foreground: 213 31% 93%;
+    --sidebar-primary-foreground: 220 33% 99%;
 
-    --sidebar-accent: 213 31% 90%;
+    --sidebar-accent: 220 20% 95%;
 
-    --sidebar-accent-foreground: 224 61% 15%;
+    --sidebar-accent-foreground: 224 18% 14%;
 
-    --sidebar-border: 213 25% 85%;
+    --sidebar-border: 220 15% 91%;
 
-    --sidebar-ring: 214 52% 25%;
+    --sidebar-ring: 224 18% 11%;
   }
 
   .dark {
-    --background: 224 50% 8%;
-    --foreground: 213 31% 93%;
+    --background: 225 15% 7%;
+    --foreground: 220 20% 96%;
 
-    --card: 224 45% 11%;
-    --card-foreground: 213 31% 93%;
+    --card: 225 14% 10%;
+    --card-foreground: 220 20% 96%;
 
-    --popover: 224 45% 11%;
-    --popover-foreground: 213 31% 93%;
+    --popover: 225 14% 10%;
+    --popover-foreground: 220 20% 96%;
 
-    --primary: 213 31% 93%;
-    --primary-foreground: 224 61% 15%;
-    --primary-wave: 213 25% 80%;
+    --primary: 220 20% 96%;
+    --primary-foreground: 225 15% 8%;
+    --primary-wave: 220 12% 80%;
 
-    --secondary: 224 40% 15%;
-    --secondary-foreground: 213 31% 93%;
+    --secondary: 225 12% 15%;
+    --secondary-foreground: 220 20% 96%;
 
-    --muted: 224 40% 14%;
-    --muted-foreground: 213 25% 70%;
+    --muted: 225 12% 14%;
+    --muted-foreground: 220 10% 68%;
 
-    --accent: 209 50% 55%;
-    --accent-foreground: 224 61% 15%;
-    --accent-wave: 209 45% 45%;
+    --accent: 222 83% 62%;
+    --accent-foreground: 225 15% 8%;
+    --accent-wave: 222 70% 56%;
 
-    --gold: 209 50% 55%;
+    --gold: 222 83% 62%;
 
     --destructive: 0 62% 48%;
-    --destructive-foreground: 213 31% 93%;
+    --destructive-foreground: 220 20% 96%;
 
-    --border: 224 30% 18%;
-    --input: 224 30% 18%;
-    --ring: 213 31% 93%;
+    --border: 225 10% 20%;
+    --input: 225 10% 20%;
+    --ring: 220 20% 90%;
 
     --gradient-primary: hsl(var(--primary));
     --gradient-secondary: hsl(var(--primary));
-    --gradient-hero: linear-gradient(180deg, hsl(224 50% 8%) 0%, hsl(224 45% 10%) 60%, hsl(214 40% 13%) 100%);
-    --glow-primary: 0 0 40px hsl(213 31% 93% / 0.08);
-    --glow-accent: 0 0 40px hsl(209 50% 55% / 0.22);
+    --gradient-hero: linear-gradient(180deg, hsl(225 15% 7%) 0%, hsl(225 18% 10%) 60%, hsl(226 22% 12%) 100%);
+    --glow-primary: 0 0 40px hsl(0 0% 100% / 0.08);
+    --glow-accent: 0 0 40px hsl(222 83% 62% / 0.2);
     --shadow-soft: 0 1px 2px hsl(0 0% 0% / 0.4), 0 8px 24px -12px hsl(0 0% 0% / 0.55);
     --shadow-lifted: 0 2px 4px hsl(0 0% 0% / 0.45), 0 18px 40px -16px hsl(0 0% 0% / 0.65);
 
-    --sidebar-background: 224 50% 7%;
-    --sidebar-foreground: 213 25% 85%;
-    --sidebar-primary: 213 31% 93%;
-    --sidebar-primary-foreground: 224 61% 15%;
-    --sidebar-accent: 224 40% 14%;
-    --sidebar-accent-foreground: 213 31% 93%;
-    --sidebar-border: 224 30% 16%;
-    --sidebar-ring: 213 31% 93%;
+    --sidebar-background: 225 15% 8%;
+    --sidebar-foreground: 220 15% 90%;
+    --sidebar-primary: 220 20% 96%;
+    --sidebar-primary-foreground: 225 15% 8%;
+    --sidebar-accent: 225 12% 14%;
+    --sidebar-accent-foreground: 220 20% 96%;
+    --sidebar-border: 225 10% 18%;
+    --sidebar-ring: 220 20% 90%;
   }
 
 
@@ -139,7 +139,7 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
     direction: rtl;
     text-align: right;
-    font-family: 'DM Sans', 'Vazirmatn', 'IRANYekan', system-ui, sans-serif;
+    font-family: 'Vazirmatn', 'IRANYekan', system-ui, sans-serif;
     font-weight: 400;
     font-size: 1rem;
     line-height: 1.85;
@@ -147,21 +147,20 @@ All colors MUST be HSL.
     font-feature-settings: "ss01", "ss02", "kern";
   }
 
-  /* Headings — Space Grotesk for Latin, Vazirmatn fallback for Persian */
+  /* Headings — tuned for Estedad's tall x-height & Persian rhythm */
   h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
-    font-family: 'Space Grotesk', 'Vazirmatn', 'IRANYekan', system-ui, sans-serif;
     overflow: visible;
     padding-top: 0.15em;
     padding-bottom: 0.1em;
   }
   h1, .h1 {
-    font-weight: 700;
+    font-weight: 800;
     font-size: clamp(2.25rem, 4vw + 1rem, 3.75rem);
     line-height: 1.6;
     letter-spacing: 0;
   }
   h2, .h2 {
-    font-weight: 700;
+    font-weight: 800;
     font-size: clamp(1.875rem, 2.5vw + 0.75rem, 2.75rem);
     line-height: 1.6;
     letter-spacing: 0;
