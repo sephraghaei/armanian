@@ -50,7 +50,7 @@ const About = () => {
 
   return (
     <section id="about" className="border-t border-border py-20 sm:py-24 md:py-28">
-      <div className="container mx-auto max-w-6xl px-5 sm:px-6">
+      <div className="container mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
         <div className="mx-auto mb-12 max-w-2xl text-center sm:mb-16">
           <h2 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
             درباره آرمانیان
@@ -62,7 +62,7 @@ const About = () => {
 
         <div className="mx-auto grid max-w-sm gap-5 sm:max-w-none md:grid-cols-2 lg:grid-cols-4">
           {features.map((feature, index) =>
-          <Card key={index} className="border-border bg-card shadow-soft transition-colors duration-200 hover:border-foreground/20">
+          <Card key={index} className="h-full border-border bg-card shadow-soft transition-all duration-200 hover:-translate-y-1 hover:border-foreground/20 hover:shadow-lifted">
               <CardContent className="flex flex-col gap-4 p-6">
                 <div className="flex h-10 w-10 items-center justify-center rounded-md border border-border bg-secondary">
                   <feature.icon className="h-5 w-5 text-foreground" />
@@ -85,10 +85,10 @@ const About = () => {
             ویدیوهای آموزشی ما
           </h3>
 
-          <div className="mx-auto max-w-2xl">
-            <Card className="overflow-hidden border-border bg-card shadow-soft">
+           <div className="mx-auto grid max-w-5xl overflow-hidden rounded-lg border border-border bg-card shadow-soft lg:grid-cols-[0.42fr_0.58fr]">
+            <Card className="contents border-0 bg-transparent shadow-none">
               {/* Video List */}
-              <div>
+              <div className="order-2 border-t border-border lg:order-1 lg:border-l lg:border-t-0">
                 {videos.map((video, index) =>
                 <button
                   key={index}
@@ -124,7 +124,7 @@ const About = () => {
               </div>
 
               {/* Main Video Player */}
-              <div className="border-t border-border bg-secondary/40 p-4 md:p-6">
+               <div className="order-1 bg-secondary/40 p-4 md:p-6 lg:order-2">
                 <div className="relative overflow-hidden rounded-md border border-border bg-muted">
                   <video
                     key={selectedVideo}

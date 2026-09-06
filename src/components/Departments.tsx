@@ -87,9 +87,9 @@ const Departments = () => {
   }, [searchQuery]);
 
   return (
-    <section id="departments" className="border-t border-border bg-secondary/30 py-20 sm:py-24 md:py-28">
-      <div className="container mx-auto max-w-6xl px-5 sm:px-6">
-        <div className="mx-auto mb-12 max-w-2xl text-center sm:mb-16">
+    <section id="departments" className="border-y border-border bg-secondary/30 py-20 sm:py-24 lg:py-28">
+      <div className="container mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+        <div className="mx-auto mb-12 max-w-2xl text-center lg:mb-14">
           <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-muted-foreground">
             <span className="h-1.5 w-1.5 rounded-full bg-accent" />
             دپارتمان‌های تخصصی
@@ -116,7 +116,7 @@ const Departments = () => {
             <p className="text-muted-foreground">دپارتمانی با این مشخصات یافت نشد</p>
           </div>
         ) : (
-          <div className="mx-auto grid max-w-sm gap-5 sm:max-w-none sm:grid-cols-2 xl:grid-cols-4">
+          <div className="mx-auto grid max-w-sm items-stretch gap-5 sm:max-w-none sm:grid-cols-2 xl:grid-cols-4">
             {filteredDepartments.map((dept, index) => (
               <DepartmentCard
                 key={index}

@@ -24,7 +24,7 @@ const Footer = () => {
 
   return (
     <footer className="bg-card border-t border-border">
-      <div className="container mx-auto px-4 py-12 sm:py-16">
+      <div className="container mx-auto max-w-7xl px-5 py-12 sm:px-6 sm:py-16 lg:px-8">
         <div className="grid gap-10 text-center sm:text-right md:grid-cols-2 lg:grid-cols-4 sm:gap-8">
           {/* Brand Section */}
           <div className="space-y-4">
@@ -33,8 +33,8 @@ const Footer = () => {
                 <Code className="w-6 h-6 text-primary-foreground" />
               </div>
               <div className="text-right">
-                <h3 className="text-xl font-black text-foreground">آرمانیان</h3>
-                <p className="text-xs text-muted-foreground font-semibold">برنامه‌نویسان آینده</p>
+                 <h3 className="text-lg font-semibold text-foreground">آرمانیان</h3>
+                 <p className="text-xs text-muted-foreground">آموزشگاه آزاد فنی و حرفه‌ای</p>
               </div>
             </div>
             <p className="mx-auto max-w-sm text-muted-foreground text-sm font-medium sm:mx-0">
@@ -58,7 +58,7 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-lg font-extrabold text-foreground mb-4">لینک‌های سریع</h4>
+             <h4 className="mb-4 text-base font-semibold text-foreground">لینک‌های سریع</h4>
             <ul className="space-y-2">
               {quickLinks.map((link, index) => (
                 <li key={index}>
@@ -75,7 +75,7 @@ const Footer = () => {
 
           {/* Programs */}
           <div>
-            <h4 className="text-lg font-extrabold text-foreground mb-4">دوره‌ها</h4>
+             <h4 className="mb-4 text-base font-semibold text-foreground">دوره‌ها</h4>
             <ul className="space-y-2">
               {programs.map((program, index) => (
                 <li key={index}>
@@ -92,7 +92,7 @@ const Footer = () => {
 
           {/* Contact Info */}
           <div>
-            <h4 className="text-lg font-extrabold text-foreground mb-4">اطلاعات تماس</h4>
+             <h4 className="mb-4 text-base font-semibold text-foreground">اطلاعات تماس</h4>
             <div className="space-y-3">
               <div className="flex items-center justify-center gap-3 sm:justify-start">
                 <Mail className="w-4 h-4 text-primary" />
