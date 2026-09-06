@@ -81,8 +81,8 @@ const Programs = () => {
   }, [searchQuery]);
 
   return (
-    <section id="programs" className="py-20 sm:py-24 md:py-28">
-      <div className="container mx-auto max-w-6xl px-5 sm:px-6">
+    <section id="programs" className="py-20 sm:py-24 lg:py-28">
+      <div className="container mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
         <div className="mx-auto mb-12 max-w-2xl text-center sm:mb-16">
           <h2 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
             مسیر یادگیری خود را انتخاب کنید
@@ -110,7 +110,7 @@ const Programs = () => {
           {filteredPrograms.map((program, index) => (
             <Card
               key={index}
-              className={`relative flex flex-col bg-card shadow-soft transition-colors duration-200 hover:border-foreground/20 ${program.popular ? 'border-foreground/25' : 'border-border'}`}
+              className={`relative flex h-full flex-col bg-card shadow-soft transition-all duration-200 hover:-translate-y-1 hover:border-foreground/20 hover:shadow-lifted ${program.popular ? 'border-foreground/25' : 'border-border'}`}
             >
               {program.popular && (
                 <div className="absolute -top-3 left-1/2 z-10 -translate-x-1/2">

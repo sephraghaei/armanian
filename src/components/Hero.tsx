@@ -102,20 +102,20 @@ const Hero = () => {
   return (
     <section
       id="home"
-      className="relative overflow-hidden bg-transparent pt-32 pb-20 sm:pt-40 sm:pb-24 md:pt-48 md:pb-32"
+      className="relative flex min-h-[76vh] items-center overflow-hidden bg-background pb-20 pt-28 sm:pt-32 lg:min-h-[78vh] lg:pb-24 lg:pt-36"
     >
-      <div className="container mx-auto max-w-3xl px-5 sm:px-6 relative z-10">
+      <div className="container relative z-10 mx-auto max-w-5xl px-5 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center text-center animate-slide-in-up">
           <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-muted-foreground">
             <span className="h-1.5 w-1.5 rounded-full bg-accent" />
             آموزشگاه آزاد فنی و حرفه‌ای
           </span>
 
-          <h1 className="mt-8 text-4xl font-semibold tracking-tight text-foreground sm:text-6xl md:text-7xl">
+          <h1 className="mt-7 text-5xl font-semibold text-foreground sm:text-6xl lg:text-7xl">
             آرمانیان
           </h1>
 
-          <h2 className="mt-4 text-balance text-xl font-medium text-foreground/90 sm:text-2xl md:text-3xl">
+          <h2 className="mt-3 text-balance text-xl font-medium text-foreground/90 sm:text-2xl lg:text-3xl">
             آموزش کامپیوتر، گرافیک، معماری و زبان
           </h2>
 
@@ -124,7 +124,7 @@ const Hero = () => {
           </p>
 
           {/* Search Bar */}
-          <div className="mt-10 w-full max-w-lg">
+          <div className="mt-9 w-full max-w-xl">
             <div className="relative">
               <Search className="absolute right-4 top-1/2 z-10 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <Input
@@ -137,12 +137,12 @@ const Hero = () => {
                     setOpen(true);
                   }
                 }}
-                className="h-12 w-full rounded-lg border-border bg-card pr-11 text-sm shadow-soft focus-visible:ring-1 focus-visible:ring-ring"
+                className="h-13 w-full rounded-lg border-border bg-card pr-11 text-sm shadow-soft focus-visible:ring-2 focus-visible:ring-ring"
               />
             </div>
           </div>
 
-          <div className="mt-6 flex w-full max-w-lg flex-col items-center justify-center gap-3 sm:w-auto sm:flex-row">
+          <div className="mt-5 flex w-full max-w-xl flex-col items-center justify-center gap-3 sm:w-auto sm:flex-row">
             <Button size="lg" className="group w-full shadow-none hover:shadow-none sm:w-auto" onClick={handleSignUp}>
               همین امروز شروع کن
               <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1" />

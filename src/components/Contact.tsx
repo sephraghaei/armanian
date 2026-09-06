@@ -26,7 +26,7 @@ const Contact = () => {
 
   return (
     <section id="contact" className="border-t border-border bg-secondary/30 py-20 sm:py-24 md:py-28">
-      <div className="container mx-auto max-w-6xl px-5 sm:px-6">
+      <div className="container mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
         <div className="mx-auto mb-12 max-w-2xl text-center sm:mb-16">
           <h2 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
             با ما در تماس باشید
@@ -36,7 +36,7 @@ const Contact = () => {
           </p>
         </div>
 
-        <div className="grid gap-6 lg:grid-cols-2 lg:gap-8">
+         <div className="grid items-start gap-6 lg:grid-cols-[0.8fr_1.2fr] lg:gap-8">
           {/* Contact Information */}
           <div className="space-y-4">
             <div className="grid gap-4">
@@ -102,14 +102,15 @@ const Contact = () => {
                 </div>
               </div>
               
-              <div className="space-y-2">
-                <Label htmlFor="email" className="text-foreground">ایمیل</Label>
-                <Input id="email" type="email" placeholder="ایمیل خود را وارد کنید" />
-              </div>
-              
-              <div className="space-y-2">
-                <Label htmlFor="phone" className="text-foreground">شماره تلفن</Label>
-                <Input id="phone" type="tel" placeholder="شماره تلفن خود را وارد کنید" />
+              <div className="grid gap-4 md:grid-cols-2">
+                <div className="space-y-2">
+                  <Label htmlFor="email" className="text-foreground">ایمیل</Label>
+                  <Input id="email" type="email" placeholder="ایمیل خود را وارد کنید" />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="phone" className="text-foreground">شماره تلفن</Label>
+                  <Input id="phone" type="tel" placeholder="شماره تلفن خود را وارد کنید" />
+                </div>
               </div>
               
               <div className="space-y-2">
@@ -126,7 +127,7 @@ const Contact = () => {
                 />
               </div>
               
-              <Button variant="hero" size="lg" className="w-full">
+              <Button size="lg" className="w-full shadow-none hover:shadow-none">
                 <Send className="w-4 h-4 ml-2" />
                 ارسال پیام
               </Button>

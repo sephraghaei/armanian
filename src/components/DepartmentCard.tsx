@@ -1,6 +1,6 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, LucideIcon } from 'lucide-react';
+import { ArrowLeft, LucideIcon } from 'lucide-react';
 
 interface DepartmentCardProps {
   title: string;
@@ -14,7 +14,7 @@ interface DepartmentCardProps {
 const DepartmentCard = ({ title, description, icon: Icon, courses, onLearnMore }: DepartmentCardProps) => {
   return (
     <div className="h-full w-full">
-      <Card className="group flex h-full flex-col overflow-hidden border-border bg-card shadow-soft transition-colors duration-200 hover:border-foreground/20">
+      <Card className="group flex h-full flex-col overflow-hidden border-border bg-card shadow-soft transition-all duration-200 hover:-translate-y-1 hover:border-foreground/20 hover:shadow-lifted">
         <CardContent className="flex flex-1 flex-col gap-5 p-6">
           <div className="flex h-10 w-10 items-center justify-center rounded-md border border-border bg-secondary">
             <Icon className="h-5 w-5 text-foreground" />
@@ -46,7 +46,7 @@ const DepartmentCard = ({ title, description, icon: Icon, courses, onLearnMore }
             onClick={onLearnMore}
           >
             مشاهده همه دوره‌ها
-            <ArrowRight className="mr-2 h-4 w-4 transition-transform duration-200 group-hover:-translate-x-0.5" />
+            <ArrowLeft className="mr-2 h-4 w-4 transition-transform duration-200 group-hover:-translate-x-0.5" />
           </Button>
         </CardContent>
       </Card>

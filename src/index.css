@@ -147,6 +147,11 @@ All colors MUST be HSL.
     font-feature-settings: "ss01", "ss02", "kern";
   }
 
+  :focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 3px;
+  }
+
   /* Headings — tuned for Estedad's tall x-height & Persian rhythm */
   h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
     overflow: visible;
@@ -218,6 +223,15 @@ All colors MUST be HSL.
   /* Persian numerals should not be over-weighted */
   strong, b {
     font-weight: 700;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
 
