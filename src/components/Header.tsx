@@ -300,8 +300,8 @@ const Header = () => {
           </Button>
         </div>
 
-        {isMenuOpen && (
-          <div className="fixed inset-0 top-0 z-[60] flex justify-start md:hidden" role="dialog" aria-modal="true" aria-label="منوی موبایل">
+        {isMenuOpen && createPortal(
+          <div className="fixed inset-0 z-[100] flex justify-start md:hidden" role="dialog" aria-modal="true" aria-label="منوی موبایل">
             <button
               type="button"
               className="absolute inset-0 bg-foreground/15 backdrop-blur-sm"
