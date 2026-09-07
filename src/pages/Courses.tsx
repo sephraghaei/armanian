@@ -234,18 +234,18 @@ const CoursesPage = () => {
                     </CardHeader>
 
                     
-                    <CardContent className="relative flex flex-col flex-1 space-y-6 pt-2">
+                    <CardContent className="relative flex flex-1 flex-col gap-5 pt-0">
                       {/* Tags */}
-                      <div className="flex flex-wrap gap-3 text-xs">
+                      <div className="flex flex-wrap gap-2 border-y border-border py-3 text-xs">
                         {course.duration && (
-                          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/10 text-primary font-medium">
-                            <Clock className="w-3.5 h-3.5" />
+                          <span className="inline-flex items-center gap-1.5 rounded-full bg-secondary px-2.5 py-1 font-medium text-secondary-foreground">
+                            <Clock className="h-3.5 w-3.5 text-muted-foreground" />
                             {course.duration}
                           </span>
                         )}
                         {course.level && (
-                          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-secondary text-secondary-foreground font-medium">
-                            <Trophy className="w-3.5 h-3.5" />
+                          <span className="inline-flex items-center gap-1.5 rounded-full bg-secondary px-2.5 py-1 font-medium text-secondary-foreground">
+                            <Trophy className="h-3.5 w-3.5 text-muted-foreground" />
                             {course.level}
                           </span>
                         )}
@@ -254,20 +254,26 @@ const CoursesPage = () => {
                       {/* Features List */}
                       {course.features && course.features.length > 0 && (
                         <div className="flex-1">
-                          <h4 className="font-semibold text-foreground mb-3 text-sm">شامل موارد:</h4>
-                          <ul className="space-y-2.5">
-                            {course.features.map((feature, idx) => (
-                              <li key={idx} className="flex items-start gap-2.5 text-sm text-muted-foreground">
-                                <CheckCircle className="w-4 h-4 mt-0.5 flex-shrink-0 text-primary" />
+                          <h4 className="mb-2.5 text-sm font-semibold text-foreground">شامل موارد:</h4>
+                          <ul className="space-y-2">
+                            {course.features.slice(0, 5).map((feature, idx) => (
+                              <li key={idx} className="flex items-start gap-2.5 text-sm leading-6 text-muted-foreground">
+                                <CheckCircle className="mt-1 h-3.5 w-3.5 flex-shrink-0 text-primary" />
                                 <span>{feature}</span>
                               </li>
                             ))}
                           </ul>
+                          {course.features.length > 5 && (
+                            <p className="mt-2 text-xs text-muted-foreground">
+                              + {course.features.length - 5} مورد دیگر
+                            </p>
+                          )}
                         </div>
                       )}
 
                       {/* Spacer when no features */}
                       {(!course.features || course.features.length === 0) && <div className="flex-1" />}
+
 
                       <Button 
                         variant={course.is_popular ? "default" : "outline"} 
