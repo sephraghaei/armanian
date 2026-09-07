@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Menu, X, Code, User, LogOut, Shield, Home as HomeIcon, Building2, GraduationCap, Info, Phone } from 'lucide-react';
