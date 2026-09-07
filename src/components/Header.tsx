@@ -296,46 +296,50 @@ const Header = () => {
                 </Button>
               </div>
 
-              <nav className="flex-1 overflow-y-auto px-4 py-5" aria-label="منوی موبایل">
-                <p className="mb-2 px-3 text-xs font-medium text-muted-foreground">دسترسی سریع</p>
-                <div className="space-y-1">
-              {menuItems.map((item, index) => {
-                const isHashLink = item.href.startsWith('#');
-                const isActive = isHashLink
-                  ? (location.pathname === '/' && (activeHash ? activeHash === item.href || (activeHash === '#' && item.label === 'خانه') : false))
-                  : location.pathname === item.href;
-                
-                return isHashLink ? (
-                  <a
-                    key={item.label}
-                    href={item.href}
-                    className={`flex items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium transition-colors ${
-                      isActive 
-                        ? 'bg-secondary text-foreground' 
-                        : 'text-muted-foreground hover:bg-secondary/70 hover:text-foreground'
-                    }`}
-                    onClick={(e) => { handleHashClick(e, item.href); setIsMenuOpen(false); }}
-                  >
-                    <item.icon className="h-4 w-4" />
-                    {item.label}
-                  </a>
-                ) : (
-                  <Link
-                    key={item.label}
-                    to={item.href}
-                    className={`flex items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium transition-colors ${
-                      isActive 
-                        ? 'bg-secondary text-foreground' 
-                        : 'text-muted-foreground hover:bg-secondary/70 hover:text-foreground'
-                    }`}
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    <item.icon className="h-4 w-4" />
-                    {item.label}
-                  </Link>
-                );
-              })}
-                </div>
+              <nav className="flex-1 overflow-y-auto px-3 py-4" aria-label="منوی موبایل">
+                {mobileSections.map((section) => (
+                  <div key={section.title} className="mb-5">
+                    <p className="mb-1.5 px-3 text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
+                      {section.title}
+                    </p>
+                    <div className="space-y-0.5">
+                      {section.items.map((item) => {
+                        const isHashLink = item.href.startsWith('#');
+                        const isActive = isHashLink
+                          ? (location.pathname === '/' && activeHash === item.href)
+                          : location.pathname === item.href;
+
+                        const cls = `flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
+                          isActive
+                            ? 'bg-secondary text-foreground'
+                            : 'text-muted-foreground hover:bg-secondary/70 hover:text-foreground'
+                        }`;
+
+                        return isHashLink ? (
+                          <a
+                            key={item.label}
+                            href={item.href}
+                            className={cls}
+                            onClick={(e) => { handleHashClick(e, item.href); setIsMenuOpen(false); }}
+                          >
+                            <item.icon className="h-4 w-4" />
+                            {item.label}
+                          </a>
+                        ) : (
+                          <Link
+                            key={item.label}
+                            to={item.href}
+                            className={cls}
+                            onClick={() => setIsMenuOpen(false)}
+                          >
+                            <item.icon className="h-4 w-4" />
+                            {item.label}
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ))}
               </nav>
 
               <div className="space-y-3 border-t border-border bg-secondary/30 p-4">
@@ -345,6 +349,9 @@ const Header = () => {
                 </div>
                 {user ? (
                   <div className="space-y-2">
+                    <div className="rounded-lg border border-border bg-card px-3 py-2 text-xs text-muted-foreground">
+                      {user.first_name ? `${user.first_name} ${user.last_name}` : (user.phone || 'کاربر')}
+                    </div>
                     <Button 
                       variant="outline" 
                       onClick={() => {
@@ -356,6 +363,19 @@ const Header = () => {
                       <User className="w-4 h-4" />
                       پروفایل کاربری
                     </Button>
+                    {isAdmin && (
+                      <Button
+                        variant="outline"
+                        onClick={() => {
+                          navigate('/admin');
+                          setIsMenuOpen(false);
+                        }}
+                        className="w-full gap-2 bg-card shadow-none"
+                      >
+                        <Shield className="w-4 h-4" />
+                        پنل مدیریت
+                      </Button>
+                    )}
                     <Button 
                       variant="outline" 
                       onClick={handleSignOut} 
@@ -366,18 +386,30 @@ const Header = () => {
                     </Button>
                   </div>
                 ) : (
-                  <Button 
-                    size="sm" 
-                    className="h-11 w-full shadow-none hover:shadow-none" 
-                    onClick={() => {
-                      navigate('/auth');
-                      setIsMenuOpen(false);
-                    }}
-                  >
-                    ورود / ثبت نام
-                  </Button>
+                  <div className="space-y-2">
+                    <Button 
+                      className="h-11 w-full shadow-none hover:shadow-none" 
+                      onClick={() => {
+                        navigate('/auth');
+                        setIsMenuOpen(false);
+                      }}
+                    >
+                      ورود
+                    </Button>
+                    <Button 
+                      variant="outline"
+                      className="h-11 w-full bg-card shadow-none" 
+                      onClick={() => {
+                        navigate('/auth?mode=signup');
+                        setIsMenuOpen(false);
+                      }}
+                    >
+                      ثبت نام
+                    </Button>
+                  </div>
                 )}
               </div>
+
             </aside>
           </div>
         )}
