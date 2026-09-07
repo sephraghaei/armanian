@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Menu, X, Code, User, LogOut, Shield, Home as HomeIcon, Building2, GraduationCap, Info, Phone } from 'lucide-react';
@@ -299,15 +300,15 @@ const Header = () => {
           </Button>
         </div>
 
-        {isMenuOpen && (
-          <div className="fixed inset-0 top-0 z-[60] flex justify-start md:hidden" role="dialog" aria-modal="true" aria-label="منوی موبایل">
+        {isMenuOpen && createPortal(
+          <div className="fixed inset-0 z-[100] flex justify-start md:hidden" role="dialog" aria-modal="true" aria-label="منوی موبایل">
             <button
               type="button"
               className="absolute inset-0 bg-foreground/15 backdrop-blur-sm"
               aria-label="بستن منو"
               onClick={() => setIsMenuOpen(false)}
             />
-            <aside className="relative flex h-full w-[86%] max-w-[340px] animate-slide-in-right flex-col border-l border-border bg-background/95 shadow-lifted backdrop-blur-xl">
+            <aside className="relative flex h-full max-h-screen w-[86%] max-w-[340px] animate-slide-in-right flex-col overflow-hidden border-l border-border bg-background shadow-lifted">
               <div className="flex h-16 items-center justify-between border-b border-border px-5">
                 <Link to="/" onClick={() => setIsMenuOpen(false)} className="flex items-center gap-2.5">
                   <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary">
@@ -435,7 +436,8 @@ const Header = () => {
               </div>
 
             </aside>
-          </div>
+          </div>,
+          document.body
         )}
       </div>
     </header>
