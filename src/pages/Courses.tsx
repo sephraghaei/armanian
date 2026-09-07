@@ -219,25 +219,20 @@ const CoursesPage = () => {
             <>
                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
                 {filteredCourses.map((course) => (
-                  <Card key={course.id} className={`group relative flex flex-col overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-xl hover:shadow-primary/10 border-border/50 bg-card/80 backdrop-blur-sm hover:border-primary/30 ${course.is_popular ? 'border-2 border-primary/40' : 'border'}`}>
-                    {/* Hover gradient overlay */}
-                    <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    
-                    {course.is_popular && (
-                      <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 z-10">
-                        <Badge variant="default" className="bg-primary text-primary-foreground shadow-lg">
-                          <Star className="w-3 h-3 mr-1" />
+                  <Card key={course.id} className={`group relative flex h-full flex-col bg-card transition-all duration-200 hover:-translate-y-1 hover:border-foreground/20 hover:shadow-lifted ${course.is_popular ? 'border-foreground/25' : 'border-border'}`}>
+                    <CardHeader className="relative gap-2 pb-4">
+                      {course.is_popular && (
+                        <Badge className="w-fit gap-1 bg-primary px-2.5 py-0.5 text-xs font-medium text-primary-foreground">
+                          <Star className="h-3 w-3" />
                           محبوب‌ترین
                         </Badge>
-                      </div>
-                    )}
-                    
-                    <CardHeader className="relative pb-4 pt-8">
-                      <CardTitle className="text-xl font-bold text-foreground leading-relaxed">{course.title}</CardTitle>
-                      <CardDescription className="text-muted-foreground mt-2 line-clamp-2 leading-relaxed">
+                      )}
+                      <CardTitle className="text-lg font-semibold leading-8 text-foreground">{course.title}</CardTitle>
+                      <CardDescription className="line-clamp-2 text-sm leading-relaxed text-muted-foreground">
                         {course.description}
                       </CardDescription>
                     </CardHeader>
+
                     
                     <CardContent className="relative flex flex-col flex-1 space-y-6 pt-2">
                       {/* Tags */}
