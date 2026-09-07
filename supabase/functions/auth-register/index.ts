@@ -22,6 +22,22 @@ async function hashPassword(password: string): Promise<string> {
   return bufferToHex(hashBuffer);
 }
 
+
+// Normalize Iranian phone numbers to a canonical 98XXXXXXXXXX form
+function normalizePhone(input: string): string {
+  let digits = String(input).replace(/[^\d]/g, "");
+  if (digits.startsWith("0098")) digits = digits.slice(4);
+  else if (digits.startsWith("98")) digits = digits.slice(2);
+  else if (digits.startsWith("0")) digits = digits.slice(1);
+  return "98" + digits;
+}
+
+function phoneVariants(input: string): string[] {
+  const canonical = normalizePhone(input);
+  const core = canonical.slice(2);
+  return [canonical, core, "0" + core, "+98" + core, "0098" + core];
+}
+
 serve(async (req: Request) => {
   console.log("Auth register function called");
   
@@ -79,7 +95,7 @@ serve(async (req: Request) => {
     const supabase = createClient(url, key);
     console.log("Supabase client created successfully");
 
-    const normalizedPhone = String(phone).replace(/[^\d]/g, "");
+    const normalizedPhone = normalizePhone(phone);
     const normalizedEmail = String(email).trim().toLowerCase();
 
     const emailRegex = /^[\w-.]+@[\w-]+\.[A-Za-z]{2,}$/;
@@ -96,7 +112,7 @@ serve(async (req: Request) => {
     const { data: exist, error: existErr } = await supabase
       .from("users_app")
       .select("id")
-      .eq("phone", normalizedPhone)
+      .in("phone", phoneVariants(phone))
       .maybeSingle();
     
     console.log("User check result:", { exist: !!exist, error: existErr });
