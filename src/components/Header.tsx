@@ -308,7 +308,7 @@ const Header = () => {
               aria-label="بستن منو"
               onClick={() => setIsMenuOpen(false)}
             />
-            <aside className="relative flex h-full w-[86%] max-w-[340px] animate-slide-in-right flex-col border-l border-border bg-background/95 shadow-lifted backdrop-blur-xl">
+            <aside className="relative flex h-full max-h-screen w-[86%] max-w-[340px] animate-slide-in-right flex-col overflow-hidden border-l border-border bg-background shadow-lifted">
               <div className="flex h-16 items-center justify-between border-b border-border px-5">
                 <Link to="/" onClick={() => setIsMenuOpen(false)} className="flex items-center gap-2.5">
                   <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary">
