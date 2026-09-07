@@ -112,20 +112,18 @@ const Programs = () => {
               key={index}
               className={`relative flex h-full flex-col bg-card shadow-soft transition-all duration-200 hover:-translate-y-1 hover:border-foreground/20 hover:shadow-lifted ${program.popular ? 'border-foreground/25' : 'border-border'}`}
             >
-              {program.popular && (
-                <div className="absolute -top-3 left-1/2 z-10 -translate-x-1/2">
-                  <Badge className="bg-primary px-3 py-0.5 text-xs font-medium text-primary-foreground">
+              <CardHeader className="gap-2 pb-4">
+                {program.popular && (
+                  <Badge className="w-fit bg-primary px-2.5 py-0.5 text-xs font-medium text-primary-foreground">
                     محبوب‌ترین
                   </Badge>
-                </div>
-              )}
-
-              <CardHeader className="pb-4">
+                )}
                 <CardTitle className="text-lg font-semibold text-foreground">{program.title}</CardTitle>
                 <CardDescription className="text-sm leading-relaxed text-muted-foreground">
                   {program.description}
                 </CardDescription>
               </CardHeader>
+
 
               <CardContent className="flex flex-1 flex-col gap-6">
                 {/* Program Details */}
