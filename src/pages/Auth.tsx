@@ -198,7 +198,7 @@ const Auth = () => {
           <p className="text-muted-foreground">به آکادمی آرمانیان خوش آمدید</p>
         </div>
 
-        <Tabs defaultValue="signin" className="w-full">
+        <Tabs defaultValue={new URLSearchParams(location.search).get('mode') === 'signup' ? 'signup' : 'signin'} className="w-full">
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="signin">ورود</TabsTrigger>
             <TabsTrigger value="signup">ثبت نام</TabsTrigger>
