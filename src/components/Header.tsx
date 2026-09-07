@@ -83,10 +83,13 @@ const Header = () => {
   const observerRef = useRef<IntersectionObserver | null>(null);
 
   const hashIds = useMemo(() => (
-    menuItems
-      .filter(i => i.href.startsWith('#'))
-      .map(i => i.href.slice(1))
+    Array.from(new Set(
+      [...menuItems, ...mobileSections.flatMap(s => s.items)]
+        .filter(i => i.href.startsWith('#'))
+        .map(i => i.href.slice(1))
+    ))
   ), []);
+
 
   useEffect(() => {
     if (location.pathname !== '/') {
