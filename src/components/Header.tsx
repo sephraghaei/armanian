@@ -57,6 +57,27 @@ const Header = () => {
     { label: 'تماس', href: '#contact', icon: Phone },
   ];
 
+  const mobileSections = [
+    {
+      title: 'صفحات',
+      items: [
+        { label: 'خانه', href: '/', icon: HomeIcon },
+        { label: 'دپارتمان‌ها', href: '/departments', icon: Building2 },
+        { label: 'دوره‌ها', href: '/courses', icon: GraduationCap },
+      ],
+    },
+    {
+      title: 'در این صفحه',
+      items: [
+        { label: 'دپارتمان‌ها', href: '#departments', icon: Building2 },
+        { label: 'دوره‌های آموزشی', href: '#programs', icon: GraduationCap },
+        { label: 'درباره ما', href: '#about', icon: Info },
+        { label: 'تماس با ما', href: '#contact', icon: Phone },
+      ],
+    },
+  ];
+
+
   // Scroll spy for hash sections on home page
   const [activeHash, setActiveHash] = useState<string | null>(null);
   const observerRef = useRef<IntersectionObserver | null>(null);
