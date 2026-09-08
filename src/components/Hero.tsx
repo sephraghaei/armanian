@@ -206,7 +206,7 @@ const Hero = () => {
                     <span className="flex flex-col">
                       <span className="text-sm font-semibold">{course.title}</span>
                       {course.description && (
-                        <span className="mt-0.5 text-xs text-muted-foreground group-aria-selected:text-primary-foreground/80">
+                        <span className="mt-0.5 text-xs text-muted-foreground group-data-[selected=true]:text-primary-foreground/80">
                           {course.description.substring(0, 60)}...
                         </span>
                       )}
