@@ -178,9 +178,9 @@ const Hero = () => {
                   <CommandItem
                     key={dept.id}
                     onSelect={() => handleSelectDepartment(dept.id)}
-                    className="group flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 aria-selected:bg-primary aria-selected:text-primary-foreground"
+                    className="group flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 data-[selected=true]:bg-primary data-[selected=true]:text-primary-foreground"
                   >
-                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md border border-border bg-muted/50 text-muted-foreground transition-colors group-hover:bg-card group-aria-selected:border-primary-foreground/20 group-aria-selected:bg-primary-foreground/20 group-aria-selected:text-primary-foreground">
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md border border-border bg-muted/50 text-muted-foreground transition-colors group-hover:bg-card group-data-[selected=true]:border-primary-foreground/20 group-data-[selected=true]:bg-primary-foreground/20 group-data-[selected=true]:text-primary-foreground">
                       <Building2 className="h-4 w-4" />
                     </span>
                     <span className="text-sm font-medium">{dept.name}</span>
@@ -198,9 +198,9 @@ const Hero = () => {
                   <CommandItem
                     key={course.id}
                     onSelect={() => handleSelectCourse(course.id)}
-                    className="group flex cursor-pointer items-start gap-3 rounded-lg px-3 py-3 aria-selected:bg-primary aria-selected:text-primary-foreground"
+                    className="group flex cursor-pointer items-start gap-3 rounded-lg px-3 py-3 data-[selected=true]:bg-primary data-[selected=true]:text-primary-foreground"
                   >
-                    <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-md border border-border bg-muted/50 text-muted-foreground transition-colors group-hover:bg-card group-aria-selected:border-primary-foreground/20 group-aria-selected:bg-primary-foreground/20 group-aria-selected:text-primary-foreground">
+                    <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-md border border-border bg-muted/50 text-muted-foreground transition-colors group-hover:bg-card group-data-[selected=true]:border-primary-foreground/20 group-data-[selected=true]:bg-primary-foreground/20 group-data-[selected=true]:text-primary-foreground">
                       <BookOpen className="h-4 w-4" />
                     </span>
                     <span className="flex flex-col">
