@@ -166,46 +166,71 @@ const Hero = () => {
             value={searchQuery}
             onValueChange={setSearchQuery}
           />
-          <CommandList>
+          <CommandList className="max-h-[440px] p-2">
             <CommandEmpty>نتیجه‌ای یافت نشد.</CommandEmpty>
 
             {filteredDepartments.length > 0 && (
-              <CommandGroup heading="دپارتمان‌ها">
+              <CommandGroup
+                heading="دپارتمان‌ها"
+                className="[&_[cmdk-group-heading]]:px-3 [&_[cmdk-group-heading]]:py-2 [&_[cmdk-group-heading]]:text-[11px] [&_[cmdk-group-heading]]:font-bold [&_[cmdk-group-heading]]:uppercase [&_[cmdk-group-heading]]:tracking-wider [&_[cmdk-group-heading]]:text-muted-foreground"
+              >
                 {filteredDepartments.map((dept) => (
                   <CommandItem
                     key={dept.id}
                     onSelect={() => handleSelectDepartment(dept.id)}
-                    className="cursor-pointer"
+                    className="group flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 aria-selected:bg-primary aria-selected:text-primary-foreground"
                   >
-                    <Building2 className="ml-2 h-4 w-4" />
-                    {dept.name}
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md border border-border bg-muted/50 text-muted-foreground transition-colors group-hover:bg-card group-aria-selected:border-primary-foreground/20 group-aria-selected:bg-primary-foreground/20 group-aria-selected:text-primary-foreground">
+                      <Building2 className="h-4 w-4" />
+                    </span>
+                    <span className="text-sm font-medium">{dept.name}</span>
                   </CommandItem>
                 ))}
               </CommandGroup>
             )}
 
             {filteredCourses.length > 0 && (
-              <CommandGroup heading="دوره‌ها">
+              <CommandGroup
+                heading="دوره‌ها"
+                className="[&_[cmdk-group-heading]]:px-3 [&_[cmdk-group-heading]]:py-2 [&_[cmdk-group-heading]]:text-[11px] [&_[cmdk-group-heading]]:font-bold [&_[cmdk-group-heading]]:uppercase [&_[cmdk-group-heading]]:tracking-wider [&_[cmdk-group-heading]]:text-muted-foreground"
+              >
                 {filteredCourses.map((course) => (
                   <CommandItem
                     key={course.id}
                     onSelect={() => handleSelectCourse(course.id)}
-                    className="cursor-pointer"
+                    className="group flex cursor-pointer items-start gap-3 rounded-lg px-3 py-3 aria-selected:bg-primary aria-selected:text-primary-foreground"
                   >
-                    <BookOpen className="ml-2 h-4 w-4" />
-                    <div className="flex flex-col">
-                      <span>{course.title}</span>
+                    <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-md border border-border bg-muted/50 text-muted-foreground transition-colors group-hover:bg-card group-aria-selected:border-primary-foreground/20 group-aria-selected:bg-primary-foreground/20 group-aria-selected:text-primary-foreground">
+                      <BookOpen className="h-4 w-4" />
+                    </span>
+                    <span className="flex flex-col">
+                      <span className="text-sm font-semibold">{course.title}</span>
                       {course.description && (
-                        <span className="text-xs text-muted-foreground">
+                        <span className="mt-0.5 text-xs text-muted-foreground group-aria-selected:text-primary-foreground/80">
                           {course.description.substring(0, 60)}...
                         </span>
                       )}
-                    </div>
+                    </span>
                   </CommandItem>
                 ))}
               </CommandGroup>
             )}
           </CommandList>
+
+          {/* Footer / keyboard hints */}
+          <div className="flex items-center justify-between border-t border-border bg-muted/40 px-4 py-2">
+            <div className="flex items-center gap-4">
+              <span className="flex items-center gap-1.5">
+                <kbd className="rounded border border-border bg-card px-1.5 py-0.5 text-[10px] text-muted-foreground">↑↓</kbd>
+                <span className="text-[10px] text-muted-foreground">پیمایش</span>
+              </span>
+              <span className="flex items-center gap-1.5">
+                <kbd className="rounded border border-border bg-card px-1.5 py-0.5 text-[10px] text-muted-foreground">↵</kbd>
+                <span className="text-[10px] text-muted-foreground">انتخاب</span>
+              </span>
+            </div>
+            <span className="text-[10px] font-light italic text-muted-foreground/60">آرمانیان</span>
+          </div>
         </CommandDialog>
       </div>
     </section>
