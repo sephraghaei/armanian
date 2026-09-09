@@ -431,6 +431,17 @@ const Header = () => {
                     >
                       ثبت نام
                     </Button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        navigate('/auth?redirect=/admin');
+                        setIsMenuOpen(false);
+                      }}
+                      className="flex w-full items-center justify-center gap-2 rounded-lg px-3 py-2 text-xs font-medium text-muted-foreground transition-colors hover:bg-secondary/70 hover:text-foreground"
+                    >
+                      <Shield className="h-3.5 w-3.5" />
+                      ورود مدیران
+                    </button>
                   </div>
                 )}
               </div>

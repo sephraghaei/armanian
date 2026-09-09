@@ -28,7 +28,11 @@ const Auth = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
   const location = useLocation();
-  const redirectTo = (location.state as { from?: string })?.from || '/';
+  const redirectParam = new URLSearchParams(location.search).get('redirect');
+  const redirectTo =
+    (location.state as { from?: string })?.from ||
+    (redirectParam && redirectParam.startsWith('/') ? redirectParam : null) ||
+    '/';
 
   // Redirect if already logged in
   useEffect(() => {
