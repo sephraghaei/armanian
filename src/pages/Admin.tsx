@@ -13,8 +13,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
+import AdminSidebar, { type AdminSection } from '@/components/AdminSidebar';
 import { Separator } from '@/components/ui/separator';
 
 interface Course {
@@ -76,7 +76,7 @@ export default function Admin() {
   const [enrollments, setEnrollments] = useState<Enrollment[]>([]);
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<'courses' | 'enrollments' | 'posts' | 'departments' | 'media' | 'content'>('courses');
+  const [activeTab, setActiveTab] = useState<AdminSection>('overview');
   const [editingCourse, setEditingCourse] = useState<Course | null>(null);
   const [editingPost, setEditingPost] = useState<Post | null>(null);
   const [formData, setFormData] = useState({
@@ -1212,9 +1212,10 @@ export default function Admin() {
               </CardContent>
             </Card>
           </TabsContent>
-        </Tabs>
-      </main>
-      <Footer />
-    </div>
+            </Tabs>
+          </main>
+        </div>
+      </div>
+    </SidebarProvider>
   );
 }
