@@ -13,8 +13,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
+import AdminSidebar, { type AdminSection } from '@/components/AdminSidebar';
 import { Separator } from '@/components/ui/separator';
 
 interface Course {
@@ -76,7 +76,7 @@ export default function Admin() {
   const [enrollments, setEnrollments] = useState<Enrollment[]>([]);
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<'courses' | 'enrollments' | 'posts' | 'departments' | 'media' | 'content'>('courses');
+  const [activeTab, setActiveTab] = useState<AdminSection>('overview');
   const [editingCourse, setEditingCourse] = useState<Course | null>(null);
   const [editingPost, setEditingPost] = useState<Post | null>(null);
   const [formData, setFormData] = useState({
@@ -555,46 +555,87 @@ export default function Admin() {
     );
   }
 
+  const activeCourses = enrollments.filter((e) => e.status === 'active').length;
+  const uniqueStudents = new Set(enrollments.map((e) => e.user_id)).size;
+  const publishedPosts = posts.filter((p) => p.status === 'published').length;
+
+  const stats = [
+    { label: 'دوره‌ها', value: courses.length, icon: BookOpen },
+    { label: 'دانشجویان', value: uniqueStudents, icon: Users },
+    { label: 'ثبت‌نام‌های فعال', value: activeCourses, icon: Calendar },
+    { label: 'دپارتمان‌ها', value: departments.length, icon: Building2 },
+    { label: 'مطالب منتشرشده', value: publishedPosts, icon: FileText },
+    { label: 'کل ثبت‌نام‌ها', value: enrollments.length, icon: Users },
+  ];
+
+  const sectionTitles: Record<typeof activeTab, string> = {
+    overview: 'نمای کلی',
+    courses: 'مدیریت دوره‌ها',
+    posts: 'مدیریت مطالب',
+    enrollments: 'ثبت‌نام‌ها',
+    departments: 'دپارتمان‌ها',
+    media: 'رسانه',
+    content: 'متن‌های سایت',
+  };
+
   return (
-    <div className="min-h-screen flex flex-col">
-      <Header />
-      <main className="flex-1 container mx-auto px-4 py-8">
-        <div className="mb-6">
-          <Button variant="outline" onClick={() => navigate('/')} className="gap-2">
-            <ArrowRight className="h-4 w-4" />
-            بازگشت به صفحه اصلی
-          </Button>
-        </div>
+    <SidebarProvider>
+      <div className="min-h-screen flex w-full bg-muted/30">
+        <AdminSidebar active={activeTab} onChange={(s) => setActiveTab(s)} />
 
-        <h1 className="text-3xl font-bold mb-8">پنل مدیریت</h1>
+        <div className="flex-1 flex flex-col min-w-0">
+          <header className="sticky top-0 z-10 h-14 flex items-center gap-3 border-b bg-background px-4">
+            <SidebarTrigger />
+            <h1 className="text-base font-semibold">{sectionTitles[activeTab]}</h1>
+          </header>
 
-        <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as typeof activeTab)} className="space-y-6">
-          <TabsList className="grid w-full max-w-4xl grid-cols-6">
-            <TabsTrigger value="courses" className="gap-2">
-              <BookOpen className="h-4 w-4" />
-              دوره‌ها
-            </TabsTrigger>
-            <TabsTrigger value="posts" className="gap-2">
-              <FileText className="h-4 w-4" />
-              مطالب
-            </TabsTrigger>
-            <TabsTrigger value="enrollments" className="gap-2">
-              <Users className="h-4 w-4" />
-              ثبت‌نام‌ها
-            </TabsTrigger>
-            <TabsTrigger value="departments" className="gap-2">
-              <Building2 className="h-4 w-4" />
-              دپارتمان‌ها
-            </TabsTrigger>
-            <TabsTrigger value="media" className="gap-2">
-              <ImageIcon className="h-4 w-4" />
-              رسانه
-            </TabsTrigger>
-            <TabsTrigger value="content" className="gap-2">
-              <Wand2 className="h-4 w-4" />
-              متن‌ها
-            </TabsTrigger>
-          </TabsList>
+          <main className="flex-1 p-4 md:p-6">
+            <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as typeof activeTab)} className="space-y-6">
+
+          {/* Overview */}
+          <TabsContent value="overview" className="space-y-6">
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {stats.map((s) => (
+                <Card key={s.label}>
+                  <CardContent className="p-5 flex items-center justify-between">
+                    <div>
+                      <p className="text-sm text-muted-foreground">{s.label}</p>
+                      <p className="text-3xl font-bold mt-1">{s.value.toLocaleString('fa-IR')}</p>
+                    </div>
+                    <div className="h-10 w-10 rounded-md bg-primary/10 text-primary flex items-center justify-center">
+                      <s.icon className="h-5 w-5" />
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-base">آخرین ثبت‌نام‌ها</CardTitle>
+                <CardDescription>۵ ثبت‌نام اخیر</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                {enrollments.slice(0, 5).map((e) => (
+                  <div key={e.id} className="flex items-center justify-between border-b pb-2 last:border-0 last:pb-0">
+                    <div className="min-w-0">
+                      <p className="text-sm font-medium truncate">
+                        {e.users_app?.first_name} {e.users_app?.last_name}
+                      </p>
+                      <p className="text-xs text-muted-foreground truncate">{e.courses?.title}</p>
+                    </div>
+                    <span className="text-xs text-muted-foreground shrink-0">
+                      {new Date(e.enrolled_at).toLocaleDateString('fa-IR')}
+                    </span>
+                  </div>
+                ))}
+                {enrollments.length === 0 && (
+                  <p className="text-sm text-muted-foreground">هنوز ثبت‌نامی وجود ندارد.</p>
+                )}
+              </CardContent>
+            </Card>
+          </TabsContent>
+
 
           {/* Courses Tab */}
           <TabsContent value="courses" className="space-y-6">
@@ -1171,9 +1212,10 @@ export default function Admin() {
               </CardContent>
             </Card>
           </TabsContent>
-        </Tabs>
-      </main>
-      <Footer />
-    </div>
+            </Tabs>
+          </main>
+        </div>
+      </div>
+    </SidebarProvider>
   );
 }
