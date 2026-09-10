@@ -69,7 +69,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         if (rawUser) {
           const parsedUser = JSON.parse(rawUser);
           setUser(parsedUser);
-          const adminStatus = await checkAdminRole(parsedUser.id);
+          const adminStatus = await checkAdminRole(parsedUser.id, rawToken);
           setIsAdmin(adminStatus);
         }
       } catch {}
