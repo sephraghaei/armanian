@@ -584,12 +584,12 @@ export default function Admin() {
         <AdminSidebar active={activeTab} onChange={(s) => setActiveTab(s)} />
 
         <div className="flex-1 flex flex-col min-w-0">
-          <header className="sticky top-0 z-10 h-14 flex items-center gap-3 border-b bg-background px-4">
-            <SidebarTrigger />
-            <h1 className="text-base font-semibold">{sectionTitles[activeTab]}</h1>
+          <header className="sticky top-0 z-20 h-14 flex items-center gap-2 border-b bg-background px-3 md:px-4">
+            <SidebarTrigger className="shrink-0" />
+            <h1 className="text-sm md:text-base font-semibold truncate">{sectionTitles[activeTab]}</h1>
           </header>
 
-          <main className="flex-1 p-4 md:p-6">
+          <main className="flex-1 p-3 md:p-6 overflow-x-hidden">
             <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as typeof activeTab)} className="space-y-6">
 
           {/* Overview */}
@@ -664,7 +664,7 @@ export default function Admin() {
                       />
                     </div>
 
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
                         <label className="text-sm font-medium">مدت زمان</label>
                         <Input
@@ -825,7 +825,7 @@ export default function Admin() {
                       />
                     </div>
 
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
                         <label className="text-sm font-medium">دسته‌بندی</label>
                         <Input
@@ -954,6 +954,57 @@ export default function Admin() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
+                {/* Mobile: card list */}
+                <div className="space-y-3 md:hidden">
+                  {enrollments.length === 0 ? (
+                    <p className="text-sm text-muted-foreground py-6 text-center">هنوز ثبت‌نامی وجود ندارد</p>
+                  ) : (
+                    enrollments.map((enrollment) => (
+                      <div key={enrollment.id} className="border rounded-lg p-3 space-y-2">
+                        <div className="flex items-start justify-between gap-2">
+                          <div className="min-w-0">
+                            <p className="font-medium text-sm truncate">
+                              {enrollment.users_app.first_name} {enrollment.users_app.last_name}
+                            </p>
+                            <p className="text-xs text-muted-foreground truncate">{enrollment.courses.title}</p>
+                          </div>
+                          <span className={`shrink-0 inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium ${
+                            enrollment.status === 'active'
+                              ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
+                              : 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200'
+                          }`}>
+                            {enrollment.status === 'active' ? 'فعال' : 'غیرفعال'}
+                          </span>
+                        </div>
+                        <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground">
+                          <span className="flex items-center gap-1">
+                            <Phone className="h-3 w-3" />
+                            {enrollment.users_app.phone}
+                          </span>
+                          <span className="flex items-center gap-1">
+                            <Calendar className="h-3 w-3" />
+                            {new Date(enrollment.enrolled_at).toLocaleDateString('fa-IR')}
+                          </span>
+                          <span>
+                            انقضا: {new Date(enrollment.expires_at).toLocaleDateString('fa-IR')}
+                          </span>
+                        </div>
+                        <Button
+                          size="sm"
+                          variant="destructive"
+                          className="w-full"
+                          onClick={() => deleteEnrollment(enrollment.id)}
+                        >
+                          <Trash2 className="h-4 w-4 ml-1" />
+                          حذف ثبت‌نام
+                        </Button>
+                      </div>
+                    ))
+                  )}
+                </div>
+
+                {/* Desktop: table */}
+                <div className="hidden md:block overflow-x-auto">
                 <Table>
                   <TableHeader>
                     <TableRow>
@@ -1018,6 +1069,7 @@ export default function Admin() {
                     )}
                   </TableBody>
                 </Table>
+                </div>
               </CardContent>
             </Card>
           </TabsContent>
