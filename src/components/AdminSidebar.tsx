@@ -10,6 +10,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from '@/components/ui/sidebar';
 import {
   LayoutDashboard,
@@ -64,6 +65,13 @@ interface Props {
 const AdminSidebar = ({ active, onChange }: Props) => {
   const navigate = useNavigate();
   const { user, signOut } = useAuth();
+  const { isMobile, setOpenMobile } = useSidebar();
+
+  const handleSelect = (key: AdminSection) => {
+    onChange(key);
+    if (isMobile) setOpenMobile(false);
+  };
+
 
   return (
     <Sidebar collapsible="icon" side="right">
@@ -92,7 +100,7 @@ const AdminSidebar = ({ active, onChange }: Props) => {
                     <SidebarMenuButton
                       isActive={active === item.key}
                       tooltip={item.title}
-                      onClick={() => onChange(item.key)}
+                      onClick={() => handleSelect(item.key)}
                     >
                       <item.icon className="h-4 w-4" />
                       <span>{item.title}</span>
