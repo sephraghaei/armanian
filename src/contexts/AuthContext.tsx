@@ -111,7 +111,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       try { if (body.token) localStorage.setItem('app_token', body.token); } catch {}
       if (body.token) setAppToken(body.token);
       setUser(body.user);
-      const adminStatus = await checkAdminRole(body.user.id);
+      const adminStatus = await checkAdminRole(body.user.id, body.token);
       setIsAdmin(adminStatus);
       // Redirect to target page after successful signup
       window.location.href = redirectTo;
