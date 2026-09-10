@@ -40,20 +40,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [appToken, setAppToken] = useState<string | null>(null);
   const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 
-  const checkAdminRole = async (userId: string) => {
+  // Admin status must be resolved server-side: this app uses custom phone auth,
+  // so auth.uid() is NULL for the client and RLS hides user_roles rows.
+  const checkAdminRole = async (_userId: string, token?: string | null) => {
     try {
-      const { data, error } = await supabase
-        .from('user_roles' as any)
-        .select('role')
-        .eq('user_id', userId)
-        .eq('role', 'admin')
-        .maybeSingle();
-      
-      if (error) {
-        console.error('Error checking admin role:', error);
-        return false;
-      }
-      return !!data;
+      const sessionToken = token ?? localStorage.getItem('app_token');
+      if (!sessionToken || !supabaseUrl) return false;
+      const res = await fetch(`${supabaseUrl}/functions/v1/auth-me`, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json', 'x-app-token': sessionToken },
+        body: '{}',
+      });
+      if (!res.ok) return false;
+      const body = await res.json();
+      return !!body.isAdmin;
     } catch (e) {
       console.error('Error checking admin role:', e);
       return false;
@@ -69,7 +69,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         if (rawUser) {
           const parsedUser = JSON.parse(rawUser);
           setUser(parsedUser);
-          const adminStatus = await checkAdminRole(parsedUser.id);
+          const adminStatus = await checkAdminRole(parsedUser.id, rawToken);
           setIsAdmin(adminStatus);
         }
       } catch {}
@@ -111,7 +111,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       try { if (body.token) localStorage.setItem('app_token', body.token); } catch {}
       if (body.token) setAppToken(body.token);
       setUser(body.user);
-      const adminStatus = await checkAdminRole(body.user.id);
+      const adminStatus = await checkAdminRole(body.user.id, body.token);
       setIsAdmin(adminStatus);
       // Redirect to target page after successful signup
       window.location.href = redirectTo;
@@ -140,7 +140,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       try { if (body.token) localStorage.setItem('app_token', body.token); } catch {}
       if (body.token) setAppToken(body.token);
       setUser(body.user);
-      const adminStatus = await checkAdminRole(body.user.id);
+      const adminStatus = await checkAdminRole(body.user.id, body.token);
       setIsAdmin(adminStatus);
       window.location.href = redirectTo;
       return { error: null };
