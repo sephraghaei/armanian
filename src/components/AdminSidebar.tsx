@@ -100,7 +100,7 @@ const AdminSidebar = ({ active, onChange }: Props) => {
                     <SidebarMenuButton
                       isActive={active === item.key}
                       tooltip={item.title}
-                      onClick={() => onChange(item.key)}
+                      onClick={() => handleSelect(item.key)}
                     >
                       <item.icon className="h-4 w-4" />
                       <span>{item.title}</span>
