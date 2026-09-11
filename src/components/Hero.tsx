@@ -36,6 +36,7 @@ const Hero = () => {
   const [open, setOpen] = useState(false);
 
   const spotlightRef = useRef<HTMLDivElement>(null);
+  const dotGridRef = useRef<HTMLDivElement>(null);
   const targetRef = useRef({ x: 0, y: 0 });
   const currentRef = useRef({ x: 0, y: 0 });
   const visibleRef = useRef(false);
