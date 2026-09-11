@@ -35,6 +35,54 @@ const Hero = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [open, setOpen] = useState(false);
 
+  const spotlightRef = useRef<HTMLDivElement>(null);
+  const targetRef = useRef({ x: 0, y: 0 });
+  const currentRef = useRef({ x: 0, y: 0 });
+  const visibleRef = useRef(false);
+  const rafRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    const animate = () => {
+      const ease = 0.12;
+      currentRef.current.x += (targetRef.current.x - currentRef.current.x) * ease;
+      currentRef.current.y += (targetRef.current.y - currentRef.current.y) * ease;
+
+      if (spotlightRef.current) {
+        spotlightRef.current.style.transform = `translate(${currentRef.current.x}px, ${currentRef.current.y}px)`;
+        spotlightRef.current.style.opacity = visibleRef.current ? '1' : '0';
+      }
+
+      rafRef.current = requestAnimationFrame(animate);
+    };
+
+    rafRef.current = requestAnimationFrame(animate);
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, []);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    targetRef.current = {
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    };
+  };
+
+  const handleMouseEnter = (e: React.MouseEvent<HTMLElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    targetRef.current = {
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    };
+    currentRef.current = { ...targetRef.current };
+    visibleRef.current = true;
+  };
+
+  const handleMouseLeave = () => {
+    visibleRef.current = false;
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
