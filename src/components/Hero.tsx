@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ArrowRight, Search, BookOpen, Building2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, useRef } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import Typewriter from '@/components/Typewriter';
 import {
