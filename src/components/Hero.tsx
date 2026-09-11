@@ -36,6 +36,7 @@ const Hero = () => {
   const [open, setOpen] = useState(false);
 
   const spotlightRef = useRef<HTMLDivElement>(null);
+  const dotGridRef = useRef<HTMLDivElement>(null);
   const targetRef = useRef({ x: 0, y: 0 });
   const currentRef = useRef({ x: 0, y: 0 });
   const visibleRef = useRef(false);
@@ -50,6 +51,12 @@ const Hero = () => {
       if (spotlightRef.current) {
         spotlightRef.current.style.transform = `translate(${currentRef.current.x}px, ${currentRef.current.y}px)`;
         spotlightRef.current.style.opacity = visibleRef.current ? '1' : '0';
+      }
+
+      if (dotGridRef.current) {
+        dotGridRef.current.style.setProperty('--mx', `${currentRef.current.x}px`);
+        dotGridRef.current.style.setProperty('--my', `${currentRef.current.y}px`);
+        dotGridRef.current.style.opacity = visibleRef.current ? '1' : '0';
       }
 
       rafRef.current = requestAnimationFrame(animate);
@@ -156,6 +163,21 @@ const Hero = () => {
       className="relative flex min-h-[76vh] items-center overflow-hidden bg-background pb-20 pt-28 sm:pt-32 lg:min-h-[78vh] lg:pb-24 lg:pt-36"
     >
       {/* Cursor spotlight */}
+      {/* Dot-grid spotlight */}
+      <div
+        ref={dotGridRef}
+        className="pointer-events-none absolute inset-0 z-0 opacity-0 transition-opacity duration-500 ease-out"
+        style={{
+          backgroundImage:
+            'radial-gradient(circle, hsl(var(--foreground) / 0.09) 1.2px, transparent 1.2px)',
+          backgroundSize: '22px 22px',
+          maskImage:
+            'radial-gradient(circle 240px at var(--mx, 50%) var(--my, 50%), black 0%, transparent 70%)',
+          WebkitMaskImage:
+            'radial-gradient(circle 240px at var(--mx, 50%) var(--my, 50%), black 0%, transparent 70%)',
+        }}
+      />
+
       <div
         ref={spotlightRef}
         className="pointer-events-none absolute left-0 top-0 z-0 opacity-0 transition-opacity duration-500 ease-out will-change-transform"
@@ -165,22 +187,33 @@ const Hero = () => {
         <div
           className="absolute -translate-x-1/2 -translate-y-1/2 rounded-full"
           style={{
-            width: 'clamp(280px, 30vw, 460px)',
-            height: 'clamp(280px, 30vw, 460px)',
+            width: 'clamp(260px, 28vw, 420px)',
+            height: 'clamp(260px, 28vw, 420px)',
             background:
-              'radial-gradient(circle at center, hsl(var(--accent) / 0.16) 0%, hsl(var(--accent) / 0.06) 40%, transparent 72%)',
-            filter: 'blur(26px)',
+              'radial-gradient(circle at center, hsl(var(--accent) / 0.18) 0%, hsl(var(--accent) / 0.07) 40%, transparent 72%)',
+            filter: 'blur(28px)',
           }}
         />
-        {/* Bright inner core */}
+        {/* Mid glow */}
         <div
           className="absolute -translate-x-1/2 -translate-y-1/2 rounded-full"
           style={{
-            width: 'clamp(80px, 10vw, 130px)',
-            height: 'clamp(80px, 10vw, 130px)',
+            width: 'clamp(90px, 11vw, 150px)',
+            height: 'clamp(90px, 11vw, 150px)',
             background:
-              'radial-gradient(circle at center, hsl(var(--accent) / 0.32) 0%, hsl(var(--accent) / 0.12) 45%, transparent 72%)',
-            filter: 'blur(12px)',
+              'radial-gradient(circle at center, hsl(var(--accent) / 0.38) 0%, hsl(var(--accent) / 0.14) 45%, transparent 72%)',
+            filter: 'blur(10px)',
+          }}
+        />
+        {/* Tiny cursor dot */}
+        <div
+          className="absolute -translate-x-1/2 -translate-y-1/2 rounded-full"
+          style={{
+            width: 'clamp(18px, 2vw, 28px)',
+            height: 'clamp(18px, 2vw, 28px)',
+            background:
+              'radial-gradient(circle at center, hsl(var(--accent) / 0.85) 0%, transparent 70%)',
+            filter: 'blur(4px)',
           }}
         />
       </div>
