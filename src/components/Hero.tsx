@@ -150,8 +150,29 @@ const Hero = () => {
   return (
     <section
       id="home"
+      onMouseMove={handleMouseMove}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
       className="relative flex min-h-[76vh] items-center overflow-hidden bg-background pb-20 pt-28 sm:pt-32 lg:min-h-[78vh] lg:pb-24 lg:pt-36"
     >
+      {/* Cursor spotlight */}
+      <div
+        ref={spotlightRef}
+        className="pointer-events-none absolute left-0 top-0 z-0 opacity-0 transition-opacity duration-500 ease-out will-change-transform"
+        style={{ transform: 'translate(0, 0)' }}
+      >
+        <div
+          className="absolute -translate-x-1/2 -translate-y-1/2 rounded-full"
+          style={{
+            width: 'clamp(380px, 42vw, 640px)',
+            height: 'clamp(380px, 42vw, 640px)',
+            background:
+              'radial-gradient(circle at center, hsl(var(--accent) / 0.22) 0%, hsl(var(--accent) / 0.08) 35%, transparent 70%)',
+            filter: 'blur(28px)',
+          }}
+        />
+      </div>
+
       <div className="container relative z-10 mx-auto max-w-5xl px-5 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center text-center animate-slide-in-up">
           <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-muted-foreground">
