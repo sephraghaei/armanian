@@ -53,6 +53,12 @@ const Hero = () => {
         spotlightRef.current.style.opacity = visibleRef.current ? '1' : '0';
       }
 
+      if (dotGridRef.current) {
+        dotGridRef.current.style.setProperty('--mx', `${currentRef.current.x}px`);
+        dotGridRef.current.style.setProperty('--my', `${currentRef.current.y}px`);
+        dotGridRef.current.style.opacity = visibleRef.current ? '1' : '0';
+      }
+
       rafRef.current = requestAnimationFrame(animate);
     };
 
