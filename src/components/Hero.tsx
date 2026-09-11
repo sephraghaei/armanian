@@ -161,14 +161,26 @@ const Hero = () => {
         className="pointer-events-none absolute left-0 top-0 z-0 opacity-0 transition-opacity duration-500 ease-out will-change-transform"
         style={{ transform: 'translate(0, 0)' }}
       >
+        {/* Soft outer halo */}
         <div
           className="absolute -translate-x-1/2 -translate-y-1/2 rounded-full"
           style={{
-            width: 'clamp(380px, 42vw, 640px)',
-            height: 'clamp(380px, 42vw, 640px)',
+            width: 'clamp(280px, 30vw, 460px)',
+            height: 'clamp(280px, 30vw, 460px)',
             background:
-              'radial-gradient(circle at center, hsl(var(--accent) / 0.22) 0%, hsl(var(--accent) / 0.08) 35%, transparent 70%)',
-            filter: 'blur(28px)',
+              'radial-gradient(circle at center, hsl(var(--accent) / 0.16) 0%, hsl(var(--accent) / 0.06) 40%, transparent 72%)',
+            filter: 'blur(26px)',
+          }}
+        />
+        {/* Bright inner core */}
+        <div
+          className="absolute -translate-x-1/2 -translate-y-1/2 rounded-full"
+          style={{
+            width: 'clamp(80px, 10vw, 130px)',
+            height: 'clamp(80px, 10vw, 130px)',
+            background:
+              'radial-gradient(circle at center, hsl(var(--accent) / 0.32) 0%, hsl(var(--accent) / 0.12) 45%, transparent 72%)',
+            filter: 'blur(12px)',
           }}
         />
       </div>
