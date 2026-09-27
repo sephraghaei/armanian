@@ -77,7 +77,10 @@ const Typewriter = ({
   return (
     <span className={className}>
       {displayed}
-      <span className="inline-block w-[1px] h-[1.2em] align-[-0.2em] bg-current ml-1 animate-pulse" />
+      <span
+        className="inline-block w-[2px] h-[1.1em] align-[-0.15em] bg-current mr-1 animate-cursor-blink"
+        aria-hidden="true"
+      />
     </span>
   );
 };

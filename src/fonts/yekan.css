@@ -1,0 +1,57 @@
+/* IRANYekan Font Family */
+@font-face {
+  font-family: 'IRANYekan';
+  src: url('/__l5e/assets-v1/c46b5cd5-bda5-4b55-a7d7-5bf89a73516c/IRANYekanThin.ttf') format('truetype');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'IRANYekan';
+  src: url('/__l5e/assets-v1/25bbdf63-a4d5-4be2-861e-f7d5c36f1572/IRANYekanLight.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'IRANYekan';
+  src: url('/__l5e/assets-v1/d05e63c6-9117-4909-aa1b-111f6d02d508/IRANYekanRegular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'IRANYekan';
+  src: url('/__l5e/assets-v1/4eb9df1b-78af-4499-9bca-e63b2bf4fee4/IRANYekanMedium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'IRANYekan';
+  src: url('/__l5e/assets-v1/ab7b8bbf-a714-462f-b269-494edc6968b3/IRANYekanBold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'IRANYekan';
+  src: url('/__l5e/assets-v1/1d9a8ab2-a25b-4758-a219-cd2af45e0905/IRANYekanExtraBold.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'IRANYekan';
+  src: url('/__l5e/assets-v1/013c717e-bdd3-475c-bd90-f7ac513336a6/IRANYekanBlack.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'IRANYekan';
+  src: url('/__l5e/assets-v1/a9b1212a-b70e-4417-8e82-92ccc5f802e0/IRANYekanExtraBlack.ttf') format('truetype');
+  font-weight: 950;
+  font-style: normal;
+  font-display: swap;
+}

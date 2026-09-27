@@ -2,42 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: "Pelak";
-  src: url("./fonts/pelak/Pelak FontFamily/webfonts/woff2/Pelak-light.woff2") format("woff2"),
-       url("./fonts/pelak/Pelak FontFamily/webfonts/woff/Pelak-light.woff") format("woff");
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Pelak";
-  src: url("./fonts/pelak/Pelak FontFamily/webfonts/woff2/Pelak-Regular.woff2") format("woff2"),
-       url("./fonts/pelak/Pelak FontFamily/webfonts/woff/Pelak-Regular.woff") format("woff");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Pelak";
-  src: url("./fonts/pelak/Pelak FontFamily/webfonts/woff2/Pelak-Bold.woff2") format("woff2"),
-       url("./fonts/pelak/Pelak FontFamily/webfonts/woff/Pelak-Bold.woff") format("woff");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "PelakNoEng";
-  src: url("./fonts/pelak/Non English/webfonts/woff2/PelakNoEng-Regular.woff2") format("woff2"),
-       url("./fonts/pelak/Non English/webfonts/woff/PelakNoEng-Regular.woff") format("woff");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
 /* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
 All colors MUST be HSL.
 */
@@ -45,115 +9,119 @@ All colors MUST be HSL.
 @layer base {
   :root {
     color-scheme: light;
-    --background: 0 0% 100%;
-    --foreground: 240 20% 10%;
+
+    /* Attio-inspired: near-white cool canvas, ink-black primary, soft neutrals */
+    --background: 220 33% 99%;
+    --foreground: 224 20% 9%;
 
     --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
+    --card-foreground: 224 20% 9%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
+    --popover-foreground: 224 20% 9%;
 
-    --primary: 217 100% 60%;
-    --primary-foreground: 0 0% 98%;
-    --primary-wave: 30 100% 60%;
+    --primary: 224 18% 11%;
+    --primary-foreground: 220 33% 99%;
+    --primary-wave: 224 14% 22%;
 
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
+    --secondary: 220 20% 96%;
+    --secondary-foreground: 224 18% 14%;
 
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
+    --muted: 220 20% 96%;
+    --muted-foreground: 220 9% 42%;
 
-    --accent: 217 100% 60%;
-    --accent-foreground: 0 0% 98%;
-    --accent-wave: 30 90% 70%;
+    --accent: 222 83% 56%;
+    --accent-foreground: 0 0% 100%;
+    --accent-wave: 222 70% 66%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
+    --gold: 222 83% 56%;
 
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 200 61% 75%;
+    --destructive: 0 72% 46%;
+    --destructive-foreground: 0 0% 100%;
 
-    --radius: 0.75rem;
+    --border: 220 15% 91%;
+    --input: 220 15% 91%;
+    --ring: 224 18% 11%;
+
+    --radius: 0.625rem;
 
     /* Custom design tokens */
-    --gradient-primary: linear-gradient(135deg, hsl(233, 63%, 67%), hsl(200 51% 65%));
-    --gradient-secondary: linear-gradient(135deg, hsl(200 51% 65%), hsl(200 41% 55%));
-    --gradient-hero: linear-gradient(135deg, hsl(0 0% 100%) 0%, hsl(240 4.8% 95.9%) 50%, hsl(0 0% 100%) 100%);
-    --glow-primary: 0 0 40px hsl(200 61% 75% / 0.3);
-    --glow-accent: 0 0 40px hsl(200 51% 65% / 0.3);
+    --gradient-primary: hsl(var(--primary));
+    --gradient-secondary: hsl(var(--primary));
+    --gradient-hero: linear-gradient(180deg, hsl(220 33% 99%) 0%, hsl(224 45% 97%) 60%, hsl(226 55% 95%) 100%);
+    --glow-primary: 0 0 40px hsl(224 20% 9% / 0.08);
+    --glow-accent: 0 0 40px hsl(222 83% 56% / 0.18);
+    --shadow-soft: 0 1px 2px hsl(224 20% 9% / 0.05), 0 6px 20px -10px hsl(224 20% 9% / 0.1);
+    --shadow-lifted: 0 1px 3px hsl(224 20% 9% / 0.06), 0 16px 36px -14px hsl(224 20% 9% / 0.16);
 
-    --sidebar-background: 0 0% 98%;
+    --sidebar-background: 220 25% 98%;
 
-    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-foreground: 220 10% 30%;
 
-    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary: 224 18% 11%;
 
-    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-primary-foreground: 220 33% 99%;
 
-    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent: 220 20% 95%;
 
-    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-accent-foreground: 224 18% 14%;
 
-    --sidebar-border: 220 13% 91%;
+    --sidebar-border: 220 15% 91%;
 
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-ring: 224 18% 11%;
   }
 
   .dark {
     color-scheme: dark;
 
-    /* Deep navy with a subtle blue tint — richer than pure black, keeps brand identity */
-    --background: 222 47% 5%;
-    --foreground: 214 32% 94%;
+    --background: 225 15% 7%;
+    --foreground: 220 20% 96%;
 
-    /* Elevated surfaces: each layer slightly lighter to create depth */
-    --card: 221 40% 8%;
-    --card-foreground: 214 32% 94%;
+    --card: 225 14% 10%;
+    --card-foreground: 220 20% 96%;
 
-    --popover: 222 42% 7%;
-    --popover-foreground: 214 32% 94%;
+    --popover: 225 14% 10%;
+    --popover-foreground: 220 20% 96%;
 
-    /* Keep the vivid brand blue (identity) but lift lightness for dark-bg contrast */
-    --primary: 217 95% 64%;
-    --primary-foreground: 222 47% 6%;
-    --primary-wave: 28 92% 54%;
+    --primary: 220 20% 96%;
+    --primary-foreground: 225 15% 8%;
+    --primary-wave: 220 12% 80%;
 
-    --secondary: 219 32% 13%;
-    --secondary-foreground: 214 32% 94%;
+    --secondary: 225 12% 15%;
+    --secondary-foreground: 220 20% 96%;
 
-    --muted: 219 30% 13%;
-    --muted-foreground: 217 16% 68%;
+    --muted: 225 12% 14%;
+    --muted-foreground: 220 10% 68%;
 
-    --accent: 217 90% 62%;
-    --accent-foreground: 222 47% 6%;
-    --accent-wave: 30 95% 60%;
+    --accent: 222 83% 62%;
+    --accent-foreground: 225 15% 8%;
+    --accent-wave: 222 70% 56%;
 
-    --destructive: 0 72% 56%;
-    --destructive-foreground: 0 0% 98%;
+    --gold: 222 83% 62%;
 
-    --border: 219 28% 17%;
-    --input: 219 28% 18%;
-    --ring: 201 85% 62%;
+    --destructive: 0 62% 48%;
+    --destructive-foreground: 220 20% 96%;
 
-    --radius: 0.75rem;
+    --border: 225 10% 20%;
+    --input: 225 10% 20%;
+    --ring: 220 20% 90%;
 
-    /* Custom design tokens — dark variants */
-    --gradient-primary: linear-gradient(135deg, hsl(233 68% 63%), hsl(199 85% 56%));
-    --gradient-secondary: linear-gradient(135deg, hsl(199 80% 55%), hsl(201 70% 44%));
-    --gradient-hero: linear-gradient(135deg, hsl(222 47% 5%) 0%, hsl(220 38% 9%) 50%, hsl(222 47% 5%) 100%);
-    --glow-primary: 0 0 45px hsl(201 85% 60% / 0.35);
-    --glow-accent: 0 0 45px hsl(28 92% 55% / 0.3);
+    --gradient-primary: hsl(var(--primary));
+    --gradient-secondary: hsl(var(--primary));
+    --gradient-hero: linear-gradient(180deg, hsl(225 15% 7%) 0%, hsl(225 18% 10%) 60%, hsl(226 22% 12%) 100%);
+    --glow-primary: 0 0 40px hsl(0 0% 100% / 0.08);
+    --glow-accent: 0 0 40px hsl(222 83% 62% / 0.2);
+    --shadow-soft: 0 1px 2px hsl(0 0% 0% / 0.4), 0 8px 24px -12px hsl(0 0% 0% / 0.55);
+    --shadow-lifted: 0 2px 4px hsl(0 0% 0% / 0.45), 0 18px 40px -16px hsl(0 0% 0% / 0.65);
 
-    --sidebar-background: 222 42% 6%;
-    --sidebar-foreground: 214 32% 94%;
-    --sidebar-primary: 217 95% 64%;
-    --sidebar-primary-foreground: 222 47% 6%;
-    --sidebar-accent: 219 30% 13%;
-    --sidebar-accent-foreground: 214 32% 94%;
-    --sidebar-border: 219 28% 16%;
-    --sidebar-ring: 201 85% 62%;
+    --sidebar-background: 225 15% 8%;
+    --sidebar-foreground: 220 15% 90%;
+    --sidebar-primary: 220 20% 96%;
+    --sidebar-primary-foreground: 225 15% 8%;
+    --sidebar-accent: 225 12% 14%;
+    --sidebar-accent-foreground: 220 20% 96%;
+    --sidebar-border: 225 10% 18%;
+    --sidebar-ring: 220 20% 90%;
   }
 }
 
@@ -162,15 +130,101 @@ All colors MUST be HSL.
     @apply border-border;
   }
 
+  html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
   body {
     @apply bg-background text-foreground;
     direction: rtl;
     text-align: right;
-    font-family: "Pelak", "PelakNoEng", "Vazirmatn", system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-family: 'Vazirmatn', 'IRANYekan', system-ui, sans-serif;
     font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.85;
+    letter-spacing: 0;
+    font-feature-settings: "ss01", "ss02", "kern";
+  }
+
+  :focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 3px;
+  }
+
+  /* Headings — tuned for Estedad's tall x-height & Persian rhythm */
+  h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
+    overflow: visible;
+    padding-top: 0.15em;
+    padding-bottom: 0.1em;
+  }
+  h1, .h1 {
+    font-weight: 800;
+    font-size: clamp(2.25rem, 4vw + 1rem, 3.75rem);
+    line-height: 1.6;
+    letter-spacing: 0;
+  }
+  h2, .h2 {
+    font-weight: 800;
+    font-size: clamp(1.875rem, 2.5vw + 0.75rem, 2.75rem);
+    line-height: 1.6;
+    letter-spacing: 0;
+  }
+  h3, .h3 {
+    font-weight: 700;
+    font-size: clamp(1.5rem, 1.5vw + 0.75rem, 2rem);
+    line-height: 1.6;
+  }
+  h4, .h4 {
+    font-weight: 700;
+    font-size: clamp(1.25rem, 1vw + 0.75rem, 1.5rem);
+    line-height: 1.6;
+  }
+  h5, .h5 {
+    font-weight: 600;
+    font-size: 1.125rem;
+    line-height: 1.65;
+  }
+  h6, .h6 {
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  p {
+    line-height: 1.85;
+  }
+  p + p {
+    margin-top: 0.75em;
+  }
+
+  small, .text-xs {
+    line-height: 1.6;
+  }
+  .text-sm {
+    line-height: 1.7;
+  }
+  .text-base {
+    line-height: 1.8;
+  }
+  .text-lg {
     line-height: 1.75;
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
+  }
+  .text-xl {
+    line-height: 1.6;
+  }
+
+  /* Persian digits + punctuation feel better slightly lighter */
+  button, input, textarea, select {
+    font-family: inherit;
+    line-height: 1.6;
+  }
+
+  /* Persian numerals should not be over-weighted */
+  strong, b {
+    font-weight: 700;
   }
 
   /* Smooth color crossfade when switching themes */
@@ -181,62 +235,52 @@ All colors MUST be HSL.
   }
 
   ::selection {
-    background: hsl(var(--primary) / 0.3);
+    background: hsl(var(--accent) / 0.25);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
   }
 
-  /* Scrollbar follows the active theme */
+  /* Theme-aware page scrollbar */
   ::-webkit-scrollbar {
     width: 10px;
   }
   ::-webkit-scrollbar-track {
-    background: hsl(var(--background));
+    background: transparent;
   }
   ::-webkit-scrollbar-thumb {
     background: hsl(var(--muted-foreground) / 0.35);
+    border-radius: 8px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: hsl(var(--primary) / 0.5);
-  }
-
-  h1, h2, h3, h4, h5, h6 {
-    font-family: "Pelak", "PelakNoEng", "Vazirmatn", system-ui, sans-serif;
-    font-weight: 700;
-    line-height: 1.35;
-  }
-
-  input, button, textarea, select {
-    font: inherit;
+    background: hsl(var(--muted-foreground) / 0.55);
   }
 }
 
 @keyframes wave {
-  0%, 100% {
-    transform: translateX(0px) translateY(0px);
-  }
-  25% {
-    transform: translateX(-5px) translateY(-3px);
-  }
-  50% {
-    transform: translateX(5px) translateY(2px);
-  }
-  75% {
-    transform: translateX(-3px) translateY(-1px);
-  }
+  0%, 100% { transform: none; }
 }
 
 @keyframes waveFlow {
-  0% {
-    transform: translateX(-100px) scaleX(1);
-    opacity: 0.8;
-  }
-  50% {
-    transform: translateX(0px) scaleX(1.02);
-    opacity: 1;
-  }
-  100% {
-    transform: translateX(100px) scaleX(1);
-    opacity: 0.8;
-  }
+  0%, 100% { transform: none; opacity: 1; }
 }
 
 @keyframes pageFadeIn {
@@ -370,6 +414,11 @@ All colors MUST be HSL.
   70% { transform: scale(1); }
 }
 
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
 @layer utilities {
   .animate-gradient-x {
     background-size: 200% 200%;
@@ -423,19 +472,22 @@ All colors MUST be HSL.
   .pulse {
     animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
-  
+  .animate-cursor-blink {
+    animation: cursor-blink 1.1s step-end infinite;
+  }
+
   .custom-scrollbar::-webkit-scrollbar {
     width: 6px;
   }
 
   .custom-scrollbar::-webkit-scrollbar-track {
     background: hsl(var(--muted) / 0.3);
-    border-radius: 10px;
+    border-radius: 6px;
   }
 
   .custom-scrollbar::-webkit-scrollbar-thumb {
     background: hsl(var(--primary) / 0.4);
-    border-radius: 10px;
+    border-radius: 6px;
   }
 
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {

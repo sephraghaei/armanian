@@ -11,3 +11,9 @@ verify_jwt = false
 
 [functions.password-reset]
 verify_jwt = false
+
+[functions.enrollments-api]
+verify_jwt = false
+
+[functions.auth-me]
+verify_jwt = false

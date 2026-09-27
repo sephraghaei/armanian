@@ -28,7 +28,11 @@ const Auth = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
   const location = useLocation();
-  const redirectTo = (location.state as { from?: string })?.from || '/';
+  const redirectParam = new URLSearchParams(location.search).get('redirect');
+  const redirectTo =
+    (location.state as { from?: string })?.from ||
+    (redirectParam && redirectParam.startsWith('/') ? redirectParam : null) ||
+    '/';
 
   // Redirect if already logged in
   useEffect(() => {
@@ -198,7 +202,7 @@ const Auth = () => {
           <p className="text-muted-foreground">به آکادمی آرمانیان خوش آمدید</p>
         </div>
 
-        <Tabs defaultValue="signin" className="w-full">
+        <Tabs defaultValue={new URLSearchParams(location.search).get('mode') === 'signup' ? 'signup' : 'signin'} className="w-full">
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="signin">ورود</TabsTrigger>
             <TabsTrigger value="signup">ثبت نام</TabsTrigger>

@@ -23,6 +23,22 @@ function bufferToHex(buffer: ArrayBuffer): string {
     .join("");
 }
 
+
+// Normalize Iranian phone numbers to a canonical 98XXXXXXXXXX form
+function normalizePhone(input: string): string {
+  let digits = String(input).replace(/[^\d]/g, "");
+  if (digits.startsWith("0098")) digits = digits.slice(4);
+  else if (digits.startsWith("98")) digits = digits.slice(2);
+  else if (digits.startsWith("0")) digits = digits.slice(1);
+  return "98" + digits;
+}
+
+function phoneVariants(input: string): string[] {
+  const canonical = normalizePhone(input);
+  const core = canonical.slice(2);
+  return [canonical, core, "0" + core, "+98" + core, "0098" + core];
+}
+
 serve(async (req: Request): Promise<Response> => {
   try {
     // Handle CORS preflight requests
@@ -50,11 +66,10 @@ serve(async (req: Request): Promise<Response> => {
         return jsonResponse({ error: "شماره تلفن الزامی است" }, 400);
       }
 
-      const normalizedPhone = String(phone).replace(/[^\d]/g, "");
       const { data: user, error } = await supabase
         .from("users_app")
         .select("id, phone")
-        .eq("phone", normalizedPhone)
+        .in("phone", phoneVariants(phone))
         .maybeSingle();
 
       if (error) {
@@ -81,11 +96,10 @@ serve(async (req: Request): Promise<Response> => {
       return jsonResponse({ error: "شماره تلفن و رمز عبور الزامی هستند" }, 400);
     }
 
-    const normalizedPhone = String(phone).replace(/[^\d]/g, "");
     const { data: user, error } = await supabase
       .from("users_app")
       .select("id, first_name, last_name, phone, email, password_hash")
-      .eq("phone", normalizedPhone)
+      .in("phone", phoneVariants(phone))
       .maybeSingle();
 
     if (error) {
@@ -112,6 +126,15 @@ serve(async (req: Request): Promise<Response> => {
     }
 
     const token = crypto.randomUUID();
+    const expiresAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString();
+    const { error: sessionErr } = await supabase
+      .from("user_sessions")
+      .insert({ token, user_id: user.id, expires_at: expiresAt });
+    if (sessionErr) {
+      console.error("Session create failed:", sessionErr);
+      return jsonResponse({ error: "خطای ایجاد نشست" }, 500);
+    }
+
     const { password_hash, ...safeUser } = user;
 
     const headers = new Headers({
@@ -121,7 +144,7 @@ serve(async (req: Request): Promise<Response> => {
 
     headers.append(
       "set-cookie",
-      `app_token=${token}; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=${60 * 60 * 24 * 7}`,
+      `app_token=${token}; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=${60 * 60 * 24 * 30}`,
     );
 
     return new Response(

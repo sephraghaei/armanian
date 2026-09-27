@@ -217,61 +217,67 @@ const CoursesPage = () => {
             </div>
           ) : (
             <>
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
                 {filteredCourses.map((course) => (
-                  <Card key={course.id} className={`relative transition-all duration-500 hover:-translate-y-2 border-orange-300/70 dark:border-primary/30 hover:shadow-[0_0_40px_hsl(28_92%_56%_/_0.35)] dark:hover:shadow-[0_0_40px_hsl(217_95%_64%_/_0.22)] ${course.is_popular ? 'border-2' : 'border'} bg-white/95 dark:bg-card/95`}>
-                    {course.is_popular && (
-                      <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                        <Badge variant="default" className="text-white" style={{ background: 'linear-gradient(135deg, hsl(28,92%,56%), hsl(24,95%,55%))' }}>
-                          <Star className="w-3 h-3 mr-1" />
+                  <Card key={course.id} className={`group relative flex h-full flex-col bg-card transition-all duration-200 hover:-translate-y-1 hover:border-foreground/20 hover:shadow-lifted ${course.is_popular ? 'border-foreground/25' : 'border-border'}`}>
+                    <CardHeader className="relative gap-2 pb-4">
+                      {course.is_popular && (
+                        <Badge className="w-fit gap-1 bg-primary px-2.5 py-0.5 text-xs font-medium text-primary-foreground">
+                          <Star className="h-3 w-3" />
                           محبوب‌ترین
                         </Badge>
-                      </div>
-                    )}
-                    
-                    <CardHeader className="pb-4">
-                      <CardTitle className="text-2xl text-foreground mb-2">{course.title}</CardTitle>
-                      <CardDescription className="text-muted-foreground">
+                      )}
+                      <CardTitle className="text-lg font-semibold leading-8 text-foreground">{course.title}</CardTitle>
+                      <CardDescription className="line-clamp-2 text-sm leading-relaxed text-muted-foreground">
                         {course.description}
                       </CardDescription>
                     </CardHeader>
+
                     
-                    <CardContent className="space-y-6">
-                      {/* Course Details */}
-                      <div className="grid grid-cols-2 gap-4 text-sm">
+                    <CardContent className="relative flex flex-1 flex-col gap-5 pt-0">
+                      {/* Tags */}
+                      <div className="flex flex-wrap gap-2 border-y border-border py-3 text-xs">
                         {course.duration && (
-                          <div className="flex items-center space-x-2">
-                            <Clock className="w-4 h-4" style={{ color: 'hsl(28,92%,56%)' }} />
-                            <span className="text-muted-foreground">{course.duration}</span>
-                          </div>
+                          <span className="inline-flex items-center gap-1.5 rounded-full bg-secondary px-2.5 py-1 font-medium text-secondary-foreground">
+                            <Clock className="h-3.5 w-3.5 text-muted-foreground" />
+                            {course.duration}
+                          </span>
                         )}
                         {course.level && (
-                          <div className="flex items-center space-x-2">
-                            <Trophy className="w-4 h-4" style={{ color: 'hsl(28,92%,56%)' }} />
-                            <span className="text-muted-foreground">{course.level}</span>
-                          </div>
+                          <span className="inline-flex items-center gap-1.5 rounded-full bg-secondary px-2.5 py-1 font-medium text-secondary-foreground">
+                            <Trophy className="h-3.5 w-3.5 text-muted-foreground" />
+                            {course.level}
+                          </span>
                         )}
                       </div>
 
                       {/* Features List */}
                       {course.features && course.features.length > 0 && (
-                        <div>
-                          <h4 className="font-semibold text-foreground mb-3">شامل موارد:</h4>
+                        <div className="flex-1">
+                          <h4 className="mb-2.5 text-sm font-semibold text-foreground">شامل موارد:</h4>
                           <ul className="space-y-2">
-                            {course.features.map((feature, idx) => (
-                              <li key={idx} className="flex items-start space-x-2 text-sm text-muted-foreground">
-                                <CheckCircle className="w-4 h-4 mt-0.5 flex-shrink-0" style={{ color: 'hsl(28,92%,56%)' }} />
+                            {course.features.slice(0, 5).map((feature, idx) => (
+                              <li key={idx} className="flex items-start gap-2.5 text-sm leading-6 text-muted-foreground">
+                                <CheckCircle className="mt-1 h-3.5 w-3.5 flex-shrink-0 text-primary" />
                                 <span>{feature}</span>
                               </li>
                             ))}
                           </ul>
+                          {course.features.length > 5 && (
+                            <p className="mt-2 text-xs text-muted-foreground">
+                              + {course.features.length - 5} مورد دیگر
+                            </p>
+                          )}
                         </div>
                       )}
 
+                      {/* Spacer when no features */}
+                      {(!course.features || course.features.length === 0) && <div className="flex-1" />}
+
+
                       <Button 
                         variant={course.is_popular ? "default" : "outline"} 
-                        className="w-full text-white"
-                        style={course.is_popular ? { background: 'linear-gradient(135deg, hsl(28,92%,56%), hsl(24,95%,55%))' } : {}}
+                        className="w-full mt-auto"
                         size="lg"
                         onClick={() => navigate(`/course-detail/${course.id}`)}
                       >
@@ -288,13 +294,13 @@ const CoursesPage = () => {
                   {courses
                     .filter(c => c.learning_outcomes && c.learning_outcomes.length > 0)
                     .map((course) => (
-                      <div key={course.id} className="bg-gradient-hero rounded-2xl p-8">
+                      <div key={course.id} className="bg-gradient-hero rounded-lg p-8">
                         <div className="grid md:grid-cols-2 gap-8 items-center">
                           <div>
                             <h3 className="text-2xl font-bold text-foreground mb-4 flex items-center">
                               {course.title}
                               {course.is_popular && (
-                                <Badge variant="default" className="bg-gradient-primary text-white mr-2">
+                                <Badge variant="default" className="bg-primary text-primary-foreground mr-2">
                                   محبوب
                                 </Badge>
                               )}
@@ -329,7 +335,7 @@ const CoursesPage = () => {
           )}
 
           {/* CTA Section */}
-          <div className="mt-16 text-center bg-card rounded-2xl p-8 border">
+          <div className="mt-16 text-center bg-card rounded-lg p-8 border">
             <h3 className="text-2xl font-bold text-foreground mb-4">
               هنوز مطمئن نیستید؟
             </h3>

@@ -2,18 +2,20 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
+import { callEnrollments } from '@/lib/enrollmentsApi';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { Loader2, Plus, Edit, Trash2, ArrowRight, Users, BookOpen, Calendar, Phone, FileText, Eye, EyeOff, UploadCloud, Image as ImageIcon, Video, Wand2, Building2 } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
+import AdminSidebar, { type AdminSection } from '@/components/AdminSidebar';
+import { Separator } from '@/components/ui/separator';
 
 interface Course {
   id: string;
@@ -74,7 +76,7 @@ export default function Admin() {
   const [enrollments, setEnrollments] = useState<Enrollment[]>([]);
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<'courses' | 'enrollments' | 'posts' | 'departments' | 'media' | 'content'>('courses');
+  const [activeTab, setActiveTab] = useState<AdminSection>('overview');
   const [editingCourse, setEditingCourse] = useState<Course | null>(null);
   const [editingPost, setEditingPost] = useState<Post | null>(null);
   const [formData, setFormData] = useState({
@@ -135,29 +137,9 @@ export default function Admin() {
 
   const fetchEnrollments = async () => {
     try {
-      const { data: enrollmentData, error: enrollmentError } = await supabase
-        .from('enrollments')
-        .select('*')
-        .order('enrolled_at', { ascending: false });
-
-      if (enrollmentError) throw enrollmentError;
-
-      const enrichedEnrollments = await Promise.all(
-        (enrollmentData || []).map(async (enrollment) => {
-          const [courseResult, userResult] = await Promise.all([
-            supabase.from('courses').select('title').eq('id', enrollment.course_id).maybeSingle(),
-            supabase.from('users_app').select('first_name, last_name, phone').eq('id', enrollment.user_id).maybeSingle()
-          ]);
-
-          return {
-            ...enrollment,
-            courses: courseResult.data || { title: 'نامشخص' },
-            users_app: userResult.data || { first_name: '', last_name: '', phone: '' }
-          };
-        })
-      );
-
-      setEnrollments(enrichedEnrollments);
+      const { data, error } = await callEnrollments<any[]>('admin_list');
+      if (error) throw new Error(error);
+      setEnrollments(data || []);
     } catch (error) {
       console.error('Error fetching enrollments:', error);
       toast({
@@ -218,7 +200,7 @@ export default function Admin() {
 
   const fetchSiteContent = async () => {
     try {
-      const { data, error } = await supabase.from('site_content').select('key, value');
+      const { data, error } = await (supabase as any).from('site_content').select('key, value');
       if (error) {
         console.error('Error fetching site content:', error);
         return;
@@ -487,7 +469,7 @@ export default function Admin() {
     setSavingContent(true);
     try {
       const rows = Object.entries(siteContent).map(([key, value]) => ({ key, value }));
-      const { error } = await supabase.from('site_content').upsert(rows);
+      const { error } = await (supabase as any).from('site_content').upsert(rows);
       if (error) {
         toast({ variant: 'destructive', title: 'خطا', description: 'خطا در ذخیره محتوا' });
       } else {
@@ -552,11 +534,7 @@ export default function Admin() {
   };
 
   const deleteEnrollment = async (enrollmentId: string) => {
-    const { error } = await supabase
-      .from('enrollments')
-      .delete()
-      .eq('id', enrollmentId);
-
+    const { error } = await callEnrollments('delete', { id: enrollmentId });
     if (error) {
       toast({
         variant: 'destructive',
@@ -577,46 +555,87 @@ export default function Admin() {
     );
   }
 
+  const activeCourses = enrollments.filter((e) => e.status === 'active').length;
+  const uniqueStudents = new Set(enrollments.map((e) => e.user_id)).size;
+  const publishedPosts = posts.filter((p) => p.status === 'published').length;
+
+  const stats = [
+    { label: 'دوره‌ها', value: courses.length, icon: BookOpen },
+    { label: 'دانشجویان', value: uniqueStudents, icon: Users },
+    { label: 'ثبت‌نام‌های فعال', value: activeCourses, icon: Calendar },
+    { label: 'دپارتمان‌ها', value: departments.length, icon: Building2 },
+    { label: 'مطالب منتشرشده', value: publishedPosts, icon: FileText },
+    { label: 'کل ثبت‌نام‌ها', value: enrollments.length, icon: Users },
+  ];
+
+  const sectionTitles: Record<typeof activeTab, string> = {
+    overview: 'نمای کلی',
+    courses: 'مدیریت دوره‌ها',
+    posts: 'مدیریت مطالب',
+    enrollments: 'ثبت‌نام‌ها',
+    departments: 'دپارتمان‌ها',
+    media: 'رسانه',
+    content: 'متن‌های سایت',
+  };
+
   return (
-    <div className="min-h-screen flex flex-col">
-      <Header />
-      <main className="flex-1 container mx-auto px-4 py-8">
-        <div className="mb-6">
-          <Button variant="outline" onClick={() => navigate('/')} className="gap-2">
-            <ArrowRight className="h-4 w-4" />
-            بازگشت به صفحه اصلی
-          </Button>
-        </div>
+    <SidebarProvider>
+      <div className="min-h-screen flex w-full bg-muted/30">
+        <AdminSidebar active={activeTab} onChange={(s) => setActiveTab(s)} />
 
-        <h1 className="text-3xl font-bold mb-8">پنل مدیریت</h1>
+        <div className="flex-1 flex flex-col min-w-0">
+          <header className="sticky top-0 z-20 h-14 flex items-center gap-2 border-b bg-background px-3 md:px-4">
+            <SidebarTrigger className="shrink-0" />
+            <h1 className="text-sm md:text-base font-semibold truncate">{sectionTitles[activeTab]}</h1>
+          </header>
 
-        <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as typeof activeTab)} className="space-y-6">
-          <TabsList className="grid w-full max-w-4xl grid-cols-6">
-            <TabsTrigger value="courses" className="gap-2">
-              <BookOpen className="h-4 w-4" />
-              دوره‌ها
-            </TabsTrigger>
-            <TabsTrigger value="posts" className="gap-2">
-              <FileText className="h-4 w-4" />
-              مطالب
-            </TabsTrigger>
-            <TabsTrigger value="enrollments" className="gap-2">
-              <Users className="h-4 w-4" />
-              ثبت‌نام‌ها
-            </TabsTrigger>
-            <TabsTrigger value="departments" className="gap-2">
-              <Building2 className="h-4 w-4" />
-              دپارتمان‌ها
-            </TabsTrigger>
-            <TabsTrigger value="media" className="gap-2">
-              <ImageIcon className="h-4 w-4" />
-              رسانه
-            </TabsTrigger>
-            <TabsTrigger value="content" className="gap-2">
-              <Wand2 className="h-4 w-4" />
-              متن‌ها
-            </TabsTrigger>
-          </TabsList>
+          <main className="flex-1 p-3 md:p-6 overflow-x-hidden">
+            <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as typeof activeTab)} className="space-y-6">
+
+          {/* Overview */}
+          <TabsContent value="overview" className="space-y-6">
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {stats.map((s) => (
+                <Card key={s.label}>
+                  <CardContent className="p-5 flex items-center justify-between">
+                    <div>
+                      <p className="text-sm text-muted-foreground">{s.label}</p>
+                      <p className="text-3xl font-bold mt-1">{s.value.toLocaleString('fa-IR')}</p>
+                    </div>
+                    <div className="h-10 w-10 rounded-md bg-primary/10 text-primary flex items-center justify-center">
+                      <s.icon className="h-5 w-5" />
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-base">آخرین ثبت‌نام‌ها</CardTitle>
+                <CardDescription>۵ ثبت‌نام اخیر</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                {enrollments.slice(0, 5).map((e) => (
+                  <div key={e.id} className="flex items-center justify-between border-b pb-2 last:border-0 last:pb-0">
+                    <div className="min-w-0">
+                      <p className="text-sm font-medium truncate">
+                        {e.users_app?.first_name} {e.users_app?.last_name}
+                      </p>
+                      <p className="text-xs text-muted-foreground truncate">{e.courses?.title}</p>
+                    </div>
+                    <span className="text-xs text-muted-foreground shrink-0">
+                      {new Date(e.enrolled_at).toLocaleDateString('fa-IR')}
+                    </span>
+                  </div>
+                ))}
+                {enrollments.length === 0 && (
+                  <p className="text-sm text-muted-foreground">هنوز ثبت‌نامی وجود ندارد.</p>
+                )}
+              </CardContent>
+            </Card>
+          </TabsContent>
+
 
           {/* Courses Tab */}
           <TabsContent value="courses" className="space-y-6">
@@ -645,7 +664,7 @@ export default function Admin() {
                       />
                     </div>
 
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
                         <label className="text-sm font-medium">مدت زمان</label>
                         <Input
@@ -806,7 +825,7 @@ export default function Admin() {
                       />
                     </div>
 
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
                         <label className="text-sm font-medium">دسته‌بندی</label>
                         <Input
@@ -935,6 +954,57 @@ export default function Admin() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
+                {/* Mobile: card list */}
+                <div className="space-y-3 md:hidden">
+                  {enrollments.length === 0 ? (
+                    <p className="text-sm text-muted-foreground py-6 text-center">هنوز ثبت‌نامی وجود ندارد</p>
+                  ) : (
+                    enrollments.map((enrollment) => (
+                      <div key={enrollment.id} className="border rounded-lg p-3 space-y-2">
+                        <div className="flex items-start justify-between gap-2">
+                          <div className="min-w-0">
+                            <p className="font-medium text-sm truncate">
+                              {enrollment.users_app.first_name} {enrollment.users_app.last_name}
+                            </p>
+                            <p className="text-xs text-muted-foreground truncate">{enrollment.courses.title}</p>
+                          </div>
+                          <span className={`shrink-0 inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium ${
+                            enrollment.status === 'active'
+                              ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
+                              : 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200'
+                          }`}>
+                            {enrollment.status === 'active' ? 'فعال' : 'غیرفعال'}
+                          </span>
+                        </div>
+                        <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground">
+                          <span className="flex items-center gap-1">
+                            <Phone className="h-3 w-3" />
+                            {enrollment.users_app.phone}
+                          </span>
+                          <span className="flex items-center gap-1">
+                            <Calendar className="h-3 w-3" />
+                            {new Date(enrollment.enrolled_at).toLocaleDateString('fa-IR')}
+                          </span>
+                          <span>
+                            انقضا: {new Date(enrollment.expires_at).toLocaleDateString('fa-IR')}
+                          </span>
+                        </div>
+                        <Button
+                          size="sm"
+                          variant="destructive"
+                          className="w-full"
+                          onClick={() => deleteEnrollment(enrollment.id)}
+                        >
+                          <Trash2 className="h-4 w-4 ml-1" />
+                          حذف ثبت‌نام
+                        </Button>
+                      </div>
+                    ))
+                  )}
+                </div>
+
+                {/* Desktop: table */}
+                <div className="hidden md:block overflow-x-auto">
                 <Table>
                   <TableHeader>
                     <TableRow>
@@ -999,6 +1069,7 @@ export default function Admin() {
                     )}
                   </TableBody>
                 </Table>
+                </div>
               </CardContent>
             </Card>
           </TabsContent>
@@ -1193,9 +1264,10 @@ export default function Admin() {
               </CardContent>
             </Card>
           </TabsContent>
-        </Tabs>
-      </main>
-      <Footer />
-    </div>
+            </Tabs>
+          </main>
+        </div>
+      </div>
+    </SidebarProvider>
   );
 }

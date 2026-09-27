@@ -33,7 +33,6 @@ const Hero = () => {
   const [courses, setCourses] = useState<Course[]>([]);
   const [departments, setDepartments] = useState<Department[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -55,28 +54,19 @@ const Hero = () => {
   };
 
   const filteredCourses = useMemo(() => {
-    return courses.filter(course => {
-      const matchesSearch = searchQuery === '' || 
-        course.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        course.description?.toLowerCase().includes(searchQuery.toLowerCase());
-      
-      const matchesCategory = selectedCategory === null || course.department_id === selectedCategory;
-      
-      return matchesSearch && matchesCategory;
-    });
-  }, [courses, searchQuery, selectedCategory]);
+    if (!searchQuery.trim()) return courses;
+    return courses.filter(course => 
+      course.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      course.description?.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [courses, searchQuery]);
 
   const filteredDepartments = useMemo(() => {
-    if (selectedCategory) {
-      return departments.filter(dept => dept.id === selectedCategory);
-    }
-    if (searchQuery) {
-      return departments.filter(dept => 
-        dept.name.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-    }
-    return departments;
-  }, [departments, searchQuery, selectedCategory]);
+    if (!searchQuery.trim()) return departments;
+    return departments.filter(dept => 
+      dept.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [departments, searchQuery]);
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
@@ -106,135 +96,37 @@ const Hero = () => {
     }, 100);
   };
 
-  const handleCategoryClick = (departmentId: number | null) => {
-    setSelectedCategory(departmentId);
-    setSearchQuery('');
-    setOpen(false);
-    if (departmentId) {
-      // Navigate to courses page with department filter
-      navigate('/courses');
-      // The courses page will need to handle the filter via URL params or state
-      // For now, just navigate to courses page
-    }
-  };
-
   const handleSignUp = () => {
     navigate('/auth');
   };
   return (
-    <section id="home" className="min-h-[80vh] md:min-h-screen flex items-center justify-center relative overflow-hidden bg-transparent">
-      {/* Smooth Flowing Wave Backgrounds */}
-      <div className="absolute inset-0 w-full h-full overflow-hidden">
-        {/* Mobile subtle orange waves */}
-        <svg className="absolute inset-0 w-full h-full z-0 sm:hidden" viewBox="0 0 1200 800" preserveAspectRatio="none">
-          <defs>
-            <linearGradient id="mobileOrange1" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="hsl(28,92%,56%)" stopOpacity="0.06" />
-              <stop offset="100%" stopColor="hsl(30,92%,60%)" stopOpacity="0.06" />
-            </linearGradient>
-            <linearGradient id="mobileOrange2" x1="100%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="hsl(28,92%,56%)" stopOpacity="0.05" />
-              <stop offset="100%" stopColor="hsl(30,92%,60%)" stopOpacity="0.05" />
-            </linearGradient>
-          </defs>
-          <g style={{ filter: 'blur(0.5px)' }}>
-            <path d="M0,260 C220,230 420,290 600,260 C820,230 1000,290 1200,260 L1200,800 L0,800 Z"
-                  fill="url(#mobileOrange1)"
-                  style={{ animation: 'wave 16s ease-in-out infinite', opacity: 0.7 }} />
-            <path d="M0,340 C240,310 460,360 720,340 C940,320 1080,360 1200,340 L1200,800 L0,800 Z"
-                  fill="url(#mobileOrange2)"
-                  style={{ animation: 'waveFlow 22s ease-in-out infinite', opacity: 0.7 }} />
-          </g>
-        </svg>
+    <section
+      id="home"
+      className="relative flex min-h-[76vh] items-center overflow-hidden bg-background pb-20 pt-28 sm:pt-32 lg:min-h-[78vh] lg:pb-24 lg:pt-36"
+    >
+      <div className="container relative z-10 mx-auto max-w-5xl px-5 sm:px-6 lg:px-8">
+        <div className="flex flex-col items-center text-center animate-slide-in-up">
+          <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-muted-foreground">
+            <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+            آموزشگاه آزاد فنی و حرفه‌ای
+          </span>
 
-        <svg className="absolute inset-0 w-full h-full z-0 hidden sm:block" viewBox="0 0 1200 800" preserveAspectRatio="none">
-          <defs>
-            <linearGradient id="waveGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="hsl(var(--primary-wave))" stopOpacity="0.1" />
-              <stop offset="50%" stopColor="hsl(var(--accent-wave))" stopOpacity="0.1" />
-              <stop offset="100%" stopColor="hsl(var(--primary-wave))" stopOpacity="0.1" />
-            </linearGradient>
-            <linearGradient id="waveGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="hsl(var(--accent-wave))" stopOpacity="0.1" />
-              <stop offset="50%" stopColor="hsl(var(--primary-wave))" stopOpacity="0.1" />
-              <stop offset="100%" stopColor="hsl(var(--accent-wave))" stopOpacity="0.1" />
-            </linearGradient>
-            <linearGradient id="waveGradient3" x1="100%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="hsl(var(--primary-wave))" stopOpacity="0.1" />
-              <stop offset="100%" stopColor="hsl(var(--accent-wave))" stopOpacity="0.1" />
-            </linearGradient>
-          </defs>
-          
-          {/* Smooth bottom waves */}
-          <path d="M0,200 C240,140 360,260 600,200 C840,140 960,260 1200,200 L1200,800 L0,800 Z" 
-                fill="url(#waveGradient1)" 
-                className="opacity-50" 
-                style={{
-                  animation: 'wave 8s ease-in-out infinite',
-                  animationDelay: '0s'
-                }} />
-          
-          <path d="M0,320 C180,240 420,380 660,300 C900,220 1080,360 1200,300 L1200,800 L0,800 Z" 
-                fill="url(#waveGradient2)" 
-                className="opacity-40" 
-                style={{
-                  animation: 'wave 12s ease-in-out infinite reverse',
-                  animationDelay: '2s'
-                }} />
-          
-          <path d="M0,440 C300,360 500,520 800,440 C1000,360 1100,480 1200,440 L1200,800 L0,800 Z" 
-                fill="url(#waveGradient3)" 
-                className="opacity-35" 
-                style={{
-                  animation: 'waveFlow 10s ease-in-out infinite',
-                  animationDelay: '4s'
-                }} />
-        </svg>
-        
-        {/* Subtle top waves */}
-        <svg className="absolute inset-0 w-full h-full z-0 hidden sm:block" viewBox="0 0 1200 800" preserveAspectRatio="none">
-          <path d="M0,100 C300,40 600,160 900,100 C1050,70 1150,130 1200,100 L1200,0 L0,0 Z" 
-                fill="hsl(var(--accent) / 0.04)" 
-                className="opacity-50" 
-                style={{
-                  animation: 'wave 14s ease-in-out infinite reverse',
-                  animationDelay: '1s'
-                }} />
-          
-          <path d="M0,180 C200,120 500,240 800,180 C1000,120 1100,200 1200,180 L1200,0 L0,0 Z" 
-                fill="hsl(var(--primary) / 0.03)" 
-                className="opacity-40" 
-                style={{
-                  animation: 'waveFlow 16s ease-in-out infinite',
-                  animationDelay: '3s'
-                }} />
-        </svg>
-      </div>
-
-      <div className="container mx-auto px-4 py-16 md:py-20 pt-28 md:pt-32 relative z-10">
-        {/* Content - Full Width */}
-        <div className="text-center space-y-12 mb-20">
-          <div className="space-y-6 md:space-y-8">
-          <h1 className="text-[4.5rem] sm:text-[5rem] md:text-[8rem] lg:text-[10rem] font-extrabold leading-[1.1] md:leading-tight max-w-5xl mx-auto mb-4 md:mb-8 tracking-tight bg-clip-text text-transparent animate-gradient-x animate-bounce-in" style={{ backgroundImage: 'linear-gradient(90deg, hsl(233,63%,67%), hsl(200 51% 65%), hsl(233,63%,67%))' }}>
-              آرمانیان
+          <h1 className="mt-7 text-5xl font-semibold text-foreground sm:text-6xl lg:text-7xl">
+            آرمانیان
           </h1>
-            <div className="space-y-6">
-              <h2 className="text-lg sm:text-xl md:text-2xl lg:text-4xl font-bold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent leading-relaxed md:leading-tight max-w-4xl mx-auto animate-slide-in-up">
-                آموزشگاه آزاد فنی و حرفه‌ای کامپیوتر و معماری
-              </h2>
-            </div>
-            
-            <div className="pt-6">
-              <p className="text-base sm:text-lg md:text-2xl text-muted-foreground/90 max-w-3xl mx-auto leading-loose md:leading-relaxed font-medium overflow-visible animate-slide-in-up" style={{ animationDelay: '0.3s' }}>
-                <Typewriter text="مسیر آینده از آرمانیان می گذرد ..." />
-              </p>
-            </div>
-          </div>
+
+          <h2 className="mt-3 text-balance text-xl font-medium text-foreground/90 sm:text-2xl lg:text-3xl">
+            آموزش کامپیوتر، گرافیک، معماری و زبان
+          </h2>
+
+          <p className="mt-5 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+            <Typewriter text="مسیر آینده از آرمانیان می گذرد ..." />
+          </p>
 
           {/* Search Bar */}
-          <div className="max-w-3xl mx-auto pt-6 animate-slide-in-up" style={{ animationDelay: '0.4s' }}>
+          <div className="mt-9 w-full max-w-xl">
             <div className="relative">
-              <Search className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground z-10" />
+              <Search className="absolute right-4 top-1/2 z-10 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <Input
                 type="text"
                 placeholder="جستجوی دوره یا دپارتمان..."
@@ -245,97 +137,101 @@ const Hero = () => {
                     setOpen(true);
                   }
                 }}
-                className="w-full h-14 pr-12 text-lg bg-background/95 backdrop-blur-sm border-2 border-primary/20 focus:border-primary/50 rounded-xl shadow-lg"
+                className="h-13 w-full rounded-lg border-border bg-card pr-11 text-sm shadow-soft focus-visible:ring-2 focus-visible:ring-ring"
               />
-            </div>
-
-            {/* Categories */}
-            <div className="flex flex-wrap gap-3 justify-center mt-6">
-              <Button
-                variant={selectedCategory === null ? "default" : "outline"}
-                size="sm"
-                onClick={() => handleCategoryClick(null)}
-                className={selectedCategory === null ? "bg-gradient-to-r from-primary to-accent text-white" : ""}
-              >
-                همه
-              </Button>
-              {departments.map((dept) => (
-                <Button
-                  key={dept.id}
-                  variant={selectedCategory === dept.id ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => handleCategoryClick(dept.id)}
-                  className={selectedCategory === dept.id ? "bg-gradient-to-r from-primary to-accent text-white" : ""}
-                >
-                  {dept.name}
-                </Button>
-              ))}
             </div>
           </div>
 
-          {/* Search Results Dialog */}
-          <CommandDialog open={open} onOpenChange={setOpen}>
-            <CommandInput 
-              placeholder="جستجوی دوره یا دپارتمان..." 
-              value={searchQuery}
-              onValueChange={setSearchQuery}
-            />
-            <CommandList>
-              <CommandEmpty>نتیجه‌ای یافت نشد.</CommandEmpty>
-              
-              {filteredDepartments.length > 0 && (
-                <CommandGroup heading="دپارتمان‌ها">
-                  {filteredDepartments.map((dept) => (
-                    <CommandItem
-                      key={dept.id}
-                      onSelect={() => handleSelectDepartment(dept.id)}
-                      className="cursor-pointer"
-                    >
-                      <Building2 className="w-4 h-4 ml-2" />
-                      {dept.name}
-                    </CommandItem>
-                  ))}
-                </CommandGroup>
-              )}
-
-              {filteredCourses.length > 0 && (
-                <CommandGroup heading="دوره‌ها">
-                  {filteredCourses.map((course) => (
-                    <CommandItem
-                      key={course.id}
-                      onSelect={() => handleSelectCourse(course.id)}
-                      className="cursor-pointer"
-                    >
-                      <BookOpen className="w-4 h-4 ml-2" />
-                      <div className="flex flex-col">
-                        <span>{course.title}</span>
-                        {course.description && (
-                          <span className="text-xs text-muted-foreground">{course.description.substring(0, 60)}...</span>
-                        )}
-                      </div>
-                    </CommandItem>
-                  ))}
-                </CommandGroup>
-              )}
-            </CommandList>
-          </CommandDialog>
-
-          <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center pt-2 md:pt-4">
-            <Button variant="hero" size="lg" className="group w-full sm:w-auto animate-bounce-in hover-scale" style={{ animationDelay: '0.6s' }} onClick={handleSignUp}>
+          <div className="mt-5 flex w-full max-w-xl flex-col items-center justify-center gap-3 sm:w-auto sm:flex-row">
+            <Button size="lg" className="group w-full shadow-none hover:shadow-none sm:w-auto" onClick={handleSignUp}>
               همین امروز شروع کن
-              <ArrowRight className="w-4 h-4 group-hover:-translate-x-2 group-hover:rotate-12 transition-all duration-300" />
+              <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1" />
             </Button>
             <Button
               variant="outline"
               size="lg"
-              className="w-full sm:w-auto animate-bounce-in hover-scale"
-              style={{ animationDelay: '0.8s' }}
+              className="w-full bg-card sm:w-auto"
               onClick={() => navigate('/courses')}
             >
               مشاهده دوره‌ها
             </Button>
           </div>
         </div>
+
+
+        {/* Search Results Dialog */}
+        <CommandDialog open={open} onOpenChange={setOpen}>
+          <CommandInput
+            placeholder="جستجوی دوره یا دپارتمان..."
+            value={searchQuery}
+            onValueChange={setSearchQuery}
+          />
+          <CommandList className="max-h-[440px] p-2">
+            <CommandEmpty>نتیجه‌ای یافت نشد.</CommandEmpty>
+
+            {filteredDepartments.length > 0 && (
+              <CommandGroup
+                heading="دپارتمان‌ها"
+                className="[&_[cmdk-group-heading]]:px-3 [&_[cmdk-group-heading]]:py-2 [&_[cmdk-group-heading]]:text-[11px] [&_[cmdk-group-heading]]:font-bold [&_[cmdk-group-heading]]:uppercase [&_[cmdk-group-heading]]:tracking-wider [&_[cmdk-group-heading]]:text-muted-foreground"
+              >
+                {filteredDepartments.map((dept) => (
+                  <CommandItem
+                    key={dept.id}
+                    onSelect={() => handleSelectDepartment(dept.id)}
+                    className="group flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 data-[selected=true]:bg-primary data-[selected=true]:text-primary-foreground"
+                  >
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md border border-border bg-muted/50 text-muted-foreground transition-colors group-hover:bg-card group-data-[selected=true]:border-primary-foreground/20 group-data-[selected=true]:bg-primary-foreground/20 group-data-[selected=true]:text-primary-foreground">
+                      <Building2 className="h-4 w-4" />
+                    </span>
+                    <span className="text-sm font-medium">{dept.name}</span>
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            )}
+
+            {filteredCourses.length > 0 && (
+              <CommandGroup
+                heading="دوره‌ها"
+                className="[&_[cmdk-group-heading]]:px-3 [&_[cmdk-group-heading]]:py-2 [&_[cmdk-group-heading]]:text-[11px] [&_[cmdk-group-heading]]:font-bold [&_[cmdk-group-heading]]:uppercase [&_[cmdk-group-heading]]:tracking-wider [&_[cmdk-group-heading]]:text-muted-foreground"
+              >
+                {filteredCourses.map((course) => (
+                  <CommandItem
+                    key={course.id}
+                    onSelect={() => handleSelectCourse(course.id)}
+                    className="group flex cursor-pointer items-start gap-3 rounded-lg px-3 py-3 data-[selected=true]:bg-primary data-[selected=true]:text-primary-foreground"
+                  >
+                    <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-md border border-border bg-muted/50 text-muted-foreground transition-colors group-hover:bg-card group-data-[selected=true]:border-primary-foreground/20 group-data-[selected=true]:bg-primary-foreground/20 group-data-[selected=true]:text-primary-foreground">
+                      <BookOpen className="h-4 w-4" />
+                    </span>
+                    <span className="flex flex-col">
+                      <span className="text-sm font-semibold">{course.title}</span>
+                      {course.description && (
+                        <span className="mt-0.5 text-xs text-muted-foreground group-data-[selected=true]:text-primary-foreground/80">
+                          {course.description.substring(0, 60)}...
+                        </span>
+                      )}
+                    </span>
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            )}
+          </CommandList>
+
+          {/* Footer / keyboard hints */}
+          <div className="flex items-center justify-between border-t border-border bg-muted/40 px-4 py-2">
+            <div className="flex items-center gap-4">
+              <span className="flex items-center gap-1.5">
+                <kbd className="rounded border border-border bg-card px-1.5 py-0.5 text-[10px] text-muted-foreground">↑↓</kbd>
+                <span className="text-[10px] text-muted-foreground">پیمایش</span>
+              </span>
+              <span className="flex items-center gap-1.5">
+                <kbd className="rounded border border-border bg-card px-1.5 py-0.5 text-[10px] text-muted-foreground">↵</kbd>
+                <span className="text-[10px] text-muted-foreground">انتخاب</span>
+              </span>
+            </div>
+            <span className="text-[10px] font-light italic text-muted-foreground/60">آرمانیان</span>
+          </div>
+        </CommandDialog>
       </div>
     </section>
   );

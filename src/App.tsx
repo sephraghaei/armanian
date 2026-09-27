@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ThemeProvider } from "next-themes";
 import { AuthProvider } from "@/contexts/AuthContext";
 import Index from "./pages/Index";
 import DepartmentsPage from "./pages/Departments";
@@ -16,8 +17,6 @@ import Admin from "./pages/Admin";
 import ResetPassword from "./pages/ResetPassword";
 import TestEmail from "./pages/TestEmail";
 import Payment from "./pages/Payment";
-import Blog from "./pages/Blog";
-import BlogPost from "./pages/BlogPost";
 import NotFound from "./pages/NotFound";
 import ConsultationPrompt from "@/components/ConsultationPrompt";
 import ScrollArrows from "@/components/ScrollArrows";
@@ -29,6 +28,7 @@ const App = () => {
   console.log('App rendering...');
   
   return (
+    <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
       <TooltipProvider>
@@ -50,8 +50,6 @@ const App = () => {
               <Route path="/profile" element={<RequireAuth><Profile /></RequireAuth>} />
               <Route path="/admin" element={<RequireAuth><Admin /></RequireAuth>} />
               <Route path="/payment/:enrollmentId" element={<RequireAuth><Payment /></RequireAuth>} />
-              <Route path="/blog" element={<Blog />} />
-              <Route path="/blog/:slug" element={<BlogPost />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
@@ -60,6 +58,7 @@ const App = () => {
       </TooltipProvider>
       </ThemeProvider>
     </QueryClientProvider>
+    </ThemeProvider>
   );
 };
 

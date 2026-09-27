@@ -7,6 +7,7 @@ import { Separator } from '@/components/ui/separator';
 import { Clock, Users, Trophy, Star, CheckCircle, ArrowLeft, Calendar, BookOpen } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
+import { callEnrollments } from '@/lib/enrollmentsApi';
 import { useToast } from '@/hooks/use-toast';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -93,12 +94,10 @@ const CourseDetail = () => {
     setEnrolling(true);
     try {
       // Check if already enrolled
-      const { data: existingEnrollment } = await supabase
-        .from('enrollments')
-        .select('id')
-        .eq('user_id', user.id)
-        .eq('course_id', course.id)
-        .maybeSingle();
+      const { data: existingEnrollment } = await callEnrollments<{ id: string } | null>(
+        'check_existing',
+        { course_id: course!.id }
+      );
 
       if (existingEnrollment) {
         toast({
@@ -112,18 +111,13 @@ const CourseDetail = () => {
       // Create enrollment
       const amountDue = parsePriceToNumber(course!.price).toString();
 
-      const { error } = await supabase
-        .from('enrollments')
-        .insert({
-          user_id: user.id,
-          course_id: course!.id,
-          expires_at: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString(),
-          payment_status: 'pending',
-          payment_method: 'manual',
-          amount_due: amountDue,
-          amount_paid: '0',
-          payment_notes: 'در انتظار تایید پرداخت توسط مدیریت'
-        } as any);
+      const { data: newEnrollment, error } = await callEnrollments<{ id: string }>('create', {
+        course_id: course!.id,
+        amount_due: amountDue,
+        payment_status: 'pending',
+        payment_method: 'manual',
+        payment_notes: 'در انتظار تایید پرداخت توسط مدیریت',
+      });
 
       if (error) {
         console.error('Enrollment error:', error);
@@ -133,23 +127,11 @@ const CourseDetail = () => {
           variant: "destructive",
         });
       } else {
-        // Get the enrollment ID from the insert response
-        const { data: newEnrollment, error: fetchError } = await supabase
-          .from('enrollments')
-          .select('id')
-          .eq('user_id', user.id)
-          .eq('course_id', course!.id)
-          .order('created_at', { ascending: false })
-          .limit(1)
-          .maybeSingle();
-
-        // Show success message first, regardless of redirect
         toast({
           title: "ثبت نام موفق",
           description: "در حال انتقال به صفحه پرداخت...",
         });
-        
-        if (newEnrollment && !fetchError) {
+        if (newEnrollment?.id) {
           navigate(`/payment/${newEnrollment.id}`);
         } else {
           navigate('/profile');
@@ -218,12 +200,12 @@ const CourseDetail = () => {
           {/* Course Details */}
           <div className="lg:col-span-2 space-y-8">
             {/* Header */}
-            <div className="bg-gradient-hero rounded-2xl p-8">
+            <div className="bg-gradient-hero rounded-lg p-8">
               <div className="flex items-start justify-between mb-4">
                 <div>
                   <h1 className="text-3xl font-bold text-foreground mb-2">{course.title}</h1>
                   {course.is_popular && (
-                    <Badge variant="default" className="text-white" style={{ background: 'linear-gradient(135deg, hsl(28,92%,56%), hsl(24,95%,55%))' }}>
+                    <Badge variant="default" className="bg-primary text-primary-foreground">
                       <Star className="w-3 h-3 mr-1" />
                       محبوب‌ترین
                     </Badge>

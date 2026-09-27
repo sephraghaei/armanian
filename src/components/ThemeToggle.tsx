@@ -1,41 +1,21 @@
-import { useEffect, useState } from 'react';
-import { useTheme } from 'next-themes';
 import { Moon, Sun } from 'lucide-react';
+import { useTheme } from 'next-themes';
+import { Button } from '@/components/ui/button';
 
-const ThemeToggle = ({ className = '' }: { className?: string }) => {
-  const { resolvedTheme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => setMounted(true), []);
-
-  const isDark = mounted && resolvedTheme === 'dark';
-
-  const toggle = () => {
-    const html = document.documentElement;
-    const willBeDark = !html.classList.contains('dark');
-    // next-themes key persists the choice; system default restored via a long-press could be added later
-    setTheme(willBeDark ? 'dark' : 'light');
-  };
+const ThemeToggle = () => {
+  const { theme, setTheme } = useTheme();
 
   return (
-    <button
-      type="button"
-      onClick={toggle}
-      aria-label={isDark ? 'تغییر به حالت روشن' : 'تغییر به حالت تاریک'}
-      title={isDark ? 'حالت روشن' : 'حالت تاریک'}
-      className={`relative inline-flex items-center justify-center w-10 h-10 rounded-lg border border-border/40 bg-card/60 text-foreground/80 hover:text-primary hover:border-primary/30 hover:bg-primary/5 transition-all duration-300 hover-scale flex-shrink-0 ${className}`}
+    <Button
+      variant="ghost"
+      size="icon"
+      onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+      className="w-9 h-9 rounded-lg bg-card/60 border border-border/20 hover:bg-card hover:border-primary/20 transition-all duration-300 shadow-md hover:shadow-lg"
+      aria-label="تغییر تم"
     >
-      <Sun
-        className={`w-[1.1rem] h-[1.1rem] absolute transition-all duration-500 ${
-          isDark ? 'rotate-0 scale-100 opacity-100' : 'rotate-90 scale-0 opacity-0'
-        }`}
-      />
-      <Moon
-        className={`w-[1.1rem] h-[1.1rem] absolute transition-all duration-500 ${
-          isDark ? '-rotate-90 scale-0 opacity-0' : 'rotate-0 scale-100 opacity-100'
-        }`}
-      />
-    </button>
+      <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+      <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+    </Button>
   );
 };
 

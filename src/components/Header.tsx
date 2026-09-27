@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Menu, X, Code, Brain, Monitor, User, LogOut, Shield } from 'lucide-react';
+import { Menu, X, Code, User, LogOut, Shield, Home as HomeIcon, Building2, GraduationCap, Info, Phone } from 'lucide-react';
+import ThemeToggle from '@/components/ThemeToggle';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
-import ThemeToggle from '@/components/ThemeToggle';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -25,6 +26,13 @@ const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  useEffect(() => {
+    document.body.style.overflow = isMenuOpen ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMenuOpen]);
+
   const handleSignOut = async () => {
     const { error } = await signOut();
     if (error) {
@@ -43,23 +51,46 @@ const Header = () => {
   };
 
   const menuItems = [
-    { label: 'خانه', href: '/' },
-    { label: 'دپارتمان ها', href: '/departments' },
-    { label: 'دوره‌ها', href: '/courses' },
-    { label: 'مطالب', href: '/blog' },
-    { label: 'درباره ما', href: '#about' },
-    { label: 'تماس', href: '#contact' },
+    { label: 'خانه', href: '/', icon: HomeIcon },
+    { label: 'دپارتمان‌ها', href: '/departments', icon: Building2 },
+    { label: 'دوره‌ها', href: '/courses', icon: GraduationCap },
+    { label: 'درباره ما', href: '#about', icon: Info },
+    { label: 'تماس', href: '#contact', icon: Phone },
   ];
+
+  const mobileSections = [
+    {
+      title: 'صفحات',
+      items: [
+        { label: 'خانه', href: '/', icon: HomeIcon },
+        { label: 'دپارتمان‌ها', href: '/departments', icon: Building2 },
+        { label: 'دوره‌ها', href: '/courses', icon: GraduationCap },
+      ],
+    },
+    {
+      title: 'در این صفحه',
+      items: [
+        { label: 'دپارتمان‌ها', href: '#departments', icon: Building2 },
+        { label: 'دوره‌های آموزشی', href: '#programs', icon: GraduationCap },
+        { label: 'درباره ما', href: '#about', icon: Info },
+        { label: 'تماس با ما', href: '#contact', icon: Phone },
+      ],
+    },
+  ];
+
 
   // Scroll spy for hash sections on home page
   const [activeHash, setActiveHash] = useState<string | null>(null);
   const observerRef = useRef<IntersectionObserver | null>(null);
 
   const hashIds = useMemo(() => (
-    menuItems
-      .filter(i => i.href.startsWith('#'))
-      .map(i => i.href.slice(1))
+    Array.from(new Set(
+      [...menuItems, ...mobileSections.flatMap(s => s.items)]
+        .filter(i => i.href.startsWith('#'))
+        .map(i => i.href.slice(1))
+    ))
   ), []);
+
 
   useEffect(() => {
     if (location.pathname !== '/') {
@@ -146,29 +177,28 @@ const Header = () => {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 animate-fade-in">
-      <div className="absolute inset-0 bg-gradient-to-b from-background/95 via-background/90 to-background/85 backdrop-blur-2xl border-b border-border/10"></div>
-      <div className="relative container mx-auto px-2 md:px-6 py-3">
-        <div className="flex items-center justify-between h-14 gap-2 px-2 md:px-6 rounded-2xl border border-border/20 bg-card/70 backdrop-blur-md shadow-xl hover:shadow-2xl transition-all duration-500">
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-border bg-background/90 backdrop-blur-xl">
+      <div className="container relative mx-auto max-w-7xl px-4 md:px-8">
+        <div className="flex h-16 items-center justify-between gap-4 lg:h-[72px]">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-reverse space-x-2 group hover-scale flex-shrink-0">
+          <Link to="/" className="group flex flex-shrink-0 items-center gap-2.5" aria-label="صفحه اصلی آرمانیان">
             <div className="relative">
-              <div className="w-8 h-8 md:w-10 md:h-10 bg-gradient-primary rounded-lg flex items-center justify-center shadow-md group-hover:shadow-lg group-hover:shadow-primary/30 transition-all duration-300 group-hover:rotate-3">
-                <Code className="w-4 h-4 md:w-5 md:h-5 text-white" />
+              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary transition-transform duration-200 group-hover:-translate-y-0.5 md:h-10 md:w-10">
+                <Code className="w-4 h-4 md:w-5 md:h-5 text-primary-foreground" />
               </div>
               <div className="absolute -top-1 -right-1 w-2 h-2 md:w-3 md:h-3 bg-accent rounded-full border-2 border-background pulse"></div>
             </div>
             <div className="hidden sm:block">
-              <h1 className="text-lg font-black transition-colors duration-300 bg-clip-text text-transparent animate-gradient-x" style={{ backgroundImage: 'linear-gradient(90deg, hsl(233,63%,67%), hsl(200 51% 65%), hsl(233,63%,67%))' }}>آرمانیان</h1>
-              <p className="text-xs text-muted-foreground/70 font-medium">آموزشگاه آزاد فنی و حرفه‌ای</p>
+              <span className="block text-base font-semibold leading-5 text-foreground">آرمانیان</span>
+              <span className="block text-[11px] leading-5 text-muted-foreground">آموزشگاه آزاد فنی و حرفه‌ای</span>
             </div>
             <div className="sm:hidden">
-              <h1 className="text-sm font-black transition-colors duration-300 bg-clip-text text-transparent animate-gradient-x" style={{ backgroundImage: 'linear-gradient(90deg, hsl(233,63%,67%), hsl(200 51% 65%), hsl(233,63%,67%))' }}>آرمانیان</h1>
+              <span className="text-base font-semibold text-foreground">آرمانیان</span>
             </div>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-reverse space-x-2">
+          <nav className="hidden items-center gap-1 md:flex" aria-label="منوی اصلی">
             {menuItems.map((item, index) => {
               const isHashLink = item.href.startsWith('#');
               const isActive = isHashLink
@@ -179,10 +209,10 @@ const Header = () => {
                 <a
                   key={item.label}
                   href={item.href}
-                  className={`story-link relative px-3 py-2 rounded-lg font-bold transition-all duration-300 group animate-fade-in ${
+                  className={`relative rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200 ${
                     isActive 
-                      ? 'text-primary bg-primary/10 shadow-sm' 
-                      : 'text-foreground/80 hover:text-primary hover:bg-primary/5'
+                      ? 'bg-secondary text-foreground' 
+                      : 'text-muted-foreground hover:bg-secondary/70 hover:text-foreground'
                   }`}
                   style={{ animationDelay: `${index * 100}ms` }}
                   onClick={(e) => handleHashClick(e, item.href)}
@@ -193,10 +223,10 @@ const Header = () => {
                 <Link
                   key={item.label}
                   to={item.href}
-                  className={`story-link relative px-3 py-2 rounded-lg font-bold transition-all duration-300 group animate-fade-in ${
+                  className={`relative rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200 ${
                     isActive 
-                      ? 'text-primary bg-primary/10 shadow-sm' 
-                      : 'text-foreground/80 hover:text-primary hover:bg-primary/5'
+                      ? 'bg-secondary text-foreground' 
+                      : 'text-muted-foreground hover:bg-secondary/70 hover:text-foreground'
                   }`}
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
@@ -214,7 +244,7 @@ const Header = () => {
             ) : user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline" size="sm" className="gap-2 hover-scale bg-card/60 hover:bg-card border-border/30 hover:border-primary/20 transition-all duration-300 shadow-md hover:shadow-lg">
+                  <Button variant="outline" size="sm" className="gap-2 bg-card shadow-none">
                     <User className="w-4 h-4" />
                     حساب کاربری
                   </Button>
@@ -247,108 +277,179 @@ const Header = () => {
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
-              <Button variant="hero" size="sm" className="hover-scale shadow-md hover:shadow-lg hover:shadow-primary/10 transition-all duration-300" onClick={() => navigate('/auth')}>
+              <Button size="sm" className="shadow-none hover:shadow-none" onClick={() => navigate('/auth')}>
                 ورود / ثبت نام
               </Button>
             )}
+            <ThemeToggle />
           </div>
 
           {/* Mobile Menu Button */}
-          <button
+          <Button
+            type="button"
+            variant="outline"
+            size="icon"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-1.5 md:p-2 rounded-lg bg-card/60 border border-border/20 text-foreground hover:text-primary hover:bg-card hover:border-primary/20 transition-all duration-300 shadow-md hover:shadow-lg hover-scale flex-shrink-0"
+            className="h-10 w-10 flex-shrink-0 bg-card shadow-none md:hidden"
+            aria-label={isMenuOpen ? 'بستن منو' : 'باز کردن منو'}
+            aria-expanded={isMenuOpen}
           >
             {isMenuOpen ? 
               <X className="w-5 h-5 animate-scale-in" /> : 
               <Menu className="w-5 h-5 animate-scale-in" />
             }
-          </button>
+          </Button>
         </div>
 
-        {/* Mobile Menu */}
-        {isMenuOpen && (
-          <div className="md:hidden mt-3 p-4 rounded-xl border border-border/20 bg-card/90 backdrop-blur-xl shadow-xl animate-slide-in-right">
-            <nav className="flex flex-col space-y-2">
-              {menuItems.map((item, index) => {
-                const isHashLink = item.href.startsWith('#');
-                const isActive = isHashLink
-                  ? (location.pathname === '/' && (activeHash ? activeHash === item.href || (activeHash === '#' && item.label === 'خانه') : false))
-                  : location.pathname === item.href;
-                
-                return isHashLink ? (
-                  <a
-                    key={item.label}
-                    href={item.href}
-                    className={`transition-all duration-300 py-3 px-4 rounded-lg text-center font-medium animate-fade-in ${
-                      isActive 
-                        ? 'text-primary bg-primary/10 border border-primary/20 shadow-sm' 
-                        : 'text-foreground/80 hover:text-primary hover:bg-primary/5'
-                    }`}
-                    style={{ animationDelay: `${index * 50}ms` }}
-                    onClick={(e) => { handleHashClick(e, item.href); setIsMenuOpen(false); }}
-                  >
-                    {item.label}
-                  </a>
-                ) : (
-                  <Link
-                    key={item.label}
-                    to={item.href}
-                    className={`transition-all duration-300 py-3 px-4 rounded-lg text-center font-medium animate-fade-in ${
-                      isActive 
-                        ? 'text-primary bg-primary/10 border border-primary/20 shadow-sm' 
-                        : 'text-foreground/80 hover:text-primary hover:bg-primary/5'
-                    }`}
-                    style={{ animationDelay: `${index * 50}ms` }}
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {item.label}
-                  </Link>
-                );
-              })}
-              
-              <div className="pt-3 mt-3 border-t border-border/20">
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-sm font-medium text-muted-foreground">نمایش سایت</span>
+        {isMenuOpen && createPortal(
+          <div className="fixed inset-0 z-[100] flex justify-start md:hidden" role="dialog" aria-modal="true" aria-label="منوی موبایل">
+            <button
+              type="button"
+              className="absolute inset-0 bg-foreground/15 backdrop-blur-sm"
+              aria-label="بستن منو"
+              onClick={() => setIsMenuOpen(false)}
+            />
+            <aside className="relative flex h-full max-h-screen w-[86%] max-w-[340px] animate-slide-in-right flex-col overflow-hidden border-l border-border bg-background shadow-lifted">
+              <div className="flex h-16 items-center justify-between border-b border-border px-5">
+                <Link to="/" onClick={() => setIsMenuOpen(false)} className="flex items-center gap-2.5">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary">
+                    <Code className="h-4 w-4 text-primary-foreground" />
+                  </div>
+                  <span className="font-semibold text-foreground">آرمانیان</span>
+                </Link>
+                <Button type="button" variant="ghost" size="icon" onClick={() => setIsMenuOpen(false)} aria-label="بستن منو">
+                  <X className="h-5 w-5" />
+                </Button>
+              </div>
+
+              <nav className="flex-1 overflow-y-auto px-3 py-4" aria-label="منوی موبایل">
+                {mobileSections.map((section) => (
+                  <div key={section.title} className="mb-5">
+                    <p className="mb-1.5 px-3 text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
+                      {section.title}
+                    </p>
+                    <div className="space-y-0.5">
+                      {section.items.map((item) => {
+                        const isHashLink = item.href.startsWith('#');
+                        const isActive = isHashLink
+                          ? (location.pathname === '/' && activeHash === item.href)
+                          : location.pathname === item.href;
+
+                        const cls = `flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
+                          isActive
+                            ? 'bg-secondary text-foreground'
+                            : 'text-muted-foreground hover:bg-secondary/70 hover:text-foreground'
+                        }`;
+
+                        return isHashLink ? (
+                          <a
+                            key={item.label}
+                            href={item.href}
+                            className={cls}
+                            onClick={(e) => { handleHashClick(e, item.href); setIsMenuOpen(false); }}
+                          >
+                            <item.icon className="h-4 w-4" />
+                            {item.label}
+                          </a>
+                        ) : (
+                          <Link
+                            key={item.label}
+                            to={item.href}
+                            className={cls}
+                            onClick={() => setIsMenuOpen(false)}
+                          >
+                            <item.icon className="h-4 w-4" />
+                            {item.label}
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ))}
+              </nav>
+
+              <div className="space-y-3 border-t border-border bg-secondary/30 p-4">
+                <div className="flex items-center justify-between rounded-lg border border-border bg-card px-3 py-2">
+                  <span className="text-sm text-muted-foreground">حالت نمایش</span>
                   <ThemeToggle />
                 </div>
                 {user ? (
                   <div className="space-y-2">
+                    <div className="rounded-lg border border-border bg-card px-3 py-2 text-xs text-muted-foreground">
+                      {user.first_name ? `${user.first_name} ${user.last_name}` : (user.phone || 'کاربر')}
+                    </div>
                     <Button 
                       variant="outline" 
                       onClick={() => {
                         navigate('/profile');
                         setIsMenuOpen(false);
                       }} 
-                      className="w-full gap-2 py-3 bg-card/60 hover:bg-card border-border/30 hover:border-primary/20 transition-all duration-300 shadow-sm hover:shadow-md"
+                      className="w-full gap-2 bg-card shadow-none"
                     >
                       <User className="w-4 h-4" />
                       پروفایل کاربری
                     </Button>
+                    {isAdmin && (
+                      <Button
+                        variant="outline"
+                        onClick={() => {
+                          navigate('/admin');
+                          setIsMenuOpen(false);
+                        }}
+                        className="w-full gap-2 bg-card shadow-none"
+                      >
+                        <Shield className="w-4 h-4" />
+                        پنل مدیریت
+                      </Button>
+                    )}
                     <Button 
                       variant="outline" 
                       onClick={handleSignOut} 
-                      className="w-full gap-2 py-3 text-destructive border-destructive/20 hover:bg-destructive/10 hover:border-destructive/30 transition-all duration-300 shadow-sm hover:shadow-md"
+                      className="w-full gap-2 border-destructive/30 text-destructive shadow-none hover:bg-destructive/10"
                     >
                       <LogOut className="w-4 h-4" />
                       خروج
                     </Button>
                   </div>
                 ) : (
-                  <Button 
-                    variant="hero" 
-                    size="sm" 
-                    className="w-full py-3 shadow-md hover:shadow-lg hover:shadow-primary/10 transition-all duration-300" 
-                    onClick={() => {
-                      navigate('/auth');
-                      setIsMenuOpen(false);
-                    }}
-                  >
-                    ورود / ثبت نام
-                  </Button>
+                  <div className="space-y-2">
+                    <Button 
+                      className="h-11 w-full shadow-none hover:shadow-none" 
+                      onClick={() => {
+                        navigate('/auth');
+                        setIsMenuOpen(false);
+                      }}
+                    >
+                      ورود
+                    </Button>
+                    <Button 
+                      variant="outline"
+                      className="h-11 w-full bg-card shadow-none" 
+                      onClick={() => {
+                        navigate('/auth?mode=signup');
+                        setIsMenuOpen(false);
+                      }}
+                    >
+                      ثبت نام
+                    </Button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        navigate('/auth?redirect=/admin');
+                        setIsMenuOpen(false);
+                      }}
+                      className="flex w-full items-center justify-center gap-2 rounded-lg px-3 py-2 text-xs font-medium text-muted-foreground transition-colors hover:bg-secondary/70 hover:text-foreground"
+                    >
+                      <Shield className="h-3.5 w-3.5" />
+                      ورود مدیران
+                    </button>
+                  </div>
                 )}
               </div>
-            </nav>
-          </div>
+
+            </aside>
+          </div>,
+          document.body
         )}
       </div>
     </header>
