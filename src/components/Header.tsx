@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Menu, X, Code, Brain, Monitor, User, LogOut, Shield } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
+import ThemeToggle from '@/components/ThemeToggle';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -206,7 +207,8 @@ const Header = () => {
           </nav>
 
           {/* Auth Section */}
-          <div className="hidden md:block">
+          <div className="hidden md:flex items-center gap-2">
+            <ThemeToggle />
             {loading ? (
               <div className="w-28 h-10 bg-muted/40 animate-pulse rounded-lg" />
             ) : user ? (
@@ -305,6 +307,10 @@ const Header = () => {
               })}
               
               <div className="pt-3 mt-3 border-t border-border/20">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-sm font-medium text-muted-foreground">نمایش سایت</span>
+                  <ThemeToggle />
+                </div>
                 {user ? (
                   <div className="space-y-2">
                     <Button 

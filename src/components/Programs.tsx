@@ -112,7 +112,7 @@ const Programs = () => {
         ) : (
         <div className="grid md:grid-cols-3 gap-8">
           {filteredPrograms.map((program, index) => (
-            <Card key={index} className={`relative transition-all duration-700 hover:-translate-y-4 hover:rotate-1 border-orange-300/70 hover:shadow-[0_0_50px_hsl(28_92%_56%_/_0.4)] ${program.popular ? 'border-2 animate-glow' : 'border'} bg-white/95 hover:bg-white animate-slide-in-up`} style={{ animationDelay: `${index * 0.3}s` }}>
+            <Card key={index} className={`relative transition-all duration-700 hover:-translate-y-4 hover:rotate-1 border-orange-300/70 dark:border-primary/30 hover:shadow-[0_0_50px_hsl(28_92%_56%_/_0.4)] dark:hover:shadow-[0_0_50px_hsl(217_95%_64%_/_0.25)] ${program.popular ? 'border-2 animate-glow' : 'border'} bg-white/95 hover:bg-white dark:bg-card/95 dark:hover:bg-card animate-slide-in-up`} style={{ animationDelay: `${index * 0.3}s` }}>
               
               {program.popular && (
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10">

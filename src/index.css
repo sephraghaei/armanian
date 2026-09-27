@@ -2,12 +2,49 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "Pelak";
+  src: url("./fonts/pelak/Pelak FontFamily/webfonts/woff2/Pelak-light.woff2") format("woff2"),
+       url("./fonts/pelak/Pelak FontFamily/webfonts/woff/Pelak-light.woff") format("woff");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Pelak";
+  src: url("./fonts/pelak/Pelak FontFamily/webfonts/woff2/Pelak-Regular.woff2") format("woff2"),
+       url("./fonts/pelak/Pelak FontFamily/webfonts/woff/Pelak-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Pelak";
+  src: url("./fonts/pelak/Pelak FontFamily/webfonts/woff2/Pelak-Bold.woff2") format("woff2"),
+       url("./fonts/pelak/Pelak FontFamily/webfonts/woff/Pelak-Bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "PelakNoEng";
+  src: url("./fonts/pelak/Non English/webfonts/woff2/PelakNoEng-Regular.woff2") format("woff2"),
+       url("./fonts/pelak/Non English/webfonts/woff/PelakNoEng-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
 All colors MUST be HSL.
 */
 
 @layer base {
   :root {
+    color-scheme: light;
     --background: 0 0% 100%;
     --foreground: 240 20% 10%;
 
@@ -65,41 +102,58 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    color-scheme: dark;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    /* Deep navy with a subtle blue tint — richer than pure black, keeps brand identity */
+    --background: 222 47% 5%;
+    --foreground: 214 32% 94%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    /* Elevated surfaces: each layer slightly lighter to create depth */
+    --card: 221 40% 8%;
+    --card-foreground: 214 32% 94%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --popover: 222 42% 7%;
+    --popover-foreground: 214 32% 94%;
 
-    --secondary: 212.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    /* Keep the vivid brand blue (identity) but lift lightness for dark-bg contrast */
+    --primary: 217 95% 64%;
+    --primary-foreground: 222 47% 6%;
+    --primary-wave: 28 92% 54%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --secondary: 219 32% 13%;
+    --secondary-foreground: 214 32% 94%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --muted: 219 30% 13%;
+    --muted-foreground: 217 16% 68%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --accent: 217 90% 62%;
+    --accent-foreground: 222 47% 6%;
+    --accent-wave: 30 95% 60%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --destructive: 0 72% 56%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 219 28% 17%;
+    --input: 219 28% 18%;
+    --ring: 201 85% 62%;
+
+    --radius: 0.75rem;
+
+    /* Custom design tokens — dark variants */
+    --gradient-primary: linear-gradient(135deg, hsl(233 68% 63%), hsl(199 85% 56%));
+    --gradient-secondary: linear-gradient(135deg, hsl(199 80% 55%), hsl(201 70% 44%));
+    --gradient-hero: linear-gradient(135deg, hsl(222 47% 5%) 0%, hsl(220 38% 9%) 50%, hsl(222 47% 5%) 100%);
+    --glow-primary: 0 0 45px hsl(201 85% 60% / 0.35);
+    --glow-accent: 0 0 45px hsl(28 92% 55% / 0.3);
+
+    --sidebar-background: 222 42% 6%;
+    --sidebar-foreground: 214 32% 94%;
+    --sidebar-primary: 217 95% 64%;
+    --sidebar-primary-foreground: 222 47% 6%;
+    --sidebar-accent: 219 30% 13%;
+    --sidebar-accent-foreground: 214 32% 94%;
+    --sidebar-border: 219 28% 16%;
+    --sidebar-ring: 201 85% 62%;
   }
 }
 
@@ -112,8 +166,46 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
     direction: rtl;
     text-align: right;
-    font-family: 'PELAK-Economic', system-ui, sans-serif;
+    font-family: "Pelak", "PelakNoEng", "Vazirmatn", system-ui, -apple-system, "Segoe UI", sans-serif;
     font-weight: 400;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Smooth color crossfade when switching themes */
+  @media (prefers-reduced-motion: no-preference) {
+    body {
+      transition: background-color 300ms ease, color 300ms ease;
+    }
+  }
+
+  ::selection {
+    background: hsl(var(--primary) / 0.3);
+  }
+
+  /* Scrollbar follows the active theme */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--background));
+  }
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--muted-foreground) / 0.35);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--primary) / 0.5);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: "Pelak", "PelakNoEng", "Vazirmatn", system-ui, sans-serif;
+    font-weight: 700;
+    line-height: 1.35;
+  }
+
+  input, button, textarea, select {
+    font: inherit;
   }
 }
 

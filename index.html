@@ -6,19 +6,6 @@
     <title>آرمانیان - آموزشگاه فنی و حرفه ای</title>
     <meta name="description" content="توانمندسازی ذهن‌های جوان با مهارت‌های برنامه‌نویسی، سواد دیجیتال و حل مسائل خلاقانه. به برنامه‌های نوآورانه‌ما که برای کودکان ۶ تا ۱۶ سال طراحی شده بپیوندید." />
     <meta name="author" content="آرمانیان" />
-    <style>
-      @font-face {
-        font-family: 'Pelak';
-        src: url('/src/fonts/pelak/Pelak FontFamily/webfonts/woff/Pelak-Bold.woff') format('woff');
-        font-weight: normal;
-        font-style: normal;
-      }
-
-      * {
-        font-family: 'Pelak', sans-serif !important;
-      }
-    </style>
-
     <meta property="og:title" content="آرمانیان - آموزشگاه فنی و حرفه ای" />
     <meta property="og:description" content="توانمندسازی ذهن‌های جوان با مهارت‌های برنامه‌نویسی، سواد دیجیتال و حل مسائل خلاقانه. به برنامه‌های نوآورانه‌ما که برای کودکان ۶ تا ۱۶ سال طراحی شده بپیوندید." />
     <meta property="og:type" content="website" />
@@ -27,6 +14,19 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@lovable_dev" />
     <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+
+    <!-- Apply saved theme before first paint to avoid a flash of the wrong theme -->
+    <script>
+      (function () {
+        try {
+          var theme = localStorage.getItem('theme');
+          var dark = theme === 'dark' ||
+            ((!theme || theme === 'system') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+          if (dark) document.documentElement.classList.add('dark');
+          document.documentElement.style.colorScheme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script>
   </head>
 
   <body>

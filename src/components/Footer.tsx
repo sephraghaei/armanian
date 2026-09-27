@@ -23,7 +23,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-black border-t border-gray-800">
+    <footer className="bg-card/60 dark:bg-[hsl(222_47%_4%)] border-t border-border/60 dark:border-border/40 backdrop-blur-sm">
       <div className="container mx-auto px-4 py-16">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Brand Section */}
@@ -47,7 +47,7 @@ const Footer = () => {
                   key={index}
                   href={social.href}
                   aria-label={social.label}
-                  className="w-10 h-10 bg-gray-800 text-gray-300 rounded-lg flex items-center justify-center hover:bg-blue-400 hover:text-white transition-colors duration-300"
+                  className="w-10 h-10 bg-gray-800 dark:bg-muted/60 text-gray-300 dark:text-foreground/70 rounded-lg flex items-center justify-center hover:bg-primary hover:text-white transition-colors duration-300"
                 >
                   <social.icon className="w-5 h-5" />
                 </a>
@@ -63,7 +63,7 @@ const Footer = () => {
                 <li key={index}>
                   <a
                     href={link.href}
-                    className="text-gray-300 hover:text-blue-200 transition-colors duration-300"
+                    className="text-gray-300 dark:text-foreground/70 hover:text-primary dark:hover:text-primary transition-colors duration-300"
                   >
                     {link.label}
                   </a>
@@ -80,7 +80,7 @@ const Footer = () => {
                 <li key={index}>
                   <a
                     href={program.href}
-                    className="text-gray-300 hover:text-blue-200 transition-colors duration-300"
+                    className="text-gray-300 dark:text-foreground/70 hover:text-primary dark:hover:text-primary transition-colors duration-300"
                   >
                     {program.label}
                   </a>
@@ -94,11 +94,11 @@ const Footer = () => {
             <h4 className="text-lg font-extrabold text-white mb-4">اطلاعات تماس</h4>
             <div className="space-y-3">
               <div className="flex items-center space-x-3">
-                <Mail className="w-4 h-4 text-blue-200" />
+                <Mail className="w-4 h-4 text-primary/80" />
                 <span className="text-gray-300 text-sm">info@armanian.ir</span>
               </div>
               <div className="flex items-center space-x-3">
-                <Phone className="w-4 h-4 text-blue-200" />
+                <Phone className="w-4 h-4 text-primary/80" />
                 <span className="text-gray-300 text-sm">۰۹۰۰۱۹۶۰۰۱۰</span>
               </div>
               <div className="mt-4">
@@ -112,19 +112,19 @@ const Footer = () => {
         </div>
 
         {/* Bottom Section */}
-        <div className="border-t border-gray-800 mt-12 pt-8">
+        <div className="border-t border-border/60 dark:border-border/40 mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <p className="text-gray-300 text-sm">
               © ۱۴۰۳ آرمانیان. تمامی حقوق محفوظ است.
             </p>
             <div className="flex space-x-6 text-sm">
-              <a href="#" className="text-gray-300 hover:text-blue-200 transition-colors">
+              <a href="#" className="text-gray-300 dark:text-foreground/70 hover:text-primary dark:hover:text-primary transition-colors">
                 سیاست حفظ حریم خصوصی
               </a>
-              <a href="#" className="text-gray-300 hover:text-blue-200 transition-colors">
+              <a href="#" className="text-gray-300 dark:text-foreground/70 hover:text-primary dark:hover:text-primary transition-colors">
                 شرایط خدمات
               </a>
-              <a href="#" className="text-gray-300 hover:text-blue-200 transition-colors">
+              <a href="#" className="text-gray-300 dark:text-foreground/70 hover:text-primary dark:hover:text-primary transition-colors">
                 سیاست کوکی
               </a>
             </div>

@@ -219,7 +219,7 @@ const CoursesPage = () => {
             <>
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
                 {filteredCourses.map((course) => (
-                  <Card key={course.id} className={`relative transition-all duration-500 hover:-translate-y-2 border-orange-300/70 hover:shadow-[0_0_40px_hsl(28_92%_56%_/_0.35)] ${course.is_popular ? 'border-2' : 'border'} bg-white/95`}>
+                  <Card key={course.id} className={`relative transition-all duration-500 hover:-translate-y-2 border-orange-300/70 dark:border-primary/30 hover:shadow-[0_0_40px_hsl(28_92%_56%_/_0.35)] dark:hover:shadow-[0_0_40px_hsl(217_95%_64%_/_0.22)] ${course.is_popular ? 'border-2' : 'border'} bg-white/95 dark:bg-card/95`}>
                     {course.is_popular && (
                       <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
                         <Badge variant="default" className="text-white" style={{ background: 'linear-gradient(135deg, hsl(28,92%,56%), hsl(24,95%,55%))' }}>
