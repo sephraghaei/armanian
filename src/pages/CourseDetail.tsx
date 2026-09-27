@@ -218,28 +218,28 @@ const CourseDetail = () => {
               {/* Course Stats */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div className="flex items-center space-x-2">
-                  <Clock className="w-5 h-5" style={{ color: 'hsl(28,92%,56%)' }} />
+                  <Clock className="w-5 h-5 text-accent" />
                   <div>
                     <p className="text-sm text-muted-foreground">مدت دوره</p>
                     <p className="font-semibold text-foreground">{course.duration}</p>
                   </div>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Trophy className="w-5 h-5" style={{ color: 'hsl(28,92%,56%)' }} />
+                  <Trophy className="w-5 h-5 text-accent" />
                   <div>
                     <p className="text-sm text-muted-foreground">سطح</p>
                     <p className="font-semibold text-foreground">{course.level}</p>
                   </div>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <BookOpen className="w-5 h-5" style={{ color: 'hsl(28,92%,56%)' }} />
+                  <BookOpen className="w-5 h-5 text-accent" />
                   <div>
                     <p className="text-sm text-muted-foreground">دسترسی</p>
                     <p className="font-semibold text-foreground">مادام‌العمر</p>
                   </div>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Calendar className="w-5 h-5" style={{ color: 'hsl(28,92%,56%)' }} />
+                  <Calendar className="w-5 h-5 text-accent" />
                   <div>
                     <p className="text-sm text-muted-foreground">شروع</p>
                     <p className="font-semibold text-foreground">فوری</p>
@@ -289,7 +289,7 @@ const CourseDetail = () => {
 
           {/* Enrollment Card */}
           <div className="lg:col-span-1">
-            <Card className="sticky top-8 border-orange-300/70">
+            <Card className="sticky top-8 border-border shadow-soft">
               <CardHeader className="text-center">
                 <CardTitle className="text-2xl">ثبت نام در دوره</CardTitle>
                 <CardDescription>
@@ -324,8 +324,7 @@ const CourseDetail = () => {
                 </div>
                 
                 <Button 
-                  className="w-full text-white"
-                  style={{ background: 'linear-gradient(135deg, hsl(28,92%,56%), hsl(24,95%,55%))' }}
+                  className="w-full"
                   size="lg"
                   onClick={handleEnroll}
                   disabled={enrolling}

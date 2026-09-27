@@ -1116,7 +1116,7 @@ export default function Admin() {
                       />
                     </div>
                     <div className="flex gap-3">
-                      <Button type="submit" className="text-white" style={{ background: 'linear-gradient(135deg, hsl(28,92%,56%), hsl(24,95%,55%))' }}>
+                      <Button type="submit">
                         {editingDepartment ? 'ذخیره تغییرات' : 'ایجاد دپارتمان'}
                       </Button>
                       {editingDepartment && (
@@ -1257,7 +1257,7 @@ export default function Admin() {
                       rows={2}
                     />
                   </div>
-                  <Button type="submit" disabled={savingContent} className="text-white" style={{ background: 'linear-gradient(135deg, hsl(28,92%,56%), hsl(24,95%,55%))' }}>
+                  <Button type="submit" disabled={savingContent}>
                     {savingContent ? 'در حال ذخیره...' : 'ذخیره تغییرات'}
                   </Button>
                 </form>

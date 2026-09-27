@@ -354,7 +354,7 @@ const Profile = () => {
                   </div>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <Clock className="w-4 h-4 text-orange-500" />
+                      <Clock className="w-4 h-4 text-accent" />
                       <span className="text-sm">ساعت مطالعه</span>
                     </div>
                     <Badge variant="outline">۰ ساعت</Badge>
@@ -427,8 +427,6 @@ const Profile = () => {
                       <Button 
                         onClick={updateProfile} 
                         disabled={updating}
-                        className="text-white"
-                        style={{ background: 'linear-gradient(135deg, hsl(28,92%,56%), hsl(24,95%,55%))' }}
                       >
                         {updating ? 'در حال به‌روزرسانی...' : 'ذخیره تغییرات'}
                       </Button>
@@ -463,8 +461,6 @@ const Profile = () => {
                       </p>
                       <Button 
                         onClick={() => navigate('/courses')}
-                        className="text-white"
-                        style={{ background: 'linear-gradient(135deg, hsl(28,92%,56%), hsl(24,95%,55%))' }}
                       >
                         <Plus className="w-4 h-4 mr-2" />
                         مشاهده دوره‌ها
@@ -475,7 +471,7 @@ const Profile = () => {
                       {enrollments.map((enrollment) => {
                         const daysRemaining = getDaysRemaining(enrollment.expires_at);
                         return (
-                          <Card key={enrollment.id} className="border-orange-300/70">
+                          <Card key={enrollment.id} className="border-border">
                             <CardContent className="p-6">
                               <div className="flex flex-col md:flex-row md:items-center gap-4">
                                 <div className="flex-1">

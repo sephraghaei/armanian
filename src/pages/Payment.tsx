@@ -244,8 +244,7 @@ const Payment = () => {
               <Button 
                 onClick={handlePayment}
                 disabled={processing}
-                className="w-full text-white py-6 text-lg"
-                style={{ background: 'linear-gradient(135deg, hsl(28,92%,56%), hsl(24,95%,55%))' }}
+                className="w-full py-6 text-lg"
               >
                 {processing ? (
                   <>

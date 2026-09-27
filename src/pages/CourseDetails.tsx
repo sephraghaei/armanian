@@ -570,11 +570,10 @@ const CourseDetailsPage = () => {
                     <p className="text-muted-foreground">هزینه کل دوره</p>
                   </div>
                   <Button 
-                    className="w-full text-white" 
+                    className="w-full" 
                     size="lg"
                     onClick={handleEnroll}
                     disabled={enrolling}
-                    style={{ background: 'linear-gradient(135deg, hsl(28,92%,56%), hsl(24,95%,55%))' }}
                   >
                     {enrolling ? (
                       <>

@@ -172,8 +172,6 @@ const CoursesPage = () => {
                 variant={showPopularOnly ? "default" : "outline"}
                 size="sm"
                 onClick={() => setShowPopularOnly(!showPopularOnly)}
-                className={showPopularOnly ? "text-white" : ""}
-                style={showPopularOnly ? { background: 'linear-gradient(135deg, hsl(28,92%,56%), hsl(24,95%,55%))' } : {}}
               >
                 <Star className="w-4 h-4 ml-1" />
                 محبوب‌ها

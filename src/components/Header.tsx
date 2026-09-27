@@ -238,7 +238,6 @@ const Header = () => {
 
           {/* Auth Section */}
           <div className="hidden md:flex items-center gap-2">
-            <ThemeToggle />
             {loading ? (
               <div className="w-28 h-10 bg-muted/40 animate-pulse rounded-lg" />
             ) : user ? (

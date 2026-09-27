@@ -195,11 +195,11 @@ const Auth = () => {
         </Link>
 
         <div className="text-center mb-8">
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <GraduationCap className="h-8 w-8 text-primary" />
-            <h1 className="text-3xl font-bold text-primary">آرمانیان</h1>
+          <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary shadow-soft">
+            <GraduationCap className="h-6 w-6 text-primary-foreground" />
           </div>
-          <p className="text-muted-foreground">به آکادمی آرمانیان خوش آمدید</p>
+          <h1 className="text-2xl font-bold text-foreground">آرمانیان</h1>
+          <p className="mt-1 text-sm text-muted-foreground">به آموزشگاه آرمانیان خوش آمدید</p>
         </div>
 
         <Tabs defaultValue={new URLSearchParams(location.search).get('mode') === 'signup' ? 'signup' : 'signin'} className="w-full">
