@@ -56,7 +56,7 @@ const ScrollArrows = () => {
         <div className="absolute inset-0 rounded-full bg-primary-foreground/10 scale-0 group-hover:scale-100 transition-transform duration-500"></div>
         
         {/* Phone icon */}
-        <PhoneCall className="w-5 h-5 sm:w-6 sm:h-6 text-primary-foreground relative z-10" />
+        <Headset className="w-4 h-4 sm:w-[18px] sm:h-[18px] text-primary-foreground relative z-10" />
       </a>
 
       {/* Scroll Buttons */}
