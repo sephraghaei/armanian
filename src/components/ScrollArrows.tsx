@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ChevronUp, ChevronDown, PhoneCall } from "lucide-react";
+import { ChevronUp, ChevronDown, Headset } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const ScrollArrows = () => {
