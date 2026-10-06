@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ChevronUp, ChevronDown, Headset } from "lucide-react";
+import { ChevronUp, ChevronDown, Headset, ArrowRight } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const ScrollArrows = () => {
@@ -37,6 +37,15 @@ const ScrollArrows = () => {
       document.documentElement.scrollHeight
     );
     window.scrollTo({ top: nextY, behavior: 'smooth' });
+  };
+
+  const goBack = () => {
+    // If there is history to go back to, use it; otherwise fall back to home
+    if (window.history.length > 1 && document.referrer !== '') {
+      navigate(-1);
+    } else {
+      navigate('/');
+    }
   };
 
   const commonBtn = "flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full border border-border bg-card text-foreground shadow-soft hover:shadow-lifted transition-all duration-300 hover:scale-105";
