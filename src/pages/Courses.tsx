@@ -9,6 +9,7 @@ import { useEffect, useState, useMemo } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import CourseRecommender from '@/components/CourseRecommender';
 
 interface Course {
   id: string;
@@ -118,6 +119,8 @@ const CoursesPage = () => {
           </div>
         </div>
       </section>
+
+      <CourseRecommender />
 
       {/* Filter Section */}
       <section className="py-8 border-b bg-card/50">

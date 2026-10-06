@@ -95,7 +95,7 @@ const CourseRecommender = () => {
                     </div>
                     <p className="text-sm text-muted-foreground mt-1">{r.reason}</p>
                   </div>
-                  <Button variant="outline" size="sm" onClick={() => navigate(`/course/${r.course.id}`)}>
+                  <Button variant="outline" size="sm" onClick={() => navigate(`/course-detail/${r.course.id}`)}>
                     مشاهده دوره <ArrowLeft className="h-4 w-4 mr-1" />
                   </Button>
                 </div>
