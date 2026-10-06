@@ -4,7 +4,6 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { ThemeProvider } from "next-themes";
 import { AuthProvider } from "@/contexts/AuthContext";
 import Index from "./pages/Index";
 import DepartmentsPage from "./pages/Departments";
@@ -28,9 +27,8 @@ const App = () => {
   console.log('App rendering...');
   
   return (
-    <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
+    <ThemeProvider defaultTheme="light">
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider>
       <TooltipProvider>
         <Toaster />
         <Sonner />
@@ -56,7 +54,6 @@ const App = () => {
           </AuthProvider>
         </BrowserRouter>
       </TooltipProvider>
-      </ThemeProvider>
     </QueryClientProvider>
     </ThemeProvider>
   );
