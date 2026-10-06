@@ -17,3 +17,5 @@ verify_jwt = false
 
 [functions.auth-me]
 verify_jwt = false
+[functions.recommend-courses]
+verify_jwt = false
